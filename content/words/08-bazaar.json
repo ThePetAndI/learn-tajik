@@ -1,0 +1,206 @@
+{
+  "theme": "bazaar",
+  "words": [
+    {
+      "id": "w_bozor",
+      "tg": "бозор",
+      "ru": "базар, рынок",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": {
+        "tg": "Ба бозор меравам.",
+        "ru": "Иду на базар."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dukon",
+      "tg": "дӯкон",
+      "ru": "магазин, лавка",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_pul",
+      "tg": "пул",
+      "ru": "деньги",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "то же слово значит мост"
+    },
+    {
+      "id": "w_narkh",
+      "tg": "нарх",
+      "ru": "цена",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить обороты со словом нарх"
+    },
+    {
+      "id": "w_arzon",
+      "tg": "арзон",
+      "ru": "дёшево, дешёвый",
+      "pos": "adj",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_qimmat",
+      "tg": "қиммат",
+      "ru": "дорого, дорогой",
+      "pos": "adj",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_somoni",
+      "tg": "сомонӣ",
+      "ru": "сомони (валюта)",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_diram",
+      "tg": "дирам",
+      "ru": "дирам (мелкая монета)",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_furushanda",
+      "tg": "фурӯшанда",
+      "ru": "продавец",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kharidor",
+      "tg": "харидор",
+      "ru": "покупатель",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kilogramm",
+      "tg": "килограмм",
+      "ru": "килограмм",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khalta",
+      "tg": "халта",
+      "ru": "пакет, мешок",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_meva",
+      "tg": "мева",
+      "ru": "фрукт",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sabzavot",
+      "tg": "сабзавот",
+      "ru": "овощи",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hisob",
+      "tg": "ҳисоб",
+      "ru": "счёт",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить значение при покупках"
+    },
+    {
+      "id": "w_tanga",
+      "tg": "танга",
+      "ru": "монета",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребительность"
+    },
+    {
+      "id": "w_tarozu",
+      "tg": "тарозу",
+      "ru": "весы",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_navbat",
+      "tg": "навбат",
+      "ru": "очередь",
+      "pos": "noun",
+      "theme": "bazaar",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

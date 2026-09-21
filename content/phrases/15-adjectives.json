@@ -1,0 +1,86 @@
+{
+  "theme": "adjectives",
+  "phrases": [
+    {
+      "id": "p_khonai_kalon",
+      "tg": "Хонаи калон",
+      "ru": "Большой дом",
+      "theme": "adjectives",
+      "words": [
+        "w_khona",
+        "w_kalon"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": "изафет: -и соединяет предмет и признак"
+    },
+    {
+      "id": "p_kitobi_man",
+      "tg": "Китоби ман",
+      "ru": "Моя книга",
+      "theme": "adjectives",
+      "words": [
+        "w_kitob",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": "изафет с принадлежностью"
+    },
+    {
+      "id": "p_guli_surkh",
+      "tg": "Гули сурх",
+      "ru": "Красный цветок",
+      "theme": "adjectives",
+      "words": [
+        "w_gul",
+        "w_surkh"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_chi_rang",
+      "tg": "Ин чӣ ранг аст?",
+      "ru": "Какого это цвета?",
+      "theme": "adjectives",
+      "words": [
+        "w_in",
+        "w_chi",
+        "w_rang",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить построение вопроса о цвете"
+    },
+    {
+      "id": "p_choy_garm",
+      "tg": "Чой гарм аст.",
+      "ru": "Чай горячий.",
+      "theme": "adjectives",
+      "words": [
+        "w_choy",
+        "w_garm",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_dukhtari_zebo",
+      "tg": "Духтари зебо",
+      "ru": "Красивая девушка",
+      "theme": "adjectives",
+      "words": [
+        "w_dukhtar",
+        "w_zebo"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

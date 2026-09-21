@@ -1,0 +1,233 @@
+{
+  "theme": "pronouns",
+  "words": [
+    {
+      "id": "w_u",
+      "tg": "ӯ",
+      "ru": "он, она",
+      "pos": "pron",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ӯ дӯсти ман аст.",
+        "ru": "Он мой друг."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_vay",
+      "tg": "вай",
+      "ru": "он, она (разговорное)",
+      "pos": "pron",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "в разговоре чаще, чем «ӯ»"
+    },
+    {
+      "id": "w_onho",
+      "tg": "онҳо",
+      "ru": "они",
+      "pos": "pron",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ast",
+      "tg": "аст",
+      "ru": "есть (связка, 3 лицо)",
+      "pos": "verb",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ин хона аст.",
+        "ru": "Это дом."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hastam",
+      "tg": "ҳастам",
+      "ru": "я есть",
+      "pos": "verb",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ман омода ҳастам.",
+        "ru": "Я готов."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить пример со словом «омода»"
+    },
+    {
+      "id": "w_nest",
+      "tg": "нест",
+      "ru": "нет, не является",
+      "pos": "verb",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ин хуб нест.",
+        "ru": "Это нехорошо."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_budan",
+      "tg": "будан",
+      "ru": "быть",
+      "pos": "verb",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kas",
+      "tg": "кас",
+      "ru": "человек, лицо",
+      "pos": "noun",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить оттенок: «кас» и «одам»"
+    },
+    {
+      "id": "w_odam",
+      "tg": "одам",
+      "ru": "человек",
+      "pos": "noun",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ӯ одами нағз аст.",
+        "ru": "Он хороший человек."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chiz",
+      "tg": "чиз",
+      "ru": "вещь",
+      "pos": "noun",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_jo",
+      "tg": "ҷо",
+      "ru": "место",
+      "pos": "noun",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ин ҷо",
+        "ru": "здесь"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hamin",
+      "tg": "ҳамин",
+      "ru": "этот самый",
+      "pos": "pron",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить оттенок"
+    },
+    {
+      "id": "w_khud",
+      "tg": "худ",
+      "ru": "сам, себя",
+      "pos": "pron",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребление"
+    },
+    {
+      "id": "w_bo",
+      "tg": "бо",
+      "ru": "с (вместе с)",
+      "pos": "prep",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Бо ман биё.",
+        "ru": "Пойдём со мной."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить пример"
+    },
+    {
+      "id": "w_be",
+      "tg": "бе",
+      "ru": "без",
+      "pos": "prep",
+      "theme": "pronouns",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_baroi",
+      "tg": "барои",
+      "ru": "для",
+      "pos": "prep",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Барои шумо",
+        "ru": "для вас"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dar_prep",
+      "tg": "дар",
+      "ru": "в, на",
+      "pos": "prep",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Дар хона",
+        "ru": "дома"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ba",
+      "tg": "ба",
+      "ru": "к, в (направление)",
+      "pos": "prep",
+      "theme": "pronouns",
+      "example": {
+        "tg": "Ба мактаб",
+        "ru": "в школу"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "theme": "past",
+  "words": [
+    {
+      "id": "w_bud",
+      "tg": "буд",
+      "ru": "был, была",
+      "pos": "verb",
+      "theme": "past",
+      "example": {
+        "tg": "Ин хуб буд.",
+        "ru": "Это было хорошо."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_raft",
+      "tg": "рафт",
+      "ru": "ушёл, пошёл",
+      "pos": "verb",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_omad",
+      "tg": "омад",
+      "ru": "пришёл",
+      "pos": "verb",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_guft",
+      "tg": "гуфт",
+      "ru": "сказал",
+      "pos": "verb",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_did",
+      "tg": "дид",
+      "ru": "увидел",
+      "pos": "verb",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kard",
+      "tg": "кард",
+      "ru": "сделал",
+      "pos": "verb",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khurd_past",
+      "tg": "хӯрд",
+      "ru": "съел",
+      "pos": "verb",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_guzashta",
+      "tg": "гузашта",
+      "ru": "прошлый, прошедший",
+      "pos": "adj",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_peshtar",
+      "tg": "пештар",
+      "ru": "раньше",
+      "pos": "adv",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nav",
+      "tg": "нав",
+      "ru": "новый",
+      "pos": "adj",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kuhna",
+      "tg": "кӯҳна",
+      "ru": "старый (о вещах)",
+      "pos": "adj",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_pir",
+      "tg": "пир",
+      "ru": "старый (о людях)",
+      "pos": "adj",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_javon",
+      "tg": "ҷавон",
+      "ru": "молодой",
+      "pos": "adj",
+      "theme": "past",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

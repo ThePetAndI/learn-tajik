@@ -1,0 +1,89 @@
+{
+  "theme": "past",
+  "phrases": [
+    {
+      "id": "p_diruz_raftam",
+      "tg": "Дирӯз ман ба бозор рафтам.",
+      "ru": "Вчера я ходил на базар.",
+      "theme": "past",
+      "words": [
+        "w_diruz",
+        "w_man",
+        "w_ba",
+        "w_bozor",
+        "w_raft"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_khub_bud",
+      "tg": "Ин хуб буд.",
+      "ru": "Это было хорошо.",
+      "theme": "past",
+      "words": [
+        "w_in",
+        "w_khub",
+        "w_bud"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_u_omad",
+      "tg": "Ӯ дирӯз омад.",
+      "ru": "Он вчера пришёл.",
+      "theme": "past",
+      "words": [
+        "w_u",
+        "w_diruz",
+        "w_omad"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_chi_gufti",
+      "tg": "Ту чӣ гуфтӣ?",
+      "ru": "Что ты сказал?",
+      "theme": "past",
+      "words": [
+        "w_tu",
+        "w_chi",
+        "w_guft"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_nadidam",
+      "tg": "Ман надидам.",
+      "ru": "Я не видел.",
+      "theme": "past",
+      "words": [
+        "w_man",
+        "w_did"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить отрицание на-"
+    },
+    {
+      "id": "p_soli_guzashta",
+      "tg": "Соли гузашта",
+      "ru": "В прошлом году",
+      "theme": "past",
+      "words": [
+        "w_sol",
+        "w_guzashta"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

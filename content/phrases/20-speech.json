@@ -1,0 +1,97 @@
+{
+  "theme": "speech",
+  "phrases": [
+    {
+      "id": "p_albatta_meoyam",
+      "tg": "Албатта меоям!",
+      "ru": "Конечно приду!",
+      "theme": "speech",
+      "words": [
+        "w_albatta"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меоям"
+    },
+    {
+      "id": "p_mutaassifona_nametavonam",
+      "tg": "Мутаассифона, наметавонам.",
+      "ru": "К сожалению, не могу.",
+      "theme": "speech",
+      "words": [
+        "w_mutaassifona"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму наметавонам"
+    },
+    {
+      "id": "p_kumak_kuned",
+      "tg": "Кӯмак кунед, лутфан.",
+      "ru": "Помогите, пожалуйста.",
+      "theme": "speech",
+      "words": [
+        "w_kumak",
+        "w_lutfan"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму кунед"
+    },
+    {
+      "id": "p_man_va_tu",
+      "tg": "Ман ва ту",
+      "ru": "Я и ты",
+      "theme": "speech",
+      "words": [
+        "w_man",
+        "w_va",
+        "w_tu"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_choy_yo_qahva",
+      "tg": "Чой ё қаҳва?",
+      "ru": "Чай или кофе?",
+      "theme": "speech",
+      "words": [
+        "w_choy",
+        "w_yo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "добавить слово қаҳва в словарь"
+    },
+    {
+      "id": "p_khele_bisyor",
+      "tg": "Ин хеле бисёр аст!",
+      "ru": "Это очень много!",
+      "theme": "speech",
+      "words": [
+        "w_in",
+        "w_khele",
+        "w_bisyor",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_durust_ast",
+      "tg": "Дуруст аст.",
+      "ru": "Верно.",
+      "theme": "speech",
+      "words": [
+        "w_durust",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

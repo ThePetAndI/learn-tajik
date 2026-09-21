@@ -1,0 +1,84 @@
+{
+  "theme": "questions",
+  "phrases": [
+    {
+      "id": "p_charo_namioi",
+      "tg": "Чаро намеоӣ?",
+      "ru": "Почему не приходишь?",
+      "theme": "questions",
+      "words": [
+        "w_charo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму намеоӣ"
+    },
+    {
+      "id": "p_kay_shuru",
+      "tg": "Дарс кай сар мешавад?",
+      "ru": "Когда начинается урок?",
+      "theme": "questions",
+      "words": [
+        "w_kay",
+        "w_dars"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот сар шудан"
+    },
+    {
+      "id": "p_in_chi_khel",
+      "tg": "Ин чӣ хел аст?",
+      "ru": "Какой он?",
+      "theme": "questions",
+      "words": [
+        "w_in",
+        "w_chi_khel",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_kadom_rang",
+      "tg": "Кадом ранг?",
+      "ru": "Какой цвет?",
+      "theme": "questions",
+      "words": [
+        "w_kadom"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_savoli_man",
+      "tg": "Ман як савол дорам.",
+      "ru": "У меня есть вопрос.",
+      "theme": "questions",
+      "words": [
+        "w_man",
+        "w_yak",
+        "w_savol",
+        "w_doshtan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_javobi_shumo",
+      "tg": "Ҷавоби шумо чист?",
+      "ru": "Каков ваш ответ?",
+      "theme": "questions",
+      "words": [
+        "w_javob",
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму чист"
+    }
+  ]
+}

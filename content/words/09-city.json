@@ -1,0 +1,231 @@
+{
+  "theme": "city",
+  "words": [
+    {
+      "id": "w_shahr",
+      "tg": "шаҳр",
+      "ru": "город",
+      "pos": "noun",
+      "theme": "city",
+      "example": {
+        "tg": "Шаҳри Душанбе",
+        "ru": "город Душанбе"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_deha",
+      "tg": "деҳа",
+      "ru": "село, деревня",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kucha",
+      "tg": "кӯча",
+      "ru": "улица",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_roh",
+      "tg": "роҳ",
+      "ru": "дорога, путь",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_maktab",
+      "tg": "мактаб",
+      "ru": "школа",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_donishgoh",
+      "tg": "донишгоҳ",
+      "ru": "университет",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bemorkhona",
+      "tg": "беморхона",
+      "ru": "больница",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kitobkhona",
+      "tg": "китобхона",
+      "ru": "библиотека",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mehmonkhona",
+      "tg": "меҳмонхона",
+      "ru": "гостиница",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_masjid",
+      "tg": "масҷид",
+      "ru": "мечеть",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_istgoh",
+      "tg": "истгоҳ",
+      "ru": "остановка",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bonk",
+      "tg": "бонк",
+      "ru": "банк",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание: бонк или банк"
+    },
+    {
+      "id": "w_chap",
+      "tg": "чап",
+      "ru": "левый, налево",
+      "pos": "adj",
+      "theme": "city",
+      "example": {
+        "tg": "Ба чап",
+        "ru": "налево"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_rost",
+      "tg": "рост",
+      "ru": "правый, прямо",
+      "pos": "adj",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "то же слово значит правда"
+    },
+    {
+      "id": "w_pesh",
+      "tg": "пеш",
+      "ru": "вперёд, перед",
+      "pos": "adv",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_aqib",
+      "tg": "ақиб",
+      "ru": "назад, сзади",
+      "pos": "adv",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: ақиб или қафо"
+    },
+    {
+      "id": "w_nazdik",
+      "tg": "наздик",
+      "ru": "близко",
+      "pos": "adj",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dur",
+      "tg": "дур",
+      "ru": "далеко",
+      "pos": "adj",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_markaz",
+      "tg": "марказ",
+      "ru": "центр",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kupruk",
+      "tg": "купрук",
+      "ru": "мост",
+      "pos": "noun",
+      "theme": "city",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    }
+  ]
+}

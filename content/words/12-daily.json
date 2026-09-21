@@ -1,0 +1,206 @@
+{
+  "theme": "daily",
+  "words": [
+    {
+      "id": "w_subhona",
+      "tg": "субҳона",
+      "ru": "завтрак",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: субҳона или ноништа"
+    },
+    {
+      "id": "w_noshto",
+      "tg": "ноништа",
+      "ru": "завтрак",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить вариант"
+    },
+    {
+      "id": "w_khuroki_shom",
+      "tg": "хӯроки шом",
+      "ru": "ужин",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить составное название"
+    },
+    {
+      "id": "w_istirohat",
+      "tg": "истироҳат",
+      "ru": "отдых",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khob",
+      "tg": "хоб",
+      "ru": "сон",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dars",
+      "tg": "дарс",
+      "ru": "урок",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kitob",
+      "tg": "китоб",
+      "ru": "книга",
+      "pos": "noun",
+      "theme": "daily",
+      "example": {
+        "tg": "Китоби нав",
+        "ru": "новая книга"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_daftar",
+      "tg": "дафтар",
+      "ru": "тетрадь",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_qalam",
+      "tg": "қалам",
+      "ru": "ручка, карандаш",
+      "pos": "noun",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_har_ruz",
+      "tg": "ҳар рӯз",
+      "ru": "каждый день",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bad_potom",
+      "tg": "баъд",
+      "ru": "потом, после",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hamesha",
+      "tg": "ҳамеша",
+      "ru": "всегда",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gohe",
+      "tg": "гоҳе",
+      "ru": "иногда",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: гоҳе или баъзан"
+    },
+    {
+      "id": "w_hech_goh",
+      "tg": "ҳеҷ гоҳ",
+      "ru": "никогда",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_boz",
+      "tg": "боз",
+      "ru": "снова, ещё",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zud",
+      "tg": "зуд",
+      "ru": "быстро, скоро",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_oram",
+      "tg": "оҳиста",
+      "ru": "медленно, тихо",
+      "pos": "adv",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bedor",
+      "tg": "бедор",
+      "ru": "бодрствующий, проснувшийся",
+      "pos": "adj",
+      "theme": "daily",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот бедор шудан"
+    }
+  ]
+}

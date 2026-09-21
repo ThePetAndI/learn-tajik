@@ -10,40 +10,116 @@
         {
           "id": "s00_l1",
           "title": "Знакомые буквы",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_barg",
+            "w_mor",
+            "w_salom",
+            "w_khayr",
+            "w_ne",
+            "w_shab",
+            "w_khush",
+            "w_khub"
+          ],
+          "phrases": [
+            "p_ob_va_non",
+            "p_barg_sabz",
+            "p_gul_zebo",
+            "p_kitobi_man2",
+            "p_sag_va_gurba",
+            "p_asp_medavad",
+            "p_noni_garm",
+            "p_choyi_shirin",
+            "p_dari_khona"
+          ],
           "exercises": "auto",
           "kind": "alphabet"
         },
         {
           "id": "s00_l2",
           "title": "Ғ и Қ",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_ghoz",
+            "w_ghor",
+            "w_ghalaba",
+            "w_qand",
+            "w_qadam",
+            "w_nagz",
+            "w_tago",
+            "w_raqam"
+          ],
+          "phrases": [
+            "p_in_ghoz_ast",
+            "p_qand_shirin",
+            "p_mor_dar_ghor",
+            "p_qadami_aval",
+            "p_ghalabai_mo"
+          ],
           "exercises": "auto",
           "kind": "alphabet"
         },
         {
           "id": "s00_l3",
           "title": "Ӣ и Ӯ",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_juy",
+            "w_tuy",
+            "w_shur",
+            "w_pust",
+            "w_chub",
+            "w_ruz",
+            "w_chi",
+            "w_dust"
+          ],
+          "phrases": [
+            "p_juy_toza",
+            "p_tuyi_kalon",
+            "p_chub_daroz",
+            "p_shuri_bahr"
+          ],
           "exercises": "auto",
           "kind": "alphabet"
         },
         {
           "id": "s00_l4",
           "title": "Ҳ и Ҷ",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_halvo",
+            "w_hayot",
+            "w_havz",
+            "w_jon",
+            "w_juy",
+            "w_ha",
+            "w_subh",
+            "w_rahmat"
+          ],
+          "phrases": [
+            "p_halvo_bamaza",
+            "p_hayoti_nav"
+          ],
           "exercises": "auto",
           "kind": "alphabet"
         },
         {
           "id": "s00_l5",
           "title": "Читаем слова",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_barg",
+            "w_mor",
+            "w_ghoz",
+            "w_ghor",
+            "w_juy",
+            "w_tuy",
+            "w_halvo",
+            "w_hayot",
+            "w_bad",
+            "w_lutfan"
+          ],
+          "phrases": [
+            "p_ob_va_non",
+            "p_in_ghoz_ast",
+            "p_juy_toza",
+            "p_halvo_bamaza"
+          ],
           "exercises": "auto",
           "kind": "alphabet",
           "boss": true
@@ -63,11 +139,13 @@
             "w_salom",
             "w_khayr",
             "w_ha",
-            "w_ne"
+            "w_ne",
+            "w_subh"
           ],
           "phrases": [
             "p_assalom",
-            "p_vaalaykum"
+            "p_shumo_chi_khel",
+            "p_nomi_shumo_chist"
           ],
           "exercises": "auto"
         },
@@ -75,15 +153,17 @@
           "id": "s01_l2",
           "title": "Доброе утро",
           "words": [
-            "w_subh",
             "w_shab",
             "w_ruz",
-            "w_khush"
+            "w_khush",
+            "w_chi",
+            "w_nagz",
+            "w_khub"
           ],
           "phrases": [
-            "p_subh_ba_khayr",
-            "p_shab_ba_khayr",
-            "p_ruz_ba_khayr"
+            "p_vaalaykum",
+            "p_tu_chi_khel",
+            "p_man_nagz"
           ],
           "exercises": "auto"
         },
@@ -91,14 +171,14 @@
           "id": "s01_l3",
           "title": "Как дела?",
           "words": [
-            "w_chi",
-            "w_nagz",
-            "w_khub",
-            "w_bad"
+            "w_bad",
+            "w_rahmat",
+            "w_tashakkur",
+            "w_lutfan",
+            "w_bubakhshed"
           ],
           "phrases": [
-            "p_shumo_chi_khel",
-            "p_tu_chi_khel",
+            "p_subh_ba_khayr",
             "p_rahmat_nagz"
           ],
           "exercises": "auto"
@@ -106,20 +186,6 @@
         {
           "id": "s01_l4",
           "title": "Спасибо",
-          "words": [
-            "w_rahmat",
-            "w_tashakkur",
-            "w_lutfan",
-            "w_bubakhshed"
-          ],
-          "phrases": [
-            "p_man_nagz"
-          ],
-          "exercises": "auto"
-        },
-        {
-          "id": "s01_l5",
-          "title": "До свидания",
           "words": [
             "w_man",
             "w_tu",
@@ -129,8 +195,24 @@
             "w_dust"
           ],
           "phrases": [
-            "p_nomi_shumo_chist",
-            "p_khush_omaded",
+            "p_shab_ba_khayr",
+            "p_khush_omaded"
+          ],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l5",
+          "title": "До свидания",
+          "words": [
+            "w_salom",
+            "w_ne",
+            "w_ruz",
+            "w_nagz",
+            "w_rahmat",
+            "w_bubakhshed"
+          ],
+          "phrases": [
+            "p_ruz_ba_khayr",
             "p_to_bozdid"
           ],
           "exercises": "auto",
@@ -147,36 +229,80 @@
         {
           "id": "s02_l1",
           "title": "Как тебя зовут?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_ki",
+            "w_in",
+            "w_on",
+            "w_az",
+            "w_kucho"
+          ],
+          "phrases": [
+            "p_nomi_man",
+            "p_gap_mezaned"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s02_l2",
           "title": "Откуда ты?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_chand",
+            "w_sola",
+            "w_zabon",
+            "w_mamlakat",
+            "w_tojik"
+          ],
+          "phrases": [
+            "p_az_kucho",
+            "p_kame_medonam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s02_l3",
           "title": "Очень приятно",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_tojiki",
+            "w_rusi",
+            "w_mehmon",
+            "w_ham",
+            "w_bale"
+          ],
+          "phrases": [
+            "p_man_az_rusiya",
+            "p_in_ki_ast"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s02_l4",
           "title": "Сколько тебе лет?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_nasab",
+            "w_khele",
+            "w_kame",
+            "w_dushanbe_city",
+            "w_oshno"
+          ],
+          "phrases": [
+            "p_chand_sola"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s02_l5",
           "title": "Первый разговор",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_ki",
+            "w_az",
+            "w_sola",
+            "w_tojik",
+            "w_mehmon",
+            "w_nasab"
+          ],
+          "phrases": [
+            "p_khele_khush"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -191,36 +317,77 @@
         {
           "id": "s03_l1",
           "title": "Ман и ту",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_u",
+            "w_vay",
+            "w_onho",
+            "w_ast"
+          ],
+          "phrases": [
+            "p_man_talaba",
+            "p_onho_kucho"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s03_l2",
           "title": "Ӯ, мо, шумо, онҳо",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_hastam",
+            "w_nest",
+            "w_budan",
+            "w_kas",
+            "w_odam"
+          ],
+          "phrases": [
+            "p_tu_ki_hasti",
+            "p_mo_dust_hastem"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s03_l3",
           "title": "Связка «аст»",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_chiz",
+            "w_jo",
+            "w_hamin",
+            "w_khud"
+          ],
+          "phrases": [
+            "p_u_dusti_man"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s03_l4",
           "title": "Отрицание «нест»",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_bo",
+            "w_be",
+            "w_baroi",
+            "w_dar_prep",
+            "w_ba"
+          ],
+          "phrases": [
+            "p_in_khona_ast"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s03_l5",
           "title": "Кто это?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_u",
+            "w_ast",
+            "w_budan",
+            "w_chiz",
+            "w_khud",
+            "w_baroi"
+          ],
+          "phrases": [
+            "p_in_khub_nest"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -235,36 +402,79 @@
         {
           "id": "s04_l1",
           "title": "Родители",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_padar",
+            "w_modar",
+            "w_barodar",
+            "w_khohar",
+            "w_pisar"
+          ],
+          "phrases": [
+            "p_oilai_man",
+            "p_bobo_pir"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s04_l2",
           "title": "Брат и сестра",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_dukhtar",
+            "w_bobo",
+            "w_bibi",
+            "w_amak",
+            "w_amma"
+          ],
+          "phrases": [
+            "p_padari_man_kor",
+            "p_du_farzand"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s04_l3",
           "title": "Бабушка и дедушка",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_tago",
+            "w_khola",
+            "w_zan",
+            "w_mard",
+            "w_shavhar"
+          ],
+          "phrases": [
+            "p_man_yak_barodar"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s04_l4",
           "title": "Моя семья",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_oila",
+            "w_kudak",
+            "w_farzand",
+            "w_nabera",
+            "w_volidayn"
+          ],
+          "phrases": [
+            "p_modari_shumo"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s04_l5",
           "title": "Расскажи о семье",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_padar",
+            "w_khohar",
+            "w_bobo",
+            "w_amma",
+            "w_zan",
+            "w_oila"
+          ],
+          "phrases": [
+            "p_in_khohari_man"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -279,36 +489,82 @@
         {
           "id": "s05_l1",
           "title": "От одного до пяти",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_yak",
+            "w_du",
+            "w_se",
+            "w_chor",
+            "w_panj",
+            "w_shash"
+          ],
+          "phrases": [
+            "p_chand_sol",
+            "p_dah_va_dah"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s05_l2",
           "title": "От шести до десяти",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_haft",
+            "w_hasht",
+            "w_nuh",
+            "w_dah",
+            "w_yozdah",
+            "w_duvozdah"
+          ],
+          "phrases": [
+            "p_man_bist_sola"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s05_l3",
           "title": "До двадцати",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_senzdah",
+            "w_chordah",
+            "w_ponzdah",
+            "w_bist",
+            "w_si",
+            "w_chil"
+          ],
+          "phrases": [
+            "p_dah_somoni"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s05_l4",
           "title": "Десятки до ста",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_panjoh",
+            "w_sad",
+            "w_hazor",
+            "w_nim",
+            "w_raqam",
+            "w_aval"
+          ],
+          "phrases": [
+            "p_yak_du_se"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s05_l5",
           "title": "Счёт и возраст",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_yak",
+            "w_chor",
+            "w_haft",
+            "w_dah",
+            "w_senzdah",
+            "w_bist"
+          ],
+          "phrases": [
+            "p_man_se_barodar"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -323,36 +579,85 @@
         {
           "id": "s06_l1",
           "title": "Хлеб и чай",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_non",
+            "w_ob",
+            "w_choy",
+            "w_shir",
+            "w_gusht",
+            "w_birinj"
+          ],
+          "phrases": [
+            "p_choy_menusham",
+            "p_chi_mekhured"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s06_l2",
           "title": "Фрукты",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_tukhm",
+            "w_panir",
+            "w_ravghan",
+            "w_namak",
+            "w_shakar",
+            "w_seb",
+            "w_angur"
+          ],
+          "phrases": [
+            "p_non_va_ob",
+            "p_khurok_tayyor"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s06_l3",
           "title": "Овощи",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_anor",
+            "w_tarbuz",
+            "w_kharbuza",
+            "w_sabzi",
+            "w_piyoz",
+            "w_kartoshka"
+          ],
+          "phrases": [
+            "p_osh_bamaza"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s06_l4",
           "title": "Блюда",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_pomidor",
+            "w_mohi",
+            "w_murgh",
+            "w_osh",
+            "w_shurbo",
+            "w_khurok",
+            "w_piyola"
+          ],
+          "phrases": [
+            "p_gusht_namekhuram"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s06_l5",
           "title": "За столом",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_non",
+            "w_shir",
+            "w_tukhm",
+            "w_namak",
+            "w_angur",
+            "w_kharbuza"
+          ],
+          "phrases": [
+            "p_yak_piyola_choy"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -367,36 +672,78 @@
         {
           "id": "s07_l1",
           "title": "Комнаты",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_khona",
+            "w_dar_door",
+            "w_tireza",
+            "w_miz",
+            "w_kursi"
+          ],
+          "phrases": [
+            "p_man_dar_khona",
+            "p_charogh_ravshan"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s07_l2",
           "title": "Мебель",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_kat",
+            "w_oshkhona",
+            "w_havli",
+            "w_devor",
+            "w_bom"
+          ],
+          "phrases": [
+            "p_khonai_mo_kalon"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s07_l3",
           "title": "Вещи в доме",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_charogh",
+            "w_oina",
+            "w_qolin",
+            "w_jevon",
+            "w_dastarkhon"
+          ],
+          "phrases": [
+            "p_kalid_kucho"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s07_l4",
           "title": "Кухня",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_kalid",
+            "w_hammom",
+            "w_bogh",
+            "w_gul",
+            "w_toqcha"
+          ],
+          "phrases": [
+            "p_miz_va_kursi"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s07_l5",
           "title": "Мой дом",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_khona",
+            "w_miz",
+            "w_oshkhona",
+            "w_bom",
+            "w_qolin",
+            "w_kalid"
+          ],
+          "phrases": [
+            "p_gul_dar_tireza"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -411,36 +758,76 @@
         {
           "id": "s08_l1",
           "title": "На базаре",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_bozor",
+            "w_dukon",
+            "w_pul",
+            "w_narkh"
+          ],
+          "phrases": [
+            "p_ba_bozor",
+            "p_meva_arzon"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s08_l2",
           "title": "Сколько стоит?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_arzon",
+            "w_qimmat",
+            "w_somoni",
+            "w_diram",
+            "w_furushanda"
+          ],
+          "phrases": [
+            "p_in_chand_pul"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s08_l3",
           "title": "Деньги",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_kharidor",
+            "w_kilogramm",
+            "w_khalta",
+            "w_meva"
+          ],
+          "phrases": [
+            "p_khele_qimmat"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s08_l4",
           "title": "Поторгуемся",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_sabzavot",
+            "w_hisob",
+            "w_tanga",
+            "w_tarozu",
+            "w_navbat"
+          ],
+          "phrases": [
+            "p_arzontar"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s08_l5",
           "title": "Покупки",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_bozor",
+            "w_narkh",
+            "w_somoni",
+            "w_kharidor",
+            "w_meva",
+            "w_tanga"
+          ],
+          "phrases": [
+            "p_yak_kilo_seb"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -455,36 +842,78 @@
         {
           "id": "s09_l1",
           "title": "Места в городе",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_shahr",
+            "w_deha",
+            "w_kucha",
+            "w_roh",
+            "w_maktab"
+          ],
+          "phrases": [
+            "p_kucho_ast_maktab",
+            "p_rohi_markaz"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s09_l2",
           "title": "Как пройти?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_donishgoh",
+            "w_bemorkhona",
+            "w_kitobkhona",
+            "w_mehmonkhona",
+            "w_masjid"
+          ],
+          "phrases": [
+            "p_ba_chap_raved"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s09_l3",
           "title": "Направления",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_istgoh",
+            "w_bonk",
+            "w_chap",
+            "w_rost",
+            "w_pesh"
+          ],
+          "phrases": [
+            "p_in_nazdik_ast"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s09_l4",
           "title": "Транспорт",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_aqib",
+            "w_nazdik",
+            "w_dur",
+            "w_markaz",
+            "w_kupruk"
+          ],
+          "phrases": [
+            "p_bozor_dur_ast"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s09_l5",
           "title": "Спроси дорогу",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_shahr",
+            "w_roh",
+            "w_bemorkhona",
+            "w_masjid",
+            "w_chap",
+            "w_aqib"
+          ],
+          "phrases": [
+            "p_man_dar_shahr"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -499,36 +928,81 @@
         {
           "id": "s10_l1",
           "title": "Дни недели",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_soat",
+            "w_daqiqa",
+            "w_soniya",
+            "w_vaqt",
+            "w_hafta"
+          ],
+          "phrases": [
+            "p_soat_chand",
+            "p_hafta_haft_ruz"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s10_l2",
           "title": "Который час?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_moh",
+            "w_sol",
+            "w_imruz",
+            "w_pagoh",
+            "w_diruz",
+            "w_hozir"
+          ],
+          "phrases": [
+            "p_imruz_dushanbe"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s10_l3",
           "title": "Утро, день, вечер",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_begoh",
+            "w_barvaqt",
+            "w_der",
+            "w_dushanbe",
+            "w_seshanbe",
+            "w_chorshanbe"
+          ],
+          "phrases": [
+            "p_pagoh_meoyam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s10_l4",
           "title": "Месяцы",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_panjshanbe",
+            "w_jumga",
+            "w_shanbe",
+            "w_yakshanbe",
+            "w_iyun",
+            "w_iyul"
+          ],
+          "phrases": [
+            "p_vaqt_nest"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s10_l5",
           "title": "Когда встретимся?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_soat",
+            "w_vaqt",
+            "w_sol",
+            "w_diruz",
+            "w_barvaqt",
+            "w_seshanbe"
+          ],
+          "phrases": [
+            "p_kay_meoed"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -543,36 +1017,80 @@
         {
           "id": "s11_l1",
           "title": "Окончания глагола",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_raftan",
+            "w_omadan",
+            "w_khurdan",
+            "w_nushidan",
+            "w_khondan"
+          ],
+          "phrases": [
+            "p_man_meravam",
+            "p_u_kor_mekunad"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s11_l2",
           "title": "Рафтан — идти",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_navishtan",
+            "w_guftan",
+            "w_didan",
+            "w_shunidan",
+            "w_donistan"
+          ],
+          "phrases": [
+            "p_chi_mekuni",
+            "p_mo_choy_menushem"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s11_l3",
           "title": "Есть и пить",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_doshtan",
+            "w_kardan",
+            "w_khobidan",
+            "w_nishastan",
+            "w_giriftan"
+          ],
+          "phrases": [
+            "p_man_medonam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s11_l4",
           "title": "Отрицание",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_dodan",
+            "w_fahmidan",
+            "w_kharidan",
+            "w_kor_kardan",
+            "w_bozi_kardan",
+            "w_kor"
+          ],
+          "phrases": [
+            "p_namefahmam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s11_l5",
           "title": "Что ты делаешь?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_raftan",
+            "w_nushidan",
+            "w_guftan",
+            "w_donistan",
+            "w_khobidan",
+            "w_dodan"
+          ],
+          "phrases": [
+            "p_kitob_mekhonam"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -587,36 +1105,76 @@
         {
           "id": "s12_l1",
           "title": "Утро",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_subhona",
+            "w_noshto",
+            "w_khuroki_shom",
+            "w_istirohat"
+          ],
+          "phrases": [
+            "p_har_ruz_mekhonam",
+            "p_kitob_va_daftar"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s12_l2",
           "title": "День",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_khob",
+            "w_dars",
+            "w_kitob",
+            "w_daftar",
+            "w_qalam"
+          ],
+          "phrases": [
+            "p_subh_mekhezam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s12_l3",
           "title": "Вечер",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_har_ruz",
+            "w_bad_potom",
+            "w_hamesha",
+            "w_gohe"
+          ],
+          "phrases": [
+            "p_bad_az_dars"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s12_l4",
           "title": "Каждый день",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_hech_goh",
+            "w_boz",
+            "w_zud",
+            "w_oram",
+            "w_bedor"
+          ],
+          "phrases": [
+            "p_shab_mekhobam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s12_l5",
           "title": "Мой день",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_subhona",
+            "w_istirohat",
+            "w_kitob",
+            "w_har_ruz",
+            "w_gohe",
+            "w_zud"
+          ],
+          "phrases": [
+            "p_man_hamesha_choy"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -631,36 +1189,70 @@
         {
           "id": "s13_l1",
           "title": "Простое прошедшее",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_bud",
+            "w_raft",
+            "w_omad"
+          ],
+          "phrases": [
+            "p_diruz_raftam",
+            "p_soli_guzashta"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s13_l2",
           "title": "Я был, ты был",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_guft",
+            "w_did",
+            "w_kard"
+          ],
+          "phrases": [
+            "p_in_khub_bud"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s13_l3",
           "title": "Вчера",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_khurd_past",
+            "w_guzashta",
+            "w_peshtar"
+          ],
+          "phrases": [
+            "p_u_omad"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s13_l4",
           "title": "Отрицание в прошлом",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_nav",
+            "w_kuhna",
+            "w_pir",
+            "w_javon"
+          ],
+          "phrases": [
+            "p_chi_gufti"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s13_l5",
           "title": "Что было вчера?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_bud",
+            "w_guft",
+            "w_khurd_past",
+            "w_nav",
+            "w_javon"
+          ],
+          "phrases": [
+            "p_man_nadidam"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -675,36 +1267,66 @@
         {
           "id": "s14_l1",
           "title": "Чӣ? Кӣ?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_charo",
+            "w_kay"
+          ],
+          "phrases": [
+            "p_charo_namioi",
+            "p_javobi_shumo"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s14_l2",
           "title": "Куҷо? Кай?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_chi_khel",
+            "w_chi_tavr",
+            "w_kadom"
+          ],
+          "phrases": [
+            "p_kay_shuru"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s14_l3",
           "title": "Чаро? Чӣ хел?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_savol",
+            "w_javob"
+          ],
+          "phrases": [
+            "p_in_chi_khel"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s14_l4",
           "title": "Чанд? Кадом?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_baroi_chi",
+            "w_kucho_ast",
+            "w_ore"
+          ],
+          "phrases": [
+            "p_kadom_rang"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s14_l5",
           "title": "Задай вопрос",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_charo",
+            "w_chi_tavr",
+            "w_javob",
+            "w_ore"
+          ],
+          "phrases": [
+            "p_savoli_man"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -719,36 +1341,80 @@
         {
           "id": "s15_l1",
           "title": "Большой и маленький",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_kalon",
+            "w_khurd",
+            "w_baland",
+            "w_past",
+            "w_daroz"
+          ],
+          "phrases": [
+            "p_khonai_kalon",
+            "p_dukhtari_zebo"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s15_l2",
           "title": "Цвета",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_kutoh",
+            "w_garm",
+            "w_khunuk",
+            "w_shirin",
+            "w_talkh",
+            "w_zebo"
+          ],
+          "phrases": [
+            "p_kitobi_man"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s15_l3",
           "title": "Изафет: -и",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_toza",
+            "w_iflos",
+            "w_rang",
+            "w_safed",
+            "w_siyoh"
+          ],
+          "phrases": [
+            "p_guli_surkh"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s15_l4",
           "title": "Чей это?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_surkh",
+            "w_sabz",
+            "w_zard",
+            "w_kabud",
+            "w_vazn",
+            "w_sabuk"
+          ],
+          "phrases": [
+            "p_in_chi_rang"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s15_l5",
           "title": "Опиши предмет",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_kalon",
+            "w_past",
+            "w_garm",
+            "w_talkh",
+            "w_iflos",
+            "w_siyoh"
+          ],
+          "phrases": [
+            "p_choy_garm"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -763,36 +1429,81 @@
         {
           "id": "s16_l1",
           "title": "Погода сегодня",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_havo",
+            "w_oftob",
+            "w_boron",
+            "w_barf",
+            "w_shamol"
+          ],
+          "phrases": [
+            "p_havo_garm",
+            "p_bahor_omad"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s16_l2",
           "title": "Времена года",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_abr",
+            "w_osmon",
+            "w_zamin",
+            "w_kuh",
+            "w_daryo",
+            "w_bahr"
+          ],
+          "phrases": [
+            "p_boron_meborad"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s16_l3",
           "title": "Природа",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_darakht",
+            "w_bahor",
+            "w_tobiston",
+            "w_tiramoh",
+            "w_zimiston",
+            "w_gurba"
+          ],
+          "phrases": [
+            "p_zimiston_barf"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s16_l4",
           "title": "Животные",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_sag",
+            "w_asp",
+            "w_gov",
+            "w_parranda",
+            "w_sitora",
+            "w_zhola"
+          ],
+          "phrases": [
+            "p_kuhho_baland"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s16_l5",
           "title": "Разговор о погоде",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_havo",
+            "w_barf",
+            "w_osmon",
+            "w_daryo",
+            "w_bahor",
+            "w_zimiston"
+          ],
+          "phrases": [
+            "p_man_gurba_doram"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -807,36 +1518,78 @@
         {
           "id": "s17_l1",
           "title": "Части тела",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_sar",
+            "w_chashm",
+            "w_gush",
+            "w_bini",
+            "w_dahon"
+          ],
+          "phrases": [
+            "p_saram_dard",
+            "p_dasti_man"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s17_l2",
           "title": "Что болит?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_dandon",
+            "w_dast",
+            "w_poy",
+            "w_dil",
+            "w_shikam"
+          ],
+          "phrases": [
+            "p_man_bemor"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s17_l3",
           "title": "У врача",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_gardan",
+            "w_muy",
+            "w_ruy",
+            "w_tan",
+            "w_dukhtur"
+          ],
+          "phrases": [
+            "p_kucho_dorukhona"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s17_l4",
           "title": "Самочувствие",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_doru",
+            "w_dard",
+            "w_bemor",
+            "w_sihat",
+            "w_dorukhona"
+          ],
+          "phrases": [
+            "p_ba_dukhtur"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s17_l5",
           "title": "В аптеке",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_sar",
+            "w_bini",
+            "w_dast",
+            "w_shikam",
+            "w_ruy",
+            "w_doru"
+          ],
+          "phrases": [
+            "p_sihat_boshed"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -851,36 +1604,76 @@
         {
           "id": "s18_l1",
           "title": "Профессии",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_muallim",
+            "w_donishju",
+            "w_talaba",
+            "w_muhandis"
+          ],
+          "phrases": [
+            "p_kasbi_shumo",
+            "p_kor_khub"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s18_l2",
           "title": "В школе",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_dehqon",
+            "w_ronanda",
+            "w_korgar",
+            "w_kasb",
+            "w_idora"
+          ],
+          "phrases": [
+            "p_man_muallim"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s18_l3",
           "title": "Учёба",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_maosh",
+            "w_imtihon",
+            "w_sinf",
+            "w_omukhtan"
+          ],
+          "phrases": [
+            "p_u_dar_maktab"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s18_l4",
           "title": "На работе",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_nomai",
+            "w_kompyuter",
+            "w_hunar",
+            "w_mudir",
+            "w_shogird"
+          ],
+          "phrases": [
+            "p_man_tojiki_meomuzam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s18_l5",
           "title": "Кем ты работаешь?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_muallim",
+            "w_muhandis",
+            "w_korgar",
+            "w_maosh",
+            "w_omukhtan",
+            "w_hunar"
+          ],
+          "phrases": [
+            "p_imtihon_sakht"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -895,36 +1688,75 @@
         {
           "id": "s19_l1",
           "title": "Транспорт",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_moshin",
+            "w_avtobus",
+            "w_taksi",
+            "w_qatora"
+          ],
+          "phrases": [
+            "p_chipta_chand",
+            "p_taksi_giriftem"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s19_l2",
           "title": "В пути",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_havopaymo",
+            "w_velosiped",
+            "w_chipta",
+            "w_safar"
+          ],
+          "phrases": [
+            "p_ba_dushanbe_meravam"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s19_l3",
           "title": "Билеты",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_furudgoh",
+            "w_vokzal",
+            "w_jomadon",
+            "w_piyoda"
+          ],
+          "phrases": [
+            "p_avtobus_kay"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s19_l4",
           "title": "В гостинице",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_harakat",
+            "w_naqliyot",
+            "w_rohbalad",
+            "w_sarhad",
+            "w_shinosnoma"
+          ],
+          "phrases": [
+            "p_man_piyoda"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s19_l5",
           "title": "Поездка",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_moshin",
+            "w_qatora",
+            "w_chipta",
+            "w_vokzal",
+            "w_harakat",
+            "w_sarhad"
+          ],
+          "phrases": [
+            "p_safari_khub"
+          ],
           "exercises": "auto",
           "boss": true
         }
@@ -939,36 +1771,78 @@
         {
           "id": "s20_l1",
           "title": "Вежливые обороты",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_albatta",
+            "w_shoyad",
+            "w_mutaassifona",
+            "w_maylash"
+          ],
+          "phrases": [
+            "p_albatta_meoyam",
+            "p_khele_bisyor"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s20_l2",
           "title": "Да и нет",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_durust",
+            "w_khato",
+            "w_kumak",
+            "w_marhamat",
+            "w_iltimos"
+          ],
+          "phrases": [
+            "p_mutaassifona_nametavonam",
+            "p_durust_ast"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s20_l3",
           "title": "Просьбы",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_hatman",
+            "w_bisyor",
+            "w_faqat",
+            "w_ammo",
+            "w_va"
+          ],
+          "phrases": [
+            "p_kumak_kuned"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s20_l4",
           "title": "Чувства",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_yo",
+            "w_chunki",
+            "w_agar",
+            "w_bas",
+            "w_ehtiyot"
+          ],
+          "phrases": [
+            "p_man_va_tu"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s20_l5",
           "title": "Маленький диалог",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_albatta",
+            "w_maylash",
+            "w_kumak",
+            "w_hatman",
+            "w_ammo",
+            "w_chunki"
+          ],
+          "phrases": [
+            "p_choy_yo_qahva"
+          ],
           "exercises": "auto",
           "boss": true
         }

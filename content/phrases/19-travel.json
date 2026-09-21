@@ -1,0 +1,88 @@
+{
+  "theme": "travel",
+  "phrases": [
+    {
+      "id": "p_chipta_chand",
+      "tg": "Чипта чанд пул аст?",
+      "ru": "Сколько стоит билет?",
+      "theme": "travel",
+      "words": [
+        "w_chipta",
+        "w_chand",
+        "w_pul"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот чанд пул"
+    },
+    {
+      "id": "p_ba_dushanbe_meravam",
+      "tg": "Ман ба Душанбе меравам.",
+      "ru": "Я еду в Душанбе.",
+      "theme": "travel",
+      "words": [
+        "w_man",
+        "w_ba",
+        "w_dushanbe_city",
+        "w_raftan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_avtobus_kay",
+      "tg": "Автобус кай меояд?",
+      "ru": "Когда придёт автобус?",
+      "theme": "travel",
+      "words": [
+        "w_avtobus",
+        "w_kay"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меояд"
+    },
+    {
+      "id": "p_man_piyoda",
+      "tg": "Ман пиёда меравам.",
+      "ru": "Я иду пешком.",
+      "theme": "travel",
+      "words": [
+        "w_man",
+        "w_piyoda",
+        "w_raftan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_safari_khub",
+      "tg": "Сафари хуб!",
+      "ru": "Счастливого пути!",
+      "theme": "travel",
+      "words": [
+        "w_safar",
+        "w_khub"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить устойчивое пожелание"
+    },
+    {
+      "id": "p_taksi_giriftem",
+      "tg": "Мо таксӣ гирифтем.",
+      "ru": "Мы взяли такси.",
+      "theme": "travel",
+      "words": [
+        "w_mo",
+        "w_taksi",
+        "w_giriftan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

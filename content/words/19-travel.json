@@ -1,0 +1,192 @@
+{
+  "theme": "travel",
+  "words": [
+    {
+      "id": "w_moshin",
+      "tg": "мошин",
+      "ru": "машина",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_avtobus",
+      "tg": "автобус",
+      "ru": "автобус",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_taksi",
+      "tg": "таксӣ",
+      "ru": "такси",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_qatora",
+      "tg": "қатора",
+      "ru": "поезд",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: қатора или поезд"
+    },
+    {
+      "id": "w_havopaymo",
+      "tg": "ҳавопаймо",
+      "ru": "самолёт",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_velosiped",
+      "tg": "велосипед",
+      "ru": "велосипед",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chipta",
+      "tg": "чипта",
+      "ru": "билет",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_safar",
+      "tg": "сафар",
+      "ru": "поездка, путешествие",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_furudgoh",
+      "tg": "фурудгоҳ",
+      "ru": "аэропорт",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_vokzal",
+      "tg": "вокзал",
+      "ru": "вокзал",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_jomadon",
+      "tg": "ҷомадон",
+      "ru": "чемодан",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_piyoda",
+      "tg": "пиёда",
+      "ru": "пешком",
+      "pos": "adv",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_harakat",
+      "tg": "ҳаракат",
+      "ru": "движение",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_naqliyot",
+      "tg": "нақлиёт",
+      "ru": "транспорт",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_rohbalad",
+      "tg": "роҳбалад",
+      "ru": "проводник, гид",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребительность"
+    },
+    {
+      "id": "w_sarhad",
+      "tg": "сарҳад",
+      "ru": "граница",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shinosnoma",
+      "tg": "шиноснома",
+      "ru": "паспорт",
+      "pos": "noun",
+      "theme": "travel",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: шиноснома или паспорт"
+    }
+  ]
+}

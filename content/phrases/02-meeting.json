@@ -1,0 +1,112 @@
+{
+  "theme": "meeting",
+  "phrases": [
+    {
+      "id": "p_nomi_man",
+      "tg": "Номи ман Алӣ.",
+      "ru": "Меня зовут Али.",
+      "theme": "meeting",
+      "words": [
+        "w_nom",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить, нужна ли связка «аст»"
+    },
+    {
+      "id": "p_az_kucho",
+      "tg": "Шумо аз куҷо ҳастед?",
+      "ru": "Вы откуда?",
+      "theme": "meeting",
+      "words": [
+        "w_az",
+        "w_kucho",
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_az_rusiya",
+      "tg": "Ман аз Русия ҳастам.",
+      "ru": "Я из России.",
+      "theme": "meeting",
+      "words": [
+        "w_man",
+        "w_az"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_chand_sola",
+      "tg": "Шумо чанд сола ҳастед?",
+      "ru": "Сколько вам лет?",
+      "theme": "meeting",
+      "words": [
+        "w_chand",
+        "w_sola",
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_khele_khush",
+      "tg": "Хеле хуш!",
+      "ru": "Очень приятно!",
+      "theme": "meeting",
+      "words": [
+        "w_khele",
+        "w_khush"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_gap_mezaned",
+      "tg": "Шумо бо тоҷикӣ гап мезанед?",
+      "ru": "Вы говорите по-таджикски?",
+      "theme": "meeting",
+      "words": [
+        "w_shumo",
+        "w_tojiki"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот «гап задан»"
+    },
+    {
+      "id": "p_kame_medonam",
+      "tg": "Ман каме тоҷикӣ медонам.",
+      "ru": "Я немного знаю таджикский.",
+      "theme": "meeting",
+      "words": [
+        "w_kame",
+        "w_tojiki",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_ki_ast",
+      "tg": "Ин кӣ аст?",
+      "ru": "Кто это?",
+      "theme": "meeting",
+      "words": [
+        "w_in",
+        "w_ki"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

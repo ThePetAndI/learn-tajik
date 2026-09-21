@@ -1,0 +1,98 @@
+{
+  "theme": "pronouns",
+  "phrases": [
+    {
+      "id": "p_man_talaba",
+      "tg": "Ман талаба ҳастам.",
+      "ru": "Я ученик.",
+      "theme": "pronouns",
+      "words": [
+        "w_man"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить: «талаба» — ученик"
+    },
+    {
+      "id": "p_tu_ki_hasti",
+      "tg": "Ту кӣ ҳастӣ?",
+      "ru": "Ты кто?",
+      "theme": "pronouns",
+      "words": [
+        "w_tu",
+        "w_ki"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_u_dusti_man",
+      "tg": "Ӯ дӯсти ман аст.",
+      "ru": "Он мой друг.",
+      "theme": "pronouns",
+      "words": [
+        "w_u",
+        "w_dust",
+        "w_man",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_khona_ast",
+      "tg": "Ин хона аст.",
+      "ru": "Это дом.",
+      "theme": "pronouns",
+      "words": [
+        "w_in",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_khub_nest",
+      "tg": "Ин хуб нест.",
+      "ru": "Это нехорошо.",
+      "theme": "pronouns",
+      "words": [
+        "w_in",
+        "w_khub",
+        "w_nest"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_onho_kucho",
+      "tg": "Онҳо куҷо ҳастанд?",
+      "ru": "Где они?",
+      "theme": "pronouns",
+      "words": [
+        "w_onho",
+        "w_kucho"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_mo_dust_hastem",
+      "tg": "Мо дӯст ҳастем.",
+      "ru": "Мы друзья.",
+      "theme": "pronouns",
+      "words": [
+        "w_mo",
+        "w_dust"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить множественное число"
+    }
+  ]
+}

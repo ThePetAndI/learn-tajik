@@ -1,0 +1,228 @@
+{
+  "theme": "house",
+  "words": [
+    {
+      "id": "w_khona",
+      "tg": "хона",
+      "ru": "дом, комната",
+      "pos": "noun",
+      "theme": "house",
+      "example": {
+        "tg": "Ман дар хона ҳастам.",
+        "ru": "Я дома."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dar_door",
+      "tg": "дар",
+      "ru": "дверь",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "то же слово значит предлог в"
+    },
+    {
+      "id": "w_tireza",
+      "tg": "тиреза",
+      "ru": "окно",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_miz",
+      "tg": "миз",
+      "ru": "стол",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kursi",
+      "tg": "курсӣ",
+      "ru": "стул",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kat",
+      "tg": "кат",
+      "ru": "кровать",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_oshkhona",
+      "tg": "ошхона",
+      "ru": "кухня",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_havli",
+      "tg": "ҳавлӣ",
+      "ru": "двор",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_devor",
+      "tg": "девор",
+      "ru": "стена",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bom",
+      "tg": "бом",
+      "ru": "крыша",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_charogh",
+      "tg": "чароғ",
+      "ru": "лампа, свет",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_oina",
+      "tg": "оина",
+      "ru": "зеркало",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_qolin",
+      "tg": "қолин",
+      "ru": "ковёр",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_jevon",
+      "tg": "ҷевон",
+      "ru": "шкаф",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_dastarkhon",
+      "tg": "дастурхон",
+      "ru": "скатерть, накрытый стол",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kalid",
+      "tg": "калид",
+      "ru": "ключ",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hammom",
+      "tg": "ҳаммом",
+      "ru": "ванная, баня",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bogh",
+      "tg": "боғ",
+      "ru": "сад",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gul",
+      "tg": "гул",
+      "ru": "цветок",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_toqcha",
+      "tg": "тоқча",
+      "ru": "ниша, полка",
+      "pos": "noun",
+      "theme": "house",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание и значение"
+    }
+  ]
+}

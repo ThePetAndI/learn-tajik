@@ -1,0 +1,255 @@
+{
+  "theme": "meeting",
+  "words": [
+    {
+      "id": "w_ki",
+      "tg": "кӣ",
+      "ru": "кто",
+      "pos": "pron",
+      "theme": "meeting",
+      "example": {
+        "tg": "Ин кӣ аст?",
+        "ru": "Кто это?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_in",
+      "tg": "ин",
+      "ru": "это, этот",
+      "pos": "pron",
+      "theme": "meeting",
+      "example": {
+        "tg": "Ин китоб аст.",
+        "ru": "Это книга."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_on",
+      "tg": "он",
+      "ru": "то, тот",
+      "pos": "pron",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_az",
+      "tg": "аз",
+      "ru": "из, от",
+      "pos": "prep",
+      "theme": "meeting",
+      "example": {
+        "tg": "Ман аз Душанбе.",
+        "ru": "Я из Душанбе."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kucho",
+      "tg": "куҷо",
+      "ru": "где, куда",
+      "pos": "pron",
+      "theme": "meeting",
+      "example": {
+        "tg": "Шумо аз куҷо?",
+        "ru": "Вы откуда?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chand",
+      "tg": "чанд",
+      "ru": "сколько",
+      "pos": "pron",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sola",
+      "tg": "сола",
+      "ru": "лет (о возрасте)",
+      "pos": "adj",
+      "theme": "meeting",
+      "example": {
+        "tg": "Ман бист сола.",
+        "ru": "Мне двадцать лет."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребление без связки «ҳастам»"
+    },
+    {
+      "id": "w_zabon",
+      "tg": "забон",
+      "ru": "язык",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": {
+        "tg": "Забони тоҷикӣ",
+        "ru": "таджикский язык"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mamlakat",
+      "tg": "мамлакат",
+      "ru": "страна",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tojik",
+      "tg": "тоҷик",
+      "ru": "таджик",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tojiki",
+      "tg": "тоҷикӣ",
+      "ru": "таджикский (язык)",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": {
+        "tg": "Ман тоҷикӣ меомӯзам.",
+        "ru": "Я учу таджикский."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить глагол «омӯхтан» в этом значении"
+    },
+    {
+      "id": "w_rusi",
+      "tg": "русӣ",
+      "ru": "русский (язык)",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mehmon",
+      "tg": "меҳмон",
+      "ru": "гость",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ham",
+      "tg": "ҳам",
+      "ru": "тоже, также",
+      "pos": "part",
+      "theme": "meeting",
+      "example": {
+        "tg": "Ман ҳам.",
+        "ru": "Я тоже."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bale",
+      "tg": "бале",
+      "ru": "да (вежливое)",
+      "pos": "part",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "более официально, чем «ҳа»"
+    },
+    {
+      "id": "w_nasab",
+      "tg": "насаб",
+      "ru": "фамилия",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: чаще говорят «фамилия»"
+    },
+    {
+      "id": "w_khele",
+      "tg": "хеле",
+      "ru": "очень",
+      "pos": "adv",
+      "theme": "meeting",
+      "example": {
+        "tg": "Хеле хуб!",
+        "ru": "Очень хорошо!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kame",
+      "tg": "каме",
+      "ru": "немного",
+      "pos": "adv",
+      "theme": "meeting",
+      "example": {
+        "tg": "Каме медонам.",
+        "ru": "Немного знаю."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dushanbe_city",
+      "tg": "Душанбе",
+      "ru": "Душанбе (город)",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_oshno",
+      "tg": "ошно",
+      "ru": "знакомый",
+      "pos": "noun",
+      "theme": "meeting",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: «ошно» или «шинос»"
+    }
+  ]
+}

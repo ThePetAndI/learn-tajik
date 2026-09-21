@@ -1,0 +1,263 @@
+{
+  "theme": "verbs",
+  "words": [
+    {
+      "id": "w_raftan",
+      "tg": "рафтан",
+      "ru": "идти, ехать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Ман меравам.",
+        "ru": "Я иду."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_omadan",
+      "tg": "омадан",
+      "ru": "приходить",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Ӯ меояд.",
+        "ru": "Он приходит."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меояд"
+    },
+    {
+      "id": "w_khurdan",
+      "tg": "хӯрдан",
+      "ru": "есть, кушать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Ман нон мехӯрам.",
+        "ru": "Я ем хлеб."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nushidan",
+      "tg": "нӯшидан",
+      "ru": "пить",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Чой менӯшам.",
+        "ru": "Пью чай."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khondan",
+      "tg": "хондан",
+      "ru": "читать, учиться",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Китоб мехонам.",
+        "ru": "Читаю книгу."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_navishtan",
+      "tg": "навиштан",
+      "ru": "писать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу настоящего времени: навис-"
+    },
+    {
+      "id": "w_guftan",
+      "tg": "гуфтан",
+      "ru": "говорить, сказать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу: гӯ-"
+    },
+    {
+      "id": "w_didan",
+      "tg": "дидан",
+      "ru": "видеть",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу: бин-"
+    },
+    {
+      "id": "w_shunidan",
+      "tg": "шунидан",
+      "ru": "слышать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу: шунав-"
+    },
+    {
+      "id": "w_donistan",
+      "tg": "донистан",
+      "ru": "знать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Ман медонам.",
+        "ru": "Я знаю."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_doshtan",
+      "tg": "доштан",
+      "ru": "иметь",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Ман дорам.",
+        "ru": "У меня есть."
+      },
+      "audio": null,
+      "verified": true,
+      "note": "в настоящем времени без приставки ме-"
+    },
+    {
+      "id": "w_kardan",
+      "tg": "кардан",
+      "ru": "делать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Чӣ мекунӣ?",
+        "ru": "Что делаешь?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khobidan",
+      "tg": "хобидан",
+      "ru": "спать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nishastan",
+      "tg": "нишастан",
+      "ru": "сидеть, садиться",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу: шин-"
+    },
+    {
+      "id": "w_giriftan",
+      "tg": "гирифтан",
+      "ru": "брать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу: гир-"
+    },
+    {
+      "id": "w_dodan",
+      "tg": "додан",
+      "ru": "давать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить основу: диҳ-"
+    },
+    {
+      "id": "w_fahmidan",
+      "tg": "фаҳмидан",
+      "ru": "понимать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": {
+        "tg": "Мефаҳмам.",
+        "ru": "Понимаю."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kharidan",
+      "tg": "харидан",
+      "ru": "покупать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kor_kardan",
+      "tg": "кор кардан",
+      "ru": "работать",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bozi_kardan",
+      "tg": "бозӣ кардан",
+      "ru": "играть",
+      "pos": "verb",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kor",
+      "tg": "кор",
+      "ru": "работа, дело",
+      "pos": "noun",
+      "theme": "verbs",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

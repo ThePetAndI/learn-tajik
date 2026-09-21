@@ -1,0 +1,84 @@
+{
+  "theme": "time",
+  "phrases": [
+    {
+      "id": "p_soat_chand",
+      "tg": "Соат чанд аст?",
+      "ru": "Который час?",
+      "theme": "time",
+      "words": [
+        "w_soat",
+        "w_chand",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_imruz_dushanbe",
+      "tg": "Имрӯз душанбе аст.",
+      "ru": "Сегодня понедельник.",
+      "theme": "time",
+      "words": [
+        "w_imruz",
+        "w_dushanbe",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_pagoh_meoyam",
+      "tg": "Пагоҳ меоям.",
+      "ru": "Завтра приду.",
+      "theme": "time",
+      "words": [
+        "w_pagoh"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меоям"
+    },
+    {
+      "id": "p_vaqt_nest",
+      "tg": "Вақт нест.",
+      "ru": "Нет времени.",
+      "theme": "time",
+      "words": [
+        "w_vaqt",
+        "w_nest"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_kay_meoed",
+      "tg": "Шумо кай меоед?",
+      "ru": "Когда вы придёте?",
+      "theme": "time",
+      "words": [
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меоед"
+    },
+    {
+      "id": "p_hafta_haft_ruz",
+      "tg": "Ҳафта ҳафт рӯз дорад.",
+      "ru": "В неделе семь дней.",
+      "theme": "time",
+      "words": [
+        "w_hafta",
+        "w_haft",
+        "w_ruz"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

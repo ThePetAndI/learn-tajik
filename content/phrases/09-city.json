@@ -1,0 +1,86 @@
+{
+  "theme": "city",
+  "phrases": [
+    {
+      "id": "p_kucho_ast_maktab",
+      "tg": "Мактаб куҷост?",
+      "ru": "Где школа?",
+      "theme": "city",
+      "words": [
+        "w_maktab",
+        "w_kucho"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму куҷост"
+    },
+    {
+      "id": "p_ba_chap_raved",
+      "tg": "Ба чап равед.",
+      "ru": "Идите налево.",
+      "theme": "city",
+      "words": [
+        "w_ba",
+        "w_chap"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму равед"
+    },
+    {
+      "id": "p_in_nazdik_ast",
+      "tg": "Ин наздик аст.",
+      "ru": "Это близко.",
+      "theme": "city",
+      "words": [
+        "w_in",
+        "w_nazdik",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_bozor_dur_ast",
+      "tg": "Бозор дур аст.",
+      "ru": "Базар далеко.",
+      "theme": "city",
+      "words": [
+        "w_bozor",
+        "w_dur",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_dar_shahr",
+      "tg": "Ман дар шаҳр зиндагӣ мекунам.",
+      "ru": "Я живу в городе.",
+      "theme": "city",
+      "words": [
+        "w_man",
+        "w_dar_prep",
+        "w_shahr"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот зиндагӣ кардан"
+    },
+    {
+      "id": "p_rohi_markaz",
+      "tg": "Роҳи марказ кадом аст?",
+      "ru": "Какая дорога в центр?",
+      "theme": "city",
+      "words": [
+        "w_roh",
+        "w_markaz"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить построение вопроса"
+    }
+  ]
+}

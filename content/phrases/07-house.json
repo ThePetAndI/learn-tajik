@@ -1,0 +1,87 @@
+{
+  "theme": "house",
+  "phrases": [
+    {
+      "id": "p_man_dar_khona",
+      "tg": "Ман дар хона ҳастам.",
+      "ru": "Я дома.",
+      "theme": "house",
+      "words": [
+        "w_man",
+        "w_dar_prep",
+        "w_khona"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_khonai_mo_kalon",
+      "tg": "Хонаи мо калон аст.",
+      "ru": "Наш дом большой.",
+      "theme": "house",
+      "words": [
+        "w_khona",
+        "w_mo",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_kalid_kucho",
+      "tg": "Калид куҷост?",
+      "ru": "Где ключ?",
+      "theme": "house",
+      "words": [
+        "w_kalid",
+        "w_kucho"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму куҷост"
+    },
+    {
+      "id": "p_miz_va_kursi",
+      "tg": "Миз ва курсӣ",
+      "ru": "Стол и стул",
+      "theme": "house",
+      "words": [
+        "w_miz",
+        "w_kursi"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_gul_dar_tireza",
+      "tg": "Гул дар тиреза аст.",
+      "ru": "Цветок на окне.",
+      "theme": "house",
+      "words": [
+        "w_gul",
+        "w_dar_prep",
+        "w_tireza",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_charogh_ravshan",
+      "tg": "Чароғ равшан аст.",
+      "ru": "Свет включён.",
+      "theme": "house",
+      "words": [
+        "w_charogh",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить слово равшан"
+    }
+  ]
+}

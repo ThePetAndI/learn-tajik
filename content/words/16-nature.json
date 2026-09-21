@@ -1,0 +1,261 @@
+{
+  "theme": "nature",
+  "words": [
+    {
+      "id": "w_havo",
+      "tg": "ҳаво",
+      "ru": "погода, воздух",
+      "pos": "noun",
+      "theme": "nature",
+      "example": {
+        "tg": "Ҳаво гарм аст.",
+        "ru": "Погода тёплая."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_oftob",
+      "tg": "офтоб",
+      "ru": "солнце",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_boron",
+      "tg": "борон",
+      "ru": "дождь",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_barf",
+      "tg": "барф",
+      "ru": "снег",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shamol",
+      "tg": "шамол",
+      "ru": "ветер",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_abr",
+      "tg": "абр",
+      "ru": "облако, туча",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_osmon",
+      "tg": "осмон",
+      "ru": "небо",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zamin",
+      "tg": "замин",
+      "ru": "земля",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kuh",
+      "tg": "кӯҳ",
+      "ru": "гора",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_daryo",
+      "tg": "дарё",
+      "ru": "река",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bahr",
+      "tg": "баҳр",
+      "ru": "море",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_darakht",
+      "tg": "дарахт",
+      "ru": "дерево",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bahor",
+      "tg": "баҳор",
+      "ru": "весна",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tobiston",
+      "tg": "тобистон",
+      "ru": "лето",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tiramoh",
+      "tg": "тирамоҳ",
+      "ru": "осень",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zimiston",
+      "tg": "зимистон",
+      "ru": "зима",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gurba",
+      "tg": "гурба",
+      "ru": "кошка",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sag",
+      "tg": "саг",
+      "ru": "собака",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_asp",
+      "tg": "асп",
+      "ru": "лошадь",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gov",
+      "tg": "гов",
+      "ru": "корова",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_parranda",
+      "tg": "парранда",
+      "ru": "птица",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sitora",
+      "tg": "ситора",
+      "ru": "звезда",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zhola",
+      "tg": "жола",
+      "ru": "град",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: жола — это град"
+    }
+  ]
+}

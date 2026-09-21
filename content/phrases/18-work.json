@@ -1,0 +1,87 @@
+{
+  "theme": "work",
+  "phrases": [
+    {
+      "id": "p_kasbi_shumo",
+      "tg": "Касби шумо чист?",
+      "ru": "Кем вы работаете?",
+      "theme": "work",
+      "words": [
+        "w_kasb",
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму чист"
+    },
+    {
+      "id": "p_man_muallim",
+      "tg": "Ман муаллим ҳастам.",
+      "ru": "Я учитель.",
+      "theme": "work",
+      "words": [
+        "w_man",
+        "w_muallim"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_u_dar_maktab",
+      "tg": "Ӯ дар мактаб кор мекунад.",
+      "ru": "Он работает в школе.",
+      "theme": "work",
+      "words": [
+        "w_u",
+        "w_dar_prep",
+        "w_maktab",
+        "w_kor_kardan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_tojiki_meomuzam",
+      "tg": "Ман забони тоҷикиро меомӯзам.",
+      "ru": "Я изучаю таджикский язык.",
+      "theme": "work",
+      "words": [
+        "w_man",
+        "w_zabon",
+        "w_tojiki",
+        "w_omukhtan"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить окончание -ро"
+    },
+    {
+      "id": "p_imtihon_sakht",
+      "tg": "Имтиҳон сахт буд.",
+      "ru": "Экзамен был трудным.",
+      "theme": "work",
+      "words": [
+        "w_imtihon",
+        "w_bud"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить слово сахт"
+    },
+    {
+      "id": "p_kor_khub",
+      "tg": "Кори хуб!",
+      "ru": "Хорошая работа!",
+      "theme": "work",
+      "words": [
+        "w_kor",
+        "w_khub"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

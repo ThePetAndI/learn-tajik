@@ -1,0 +1,99 @@
+{
+  "theme": "food",
+  "phrases": [
+    {
+      "id": "p_choy_menusham",
+      "tg": "Ман чой менӯшам.",
+      "ru": "Я пью чай.",
+      "theme": "food",
+      "words": [
+        "w_man",
+        "w_choy"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_non_va_ob",
+      "tg": "Нон ва об.",
+      "ru": "Хлеб и вода.",
+      "theme": "food",
+      "words": [
+        "w_non",
+        "w_ob"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_osh_bamaza",
+      "tg": "Ош хеле бамаза аст.",
+      "ru": "Плов очень вкусный.",
+      "theme": "food",
+      "words": [
+        "w_osh",
+        "w_khele",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить слово бамаза"
+    },
+    {
+      "id": "p_gusht_namekhuram",
+      "tg": "Ман гӯшт намехӯрам.",
+      "ru": "Я не ем мясо.",
+      "theme": "food",
+      "words": [
+        "w_man",
+        "w_gusht"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_yak_piyola_choy",
+      "tg": "Як пиёла чой, лутфан.",
+      "ru": "Одну пиалу чая, пожалуйста.",
+      "theme": "food",
+      "words": [
+        "w_yak",
+        "w_piyola",
+        "w_choy",
+        "w_lutfan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_chi_mekhured",
+      "tg": "Шумо чӣ мехӯред?",
+      "ru": "Что вы будете есть?",
+      "theme": "food",
+      "words": [
+        "w_shumo",
+        "w_chi"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_khurok_tayyor",
+      "tg": "Хӯрок тайёр аст.",
+      "ru": "Еда готова.",
+      "theme": "food",
+      "words": [
+        "w_khurok",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить тайёр"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "theme": "questions",
+  "words": [
+    {
+      "id": "w_charo",
+      "tg": "чаро",
+      "ru": "почему",
+      "pos": "pron",
+      "theme": "questions",
+      "example": {
+        "tg": "Чаро?",
+        "ru": "Почему?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kay",
+      "tg": "кай",
+      "ru": "когда",
+      "pos": "pron",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chi_khel",
+      "tg": "чӣ хел",
+      "ru": "как, какой",
+      "pos": "pron",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chi_tavr",
+      "tg": "чӣ тавр",
+      "ru": "каким образом",
+      "pos": "pron",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить оттенок против чӣ хел"
+    },
+    {
+      "id": "w_kadom",
+      "tg": "кадом",
+      "ru": "какой, который",
+      "pos": "pron",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_savol",
+      "tg": "савол",
+      "ru": "вопрос",
+      "pos": "noun",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_javob",
+      "tg": "ҷавоб",
+      "ru": "ответ",
+      "pos": "noun",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_baroi_chi",
+      "tg": "барои чӣ",
+      "ru": "зачем, для чего",
+      "pos": "pron",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kucho_ast",
+      "tg": "куҷост",
+      "ru": "где находится",
+      "pos": "pron",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "стяжение куҷо + аст"
+    },
+    {
+      "id": "w_ore",
+      "tg": "оре",
+      "ru": "да (разговорное)",
+      "pos": "part",
+      "theme": "questions",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребительность"
+    }
+  ]
+}

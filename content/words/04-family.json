@@ -1,0 +1,234 @@
+{
+  "theme": "family",
+  "words": [
+    {
+      "id": "w_padar",
+      "tg": "падар",
+      "ru": "отец",
+      "pos": "noun",
+      "theme": "family",
+      "example": {
+        "tg": "Падари ман муаллим аст.",
+        "ru": "Мой отец — учитель."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_modar",
+      "tg": "модар",
+      "ru": "мать",
+      "pos": "noun",
+      "theme": "family",
+      "example": {
+        "tg": "Модари ман дар хона аст.",
+        "ru": "Моя мама дома."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_barodar",
+      "tg": "бародар",
+      "ru": "брат",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khohar",
+      "tg": "хоҳар",
+      "ru": "сестра",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_pisar",
+      "tg": "писар",
+      "ru": "сын, мальчик",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dukhtar",
+      "tg": "духтар",
+      "ru": "дочь, девочка",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bobo",
+      "tg": "бобо",
+      "ru": "дедушка",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bibi",
+      "tg": "бибӣ",
+      "ru": "бабушка",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: бибӣ или момо"
+    },
+    {
+      "id": "w_amak",
+      "tg": "амак",
+      "ru": "дядя (брат отца)",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "по материнской линии — тағо"
+    },
+    {
+      "id": "w_amma",
+      "tg": "амма",
+      "ru": "тётя (сестра отца)",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "по материнской линии — хола"
+    },
+    {
+      "id": "w_tago",
+      "tg": "тағо",
+      "ru": "дядя (брат матери)",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khola",
+      "tg": "хола",
+      "ru": "тётя (сестра матери)",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zan",
+      "tg": "зан",
+      "ru": "женщина, жена",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mard",
+      "tg": "мард",
+      "ru": "мужчина",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shavhar",
+      "tg": "шавҳар",
+      "ru": "муж",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_oila",
+      "tg": "оила",
+      "ru": "семья",
+      "pos": "noun",
+      "theme": "family",
+      "example": {
+        "tg": "Оилаи мо калон аст.",
+        "ru": "Наша семья большая."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kudak",
+      "tg": "кӯдак",
+      "ru": "ребёнок",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_farzand",
+      "tg": "фарзанд",
+      "ru": "дитя, ребёнок (свой)",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "о собственных детях"
+    },
+    {
+      "id": "w_nabera",
+      "tg": "набера",
+      "ru": "внук, внучка",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_volidayn",
+      "tg": "волидайн",
+      "ru": "родители",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребительность"
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "theme": "health",
+  "words": [
+    {
+      "id": "w_sar",
+      "tg": "сар",
+      "ru": "голова",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chashm",
+      "tg": "чашм",
+      "ru": "глаз",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gush",
+      "tg": "гӯш",
+      "ru": "ухо",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bini",
+      "tg": "бинӣ",
+      "ru": "нос",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dahon",
+      "tg": "даҳон",
+      "ru": "рот",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dandon",
+      "tg": "дандон",
+      "ru": "зуб",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dast",
+      "tg": "даст",
+      "ru": "рука",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_poy",
+      "tg": "пой",
+      "ru": "нога",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dil",
+      "tg": "дил",
+      "ru": "сердце",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shikam",
+      "tg": "шикам",
+      "ru": "живот",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gardan",
+      "tg": "гардан",
+      "ru": "шея",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_muy",
+      "tg": "мӯй",
+      "ru": "волосы",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ruy",
+      "tg": "рӯй",
+      "ru": "лицо",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tan",
+      "tg": "тан",
+      "ru": "тело",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dukhtur",
+      "tg": "духтур",
+      "ru": "врач",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_doru",
+      "tg": "дору",
+      "ru": "лекарство",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dard",
+      "tg": "дард",
+      "ru": "боль",
+      "pos": "noun",
+      "theme": "health",
+      "example": {
+        "tg": "Сарам дард мекунад.",
+        "ru": "У меня болит голова."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот дард кардан"
+    },
+    {
+      "id": "w_bemor",
+      "tg": "бемор",
+      "ru": "больной",
+      "pos": "adj",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sihat",
+      "tg": "сиҳат",
+      "ru": "здоровый",
+      "pos": "adj",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: сиҳат или солим"
+    },
+    {
+      "id": "w_dorukhona",
+      "tg": "дорухона",
+      "ru": "аптека",
+      "pos": "noun",
+      "theme": "health",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "theme": "num",
+  "words": [
+    {
+      "id": "w_yak",
+      "tg": "як",
+      "ru": "один",
+      "pos": "num",
+      "theme": "num",
+      "example": {
+        "tg": "як нон",
+        "ru": "один хлеб"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_du",
+      "tg": "ду",
+      "ru": "два",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_se",
+      "tg": "се",
+      "ru": "три",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chor",
+      "tg": "чор",
+      "ru": "четыре",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_panj",
+      "tg": "панҷ",
+      "ru": "пять",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shash",
+      "tg": "шаш",
+      "ru": "шесть",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_haft",
+      "tg": "ҳафт",
+      "ru": "семь",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hasht",
+      "tg": "ҳашт",
+      "ru": "восемь",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nuh",
+      "tg": "нӯҳ",
+      "ru": "девять",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dah",
+      "tg": "даҳ",
+      "ru": "десять",
+      "pos": "num",
+      "theme": "num",
+      "example": {
+        "tg": "даҳ сомонӣ",
+        "ru": "десять сомони"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_yozdah",
+      "tg": "ёздаҳ",
+      "ru": "одиннадцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_duvozdah",
+      "tg": "дувоздаҳ",
+      "ru": "двенадцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание числительного"
+    },
+    {
+      "id": "w_senzdah",
+      "tg": "сенздаҳ",
+      "ru": "тринадцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание числительного"
+    },
+    {
+      "id": "w_chordah",
+      "tg": "чордаҳ",
+      "ru": "четырнадцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ponzdah",
+      "tg": "понздаҳ",
+      "ru": "пятнадцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание числительного"
+    },
+    {
+      "id": "w_bist",
+      "tg": "бист",
+      "ru": "двадцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_si",
+      "tg": "сӣ",
+      "ru": "тридцать",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chil",
+      "tg": "чил",
+      "ru": "сорок",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_panjoh",
+      "tg": "панҷоҳ",
+      "ru": "пятьдесят",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sad",
+      "tg": "сад",
+      "ru": "сто",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hazor",
+      "tg": "ҳазор",
+      "ru": "тысяча",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nim",
+      "tg": "ним",
+      "ru": "половина",
+      "pos": "num",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_raqam",
+      "tg": "рақам",
+      "ru": "число, цифра",
+      "pos": "noun",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_aval",
+      "tg": "аввал",
+      "ru": "первый, сначала",
+      "pos": "adj",
+      "theme": "num",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

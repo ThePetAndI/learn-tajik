@@ -1,0 +1,203 @@
+{
+  "theme": "work",
+  "words": [
+    {
+      "id": "w_muallim",
+      "tg": "муаллим",
+      "ru": "учитель",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_donishju",
+      "tg": "донишҷӯ",
+      "ru": "студент",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_talaba",
+      "tg": "талаба",
+      "ru": "ученик",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_muhandis",
+      "tg": "муҳандис",
+      "ru": "инженер",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dehqon",
+      "tg": "деҳқон",
+      "ru": "крестьянин, фермер",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ronanda",
+      "tg": "ронанда",
+      "ru": "водитель",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_korgar",
+      "tg": "коргар",
+      "ru": "рабочий",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kasb",
+      "tg": "касб",
+      "ru": "профессия",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_idora",
+      "tg": "идора",
+      "ru": "офис, учреждение",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_maosh",
+      "tg": "маош",
+      "ru": "зарплата",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_imtihon",
+      "tg": "имтиҳон",
+      "ru": "экзамен",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sinf",
+      "tg": "синф",
+      "ru": "класс",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_omukhtan",
+      "tg": "омӯхтан",
+      "ru": "учить, изучать",
+      "pos": "verb",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nomai",
+      "tg": "нома",
+      "ru": "письмо",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: нома или мактуб"
+    },
+    {
+      "id": "w_kompyuter",
+      "tg": "компютер",
+      "ru": "компьютер",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_hunar",
+      "tg": "ҳунар",
+      "ru": "ремесло, мастерство",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mudir",
+      "tg": "мудир",
+      "ru": "начальник, заведующий",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить оттенок"
+    },
+    {
+      "id": "w_shogird",
+      "tg": "шогирд",
+      "ru": "ученик, подмастерье",
+      "pos": "noun",
+      "theme": "work",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

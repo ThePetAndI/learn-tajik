@@ -1,0 +1,88 @@
+{
+  "theme": "num",
+  "phrases": [
+    {
+      "id": "p_chand_sol",
+      "tg": "Шумо чанд сол доред?",
+      "ru": "Сколько вам лет?",
+      "theme": "num",
+      "words": [
+        "w_chand",
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить: чанд сола ҳастед или чанд сол доред"
+    },
+    {
+      "id": "p_man_bist_sola",
+      "tg": "Ман бист сола.",
+      "ru": "Мне двадцать лет.",
+      "theme": "num",
+      "words": [
+        "w_man",
+        "w_bist",
+        "w_sola"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить, нужна ли связка"
+    },
+    {
+      "id": "p_dah_somoni",
+      "tg": "Ин даҳ сомонӣ аст.",
+      "ru": "Это десять сомони.",
+      "theme": "num",
+      "words": [
+        "w_in",
+        "w_dah",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_yak_du_se",
+      "tg": "Як, ду, се!",
+      "ru": "Раз, два, три!",
+      "theme": "num",
+      "words": [
+        "w_yak",
+        "w_du",
+        "w_se"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_se_barodar",
+      "tg": "Ман се бародар дорам.",
+      "ru": "У меня три брата.",
+      "theme": "num",
+      "words": [
+        "w_man",
+        "w_se",
+        "w_barodar"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_dah_va_dah",
+      "tg": "Даҳ ва даҳ бист аст.",
+      "ru": "Десять и десять — двадцать.",
+      "theme": "num",
+      "words": [
+        "w_dah",
+        "w_bist",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "theme": "time",
+  "words": [
+    {
+      "id": "w_soat",
+      "tg": "соат",
+      "ru": "час, часы",
+      "pos": "noun",
+      "theme": "time",
+      "example": {
+        "tg": "Соат чанд аст?",
+        "ru": "Который час?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_daqiqa",
+      "tg": "дақиқа",
+      "ru": "минута",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_soniya",
+      "tg": "сония",
+      "ru": "секунда",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_vaqt",
+      "tg": "вақт",
+      "ru": "время",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hafta",
+      "tg": "ҳафта",
+      "ru": "неделя",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_moh",
+      "tg": "моҳ",
+      "ru": "месяц, луна",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "одно слово для месяца и луны"
+    },
+    {
+      "id": "w_sol",
+      "tg": "сол",
+      "ru": "год",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_imruz",
+      "tg": "имрӯз",
+      "ru": "сегодня",
+      "pos": "adv",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_pagoh",
+      "tg": "пагоҳ",
+      "ru": "завтра",
+      "pos": "adv",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: пагоҳ также значит утро"
+    },
+    {
+      "id": "w_diruz",
+      "tg": "дирӯз",
+      "ru": "вчера",
+      "pos": "adv",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hozir",
+      "tg": "ҳозир",
+      "ru": "сейчас",
+      "pos": "adv",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_begoh",
+      "tg": "бегоҳ",
+      "ru": "вечер, вечером",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_barvaqt",
+      "tg": "барвақт",
+      "ru": "рано",
+      "pos": "adv",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_der",
+      "tg": "дер",
+      "ru": "поздно",
+      "pos": "adv",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dushanbe",
+      "tg": "душанбе",
+      "ru": "понедельник",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "столица названа так же"
+    },
+    {
+      "id": "w_seshanbe",
+      "tg": "сешанбе",
+      "ru": "вторник",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chorshanbe",
+      "tg": "чоршанбе",
+      "ru": "среда",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_panjshanbe",
+      "tg": "панҷшанбе",
+      "ru": "четверг",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_jumga",
+      "tg": "ҷумъа",
+      "ru": "пятница",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shanbe",
+      "tg": "шанбе",
+      "ru": "суббота",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_yakshanbe",
+      "tg": "якшанбе",
+      "ru": "воскресенье",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_iyun",
+      "tg": "июн",
+      "ru": "июнь",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание месяцев"
+    },
+    {
+      "id": "w_iyul",
+      "tg": "июл",
+      "ru": "июль",
+      "pos": "noun",
+      "theme": "time",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание месяцев"
+    }
+  ]
+}

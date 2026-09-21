@@ -1,0 +1,524 @@
+{
+  "note": "35 букв. В русском алфавите есть ц щ ы ь — в таджикском их нет; зато есть шесть своих: ғ ӣ қ ӯ ҳ ҷ.",
+  "letters": [
+    {
+      "lower": "а",
+      "upper": "А",
+      "name": "а",
+      "sound": "как русское «а»",
+      "ru": "а",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_ha",
+        "w_az",
+        "w_ba"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "б",
+      "upper": "Б",
+      "name": "бе",
+      "sound": "как русское «б»",
+      "ru": "б",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_bo",
+        "w_be",
+        "w_ba"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "в",
+      "upper": "В",
+      "name": "ве",
+      "sound": "как русское «в»",
+      "ru": "в",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_va",
+        "w_vay",
+        "w_nav"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "г",
+      "upper": "Г",
+      "name": "ге",
+      "sound": "как русское «г»",
+      "ru": "г",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_gul",
+        "w_sag",
+        "w_gov"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ғ",
+      "upper": "Ғ",
+      "name": "ғе",
+      "sound": "звонкий гортанный звук, похож на французское «r»; в русском такого нет",
+      "ru": null,
+      "special": true,
+      "note": "проверить описание звука у носителя",
+      "examples": [
+        "w_ghoz",
+        "w_ghor",
+        "w_bogh"
+      ],
+      "verified": false
+    },
+    {
+      "lower": "д",
+      "upper": "Д",
+      "name": "де",
+      "sound": "как русское «д»",
+      "ru": "д",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_du",
+        "w_bad",
+        "w_khud"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "е",
+      "upper": "Е",
+      "name": "е",
+      "sound": "как русское «е»",
+      "ru": "е",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_ne",
+        "w_be",
+        "w_se"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ё",
+      "upper": "Ё",
+      "name": "ё",
+      "sound": "как русское «ё»",
+      "ru": "ё",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_yo",
+        "w_hayot",
+        "w_piyoz"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ж",
+      "upper": "Ж",
+      "name": "же",
+      "sound": "как русское «ж»",
+      "ru": "ж",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_zhola"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "з",
+      "upper": "З",
+      "name": "зе",
+      "sound": "как русское «з»",
+      "ru": "з",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_az",
+        "w_ghoz",
+        "w_ruz"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "и",
+      "upper": "И",
+      "name": "и",
+      "sound": "как русское «и»",
+      "ru": "и",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_in",
+        "w_chiz",
+        "w_chil"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ӣ",
+      "upper": "Ӣ",
+      "name": "ии дароз",
+      "sound": "долгое «и» под ударением; почти всегда в конце слова",
+      "ru": null,
+      "special": true,
+      "note": "проверить название буквы",
+      "examples": [
+        "w_chi",
+        "w_ki",
+        "w_si"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "й",
+      "upper": "Й",
+      "name": "и ёта",
+      "sound": "как русское «й»",
+      "ru": "й",
+      "special": false,
+      "note": "проверить название буквы",
+      "examples": [
+        "w_juy",
+        "w_tuy",
+        "w_vay"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "к",
+      "upper": "К",
+      "name": "ке",
+      "sound": "как русское «к»",
+      "ru": "к",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_ki",
+        "w_yak",
+        "w_kas"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "қ",
+      "upper": "Қ",
+      "name": "қе",
+      "sound": "глубокий «к», произносится у самого горла; в русском такого нет",
+      "ru": null,
+      "special": true,
+      "note": "",
+      "examples": [
+        "w_qand",
+        "w_aqib",
+        "w_vaqt"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "л",
+      "upper": "Л",
+      "name": "ле",
+      "sound": "как русское «л»",
+      "ru": "л",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_chil",
+        "w_gul",
+        "w_pul"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "м",
+      "upper": "М",
+      "name": "ме",
+      "sound": "как русское «м»",
+      "ru": "м",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_mo",
+        "w_mor",
+        "w_man"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "н",
+      "upper": "Н",
+      "name": "не",
+      "sound": "как русское «н»",
+      "ru": "н",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_ne",
+        "w_in",
+        "w_on"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "о",
+      "upper": "О",
+      "name": "о",
+      "sound": "как русское «о», но всегда чёткое — без оканья и аканья",
+      "ru": "о",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_mo",
+        "w_on",
+        "w_jo"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "п",
+      "upper": "П",
+      "name": "пе",
+      "sound": "как русское «п»",
+      "ru": "п",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_pul",
+        "w_chap",
+        "w_pesh"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "р",
+      "upper": "Р",
+      "name": "ре",
+      "sound": "как русское «р»",
+      "ru": "р",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_ghor",
+        "w_shur",
+        "w_mor"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "с",
+      "upper": "С",
+      "name": "се",
+      "sound": "как русское «с»",
+      "ru": "с",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_se",
+        "w_si",
+        "w_ast"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "т",
+      "upper": "Т",
+      "name": "те",
+      "sound": "как русское «т»",
+      "ru": "т",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_tu",
+        "w_tuy",
+        "w_ast"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "у",
+      "upper": "У",
+      "name": "у",
+      "sound": "как русское «у»",
+      "ru": "у",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_tu",
+        "w_du",
+        "w_khush"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ӯ",
+      "upper": "Ӯ",
+      "name": "у дароз",
+      "sound": "звук между «у» и «о», губы округлены; в русском такого нет",
+      "ru": null,
+      "special": true,
+      "note": "проверить описание звука у носителя",
+      "examples": [
+        "w_u",
+        "w_juy",
+        "w_tuy"
+      ],
+      "verified": false
+    },
+    {
+      "lower": "ф",
+      "upper": "Ф",
+      "name": "фе",
+      "sound": "как русское «ф»",
+      "ru": "ф",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_haft",
+        "w_raft",
+        "w_guft"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "х",
+      "upper": "Х",
+      "name": "хе",
+      "sound": "как русское «х»",
+      "ru": "х",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_khush",
+        "w_khub",
+        "w_khud"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ҳ",
+      "upper": "Ҳ",
+      "name": "ҳе",
+      "sound": "лёгкий выдох, как «h» в английском hello; не путать с «х»",
+      "ru": null,
+      "special": true,
+      "note": "",
+      "examples": [
+        "w_ha",
+        "w_ham",
+        "w_nuh"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ч",
+      "upper": "Ч",
+      "name": "че",
+      "sound": "как русское «ч»",
+      "ru": "ч",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_chi",
+        "w_chub",
+        "w_chiz"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ҷ",
+      "upper": "Ҷ",
+      "name": "ҷе",
+      "sound": "звонкое «ч» — как «дж» в слове «джем»",
+      "ru": null,
+      "special": true,
+      "note": "",
+      "examples": [
+        "w_jo",
+        "w_jon",
+        "w_juy"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ш",
+      "upper": "Ш",
+      "name": "ше",
+      "sound": "как русское «ш»",
+      "ru": "ш",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_osh",
+        "w_shur",
+        "w_shab"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ъ",
+      "upper": "Ъ",
+      "name": "аломати ҷудоӣ",
+      "sound": "короткая задержка голоса, гортанная смычка; это не мягкий знак",
+      "ru": null,
+      "special": false,
+      "note": "проверить название буквы",
+      "examples": [
+        "w_bad_potom",
+        "w_jumga"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "э",
+      "upper": "Э",
+      "name": "э",
+      "sound": "как русское «э»",
+      "ru": "э",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_ehtiyot"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "ю",
+      "upper": "Ю",
+      "name": "ю",
+      "sound": "как русское «ю»",
+      "ru": "ю",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_iyun",
+        "w_iyul"
+      ],
+      "verified": true
+    },
+    {
+      "lower": "я",
+      "upper": "Я",
+      "name": "я",
+      "sound": "как русское «я»",
+      "ru": "я",
+      "special": false,
+      "note": "",
+      "examples": [
+        "w_yak",
+        "w_shoyad",
+        "w_soniya"
+      ],
+      "verified": true
+    }
+  ]
+}

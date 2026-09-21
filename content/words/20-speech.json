@@ -1,0 +1,214 @@
+{
+  "theme": "speech",
+  "words": [
+    {
+      "id": "w_albatta",
+      "tg": "албатта",
+      "ru": "конечно",
+      "pos": "adv",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shoyad",
+      "tg": "шояд",
+      "ru": "может быть",
+      "pos": "adv",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mutaassifona",
+      "tg": "мутаассифона",
+      "ru": "к сожалению",
+      "pos": "adv",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить написание"
+    },
+    {
+      "id": "w_maylash",
+      "tg": "майлаш",
+      "ru": "ладно, хорошо",
+      "pos": "part",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребительность"
+    },
+    {
+      "id": "w_durust",
+      "tg": "дуруст",
+      "ru": "правильно, верно",
+      "pos": "adj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khato",
+      "tg": "хато",
+      "ru": "ошибка",
+      "pos": "noun",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kumak",
+      "tg": "кӯмак",
+      "ru": "помощь",
+      "pos": "noun",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_marhamat",
+      "tg": "марҳамат",
+      "ru": "пожалуйста, прошу",
+      "pos": "interj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "приглашение: проходите, берите"
+    },
+    {
+      "id": "w_iltimos",
+      "tg": "илтимос",
+      "ru": "просьба, пожалуйста",
+      "pos": "noun",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_hatman",
+      "tg": "ҳатман",
+      "ru": "обязательно",
+      "pos": "adv",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bisyor",
+      "tg": "бисёр",
+      "ru": "много, очень",
+      "pos": "adv",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_faqat",
+      "tg": "фақат",
+      "ru": "только",
+      "pos": "adv",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ammo",
+      "tg": "аммо",
+      "ru": "но, однако",
+      "pos": "conj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_va",
+      "tg": "ва",
+      "ru": "и",
+      "pos": "conj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_yo",
+      "tg": "ё",
+      "ru": "или",
+      "pos": "conj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chunki",
+      "tg": "чунки",
+      "ru": "потому что",
+      "pos": "conj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_agar",
+      "tg": "агар",
+      "ru": "если",
+      "pos": "conj",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_bas",
+      "tg": "бас",
+      "ru": "хватит, довольно",
+      "pos": "part",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить оттенок"
+    },
+    {
+      "id": "w_ehtiyot",
+      "tg": "эҳтиёт",
+      "ru": "осторожно, осторожность",
+      "pos": "noun",
+      "theme": "speech",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить употребление как предупреждения"
+    }
+  ]
+}

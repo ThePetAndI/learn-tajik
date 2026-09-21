@@ -1,0 +1,85 @@
+{
+  "theme": "health",
+  "phrases": [
+    {
+      "id": "p_saram_dard",
+      "tg": "Сарам дард мекунад.",
+      "ru": "У меня болит голова.",
+      "theme": "health",
+      "words": [
+        "w_sar",
+        "w_dard"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот дард кардан"
+    },
+    {
+      "id": "p_man_bemor",
+      "tg": "Ман бемор ҳастам.",
+      "ru": "Я болен.",
+      "theme": "health",
+      "words": [
+        "w_man",
+        "w_bemor"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_kucho_dorukhona",
+      "tg": "Дорухона куҷост?",
+      "ru": "Где аптека?",
+      "theme": "health",
+      "words": [
+        "w_dorukhona",
+        "w_kucho"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму куҷост"
+    },
+    {
+      "id": "p_ba_dukhtur",
+      "tg": "Ман ба духтур меравам.",
+      "ru": "Я иду к врачу.",
+      "theme": "health",
+      "words": [
+        "w_man",
+        "w_ba",
+        "w_dukhtur",
+        "w_raftan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_sihat_boshed",
+      "tg": "Сиҳат бошед!",
+      "ru": "Будьте здоровы!",
+      "theme": "health",
+      "words": [
+        "w_sihat"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму бошед"
+    },
+    {
+      "id": "p_dasti_man",
+      "tg": "Дасти ман дард мекунад.",
+      "ru": "У меня болит рука.",
+      "theme": "health",
+      "words": [
+        "w_dast",
+        "w_man",
+        "w_dard"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот"
+    }
+  ]
+}

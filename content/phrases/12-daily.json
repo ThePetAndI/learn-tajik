@@ -1,0 +1,92 @@
+{
+  "theme": "daily",
+  "phrases": [
+    {
+      "id": "p_har_ruz_mekhonam",
+      "tg": "Ман ҳар рӯз тоҷикӣ мехонам.",
+      "ru": "Я каждый день учу таджикский.",
+      "theme": "daily",
+      "words": [
+        "w_har_ruz",
+        "w_tojiki",
+        "w_khondan",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_subh_mekhezam",
+      "tg": "Ман субҳ барвақт мехезам.",
+      "ru": "Я встаю рано утром.",
+      "theme": "daily",
+      "words": [
+        "w_man",
+        "w_subh",
+        "w_barvaqt"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму мехезам"
+    },
+    {
+      "id": "p_bad_az_dars",
+      "tg": "Баъд аз дарс ба хона меравам.",
+      "ru": "После урока иду домой.",
+      "theme": "daily",
+      "words": [
+        "w_bad_potom",
+        "w_az",
+        "w_dars",
+        "w_ba",
+        "w_khona"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_shab_mekhobam",
+      "tg": "Шаб ман мехобам.",
+      "ru": "Ночью я сплю.",
+      "theme": "daily",
+      "words": [
+        "w_shab",
+        "w_man",
+        "w_khobidan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_hamesha_choy",
+      "tg": "Ман ҳамеша чой менӯшам.",
+      "ru": "Я всегда пью чай.",
+      "theme": "daily",
+      "words": [
+        "w_man",
+        "w_hamesha",
+        "w_choy",
+        "w_nushidan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_kitob_va_daftar",
+      "tg": "Китоб ва дафтар",
+      "ru": "Книга и тетрадь",
+      "theme": "daily",
+      "words": [
+        "w_kitob",
+        "w_daftar"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

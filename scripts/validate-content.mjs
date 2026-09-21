@@ -258,20 +258,31 @@ const REVIEW_HEADER = `# На проверку
 
 /** Перегенерирует REVIEW.md из полей verified: false. */
 async function writeReview(reviewPath) {
-  const rows = unverified.map((u) => {
+  // Группируем по файлам: так список читается разделами, а не сплошной простынёй
+  const groups = new Map();
+  for (const u of unverified) {
     const file = relative(ROOT, u.file).split('\\').join('/');
-    const note = (u.note || '—').split('|').join('\\|');
-    return '| `' + u.id + '` | ' + u.tg + ' | ' + u.ru + ' | ' + note + ' | `' + file + '` |';
-  });
-  const body =
-    rows.length === 0
-      ? '\nПока всё проверено.\n'
-      : '\n| id | таджикский | перевод | в чём сомнение | файл |\n' +
-        '|---|---|---|---|---|\n' +
-        rows.join('\n') +
-        '\n';
+    if (!groups.has(file)) groups.set(file, []);
+    groups.get(file).push(u);
+  }
+
+  let body;
+  if (groups.size === 0) {
+    body = '\nПока всё проверено.\n';
+  } else {
+    body = '\nВсего на проверку: ' + unverified.length + '\n';
+    for (const [file, items] of [...groups.entries()].sort()) {
+      body += '\n## ' + file + '\n\n';
+      body += '| id | таджикский | перевод | в чём сомнение |\n|---|---|---|---|\n';
+      for (const u of items) {
+        const note = (u.note || '—').split('|').join('\\|');
+        body += '| `' + u.id + '` | ' + u.tg + ' | ' + u.ru + ' | ' + note + ' |\n';
+      }
+    }
+  }
+
   await writeFile(reviewPath, REVIEW_HEADER + body, 'utf8');
-  console.log('REVIEW.md обновлён: строк ' + rows.length);
+  console.log('REVIEW.md обновлён: строк ' + unverified.length + ' в ' + groups.size + ' файлах');
 }
 
 async function main() {

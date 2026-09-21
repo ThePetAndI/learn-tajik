@@ -1,0 +1,91 @@
+{
+  "theme": "bazaar",
+  "phrases": [
+    {
+      "id": "p_ba_bozor",
+      "tg": "Ман ба бозор меравам.",
+      "ru": "Я иду на базар.",
+      "theme": "bazaar",
+      "words": [
+        "w_man",
+        "w_ba",
+        "w_bozor"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_chand_pul",
+      "tg": "Ин чанд пул аст?",
+      "ru": "Сколько это стоит?",
+      "theme": "bazaar",
+      "words": [
+        "w_in",
+        "w_chand",
+        "w_pul"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот чанд пул"
+    },
+    {
+      "id": "p_khele_qimmat",
+      "tg": "Ин хеле қиммат аст!",
+      "ru": "Это очень дорого!",
+      "theme": "bazaar",
+      "words": [
+        "w_in",
+        "w_khele",
+        "w_qimmat"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_arzontar",
+      "tg": "Арзонтар нест?",
+      "ru": "Подешевле нет?",
+      "theme": "bazaar",
+      "words": [
+        "w_arzon",
+        "w_nest"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму арзонтар"
+    },
+    {
+      "id": "p_yak_kilo_seb",
+      "tg": "Як килограмм себ, лутфан.",
+      "ru": "Килограмм яблок, пожалуйста.",
+      "theme": "bazaar",
+      "words": [
+        "w_yak",
+        "w_kilogramm",
+        "w_seb",
+        "w_lutfan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_meva_arzon",
+      "tg": "Мева дар бозор арзон аст.",
+      "ru": "Фрукты на базаре дешёвые.",
+      "theme": "bazaar",
+      "words": [
+        "w_meva",
+        "w_dar_prep",
+        "w_bozor",
+        "w_arzon",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

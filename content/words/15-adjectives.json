@@ -1,0 +1,250 @@
+{
+  "theme": "adjectives",
+  "words": [
+    {
+      "id": "w_kalon",
+      "tg": "калон",
+      "ru": "большой",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": {
+        "tg": "Хонаи калон",
+        "ru": "большой дом"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khurd",
+      "tg": "хурд",
+      "ru": "маленький",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_baland",
+      "tg": "баланд",
+      "ru": "высокий, громкий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_past",
+      "tg": "паст",
+      "ru": "низкий, тихий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_daroz",
+      "tg": "дароз",
+      "ru": "длинный",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kutoh",
+      "tg": "кӯтоҳ",
+      "ru": "короткий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_garm",
+      "tg": "гарм",
+      "ru": "тёплый, горячий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khunuk",
+      "tg": "хунук",
+      "ru": "холодный",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shirin",
+      "tg": "ширин",
+      "ru": "сладкий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_talkh",
+      "tg": "талх",
+      "ru": "горький",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zebo",
+      "tg": "зебо",
+      "ru": "красивый",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_toza",
+      "tg": "тоза",
+      "ru": "чистый, свежий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_iflos",
+      "tg": "ифлос",
+      "ru": "грязный",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_rang",
+      "tg": "ранг",
+      "ru": "цвет",
+      "pos": "noun",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_safed",
+      "tg": "сафед",
+      "ru": "белый",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_siyoh",
+      "tg": "сиёҳ",
+      "ru": "чёрный",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_surkh",
+      "tg": "сурх",
+      "ru": "красный",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sabz",
+      "tg": "сабз",
+      "ru": "зелёный",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_zard",
+      "tg": "зард",
+      "ru": "жёлтый",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kabud",
+      "tg": "кабуд",
+      "ru": "синий, голубой",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": false,
+      "note": "проверить: кабуд и осмонӣ"
+    },
+    {
+      "id": "w_vazn",
+      "tg": "вазнин",
+      "ru": "тяжёлый",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sabuk",
+      "tg": "сабук",
+      "ru": "лёгкий",
+      "pos": "adj",
+      "theme": "adjectives",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

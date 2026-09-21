@@ -1,0 +1,86 @@
+{
+  "theme": "nature",
+  "phrases": [
+    {
+      "id": "p_havo_garm",
+      "tg": "Имрӯз ҳаво гарм аст.",
+      "ru": "Сегодня тепло.",
+      "theme": "nature",
+      "words": [
+        "w_imruz",
+        "w_havo",
+        "w_garm",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_boron_meborad",
+      "tg": "Борон меборад.",
+      "ru": "Идёт дождь.",
+      "theme": "nature",
+      "words": [
+        "w_boron"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меборад"
+    },
+    {
+      "id": "p_zimiston_barf",
+      "tg": "Дар зимистон барф меборад.",
+      "ru": "Зимой идёт снег.",
+      "theme": "nature",
+      "words": [
+        "w_dar_prep",
+        "w_zimiston",
+        "w_barf"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму меборад"
+    },
+    {
+      "id": "p_kuhho_baland",
+      "tg": "Кӯҳҳои Тоҷикистон баланд.",
+      "ru": "Горы Таджикистана высокие.",
+      "theme": "nature",
+      "words": [
+        "w_kuh",
+        "w_baland"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить множественное число и связку"
+    },
+    {
+      "id": "p_man_gurba_doram",
+      "tg": "Ман гурба дорам.",
+      "ru": "У меня есть кошка.",
+      "theme": "nature",
+      "words": [
+        "w_man",
+        "w_gurba",
+        "w_doshtan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_bahor_omad",
+      "tg": "Баҳор омад.",
+      "ru": "Весна пришла.",
+      "theme": "nature",
+      "words": [
+        "w_bahor",
+        "w_omad"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

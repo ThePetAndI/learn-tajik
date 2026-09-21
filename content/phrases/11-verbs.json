@@ -1,0 +1,101 @@
+{
+  "theme": "verbs",
+  "phrases": [
+    {
+      "id": "p_man_meravam",
+      "tg": "Ман ба хона меравам.",
+      "ru": "Я иду домой.",
+      "theme": "verbs",
+      "words": [
+        "w_man",
+        "w_ba",
+        "w_khona",
+        "w_raftan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_chi_mekuni",
+      "tg": "Ту чӣ мекунӣ?",
+      "ru": "Что ты делаешь?",
+      "theme": "verbs",
+      "words": [
+        "w_tu",
+        "w_chi",
+        "w_kardan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_medonam",
+      "tg": "Ман медонам.",
+      "ru": "Я знаю.",
+      "theme": "verbs",
+      "words": [
+        "w_man",
+        "w_donistan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_namefahmam",
+      "tg": "Ман намефаҳмам.",
+      "ru": "Я не понимаю.",
+      "theme": "verbs",
+      "words": [
+        "w_man",
+        "w_fahmidan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_kitob_mekhonam",
+      "tg": "Ман китоб мехонам.",
+      "ru": "Я читаю книгу.",
+      "theme": "verbs",
+      "words": [
+        "w_man",
+        "w_khondan"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "добавить слово китоб в словарь раздела"
+    },
+    {
+      "id": "p_u_kor_mekunad",
+      "tg": "Ӯ кор мекунад.",
+      "ru": "Он работает.",
+      "theme": "verbs",
+      "words": [
+        "w_u",
+        "w_kor_kardan",
+        "w_kor"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_mo_choy_menushem",
+      "tg": "Мо чой менӯшем.",
+      "ru": "Мы пьём чай.",
+      "theme": "verbs",
+      "words": [
+        "w_mo",
+        "w_choy",
+        "w_nushidan"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

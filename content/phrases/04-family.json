@@ -1,0 +1,101 @@
+{
+  "theme": "family",
+  "phrases": [
+    {
+      "id": "p_oilai_man",
+      "tg": "Оилаи ман калон аст.",
+      "ru": "Моя семья большая.",
+      "theme": "family",
+      "words": [
+        "w_oila",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_padari_man_kor",
+      "tg": "Падари ман кор мекунад.",
+      "ru": "Мой отец работает.",
+      "theme": "family",
+      "words": [
+        "w_padar",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_man_yak_barodar",
+      "tg": "Ман як бародар дорам.",
+      "ru": "У меня есть брат.",
+      "theme": "family",
+      "words": [
+        "w_man",
+        "w_barodar",
+        "w_yak"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_modari_shumo",
+      "tg": "Модари шумо куҷост?",
+      "ru": "Где ваша мама?",
+      "theme": "family",
+      "words": [
+        "w_modar",
+        "w_shumo",
+        "w_kucho"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму куҷост"
+    },
+    {
+      "id": "p_in_khohari_man",
+      "tg": "Ин хоҳари ман аст.",
+      "ru": "Это моя сестра.",
+      "theme": "family",
+      "words": [
+        "w_in",
+        "w_khohar",
+        "w_man",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_bobo_pir",
+      "tg": "Бобои ман пир аст.",
+      "ru": "Мой дедушка старый.",
+      "theme": "family",
+      "words": [
+        "w_bobo",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_du_farzand",
+      "tg": "Онҳо ду фарзанд доранд.",
+      "ru": "У них двое детей.",
+      "theme": "family",
+      "words": [
+        "w_onho",
+        "w_farzand",
+        "w_du"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

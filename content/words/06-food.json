@@ -1,0 +1,300 @@
+{
+  "theme": "food",
+  "words": [
+    {
+      "id": "w_non",
+      "tg": "нон",
+      "ru": "хлеб",
+      "pos": "noun",
+      "theme": "food",
+      "example": {
+        "tg": "Нон ва об",
+        "ru": "хлеб и вода"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ob",
+      "tg": "об",
+      "ru": "вода",
+      "pos": "noun",
+      "theme": "food",
+      "example": {
+        "tg": "Як пиёла об",
+        "ru": "чашка воды"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_choy",
+      "tg": "чой",
+      "ru": "чай",
+      "pos": "noun",
+      "theme": "food",
+      "example": {
+        "tg": "Ман чой менӯшам.",
+        "ru": "Я пью чай."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shir",
+      "tg": "шир",
+      "ru": "молоко",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_gusht",
+      "tg": "гӯшт",
+      "ru": "мясо",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_birinj",
+      "tg": "биринҷ",
+      "ru": "рис",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tukhm",
+      "tg": "тухм",
+      "ru": "яйцо",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_panir",
+      "tg": "панир",
+      "ru": "сыр",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ravghan",
+      "tg": "равған",
+      "ru": "масло",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_namak",
+      "tg": "намак",
+      "ru": "соль",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shakar",
+      "tg": "шакар",
+      "ru": "сахар",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_seb",
+      "tg": "себ",
+      "ru": "яблоко",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_angur",
+      "tg": "ангур",
+      "ru": "виноград",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_anor",
+      "tg": "анор",
+      "ru": "гранат",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_tarbuz",
+      "tg": "тарбуз",
+      "ru": "арбуз",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kharbuza",
+      "tg": "харбуза",
+      "ru": "дыня",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_sabzi",
+      "tg": "сабзӣ",
+      "ru": "морковь",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_piyoz",
+      "tg": "пиёз",
+      "ru": "лук",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_kartoshka",
+      "tg": "картошка",
+      "ru": "картофель",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_pomidor",
+      "tg": "помидор",
+      "ru": "помидор",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mohi",
+      "tg": "моҳӣ",
+      "ru": "рыба",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_murgh",
+      "tg": "мурғ",
+      "ru": "курица, птица",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_osh",
+      "tg": "ош",
+      "ru": "плов",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "главное блюдо застолья"
+    },
+    {
+      "id": "w_shurbo",
+      "tg": "шӯрбо",
+      "ru": "суп",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khurok",
+      "tg": "хӯрок",
+      "ru": "еда, пища",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_piyola",
+      "tg": "пиёла",
+      "ru": "пиала, чашка",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}
