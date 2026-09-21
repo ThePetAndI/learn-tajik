@@ -1,0 +1,68 @@
+name: Сборка и деплой на GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Нужны Pages и OIDC-токен для actions/deploy-pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Параллельные деплои не нужны: катим только последний коммит
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Установка зависимостей
+        run: npm ci
+
+      - name: Тесты
+        run: npm test
+
+      - name: Проверка шрифтов и контента
+        run: |
+          npm run fonts:check
+          npm run validate:content
+
+      - name: Вычислить base path
+        id: base
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          if [[ "$REPO" == *.github.io ]]; then
+            echo "value=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=/$REPO/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Сборка
+        run: npm run build
+        env:
+          VITE_BASE: ${{ steps.base.outputs.value }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

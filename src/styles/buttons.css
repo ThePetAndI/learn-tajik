@@ -1,0 +1,112 @@
+/* Объёмная «жевательная» кнопка: градиент, белая обводка, тень-дно, вдавливание. */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 12px 22px;
+  border: var(--btn-border) solid #fff;
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, var(--c1, var(--orange-1)) 0%, var(--c2, var(--orange-2)) 100%);
+  box-shadow:
+    0 var(--btn-lift) 0 var(--cd, var(--orange-deep)),
+    0 calc(var(--btn-lift) + 5px) 14px rgba(40, 20, 70, 0.28);
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+  transition:
+    transform var(--t-press) var(--ease-out),
+    box-shadow var(--t-press) var(--ease-out),
+    filter var(--t-fast) linear;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+/* Блик сверху — без него градиент выглядит «нейросетевым» */
+.btn::before {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 4px;
+  height: 34%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.btn:active:not(:disabled),
+.btn.is-pressed {
+  transform: translate3d(0, var(--btn-lift), 0);
+  box-shadow:
+    0 0 0 var(--cd, var(--orange-deep)),
+    0 2px 6px rgba(40, 20, 70, 0.25);
+}
+
+.btn:disabled,
+.btn.is-disabled {
+  filter: saturate(0.35) brightness(1.05);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: default;
+}
+
+.btn--big { min-height: 62px; font-size: 21px; border-radius: var(--r-xl); --btn-lift: 6px; }
+.btn--wide { width: 100%; }
+.btn--sm { min-height: 40px; padding: 8px 14px; font-size: 15px; border-radius: var(--r-md); --btn-lift: 4px; }
+.btn--icon { min-height: 44px; width: 44px; padding: 0; border-radius: var(--r-md); --btn-lift: 4px; }
+.btn--ink { color: var(--ink); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); }
+
+/* Плоская «стеклянная» кнопка для экрана упражнения */
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--r-md);
+  background: var(--glass);
+  color: #fff;
+  font-weight: 800;
+  backdrop-filter: blur(6px);
+  transition: transform var(--t-press) var(--ease-out), background var(--t-fast);
+}
+.btn-glass:active { transform: scale(0.97); background: var(--glass-strong); }
+
+/* Нажимаемая карточка (варианты ответа, слова в банке) */
+.card-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 16px;
+  border: 3px solid #fff;
+  border-radius: var(--r-md);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 900;
+  font-size: 17px;
+  box-shadow: 0 4px 0 #cdbfe6, 0 6px 12px rgba(40, 20, 70, 0.18);
+  transition: transform var(--t-press) var(--ease-out), box-shadow var(--t-press) var(--ease-out),
+    background var(--t-fast) linear, border-color var(--t-fast) linear;
+}
+.card-btn:active:not(.is-locked) { transform: translate3d(0, 4px, 0); box-shadow: 0 0 0 #cdbfe6; }
+.card-btn.is-right {
+  background: linear-gradient(180deg, var(--green-1), var(--green-2));
+  border-color: #fff; color: #fff; box-shadow: 0 4px 0 var(--green-deep);
+}
+.card-btn.is-wrong {
+  background: linear-gradient(180deg, var(--red-1), var(--red-2));
+  border-color: #fff; color: #fff; box-shadow: 0 4px 0 var(--red-deep);
+}
+.card-btn.is-dim { opacity: 0.45; }
+
+.pressable { transition: transform var(--t-press) var(--ease-out); }
+.pressable:active { transform: scale(0.94); }

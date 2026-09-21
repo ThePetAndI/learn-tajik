@@ -1,0 +1,5 @@
+# Держим в репозитории LF: сборка идёт на Linux, разработка на Windows.
+* text=auto eol=lf
+*.woff2 binary
+*.png binary
+*.ico binary

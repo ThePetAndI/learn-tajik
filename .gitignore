@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+.DS_Store
+.vite/
+coverage/
+# шрифты скачиваются скриптом npm run fonts, но коммитим их —
+# иначе сборка в CI зависит от сети Google Fonts
+!public/fonts/

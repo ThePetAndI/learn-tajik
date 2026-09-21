@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#4E32B0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="Игра-тренажёр таджикского языка: уровни, слова, повторение. Работает офлайн." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Тоҷикӣ" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <title>Тоҷикӣ — таджикский с нуля</title>
+    <style>
+      /* Критичный минимум: заставка должна появиться до загрузки CSS-бандла. */
+      html, body { margin: 0; height: 100%; background: #4e32b0; }
+      #boot {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(170deg, #6a4bd8, #33207d);
+        transition: opacity 420ms ease;
+        z-index: 100;
+      }
+      #boot.is-gone { opacity: 0; pointer-events: none; }
+      .boot__logo {
+        display: grid;
+        place-items: center;
+        width: 108px;
+        height: 108px;
+        border: 5px solid #fff;
+        border-radius: 34px;
+        background: linear-gradient(180deg, #ffb84d, #ff7a1a);
+        box-shadow: 0 8px 0 #bf5200, 0 16px 34px rgba(20, 10, 45, 0.45);
+        color: #fff;
+        font: 900 46px/1 'Segoe UI', system-ui, sans-serif;
+        letter-spacing: -0.02em;
+        animation: boot-bob 1.8s ease-in-out infinite;
+      }
+      .boot__title {
+        margin-top: 18px;
+        color: #fff;
+        font: 900 22px/1.2 'Segoe UI', system-ui, sans-serif;
+        text-align: center;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+      }
+      .boot__sub {
+        margin-top: 6px;
+        color: rgba(255, 255, 255, 0.72);
+        font: 700 14px/1.4 'Segoe UI', system-ui, sans-serif;
+        text-align: center;
+      }
+      @keyframes boot-bob {
+        0%, 100% { transform: translateY(0) rotate(-2deg); }
+        50% { transform: translateY(-10px) rotate(2deg); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot__logo { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="boot">
+      <div>
+        <div class="boot__logo">Тҷ</div>
+        <div class="boot__title">Тоҷикӣ</div>
+        <div class="boot__sub">таджикский с нуля</div>
+      </div>
+    </div>
+    <noscript>
+      <div style="padding: 24px; color: #fff; font: 700 16px/1.5 system-ui; text-align: center">
+        Для игры нужен JavaScript. Включите его в настройках браузера.
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

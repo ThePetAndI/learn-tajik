@@ -1,0 +1,137 @@
+/* Стили конкретных экранов. */
+
+/* ————————————————————————— спокойные анимации ————————————————————————— */
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 60ms !important;
+}
+
+/* ————————————————————————— настройки ————————————————————————— */
+
+.screen--settings .screen-body { padding-bottom: calc(var(--sab) + 28px); }
+
+.settings__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+.settings__install { margin-bottom: 10px; }
+.settings__version { margin-top: 10px; opacity: 0.8; }
+
+.panel--danger { border-color: #ffd9d4; background: linear-gradient(180deg, #fff, #fff4f2); }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+.stepper__btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2.5px solid #fff;
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, var(--purple-1), var(--purple-2));
+  box-shadow: 0 3px 0 var(--purple-deep);
+  color: #fff;
+  font-size: 14px;
+  transition: transform var(--t-press) var(--ease-out), box-shadow var(--t-press);
+}
+.stepper__btn:active { transform: translateY(3px); box-shadow: none; }
+.stepper__value {
+  min-width: 34px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* ————————————————————————— профиль ————————————————————————— */
+
+.screen--profile .screen-body { padding-bottom: calc(var(--sab) + 24px); }
+
+.profile__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 22px 16px 6px;
+  text-align: center;
+}
+.profile__avatar {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  margin-bottom: 8px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--orange-1), var(--orange-2));
+  box-shadow: 0 6px 0 var(--orange-deep), 0 10px 22px rgba(60, 35, 110, 0.3);
+  color: #fff;
+  font-size: 46px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 10px 4px 8px;
+  border: 2.5px solid #fff;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--c1), var(--c2));
+  box-shadow: 0 4px 0 var(--cd), 0 6px 12px rgba(60, 35, 110, 0.16);
+  color: #fff;
+  text-align: center;
+}
+.stat-card__icon { font-size: 22px; opacity: 0.95; }
+.stat-card__value {
+  font-size: 19px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.16);
+  font-variant-numeric: tabular-nums;
+}
+.stat-card__label { font-size: 11px; font-weight: 800; opacity: 0.92; }
+.stat-card.t-gold, .stat-card.t-gold .stat-card__value { color: var(--ink); text-shadow: none; }
+
+.profile__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px var(--gutter) 0;
+}
+
+/* ————————————————————————— временная карта ————————————————————————— */
+
+.screen--map {
+  background: linear-gradient(
+    180deg,
+    var(--sky-1) 0%,
+    var(--sky-2) 20%,
+    var(--meadow-1) 21%,
+    var(--meadow-2) 58%,
+    var(--meadow-3) 100%
+  );
+}
+.screen--map .empty-state { color: #2f5b22; }
+.screen--map .empty-state__icon {
+  background: linear-gradient(180deg, #fff, #eafbd8);
+  color: var(--green-deep);
+  box-shadow: 0 6px 0 rgba(46, 108, 32, 0.25);
+}
