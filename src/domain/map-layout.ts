@@ -40,6 +40,8 @@ export interface DecorItem extends Pt {
 export interface SectionLayout {
   height: number;
   nodes: MapNode[];
+  /** Узел повторения в конце раздела, если он запрошен. */
+  review: MapNode | null;
   /** Готовый атрибут d для дорожки. */
   path: string;
   decor: DecorItem[];
@@ -101,6 +103,8 @@ export interface LayoutOptions {
   nextX: number | null;
   /** Сеять декор детерминированно. */
   seed?: number;
+  /** Добавить в конце раздела узел повторения. */
+  reviewNode?: boolean;
 }
 
 export function layoutSection(opts: LayoutOptions): SectionLayout {
@@ -115,18 +119,31 @@ export function layoutSection(opts: LayoutOptions): SectionLayout {
     });
   }
 
-  const lastY = nodes.length > 0 ? (nodes[nodes.length - 1] as MapNode).y : bannerHeight;
+  // Узел повторения встаёт на полшага дальше последнего уровня —
+  // так он читается как продолжение дорожки, а не как ещё один уровень.
+  let review: MapNode | null = null;
+  if (opts.reviewNode && nodes.length > 0) {
+    const last = nodes[nodes.length - 1] as MapNode;
+    review = {
+      index: -1,
+      x: round(nodeX(startIndex + count - 0.5, width)),
+      y: last.y + NODE_SPACING,
+    };
+  }
+
+  const lastY = review ? review.y : nodes.length > 0 ? (nodes[nodes.length - 1] as MapNode).y : bannerHeight;
   const height = lastY + BOTTOM_PAD;
 
   // Дорожка целиком внутри блока раздела: иначе content-visibility её обрежет.
   // На стыке разделов соседние кривые приходят в одну точку — середину
   // между последним узлом сверху и первым узлом снизу.
   const firstX = nodes.length > 0 ? (nodes[0] as MapNode).x : width / 2;
-  const lastX = nodes.length > 0 ? (nodes[nodes.length - 1] as MapNode).x : width / 2;
+  const lastX = review ? review.x : nodes.length > 0 ? (nodes[nodes.length - 1] as MapNode).x : width / 2;
 
   const points: Pt[] = [];
   if (prevX !== null) points.push({ x: round((prevX + firstX) / 2), y: 0 });
   for (const n of nodes) points.push({ x: n.x, y: n.y });
+  if (review) points.push({ x: review.x, y: review.y });
   if (nextX !== null) points.push({ x: round((lastX + nextX) / 2), y: height });
 
   const ghostBefore = prevX !== null ? { x: prevX, y: -BOTTOM_PAD } : null;
@@ -135,8 +152,9 @@ export function layoutSection(opts: LayoutOptions): SectionLayout {
   return {
     height,
     nodes,
+    review,
     path: smoothPath(points, ghostBefore, ghostAfter),
-    decor: layoutDecor(nodes, width, height, opts.seed ?? startIndex + 1),
+    decor: layoutDecor(review ? [...nodes, review] : nodes, width, height, opts.seed ?? startIndex + 1),
   };
 }
 

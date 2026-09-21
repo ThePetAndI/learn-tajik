@@ -131,6 +131,51 @@ export function hardestWords(state: SaveState, limit: number, ts: number): strin
   return scored.slice(0, limit).map((x) => x.id);
 }
 
+/** Просроченные слова из заданного набора — для повторения раздела. */
+export function dueWordsFrom(
+  state: SaveState,
+  candidates: readonly string[],
+  ts: number,
+): string[] {
+  return candidates.filter((id) => {
+    const stat = state.srs[id];
+    return stat !== undefined && isDue(stat, ts);
+  });
+}
+
+/** Сколько слов набора уже знакомы игроку. */
+export function introducedCount(state: SaveState, candidates: readonly string[]): number {
+  let n = 0;
+  for (const id of candidates) {
+    if (state.srs[id]?.introduced) n++;
+  }
+  return n;
+}
+
+/**
+ * Что показать в сессии повторения: сначала просроченное, потом трудное,
+ * потом просто знакомое. Слова, которых игрок ещё не видел, не берём —
+ * повторение не должно превращаться в изучение нового.
+ */
+export function reviewSelection(
+  state: SaveState,
+  candidates: readonly string[],
+  limit: number,
+  ts: number,
+): string[] {
+  const known = candidates.filter((id) => state.srs[id]?.introduced || (state.srs[id]?.seen ?? 0) > 0);
+  const scored = known.map((id) => {
+    const stat = state.srs[id] as WordStat;
+    return { id, due: isDue(stat, ts), score: wordDifficulty(stat), lastAt: stat.lastAt };
+  });
+  scored.sort((a, b) => {
+    if (a.due !== b.due) return a.due ? -1 : 1;
+    if (b.score !== a.score) return b.score - a.score;
+    return a.lastAt - b.lastAt;
+  });
+  return scored.slice(0, limit).map((x) => x.id);
+}
+
 export interface WordsSummary {
   /** Слов, которые уже встречались. */
   seen: number;

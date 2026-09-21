@@ -16,7 +16,7 @@ import { createMapScreen } from './screens/map';
 import { createProfileScreen } from './screens/profile';
 import { openLivesModal } from './screens/rewards';
 import { createShopScreen } from './screens/shop';
-import { createStubScreen } from './screens/stub';
+import { createWordsScreen } from './screens/words';
 import { now } from './core/time';
 import { applyPetEffects } from './domain/shop';
 
@@ -57,9 +57,7 @@ export async function bootstrap(): Promise<void> {
 
   registerTab('map', createMapScreen);
   registerTab('shop', createShopScreen);
-  registerTab('words', () =>
-    createStubScreen('Слова', 'book', 'Выученные слова и их прогресс появятся позже.'),
-  );
+  registerTab('words', createWordsScreen);
   registerTab('profile', createProfileScreen);
 
   showTab('map');

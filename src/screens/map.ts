@@ -17,10 +17,13 @@ import {
   type SectionLayout,
 } from '../domain/map-layout';
 import { currentIndex, getLevelProgress, sectionSummary, statusOf, type LevelStatus } from '../domain/progress';
+import { dueWordsFrom, introducedCount } from '../domain/srs';
+import { openReviewSession } from './review';
 import { MAX_STARS } from '../domain/stars';
 import { button } from '../ui/button';
 import { decorLayer } from '../ui/decor';
 import { icon, type IconName } from '../ui/icons';
+import { toast } from '../ui/toast';
 import { createPet, type PetHandle } from '../ui/pet';
 import { now } from '../core/time';
 import { canOpenChest, canSpinWheel } from '../domain/daily';
@@ -83,6 +86,14 @@ export function createMapScreen(): ScreenView {
 
   const nodeRefs = new Map<string, NodeRefs>();
   const bannerRefs = new Map<string, { root: HTMLElement; stars: HTMLElement }>();
+  const reviewRefs = new Map<string, { root: HTMLElement; badge: HTMLElement }>();
+  /** Слова каждого раздела — по ним собирается повторение. */
+  const sectionWords = new Map<string, string[]>();
+  for (const level of levels) {
+    const list = sectionWords.get(level.sectionId) ?? [];
+    for (const id of level.wordIds) if (!list.includes(id)) list.push(id);
+    sectionWords.set(level.sectionId, list);
+  }
   let pet: PetHandle | null = null;
   let builtWidth = 0;
   let currentLevel: FlatLevel | null = null;
@@ -94,6 +105,7 @@ export function createMapScreen(): ScreenView {
     builtWidth = width;
     nodeRefs.clear();
     bannerRefs.clear();
+    reviewRefs.clear();
     pet = null;
     clear(inner);
 
@@ -125,6 +137,7 @@ export function createMapScreen(): ScreenView {
         prevX,
         nextX,
         seed: si * 7919 + 13,
+        reviewNode: true,
       });
       inner.append(buildSection(section.id, si, layout, width));
       startIndex += count;
@@ -174,7 +187,51 @@ export function createMapScreen(): ScreenView {
       if (!level) continue;
       box.append(buildNode(level, node));
     }
+    if (layout.review) box.append(buildReviewNode(sectionId, layout.review));
     return box;
+  }
+
+  /** Узел повторения: открывается, когда раздел пройден и есть что повторять. */
+  function buildReviewNode(sectionId: string, node: MapNode): HTMLElement {
+    const badge = h('span', { class: 'map-review__badge' });
+    const root = h(
+      'button',
+      {
+        class: 'map-review',
+        attr: { type: 'button' },
+        data: { review: sectionId },
+        style: { left: node.x + 'px', top: node.y + 'px' },
+      },
+      h('span', { class: 'map-review__disc' }, icon('refresh')),
+      badge,
+    );
+    onTap(root, () => onReviewTap(sectionId));
+    reviewRefs.set(sectionId, { root, badge });
+    return root;
+  }
+
+  function onReviewTap(sectionId: string): void {
+    const state = getState();
+    const words = sectionWords.get(sectionId) ?? [];
+    const known = introducedCount(state, words);
+    const summary = sectionSummary(state, levels, sectionId);
+
+    if (summary.done < summary.total) {
+      haptics.wrong();
+      toast({ text: 'Сначала пройди все уровни раздела', iconName: 'lock' });
+      return;
+    }
+    if (known < 4) {
+      haptics.wrong();
+      toast({ text: 'Слишком мало знакомых слов для повторения', iconName: 'bulb' });
+      return;
+    }
+    haptics.tap();
+    openReviewSession({
+      title: summary.title,
+      sessionId: 'review:' + sectionId,
+      candidates: words,
+    });
   }
 
   function buildBanner(sectionId: string, title: string, iconName: string, color: string): HTMLElement {
@@ -238,9 +295,29 @@ export function createMapScreen(): ScreenView {
       refs.root.classList.toggle('is-locked', sum.locked);
     }
 
+    updateReviewNodes(state);
     placePet();
     updateCta();
     updateDaily();
+  }
+
+  function updateReviewNodes(state: ReturnType<typeof getState>): void {
+    const ts = now();
+    for (const [sectionId, refs] of reviewRefs) {
+      const words = sectionWords.get(sectionId) ?? [];
+      const summary = sectionSummary(state, levels, sectionId);
+      const ready = summary.done >= summary.total && introducedCount(state, words) >= 4;
+      const due = ready ? dueWordsFrom(state, words, ts).length : 0;
+
+      refs.root.classList.toggle('is-ready', ready);
+      refs.root.classList.toggle('is-due', due > 0);
+      refs.badge.textContent = due > 0 ? String(due) : '';
+      refs.root.setAttribute(
+        'aria-label',
+        'Повторение раздела «' + summary.title + '»' +
+          (ready ? (due > 0 ? ', слов к повторению: ' + due : ', готово') : ', закрыто'),
+      );
+    }
   }
 
   function updateDaily(): void {

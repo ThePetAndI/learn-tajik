@@ -93,6 +93,14 @@ describe('время', () => {
     expect(formatDuration(120 * 60_000)).toBe('2 ч');
   });
 
+  it('от суток формат переходит на дни', () => {
+    expect(formatDuration(24 * 60 * 60_000)).toBe('1 день');
+    expect(formatDuration(72 * 60 * 60_000)).toBe('3 дня');
+    expect(formatDuration(90 * 24 * 60 * 60_000)).toBe('90 дней');
+    // 23 часа — всё ещё часы
+    expect(formatDuration(23 * 60 * 60_000)).toBe('23 ч');
+  });
+
   it('formatClock', () => {
     expect(formatClock(0)).toBe('00:00');
     expect(formatClock(65_000)).toBe('01:05');

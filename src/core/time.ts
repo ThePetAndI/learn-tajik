@@ -39,10 +39,19 @@ export function daysBetween(fromKey: string, toKey: string): number {
   return Math.round((b - a) / DAY);
 }
 
-/** «5 мин», «1 ч 20 мин» — подпись под таймером жизней. */
+/**
+ * «5 мин», «1 ч 20 мин», «3 дня» — таймер жизней и срок следующего повторения.
+ * От суток и больше считаем в днях: «через 71 ч» никто в уме не переводит.
+ */
 export function formatDuration(ms: number): string {
   if (ms <= 0) return '0 мин';
   const totalMin = Math.ceil(ms / MINUTE);
+
+  if (totalMin >= 24 * 60) {
+    const days = Math.round(totalMin / (24 * 60));
+    return days + ' ' + plural(days, 'день', 'дня', 'дней');
+  }
+
   const h = Math.floor(totalMin / 60);
   const m = totalMin % 60;
   if (h === 0) return m + ' мин';
