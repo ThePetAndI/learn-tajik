@@ -116,22 +116,3 @@
   gap: 10px;
   padding: 4px var(--gutter) 0;
 }
-
-/* ————————————————————————— временная карта ————————————————————————— */
-
-.screen--map {
-  background: linear-gradient(
-    180deg,
-    var(--sky-1) 0%,
-    var(--sky-2) 20%,
-    var(--meadow-1) 21%,
-    var(--meadow-2) 58%,
-    var(--meadow-3) 100%
-  );
-}
-.screen--map .empty-state { color: #2f5b22; }
-.screen--map .empty-state__icon {
-  background: linear-gradient(180deg, #fff, #eafbd8);
-  color: var(--green-deep);
-  box-shadow: 0 6px 0 rgba(46, 108, 32, 0.25);
-}

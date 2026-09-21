@@ -93,6 +93,7 @@ function checkRu(file, id, field, value) {
 const wordIds = new Map();
 const phraseIds = new Map();
 const levelIds = new Set();
+const emptyLevels = [];
 const sectionIds = new Set();
 const usedWordIds = new Set();
 
@@ -227,8 +228,10 @@ async function checkCourse() {
       for (const pid of phrases) {
         if (!phraseIds.has(pid)) err(file, lid + ': нет фразы ' + pid);
       }
+      // Пустой уровень — не ошибка на этапе, когда контент ещё пишется:
+      // карта его показывает, но играть в него нельзя. Считаем такие отдельно.
       if (lvl.kind !== 'alphabet' && words.length === 0 && phrases.length === 0) {
-        err(file, lid + ': уровень без слов и фраз');
+        emptyLevels.push(lid);
       }
       if (lvl.exercises !== undefined && lvl.exercises !== 'auto' && !Array.isArray(lvl.exercises)) {
         err(file, lid + ': exercises должно быть "auto" или массивом');
@@ -269,6 +272,15 @@ async function main() {
       ', уровней: ' + levelIds.size +
       ', на проверку: ' + unverified.length,
   );
+
+  if (emptyLevels.length > 0) {
+    warn(
+      join(CONTENT, 'course.json'),
+      'уровней без слов и фраз: ' + emptyLevels.length + ' из ' + levelIds.size +
+        ' — играть в них пока нельзя (' + emptyLevels.slice(0, 5).join(', ') +
+        (emptyLevels.length > 5 ? '…' : '') + ')',
+    );
+  }
 
   const orphans = [...wordIds.keys()].filter((id) => !usedWordIds.has(id));
   if (orphans.length > 0) {

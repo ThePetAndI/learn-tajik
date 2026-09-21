@@ -1,0 +1,934 @@
+{
+  "_comment": "Структура карты. Формат описан в content/README.md. Слова и фразы добавляются на вехе 4.",
+  "sections": [
+    {
+      "id": "s00",
+      "title": "Алфавит",
+      "color": "purple",
+      "icon": "pencil",
+      "levels": [
+        {
+          "id": "s00_l1",
+          "title": "Знакомые буквы",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "kind": "alphabet"
+        },
+        {
+          "id": "s00_l2",
+          "title": "Ғ и Қ",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "kind": "alphabet"
+        },
+        {
+          "id": "s00_l3",
+          "title": "Ӣ и Ӯ",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "kind": "alphabet"
+        },
+        {
+          "id": "s00_l4",
+          "title": "Ҳ и Ҷ",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "kind": "alphabet"
+        },
+        {
+          "id": "s00_l5",
+          "title": "Читаем слова",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "kind": "alphabet",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s01",
+      "title": "Приветствия",
+      "color": "orange",
+      "icon": "hand",
+      "levels": [
+        {
+          "id": "s01_l1",
+          "title": "Салом!",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l2",
+          "title": "Доброе утро",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l3",
+          "title": "Как дела?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l4",
+          "title": "Спасибо",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l5",
+          "title": "До свидания",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Знакомство",
+      "color": "pink",
+      "icon": "user",
+      "levels": [
+        {
+          "id": "s02_l1",
+          "title": "Как тебя зовут?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s02_l2",
+          "title": "Откуда ты?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s02_l3",
+          "title": "Очень приятно",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s02_l4",
+          "title": "Сколько тебе лет?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s02_l5",
+          "title": "Первый разговор",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Я, ты, он",
+      "color": "blue",
+      "icon": "chat",
+      "levels": [
+        {
+          "id": "s03_l1",
+          "title": "Ман и ту",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s03_l2",
+          "title": "Ӯ, мо, шумо, онҳо",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s03_l3",
+          "title": "Связка «аст»",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s03_l4",
+          "title": "Отрицание «нест»",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s03_l5",
+          "title": "Кто это?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Семья",
+      "color": "green",
+      "icon": "family",
+      "levels": [
+        {
+          "id": "s04_l1",
+          "title": "Родители",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s04_l2",
+          "title": "Брат и сестра",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s04_l3",
+          "title": "Бабушка и дедушка",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s04_l4",
+          "title": "Моя семья",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s04_l5",
+          "title": "Расскажи о семье",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Числа",
+      "color": "gold",
+      "icon": "num",
+      "levels": [
+        {
+          "id": "s05_l1",
+          "title": "От одного до пяти",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s05_l2",
+          "title": "От шести до десяти",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s05_l3",
+          "title": "До двадцати",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s05_l4",
+          "title": "Десятки до ста",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s05_l5",
+          "title": "Счёт и возраст",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "Еда и напитки",
+      "color": "red",
+      "icon": "apple",
+      "levels": [
+        {
+          "id": "s06_l1",
+          "title": "Хлеб и чай",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s06_l2",
+          "title": "Фрукты",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s06_l3",
+          "title": "Овощи",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s06_l4",
+          "title": "Блюда",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s06_l5",
+          "title": "За столом",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "title": "Дом",
+      "color": "teal",
+      "icon": "house",
+      "levels": [
+        {
+          "id": "s07_l1",
+          "title": "Комнаты",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s07_l2",
+          "title": "Мебель",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s07_l3",
+          "title": "Вещи в доме",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s07_l4",
+          "title": "Кухня",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s07_l5",
+          "title": "Мой дом",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "title": "Базар",
+      "color": "orange",
+      "icon": "basket",
+      "levels": [
+        {
+          "id": "s08_l1",
+          "title": "На базаре",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s08_l2",
+          "title": "Сколько стоит?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s08_l3",
+          "title": "Деньги",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s08_l4",
+          "title": "Поторгуемся",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s08_l5",
+          "title": "Покупки",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s09",
+      "title": "Город и дорога",
+      "color": "blue",
+      "icon": "city",
+      "levels": [
+        {
+          "id": "s09_l1",
+          "title": "Места в городе",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s09_l2",
+          "title": "Как пройти?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s09_l3",
+          "title": "Направления",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s09_l4",
+          "title": "Транспорт",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s09_l5",
+          "title": "Спроси дорогу",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "title": "Время",
+      "color": "purple",
+      "icon": "clock",
+      "levels": [
+        {
+          "id": "s10_l1",
+          "title": "Дни недели",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s10_l2",
+          "title": "Который час?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s10_l3",
+          "title": "Утро, день, вечер",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s10_l4",
+          "title": "Месяцы",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s10_l5",
+          "title": "Когда встретимся?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "title": "Настоящее время",
+      "color": "green",
+      "icon": "run",
+      "levels": [
+        {
+          "id": "s11_l1",
+          "title": "Окончания глагола",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s11_l2",
+          "title": "Рафтан — идти",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s11_l3",
+          "title": "Есть и пить",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s11_l4",
+          "title": "Отрицание",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s11_l5",
+          "title": "Что ты делаешь?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "title": "День за днём",
+      "color": "gold",
+      "icon": "sun",
+      "levels": [
+        {
+          "id": "s12_l1",
+          "title": "Утро",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s12_l2",
+          "title": "День",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s12_l3",
+          "title": "Вечер",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s12_l4",
+          "title": "Каждый день",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s12_l5",
+          "title": "Мой день",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s13",
+      "title": "Прошедшее время",
+      "color": "pink",
+      "icon": "clock",
+      "levels": [
+        {
+          "id": "s13_l1",
+          "title": "Простое прошедшее",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s13_l2",
+          "title": "Я был, ты был",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s13_l3",
+          "title": "Вчера",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s13_l4",
+          "title": "Отрицание в прошлом",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s13_l5",
+          "title": "Что было вчера?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s14",
+      "title": "Вопросы",
+      "color": "teal",
+      "icon": "target",
+      "levels": [
+        {
+          "id": "s14_l1",
+          "title": "Чӣ? Кӣ?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s14_l2",
+          "title": "Куҷо? Кай?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s14_l3",
+          "title": "Чаро? Чӣ хел?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s14_l4",
+          "title": "Чанд? Кадом?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s14_l5",
+          "title": "Задай вопрос",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s15",
+      "title": "Какой? Чей?",
+      "color": "red",
+      "icon": "sparkle",
+      "levels": [
+        {
+          "id": "s15_l1",
+          "title": "Большой и маленький",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s15_l2",
+          "title": "Цвета",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s15_l3",
+          "title": "Изафет: -и",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s15_l4",
+          "title": "Чей это?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s15_l5",
+          "title": "Опиши предмет",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s16",
+      "title": "Погода и природа",
+      "color": "blue",
+      "icon": "sun",
+      "levels": [
+        {
+          "id": "s16_l1",
+          "title": "Погода сегодня",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s16_l2",
+          "title": "Времена года",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s16_l3",
+          "title": "Природа",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s16_l4",
+          "title": "Животные",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s16_l5",
+          "title": "Разговор о погоде",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s17",
+      "title": "Здоровье",
+      "color": "green",
+      "icon": "heart",
+      "levels": [
+        {
+          "id": "s17_l1",
+          "title": "Части тела",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s17_l2",
+          "title": "Что болит?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s17_l3",
+          "title": "У врача",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s17_l4",
+          "title": "Самочувствие",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s17_l5",
+          "title": "В аптеке",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s18",
+      "title": "Работа и учёба",
+      "color": "purple",
+      "icon": "work",
+      "levels": [
+        {
+          "id": "s18_l1",
+          "title": "Профессии",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s18_l2",
+          "title": "В школе",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s18_l3",
+          "title": "Учёба",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s18_l4",
+          "title": "На работе",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s18_l5",
+          "title": "Кем ты работаешь?",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s19",
+      "title": "В дорогу",
+      "color": "orange",
+      "icon": "bus",
+      "levels": [
+        {
+          "id": "s19_l1",
+          "title": "Транспорт",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s19_l2",
+          "title": "В пути",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s19_l3",
+          "title": "Билеты",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s19_l4",
+          "title": "В гостинице",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s19_l5",
+          "title": "Поездка",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    },
+    {
+      "id": "s20",
+      "title": "Живая речь",
+      "color": "pink",
+      "icon": "chat",
+      "levels": [
+        {
+          "id": "s20_l1",
+          "title": "Вежливые обороты",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s20_l2",
+          "title": "Да и нет",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s20_l3",
+          "title": "Просьбы",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s20_l4",
+          "title": "Чувства",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto"
+        },
+        {
+          "id": "s20_l5",
+          "title": "Маленький диалог",
+          "words": [],
+          "phrases": [],
+          "exercises": "auto",
+          "boss": true
+        }
+      ]
+    }
+  ]
+}

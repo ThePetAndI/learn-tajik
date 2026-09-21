@@ -3,6 +3,7 @@ import './styles/tokens.css';
 import './styles/base.css';
 import './styles/buttons.css';
 import './styles/shell.css';
+import './styles/map.css';
 import './styles/screens.css';
 
 import { bootstrap } from './app';

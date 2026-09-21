@@ -1,0 +1,413 @@
+/* Карта уровней: луг, дорожка, узлы, питомец. */
+
+.screen--map {
+  background: linear-gradient(180deg, var(--meadow-1) 0%, var(--meadow-2) 42%, var(--meadow-3) 100%);
+  background-attachment: local;
+}
+
+.map__scroll {
+  position: relative;
+  overscroll-behavior-y: contain;
+}
+
+.map__inner {
+  position: relative;
+  width: 100%;
+}
+
+/* Небо над первым разделом */
+.map__sky {
+  position: relative;
+  height: 96px;
+  background: linear-gradient(180deg, var(--sky-1), var(--sky-2));
+  border-bottom-left-radius: 60% 34px;
+  border-bottom-right-radius: 60% 34px;
+  box-shadow: inset 0 -8px 0 rgba(255, 255, 255, 0.25);
+}
+.map__sky::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -14px;
+  height: 28px;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(255, 255, 255, 0.35), transparent 70%);
+}
+
+.map__tail { width: 100%; }
+
+/* ————————————————————————— раздел ————————————————————————— */
+
+.map-section {
+  position: relative;
+  width: 100%;
+  /* длинная карта: браузер не рисует разделы за пределами экрана */
+  content-visibility: auto;
+}
+
+.map-section__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ————————————————————————— дорожка ————————————————————————— */
+
+.map__road-edge {
+  fill: none;
+  stroke: var(--sand-edge);
+  stroke-width: 38;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.map__road {
+  fill: none;
+  stroke: var(--sand-1);
+  stroke-width: 31;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.map__road-dash {
+  fill: none;
+  stroke: var(--sand-edge);
+  stroke-width: 6.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 24;
+  opacity: 0.55;
+}
+
+/* ————————————————————————— декор ————————————————————————— */
+
+.d-shadow { fill: rgba(38, 84, 24, 0.17); }
+.d-trunk { fill: #a3693c; }
+.d-leaf-1 { fill: #54b745; }
+.d-leaf-2 { fill: #44a337; }
+.d-leaf-3 { fill: #3b9330; }
+.d-leaf-hi { fill: #71d35f; }
+.d-rock { fill: #b6c1cb; }
+.d-rock-hi { fill: #d9e1e8; }
+.d-stem { fill: none; stroke: #3f9c33; stroke-width: 2.6; stroke-linecap: round; }
+.d-petal { fill: #ff97c4; }
+.d-petal-core { fill: #ffd451; }
+.d-cloud { fill: #ffffff; opacity: 0.92; }
+.decor--cloud { opacity: 0.85; }
+
+/* ————————————————————————— баннер раздела ————————————————————————— */
+
+.map-banner {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(86%, 340px);
+  padding: 9px 16px 9px 10px;
+  border: 3px solid #fff;
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, var(--c1), var(--c2));
+  box-shadow: 0 5px 0 var(--cd), 0 8px 18px rgba(30, 60, 20, 0.28);
+  color: #fff;
+  transform: translateX(-50%);
+}
+.map-banner.is-locked { filter: saturate(0.45) brightness(0.92); }
+
+.map-banner__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+  font-size: 23px;
+  flex: none;
+}
+.map-banner__text { display: flex; flex-direction: column; min-width: 0; }
+.map-banner__title {
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.map-banner__sub {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 800;
+  opacity: 0.95;
+}
+.map-banner__sub .icon { font-size: 14px; color: #ffe066; }
+
+/* ————————————————————————— узел уровня ————————————————————————— */
+
+.map-node {
+  position: absolute;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  background: none;
+  transform: translate(-50%, -50%);
+  transition: transform var(--t-press) var(--ease-out);
+  touch-action: manipulation;
+}
+
+.map-node__disc {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--lock-1), var(--lock-2));
+  box-shadow: 0 6px 0 var(--lock-deep), 0 10px 18px rgba(30, 60, 20, 0.3);
+  color: #fff;
+  font-size: 26px;
+  transition: transform var(--t-press) var(--ease-out), box-shadow var(--t-press) var(--ease-out);
+}
+.map-node__disc::before {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 8%;
+  height: 26%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.map-node__num {
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.22);
+  font-variant-numeric: tabular-nums;
+}
+
+.map-node:active:not(.is-locked) .map-node__disc {
+  transform: translateY(5px);
+  box-shadow: 0 1px 0 var(--lock-deep), 0 3px 8px rgba(30, 60, 20, 0.28);
+}
+
+.map-node.is-done .map-node__disc {
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 6px 0 var(--gold-deep), 0 10px 18px rgba(30, 60, 20, 0.3);
+  color: #fff;
+}
+.map-node.is-done:active .map-node__disc {
+  box-shadow: 0 1px 0 var(--gold-deep), 0 3px 8px rgba(30, 60, 20, 0.28);
+}
+
+.map-node.is-current .map-node__disc {
+  background: linear-gradient(180deg, var(--pink-1), var(--pink-2));
+  box-shadow: 0 6px 0 var(--pink-deep), 0 10px 22px rgba(120, 20, 70, 0.34);
+}
+.map-node.is-current:active .map-node__disc {
+  box-shadow: 0 1px 0 var(--pink-deep), 0 3px 8px rgba(120, 20, 70, 0.3);
+}
+
+/* Пульсирующее кольцо вокруг текущего уровня */
+.map-node.is-current::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border: 4px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  animation: node-pulse 2s var(--ease-out) infinite;
+  pointer-events: none;
+}
+@keyframes node-pulse {
+  0% { transform: scale(0.92); opacity: 0.9; }
+  70% { transform: scale(1.16); opacity: 0; }
+  100% { transform: scale(1.16); opacity: 0; }
+}
+
+.map-node.is-locked .map-node__disc { font-size: 28px; color: rgba(255, 255, 255, 0.9); }
+.map-node.is-locked { cursor: default; }
+
+.map-node.is-boss .map-node__disc {
+  border-width: 5px;
+  background: linear-gradient(180deg, #b98bff, #7a45e0);
+  box-shadow: 0 7px 0 #4d1fa3, 0 12px 24px rgba(50, 20, 110, 0.36);
+  font-size: 36px;
+}
+.map-node.is-boss.is-done .map-node__disc {
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 7px 0 var(--gold-deep), 0 12px 24px rgba(30, 60, 20, 0.3);
+}
+.map-node.is-boss.is-locked .map-node__disc {
+  background: linear-gradient(180deg, #a9a2c4, #837bab);
+  box-shadow: 0 7px 0 #5e5782, 0 12px 20px rgba(30, 60, 20, 0.28);
+}
+
+/* Маленький замок в углу закрытого сундука */
+.map-node__badge {
+  position: absolute;
+  right: -2px;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--lock-1), var(--lock-2));
+  box-shadow: 0 2px 0 var(--lock-deep);
+  font-size: 13px;
+  color: #fff;
+}
+
+.map-node.is-empty .map-node__disc { filter: saturate(0.6); }
+
+.map-node.is-shake { animation: node-shake 420ms var(--ease-out); }
+@keyframes node-shake {
+  0%, 100% { transform: translate(-50%, -50%); }
+  20% { transform: translate(calc(-50% - 7px), -50%); }
+  45% { transform: translate(calc(-50% + 7px), -50%); }
+  70% { transform: translate(calc(-50% - 4px), -50%); }
+}
+
+.map-node__stars {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 3px);
+  display: flex;
+  gap: 1px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.map-node__stars .icon { font-size: 16px; }
+.map-node__stars .is-on { color: #ffd12e; filter: drop-shadow(0 1.5px 0 #c98600); }
+.map-node__stars .is-off { color: rgba(255, 255, 255, 0.75); }
+
+/* ————————————————————————— питомец ————————————————————————— */
+
+.pet {
+  position: absolute;
+  z-index: 4;
+  width: 66px;
+  height: 66px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(30, 60, 20, 0.28));
+}
+.pet__svg { width: 100%; height: 100%; display: block; animation: pet-bob 2.6s ease-in-out infinite; }
+.pet--mirrored .pet__svg { scale: -1 1; }
+@keyframes pet-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(2deg); }
+}
+.pet.is-cheer .pet__svg { animation: pet-cheer 700ms var(--ease-pop); }
+@keyframes pet-cheer {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.22) rotate(-8deg); }
+  65% { transform: scale(1.05) rotate(6deg); }
+  100% { transform: scale(1); }
+}
+
+.p-shadow { fill: rgba(38, 84, 24, 0.2); }
+.p-fur { fill: #ff9f42; }
+.p-fur-dark { fill: #ec8226; }
+.p-ear-in { fill: #ffc79f; }
+.p-belly { fill: #ffe3bd; }
+.p-eye { fill: #3b2a5e; }
+.p-eye-hi { fill: #ffffff; }
+.p-cheek { fill: #ff8fb4; opacity: 0.7; }
+.p-nose { fill: #6f4b2c; }
+.p-mouth { fill: none; stroke: #6f4b2c; stroke-width: 2.3; stroke-linecap: round; }
+.pet--sleepy .p-eye { transform-box: fill-box; transform-origin: center; transform: scaleY(0.25); }
+
+/* ————————————————————————— кнопка уровня ————————————————————————— */
+
+.map__cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 12;
+  padding: 26px var(--gutter) 14px;
+  background: linear-gradient(180deg, rgba(98, 185, 68, 0) 0%, rgba(98, 185, 68, 0.75) 45%, rgba(98, 185, 68, 0.95) 100%);
+  pointer-events: none;
+}
+.map__cta > * { pointer-events: auto; }
+.map__cta .btn__label { font-size: 21px; }
+.map__cta .btn__sub {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ————————————————————————— карточка уровня ————————————————————————— */
+
+.modal__card--level { padding-top: 46px; }
+
+.level-card { display: flex; flex-direction: column; align-items: center; }
+.level-card__badge {
+  position: absolute;
+  left: 50%;
+  top: -34px;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--pink-1), var(--pink-2));
+  box-shadow: 0 6px 0 var(--pink-deep), 0 10px 20px rgba(60, 20, 90, 0.3);
+  color: #fff;
+  font-size: 30px;
+  font-weight: 900;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%);
+}
+.level-card__badge.is-boss {
+  background: linear-gradient(180deg, #b98bff, #7a45e0);
+  box-shadow: 0 6px 0 #4d1fa3, 0 10px 20px rgba(50, 20, 110, 0.32);
+  font-size: 38px;
+}
+.level-card__section {
+  margin-top: 4px;
+  color: var(--ink-mute);
+  font-size: 12.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.level-card__title { margin-top: 2px; }
+.level-card__stars { display: flex; gap: 6px; margin-top: 12px; }
+.level-card__star { font-size: 30px; animation: star-pop 420ms var(--ease-pop) both; }
+.level-card__star.is-on { color: #ffc31f; filter: drop-shadow(0 2px 0 #c98600); }
+.level-card__star.is-off { color: #ddd3ef; }
+@keyframes star-pop {
+  from { transform: scale(0.2) rotate(-30deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.level-card__meta {
+  margin-top: 10px;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 800;
+}
+.level-card__boss {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, #f1e6ff, #e2d2ff);
+  color: #6b3fd4;
+  font-size: 13px;
+  font-weight: 900;
+}
+.level-card__note { margin-bottom: 4px; font-size: 13.5px; }
+.level-card .modal__actions { width: 100%; }
+
+@media (max-height: 640px) {
+  .map__cta { padding-top: 18px; }
+}

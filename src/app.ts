@@ -11,6 +11,7 @@ import { applyReducedMotion, systemPrefersReducedMotion } from './ui/motion';
 import { modal } from './ui/modal';
 import { initInstallPrompt } from './pwa/install-prompt';
 import { initServiceWorker } from './pwa/register-sw';
+import { createMapScreen } from './screens/map';
 import { createProfileScreen } from './screens/profile';
 import { createStubScreen } from './screens/stub';
 import { formatDuration } from './core/time';
@@ -45,14 +46,7 @@ export async function bootstrap(): Promise<void> {
   mountRouter(stage, overlay);
   seedHistory();
 
-  registerTab('map', () =>
-    createStubScreen(
-      'Карта уровней',
-      'map',
-      'Здесь появится дорожка с уровнями. Сейчас готов каркас: хранилище, офлайн-режим и перенос прогресса.',
-      'screen--map',
-    ),
-  );
+  registerTab('map', createMapScreen);
   registerTab('shop', () =>
     createStubScreen('Магазин', 'shop', 'Питомцы, скины карты и бустеры появятся позже.'),
   );
