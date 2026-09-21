@@ -2,23 +2,23 @@
 
 import { h, qs } from './core/dom';
 import { mountRouter, push, registerTab, seedHistory, showTab } from './core/router';
-import { getState, initStore } from './core/store';
+import { getState, initStore, update } from './core/store';
 import { requestPersistentStorage } from './data/db';
 import { setHapticsEnabled } from './core/haptics';
 import { createHud } from './ui/hud';
 import { createTabBar } from './ui/tabbar';
 import { applyReducedMotion, systemPrefersReducedMotion } from './ui/motion';
-import { modal } from './ui/modal';
 import { initInstallPrompt } from './pwa/install-prompt';
 import { initServiceWorker } from './pwa/register-sw';
 import { createLevelScreen } from './screens/level';
-import { setLevelStartHandler } from './screens/level-card';
+import { setLevelStartHandler, setLivesGate } from './screens/level-card';
 import { createMapScreen } from './screens/map';
 import { createProfileScreen } from './screens/profile';
+import { openLivesModal } from './screens/rewards';
+import { createShopScreen } from './screens/shop';
 import { createStubScreen } from './screens/stub';
-import { formatDuration } from './core/time';
-import { computeLives } from './domain/lives';
 import { now } from './core/time';
+import { applyPetEffects } from './domain/shop';
 
 export async function bootstrap(): Promise<void> {
   const root = qs<HTMLElement>('#app');
@@ -34,8 +34,11 @@ export async function bootstrap(): Promise<void> {
   initInstallPrompt();
   initServiceWorker();
 
+  // бонусы питомца применяются при старте: максимум жизней зависит от него
+  update((st) => applyPetEffects(st, now()));
+
   const hud = createHud({
-    onLives: showLivesInfo,
+    onLives: openLivesModal,
     onCoins: () => showTab('shop'),
     onStars: () => showTab('map'),
   });
@@ -50,11 +53,10 @@ export async function bootstrap(): Promise<void> {
 
   // карта не знает про движок, движок не знает про карту — связь только здесь
   setLevelStartHandler((level) => push(() => createLevelScreen(level), 'level:' + level.id));
+  setLivesGate(openLivesModal);
 
   registerTab('map', createMapScreen);
-  registerTab('shop', () =>
-    createStubScreen('Магазин', 'shop', 'Питомцы, скины карты и бустеры появятся позже.'),
-  );
+  registerTab('shop', createShopScreen);
   registerTab('words', () =>
     createStubScreen('Слова', 'book', 'Выученные слова и их прогресс появятся позже.'),
   );
@@ -66,24 +68,6 @@ export async function bootstrap(): Promise<void> {
   // Заставку убираем только когда шрифт готов — иначе на секунду мелькает системный.
   await waitForFonts();
   hideBootSplash();
-}
-
-function showLivesInfo(): void {
-  const lives = computeLives(getState().lives, now());
-  const text = lives.full
-    ? 'Запас полон: ' + lives.max + ' из ' + lives.max + '.'
-    : 'Осталось ' +
-      lives.count +
-      ' из ' +
-      lives.max +
-      '. Следующая жизнь через ' +
-      formatDuration(lives.msToNext) +
-      '.';
-  modal({
-    title: 'Жизни',
-    text,
-    actions: [{ label: 'Понятно', tone: 'orange', value: 'ok', primary: true }],
-  });
 }
 
 async function waitForFonts(): Promise<void> {

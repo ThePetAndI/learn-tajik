@@ -98,6 +98,10 @@ export interface ExerciseContext {
   finish: (outcome: ExerciseOutcome) => void;
   /** Потратить монеты на подсказку. false — не хватило. */
   spend: (cost: number) => boolean;
+  /** Потратить бустер из инвентаря. false — его нет. */
+  useItem: (itemId: string) => boolean;
+  /** Сколько бустеров осталось. */
+  itemCount: (itemId: string) => number;
   /** Сколько сейчас монет — для подписи на кнопке подсказки. */
   coins: () => number;
   /** Детерминированный генератор для перемешиваний внутри задания. */

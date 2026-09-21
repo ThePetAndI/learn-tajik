@@ -1,26 +1,27 @@
 /**
- * Экран уровня: очередь заданий, полоса прогресса, обратная связь после
- * каждого задания. Сам не знает, как устроены мини-игры — берёт их из реестра.
+ * Экран уровня. Сам проигрыватель заданий живёт в session-view,
+ * здесь — правила уровня: жизни, награды, запись прогресса и статистики слов.
  */
 
-import { clear, h, onTap } from '../core/dom';
+import { h } from '../core/dom';
 import { haptics } from '../core/haptics';
 import { pop, replaceTop, type ScreenView } from '../core/router';
-import { rngFor } from '../core/rng';
 import { getState, update } from '../core/store';
 import { now } from '../core/time';
 import { allWords, getPhrase, getWord, type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
+import { computeLives, spendLife } from '../domain/lives';
 import { getLevelProgress, recordLevelResult } from '../domain/progress';
-import { createSession, type SessionResult } from '../game/engine';
+import { applyCoinBonus, coinMultiplier } from '../domain/shop';
+import { recordAttemptWords } from '../domain/srs';
+import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises, makePool } from '../game/generators';
 import { moduleFor } from '../game/registry';
-import type { ExerciseContext, ExerciseInstance, ExerciseOutcome } from '../game/types';
-import { button } from '../ui/button';
 import { icon } from '../ui/icons';
 import { confirmModal } from '../ui/modal';
 import { toast } from '../ui/toast';
 import { createResultsScreen } from './results';
+import { createSessionView } from './session-view';
 
 export function createLevelScreen(level: FlatLevel): ScreenView {
   const attemptNo = getLevelProgress(getState(), level.id).attempts;
@@ -33,167 +34,97 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
     moduleFor(ex.kind),
   );
 
-  const session = createSession({ levelId: level.id, exercises });
+  /* ——————————————————— сердечки в шапке ——————————————————— */
 
-  /* ——————————————————————— каркас экрана ——————————————————————— */
-
-  const barFill = h('span', { class: 'level__bar-fill' });
-  const comboBadge = h('div', { class: 'level__combo' });
-  const closeBtn = h(
-    'button',
-    { class: 'level__close', attr: { type: 'button' }, aria: { label: 'Выйти с уровня' } },
-    icon('close'),
-  );
-
-  const titleEl = h('div', { class: 'level__task' });
-  const host = h('div', { class: 'level__host' });
-
-  const feedbackTitle = h('div', { class: 'feedback__title' });
-  const feedbackText = h('div', { class: 'feedback__text' });
-  const feedbackIcon = h('div', { class: 'feedback__icon' });
-  const continueBtn = button({ label: 'Продолжить', tone: 'green', size: 'big', wide: true });
-  const feedback = h(
-    'div',
-    { class: 'feedback' },
-    h('div', { class: 'feedback__row' }, feedbackIcon, h('div', { class: 'grow' }, feedbackTitle, feedbackText)),
-    continueBtn,
-  );
-
-  const el = h(
-    'div',
-    { class: 'screen screen--level' },
-    h('header', { class: 'level__top' }, closeBtn, h('div', { class: 'level__bar' }, barFill), comboBadge),
-    titleEl,
-    host,
-    feedback,
-  );
-
-  let instance: ExerciseInstance | null = null;
-  let awaitingContinue = false;
-
-  /* ——————————————————————— контекст мини-игры ——————————————————————— */
-
-  function makeContext(index: number): ExerciseContext {
-    return {
-      attempt: (attempt) => {
-        session.attempt(attempt);
-        renderCombo();
-      },
-      finish: (outcome) => showFeedback(outcome),
-      spend: (cost) => {
-        if (getState().wallet.coins < cost) return false;
-        update((s) => {
-          s.wallet.coins = Math.max(0, s.wallet.coins - cost);
-        });
-        return true;
-      },
-      coins: () => getState().wallet.coins,
-      rng: rngFor(level.id + ':' + attemptNo + ':' + index),
-      settings: { showHints: getState().settings.showHints },
-    };
-  }
-
-  /* ——————————————————————— показ задания ——————————————————————— */
-
-  function mountCurrent(): void {
-    const exercise = session.current();
-    if (!exercise) {
-      finishLevel();
-      return;
-    }
-    const mod = moduleFor(exercise.kind);
-    if (!mod) {
-      // тип задания появится позже — просто пропускаем, не ломая уровень
-      if (!session.advance()) finishLevel();
-      else mountCurrent();
-      return;
-    }
-
-    instance?.destroy?.();
-    clear(host);
-    awaitingContinue = false;
-    feedback.classList.remove('is-shown', 'is-right', 'is-wrong');
-
-    titleEl.textContent = mod.title(exercise);
-    instance = mod.mount(exercise, makeContext(session.state.index));
-    instance.el.classList.add('ex--enter');
-    host.append(instance.el);
-    host.scrollTop = 0;
-    renderProgress();
-  }
-
-  function renderProgress(): void {
-    barFill.style.transform = 'scaleX(' + session.progress() + ')';
-  }
-
-  function renderCombo(): void {
-    const combo = session.state.combo;
-    comboBadge.classList.toggle('is-on', combo >= 3);
-    if (combo >= 3) {
-      comboBadge.textContent = '×' + combo;
-      comboBadge.classList.remove('is-pop');
-      void comboBadge.offsetWidth;
-      comboBadge.classList.add('is-pop');
+  const hearts = h('div', { class: 'level__hearts' });
+  function renderHearts(): void {
+    const lives = computeLives(getState().lives, now());
+    hearts.replaceChildren();
+    for (let i = 0; i < lives.max; i++) {
+      const on = i < lives.count;
+      const heart = h('span', { class: 'level__heart ' + (on ? 'is-on' : 'is-off') },
+        icon(on ? 'heart' : 'heartEmpty'));
+      hearts.append(heart);
     }
   }
+  renderHearts();
 
-  function showFeedback(outcome: ExerciseOutcome): void {
-    awaitingContinue = true;
-    clear(feedbackIcon);
-    feedbackIcon.append(icon(outcome.correct ? 'check' : 'cross'));
-    feedback.classList.add('is-shown', outcome.correct ? 'is-right' : 'is-wrong');
+  let outOfLives = false;
 
-    if (outcome.correct) {
-      feedbackTitle.textContent = outcome.message ?? pickPraise();
-      feedbackText.textContent = outcome.lenient && outcome.expected
-        ? 'Правильно пишется: ' + outcome.expected
-        : '';
-    } else {
-      feedbackTitle.textContent = outcome.message ?? 'Не угадал';
-      feedbackText.textContent = outcome.expected ? 'Правильно: ' + outcome.expected : '';
-    }
-    feedbackText.classList.toggle('hidden', feedbackText.textContent === '');
-    continueBtn.className = continueBtn.className
-      .replace(/\bt-(green|red)\b/g, '')
-      .trim() + (outcome.correct ? ' t-green' : ' t-red');
-  }
+  const view = createSessionView({
+    exercises,
+    sessionId: level.id,
+    seedKey: level.id + ':' + attemptNo,
+    headerSlot: hearts,
 
-  const PRAISE = ['Верно!', 'Отлично!', 'Точно!', 'Так и есть!', 'Молодец!'];
-  let praiseIndex = 0;
-  function pickPraise(): string {
-    praiseIndex = (praiseIndex + 1) % PRAISE.length;
-    return PRAISE[praiseIndex] as string;
-  }
+    onAttempt: (attempt) => {
+      const ts = now();
+      update((s) => {
+        recordAttemptWords(s, attempt.wordIds, attempt.correct, ts);
+        countDailyExercise(s, ts);
+        touchStreak(s, ts);
+        if (!attempt.correct) {
+          if (!spendLife(s, ts)) outOfLives = true;
+          if (computeLives(s.lives, ts).count <= 0) outOfLives = true;
+        }
+      });
+      renderHearts();
+      if (!attempt.correct) {
+        hearts.classList.remove('is-hit');
+        void hearts.offsetWidth;
+        hearts.classList.add('is-hit');
+      }
+    },
 
-  onTap(continueBtn, () => {
-    if (!awaitingContinue) return;
-    awaitingContinue = false;
-    if (session.advance()) mountCurrent();
-    else finishLevel();
+    stopAfterAttempt: () => outOfLives,
+
+    onDone: (session, reason) => finish(session.result(), reason === 'stopped'),
+
+    onExit: () => {
+      const st = view.session.state;
+      if (st.index === 0 && st.attempts === 0) {
+        pop();
+        return;
+      }
+      void confirmModal(
+        'Выйти с уровня?',
+        'Прогресс этой попытки не сохранится — уровень придётся начать сначала.',
+        'Выйти',
+        'red',
+      ).then((ok) => {
+        if (ok) pop();
+      });
+    },
   });
 
-  /* ——————————————————————— завершение ——————————————————————— */
+  /* ——————————————————— завершение ——————————————————— */
 
-  function finishLevel(): void {
-    const result = session.result();
-    renderProgress();
-    instance?.destroy?.();
-    instance = null;
+  function finish(result: ReturnType<typeof view.session.result>, failed: boolean): void {
+    view.destroy();
+    const ts = now();
 
     let levelCoins = 0;
     let firstClear = false;
+    let answerCoins = result.coinsFromAnswers;
+
     update((s) => {
-      const outcome = recordLevelResult(
-        s,
-        level.id,
-        result.correct,
-        result.attempts,
-        result.mistakes,
-        now(),
-      );
-      firstClear = outcome.firstClear;
-      levelCoins = coinsForLevel(outcome.stars, outcome.firstClear);
-      const total = result.coinsFromAnswers + levelCoins;
+      const bonus = coinMultiplier(s);
+      answerCoins = applyCoinBonus(result.coinsFromAnswers, bonus);
+
+      if (!failed) {
+        const outcome = recordLevelResult(
+          s,
+          level.id,
+          result.correct,
+          result.attempts,
+          result.mistakes,
+          ts,
+        );
+        firstClear = outcome.firstClear;
+        levelCoins = applyCoinBonus(coinsForLevel(outcome.stars, outcome.firstClear), bonus);
+      }
+
+      const total = answerCoins + levelCoins;
       s.wallet.coins += total;
       s.stats.coinsEarned += total;
       s.stats.answers += result.attempts;
@@ -201,44 +132,31 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
       if (result.bestCombo > s.stats.bestCombo) s.stats.bestCombo = result.bestCombo;
     });
 
-    haptics.levelUp();
+    if (failed) haptics.fail();
+    else haptics.levelUp();
+
     replaceTop(
-      () => createResultsScreen(level, result, { levelCoins, firstClear }),
+      () =>
+        createResultsScreen(level, { ...result, coinsFromAnswers: answerCoins }, {
+          levelCoins,
+          firstClear,
+          failed,
+        }),
       'results:' + level.id,
     );
   }
 
-  onTap(closeBtn, () => {
-    if (session.state.index === 0 && session.state.attempts === 0) {
-      pop();
-      return;
-    }
-    void confirmModal(
-      'Выйти с уровня?',
-      'Прогресс этой попытки не сохранится — уровень придётся начать сначала.',
-      'Выйти',
-      'red',
-    ).then((ok) => {
-      if (ok) pop();
-    });
-  });
-
   return {
-    el,
+    el: view.el,
     onShow: () => {
       if (exercises.length === 0) {
         toast({ text: 'Для этого уровня пока нет заданий', iconName: 'bulb' });
         pop();
         return;
       }
-      if (!instance) mountCurrent();
+      renderHearts();
+      view.start();
     },
-    destroy: () => {
-      instance?.destroy?.();
-      instance = null;
-    },
+    destroy: () => view.destroy(),
   };
 }
-
-/** Итог уровня — используется и экраном результатов. */
-export type { SessionResult };

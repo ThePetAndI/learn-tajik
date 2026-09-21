@@ -1,0 +1,339 @@
+/* Экономика: магазин, дневные награды, жизни, восстановление, скины карты. */
+
+/* ————————————————————————— сердечки на уровне ————————————————————————— */
+
+.level__hearts {
+  display: flex;
+  gap: 2px;
+  flex: none;
+  font-size: 19px;
+}
+.level__heart.is-on { color: #ff5e52; filter: drop-shadow(0 1.5px 0 rgba(0, 0, 0, 0.2)); }
+.level__heart.is-off { color: rgba(255, 255, 255, 0.35); }
+.level__hearts.is-hit { animation: hearts-hit 460ms var(--ease-out); }
+@keyframes hearts-hit {
+  0%, 100% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(-4px) scale(1.14); }
+  55% { transform: translateX(4px) scale(1.06); }
+}
+
+/* ————————————————————————— дневные награды на карте ————————————————————————— */
+
+.map-daily {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.map-daily__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 3px solid #fff;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, #fff, #efe7ff);
+  box-shadow: 0 4px 0 #c7b6e8, 0 6px 14px rgba(30, 60, 20, 0.22);
+  color: var(--purple-1);
+  font-size: 24px;
+  transition: transform var(--t-press) var(--ease-out), box-shadow var(--t-press);
+}
+.map-daily__btn:active { transform: translateY(4px); box-shadow: 0 0 0 #c7b6e8; }
+.map-daily__btn.is-ready {
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 4px 0 var(--gold-deep), 0 6px 16px rgba(180, 120, 0, 0.35);
+  color: #fff;
+  animation: daily-nudge 2.4s var(--ease-out) infinite;
+}
+@keyframes daily-nudge {
+  0%, 82%, 100% { transform: translateY(0) rotate(0deg); }
+  86% { transform: translateY(-4px) rotate(-7deg); }
+  92% { transform: translateY(-2px) rotate(6deg); }
+}
+
+.map-daily__dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 13px;
+  height: 13px;
+  border: 2.5px solid #fff;
+  border-radius: 50%;
+  background: var(--red-2);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity var(--t-fast), transform var(--t-fast) var(--ease-pop);
+}
+.map-daily__btn.is-ready .map-daily__dot { opacity: 1; transform: none; }
+
+.map-daily__streak {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 10px 4px 7px;
+  border: 2.5px solid #fff;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, #fff, #f1ebff);
+  box-shadow: 0 3px 0 #d6cbee;
+  color: var(--ink-mute);
+  font-size: 14px;
+  font-weight: 900;
+}
+.map-daily__streak .icon { font-size: 17px; }
+.map-daily__streak.is-on {
+  background: linear-gradient(180deg, var(--orange-1), var(--orange-2));
+  box-shadow: 0 3px 0 var(--orange-deep);
+  color: #fff;
+}
+
+/* ————————————————————————— магазин ————————————————————————— */
+
+.screen--shop .screen-body { padding-bottom: calc(var(--sab) + 24px); }
+.shop-section { padding-top: 14px; }
+
+.shop-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 2px solid #efe9fb;
+}
+.shop-card:last-of-type { border-bottom: 0; }
+
+.shop-card__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2.5px solid #fff;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--c1), var(--c2));
+  box-shadow: 0 3px 0 var(--cd);
+  color: #fff;
+  font-size: 25px;
+  flex: none;
+}
+.shop-card__text { flex: 1; min-width: 0; }
+.shop-card__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15.5px;
+  font-weight: 900;
+  color: var(--ink);
+}
+.shop-card__count {
+  padding: 1px 7px;
+  border-radius: var(--r-pill);
+  background: var(--purple-1);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 900;
+}
+.shop-card__count:empty { display: none; }
+.shop-card__desc { font-size: 12.5px; font-weight: 700; color: var(--ink-mute); line-height: 1.32; }
+
+.shop-card__buy { display: flex; align-items: center; gap: 4px; flex: none; }
+.shop-card__buy .btn { min-width: 62px; }
+.shop-card__coin { font-size: 19px; color: var(--gold-2); }
+
+.shop-card.is-equipped .shop-card__icon { box-shadow: 0 3px 0 var(--cd), 0 0 0 3px var(--green-2); }
+.shop-note { padding: 0 var(--gutter) 8px; font-size: 12.5px; }
+
+/* ————————————————————————— окна наград ————————————————————————— */
+
+.reward-body { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 8px; }
+
+.chest {
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  padding: 0;
+  border: 4px solid #fff;
+  border-radius: var(--r-xl);
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 7px 0 var(--gold-deep), 0 12px 26px rgba(180, 120, 0, 0.35);
+  color: #fff;
+  font-size: 62px;
+  animation: chest-wiggle 1.8s ease-in-out infinite;
+}
+@keyframes chest-wiggle {
+  0%, 70%, 100% { transform: rotate(0deg) scale(1); }
+  78% { transform: rotate(-5deg) scale(1.04); }
+  88% { transform: rotate(5deg) scale(1.04); }
+}
+.chest.is-open {
+  animation: chest-burst 460ms var(--ease-pop) forwards;
+}
+@keyframes chest-burst {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.18) rotate(-6deg); }
+  100% { transform: scale(0.82); opacity: 0.35; }
+}
+
+.prize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity var(--t-mid), transform var(--t-mid) var(--ease-pop);
+}
+.prize.is-shown { opacity: 1; transform: none; }
+.prize__icon { font-size: 46px; color: var(--gold-2); filter: drop-shadow(0 3px 0 rgba(0,0,0,.14)); }
+.prize__title { font-size: 20px; font-weight: 900; color: var(--ink); }
+
+/* колесо удачи */
+.wheel-fortune { position: relative; width: 222px; height: 222px; }
+.wheel-fortune__disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px #fff, 0 8px 22px rgba(60, 30, 110, 0.32);
+  transform: rotate(0deg);
+}
+.wheel-fortune__label { font: 900 11.5px Nunito, sans-serif; fill: #3b2a5e; }
+.wheel-fortune__pin {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 22px solid var(--red-2);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+  transform: translateX(-50%);
+}
+
+/* ————————————————————————— окно жизней ————————————————————————— */
+
+.lives-modal { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 6px; }
+.lives-modal__hearts { display: flex; gap: 6px; }
+.lives-modal__heart { font-size: 34px; }
+.lives-modal__heart.is-on { color: #ff4d40; filter: drop-shadow(0 3px 0 #a81d13); }
+.lives-modal__heart.is-off { color: #ddd3ef; }
+.lives-modal__timer { font-size: 14px; font-weight: 800; color: var(--ink-2); }
+.lives-modal .modal__actions { width: 100%; }
+
+/* ————————————————————————— восстановление ————————————————————————— */
+
+.recovery__meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  padding: 3px 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+}
+.recovery__meter .icon { font-size: 16px; }
+.recovery__lives, .recovery__chain { display: flex; align-items: center; gap: 3px; }
+.recovery__lives .icon { color: #ff7a6e; }
+.recovery__chain .icon { color: var(--gold-1); }
+.recovery__meter.is-pop { animation: combo-pop 520ms var(--ease-pop); }
+
+.screen--recovery-done { background: linear-gradient(165deg, #3fc23a 0%, #2e9be6 100%); }
+.recovery__hearts { display: flex; gap: 8px; margin: 8px 0 4px; }
+.recovery__heart { font-size: 40px; }
+.recovery__heart.is-on { color: #fff; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.2)); }
+.recovery__heart.is-off { color: rgba(255, 255, 255, 0.3); }
+
+.screen--results.is-failed { background: linear-gradient(165deg, #6b4bd8 0%, #8a3a6a 100%); }
+.results__broken { font-size: 64px; color: rgba(255, 255, 255, 0.45); margin: 6px 0; }
+
+/* ————————————————————————— конфетти ————————————————————————— */
+
+.confetti { position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; }
+.confetti__piece { position: absolute; border-radius: 2px; will-change: transform, opacity; }
+
+/* ————————————————————————— скины карты ————————————————————————— */
+
+.screen--map[data-theme='desert'] {
+  --meadow-1: #f3dfae;
+  --meadow-2: #e6c384;
+  --meadow-3: #d2a55f;
+  --sky-1: #ffe9c2;
+  --sky-2: #ffcf8a;
+  --sand-1: #fff3d8;
+  --sand-2: #f0dbb0;
+  --sand-edge: #c99a56;
+}
+.screen--map[data-theme='desert'] .d-leaf-1 { fill: #86b95e; }
+.screen--map[data-theme='desert'] .d-leaf-2 { fill: #6fa34b; }
+.screen--map[data-theme='desert'] .d-leaf-3 { fill: #5d8d3d; }
+.screen--map[data-theme='desert'] .d-leaf-hi { fill: #9fce74; }
+.screen--map[data-theme='desert'] .d-trunk { fill: #b07e4a; }
+
+.screen--map[data-theme='winter'] {
+  --meadow-1: #eef6ff;
+  --meadow-2: #d6e6f7;
+  --meadow-3: #bcd3ec;
+  --sky-1: #d8ecff;
+  --sky-2: #a9d2f5;
+  --sand-1: #ffffff;
+  --sand-2: #e6eef7;
+  --sand-edge: #9fb7cf;
+}
+.screen--map[data-theme='winter'] .d-leaf-1 { fill: #4e8f6a; }
+.screen--map[data-theme='winter'] .d-leaf-2 { fill: #3f7a59; }
+.screen--map[data-theme='winter'] .d-leaf-3 { fill: #356a4d; }
+.screen--map[data-theme='winter'] .d-leaf-hi { fill: #e8f4ff; }
+.screen--map[data-theme='winter'] .d-trunk { fill: #7a5c42; }
+.screen--map[data-theme='winter'] .d-shadow { fill: rgba(60, 90, 130, 0.14); }
+.screen--map[data-theme='winter'] .map-node__num { color: #fff; }
+
+.screen--map[data-theme='night'] {
+  --meadow-1: #3c3570;
+  --meadow-2: #2e2757;
+  --meadow-3: #221c43;
+  --sky-1: #241f4a;
+  --sky-2: #151233;
+  --sand-1: #6f63b8;
+  --sand-2: #584da0;
+  --sand-edge: #423979;
+}
+.screen--map[data-theme='night'] .d-leaf-1 { fill: #3f7a59; }
+.screen--map[data-theme='night'] .d-leaf-2 { fill: #35684c; }
+.screen--map[data-theme='night'] .d-leaf-3 { fill: #2b573f; }
+.screen--map[data-theme='night'] .d-leaf-hi { fill: #4f9a6f; }
+.screen--map[data-theme='night'] .d-trunk { fill: #5a4433; }
+.screen--map[data-theme='night'] .d-cloud { fill: #6a5fae; }
+.screen--map[data-theme='night'] .d-shadow { fill: rgba(0, 0, 0, 0.25); }
+.screen--map[data-theme='night'] .map__cta {
+  background: linear-gradient(180deg, rgba(34, 28, 67, 0) 0%, rgba(34, 28, 67, 0.8) 45%, rgba(34, 28, 67, 0.96) 100%);
+}
+
+/* ————————————————————————— бустер 50/50 в квизе ————————————————————————— */
+
+.quiz__tools { display: flex; justify-content: center; }
+.quiz__fifty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 2.5px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  transition: transform var(--t-press) var(--ease-out), background var(--t-fast);
+}
+.quiz__fifty:active { transform: scale(0.95); background: rgba(255, 255, 255, 0.28); }
+.quiz__fifty .icon { font-size: 18px; }
+.quiz__fifty-count { opacity: 0.8; font-size: 13px; }

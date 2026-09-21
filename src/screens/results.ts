@@ -1,19 +1,26 @@
 /** Экран результатов уровня: звёзды, точность, монеты. */
 
 import { h } from '../core/dom';
-import { pop, type ScreenView } from '../core/router';
+import { closeAll, pop, type ScreenView } from '../core/router';
+import { getState } from '../core/store';
+import { now } from '../core/time';
 import type { FlatLevel } from '../data/content';
-import type { SessionResult } from '../game/engine';
+import { computeLives } from '../domain/lives';
+import { hasRecoveryMaterial } from '../domain/recovery';
 import { MAX_STARS, starsTitle } from '../domain/stars';
+import type { SessionResult } from '../game/engine';
 import { button } from '../ui/button';
-import { icon } from '../ui/icons';
+import { icon, type IconName } from '../ui/icons';
+import { openRecovery } from './recovery';
 
 export interface ResultsExtra {
   levelCoins: number;
   firstClear: boolean;
+  /** Уровень прерван: кончились жизни. */
+  failed?: boolean;
 }
 
-function statRow(iconName: Parameters<typeof icon>[0], label: string, value: string): HTMLElement {
+function statRow(iconName: IconName, label: string, value: string): HTMLElement {
   return h(
     'div',
     { class: 'results__stat' },
@@ -28,74 +35,90 @@ export function createResultsScreen(
   result: SessionResult,
   extra: ResultsExtra,
 ): ScreenView {
+  const failed = extra.failed === true;
+  const totalCoins = result.coinsFromAnswers + extra.levelCoins;
+
   const stars = h('div', { class: 'results__stars' });
   for (let i = 0; i < MAX_STARS; i++) {
-    const on = i < result.stars;
-    const star = h('span', { class: 'results__star ' + (on ? 'is-on' : 'is-off') }, icon(on ? 'star' : 'starEmpty'));
+    const on = !failed && i < result.stars;
+    const star = h(
+      'span',
+      { class: 'results__star ' + (on ? 'is-on' : 'is-off') },
+      icon(on ? 'star' : 'starEmpty'),
+    );
     star.style.animationDelay = 120 + i * 180 + 'ms';
     stars.append(star);
   }
 
-  const totalCoins = result.coinsFromAnswers + extra.levelCoins;
+  const actions = h('div', { class: 'results__actions' });
+  if (failed && hasRecoveryMaterial(getState(), now())) {
+    actions.append(
+      button({
+        label: 'Восстановление',
+        sub: 'вернуть жизни на трудных словах',
+        tone: 'green',
+        size: 'big',
+        wide: true,
+        onTap: () => {
+          closeAll();
+          openRecovery();
+        },
+      }),
+      button({ label: 'На карту', tone: 'white', wide: true, onTap: () => pop() }),
+    );
+  } else {
+    actions.append(
+      button({ label: 'На карту', tone: 'orange', size: 'big', wide: true, onTap: () => pop() }),
+    );
+  }
+
+  const lives = computeLives(getState().lives, now());
 
   const el = h(
     'div',
-    { class: 'screen screen--results' },
+    { class: 'screen screen--results' + (failed ? ' is-failed' : '') },
     h(
       'div',
       { class: 'results__body' },
       h('div', { class: 'results__section', text: level.sectionTitle }),
-      h('h1', { class: 'h1 results__title', text: starsTitle(result.stars) }),
-      stars,
-      h(
-        'div',
-        { class: 'results__coins' },
-        icon('coin'),
-        h('span', { text: '+' + totalCoins }),
-      ),
+      h('h1', {
+        class: 'h1 results__title',
+        text: failed ? 'Жизни кончились' : starsTitle(result.stars),
+      }),
+      failed
+        ? h('div', { class: 'results__broken' }, icon('heartEmpty'))
+        : stars,
+      totalCoins > 0
+        ? h('div', { class: 'results__coins' }, icon('coin'), h('span', { text: '+' + totalCoins }))
+        : null,
       h(
         'div',
         { class: 'results__stats' },
         statRow('target', 'Точность', Math.round(result.accuracy * 100) + '%'),
         statRow('check', 'Верных ответов', result.correct + ' из ' + result.attempts),
         statRow('flame', 'Лучшая серия', result.bestCombo + ' подряд'),
-        statRow(
-          'coin',
-          extra.firstClear ? 'За первое прохождение' : 'За уровень',
-          '+' + extra.levelCoins,
-        ),
+        failed
+          ? statRow('heart', 'Жизней осталось', lives.count + ' из ' + lives.max)
+          : statRow(
+              'coin',
+              extra.firstClear ? 'За первое прохождение' : 'За уровень',
+              '+' + extra.levelCoins,
+            ),
       ),
-      result.mistakes > 0
+      failed
         ? h('p', {
             class: 'p results__note',
-            text:
-              'Ошибок: ' +
-              result.mistakes +
-              '. Пройди без ошибок — получишь три звезды.',
+            text: 'Уровень не засчитан. Верни жизни в «Восстановлении» — там повторяются слова, которые даются труднее всего.',
           })
-        : null,
+        : result.mistakes > 0
+          ? h('p', {
+              class: 'p results__note',
+              text: 'Ошибок: ' + result.mistakes + '. Пройди без ошибок — получишь три звезды.',
+            })
+          : null,
     ),
-    h(
-      'div',
-      { class: 'results__actions' },
-      button({
-        label: 'На карту',
-        tone: 'orange',
-        size: 'big',
-        wide: true,
-        onTap: () => pop(),
-      }),
-    ),
+    actions,
   );
 
-  // экран поверх карты: системная «назад» должна вести туда же
-  const onKey = (ev: KeyboardEvent): void => {
-    if (ev.key === 'Enter') pop();
-  };
-
-  return {
-    el,
-    onShow: () => document.addEventListener('keydown', onKey),
-    destroy: () => document.removeEventListener('keydown', onKey),
-  };
+  return { el };
 }

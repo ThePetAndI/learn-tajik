@@ -3,6 +3,7 @@
 import { h, onTap } from '../../core/dom';
 import { haptics } from '../../core/haptics';
 import { hasSpecialLetters, specialLettersOf } from '../../domain/answer';
+import { icon } from '../../ui/icons';
 import type { ExerciseContext, ExerciseInstance, ExerciseModule, QuizExercise } from '../types';
 
 /** Короткие варианты помещаются в две колонки, длинные — в одну. */
@@ -67,6 +68,49 @@ export const quizModule: ExerciseModule<QuizExercise> = {
       }),
     );
 
-    return { el: h('div', { class: 'ex ex--quiz' }, promptEl, list) };
+    /* ——— бустер «50 на 50»: убирает два неверных варианта ——— */
+
+    const fiftyCount = h('span', { class: 'quiz__fifty-count' });
+    const fiftyBtn = h(
+      'button',
+      { class: 'quiz__fifty', attr: { type: 'button' }, aria: { label: 'Убрать два неверных варианта' } },
+      icon('target'),
+      h('span', { text: '50/50' }),
+      fiftyCount,
+    );
+    let fiftyUsed = false;
+
+    function renderFifty(): void {
+      const left = ctx.itemCount('fifty');
+      fiftyCount.textContent = '×' + left;
+      // прятать кнопку, когда бустеров нет: иначе она дразнит впустую
+      fiftyBtn.classList.toggle('hidden', left <= 0 || fiftyUsed || answered);
+    }
+
+    onTap(fiftyBtn, () => {
+      if (answered || fiftyUsed) return;
+      if (!ctx.useItem('fifty')) {
+        renderFifty();
+        return;
+      }
+      fiftyUsed = true;
+      const wrong = buttons
+        .map((btn, i) => ({ btn, i }))
+        .filter((x) => x.i !== ex.correct);
+      // убираем два случайных неверных — какие именно, решает свой ГПСЧ
+      const shuffled = wrong.sort(() => ctx.rng() - 0.5).slice(0, 2);
+      for (const { btn } of shuffled) {
+        btn.disabled = true;
+        btn.classList.add('is-dim');
+      }
+      haptics.reward();
+      renderFifty();
+    });
+
+    renderFifty();
+
+    return {
+      el: h('div', { class: 'ex ex--quiz' }, promptEl, list, h('div', { class: 'quiz__tools' }, fiftyBtn)),
+    };
   },
 };

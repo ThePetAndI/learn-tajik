@@ -23,7 +23,8 @@ export interface SessionState {
 }
 
 export interface SessionResult {
-  levelId: string;
+  /** Уровень или «recovery» — сессия восстановления. */
+  sessionId: string;
   total: number;
   attempts: number;
   correct: number;
@@ -35,7 +36,7 @@ export interface SessionResult {
 }
 
 export interface SessionOptions {
-  levelId: string;
+  sessionId: string;
   exercises: Exercise[];
   /** Вызывается на каждую попытку — сюда подключится интервальное повторение. */
   onAttempt?: (attempt: Attempt) => void;
@@ -104,7 +105,7 @@ export function createSession(opts: SessionOptions): Session {
 
     result() {
       return {
-        levelId: opts.levelId,
+        sessionId: opts.sessionId,
         total: state.total,
         attempts: state.attempts,
         correct: state.correct,

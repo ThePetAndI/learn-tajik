@@ -22,6 +22,11 @@ import { button } from '../ui/button';
 import { decorLayer } from '../ui/decor';
 import { icon, type IconName } from '../ui/icons';
 import { createPet, type PetHandle } from '../ui/pet';
+import { now } from '../core/time';
+import { canOpenChest, canSpinWheel } from '../domain/daily';
+import { activeThemeId } from '../domain/shop';
+import { visibleStreak } from '../domain/streak';
+import { openChestModal, openWheelModal } from './rewards';
 import { openLevelCard } from './level-card';
 
 const BANNER_HEIGHT = 78;
@@ -46,7 +51,35 @@ export function createMapScreen(): ScreenView {
   cta.replaceChildren(h('span', { class: 'btn__text' }, ctaLabel, ctaSub));
   const ctaBar = h('div', { class: 'map__cta' }, cta);
 
-  const el = h('div', { class: 'screen screen--map' }, scroll, ctaBar);
+  /* —————————————————— дневные награды сбоку —————————————————— */
+
+  const chestBtn = h(
+    'button',
+    { class: 'map-daily__btn', attr: { type: 'button' }, aria: { label: 'Дневной сундук' } },
+    icon('chest'),
+    h('span', { class: 'map-daily__dot' }),
+  );
+  onTap(chestBtn, () => {
+    haptics.tap();
+    openChestModal();
+  });
+
+  const wheelBtn = h(
+    'button',
+    { class: 'map-daily__btn', attr: { type: 'button' }, aria: { label: 'Колесо удачи' } },
+    icon('wheel'),
+    h('span', { class: 'map-daily__dot' }),
+  );
+  onTap(wheelBtn, () => {
+    haptics.tap();
+    openWheelModal();
+  });
+
+  const streakChip = h('div', { class: 'map-daily__streak' }, icon('flame'), h('span', { text: '0' }));
+
+  const dailyBar = h('div', { class: 'map-daily' }, streakChip, chestBtn, wheelBtn);
+
+  const el = h('div', { class: 'screen screen--map' }, scroll, dailyBar, ctaBar);
 
   const nodeRefs = new Map<string, NodeRefs>();
   const bannerRefs = new Map<string, { root: HTMLElement; stars: HTMLElement }>();
@@ -207,6 +240,19 @@ export function createMapScreen(): ScreenView {
 
     placePet();
     updateCta();
+    updateDaily();
+  }
+
+  function updateDaily(): void {
+    const state = getState();
+    const ts = now();
+    chestBtn.classList.toggle('is-ready', canOpenChest(state, ts));
+    wheelBtn.classList.toggle('is-ready', canSpinWheel(state, ts));
+    const streak = visibleStreak(state, ts);
+    streakChip.classList.toggle('is-on', streak > 0);
+    const label = streakChip.querySelector('span');
+    if (label) label.textContent = String(streak);
+    el.dataset.theme = activeThemeId(state);
   }
 
   function applyNodeState(refs: NodeRefs, status: LevelStatus, stars: number): void {

@@ -95,20 +95,21 @@
 
 .map-banner {
   position: absolute;
-  left: 50%;
+  /* справа оставлено место под кнопки дневных наград — они висят поверх карты */
+  left: 12px;
+  right: 72px;
   top: 14px;
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 10px;
-  width: min(86%, 340px);
+  max-width: 340px;
   padding: 9px 16px 9px 10px;
   border: 3px solid #fff;
   border-radius: var(--r-lg);
   background: linear-gradient(180deg, var(--c1), var(--c2));
   box-shadow: 0 5px 0 var(--cd), 0 8px 18px rgba(30, 60, 20, 0.28);
   color: #fff;
-  transform: translateX(-50%);
 }
 .map-banner.is-locked { filter: saturate(0.45) brightness(0.92); }
 

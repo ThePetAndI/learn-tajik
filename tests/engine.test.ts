@@ -22,7 +22,7 @@ function quiz(id: string): Exercise {
 
 function session(count = 3) {
   return createSession({
-    levelId: 's01_l1',
+    sessionId: 's01_l1',
     exercises: Array.from({ length: count }, (_, i) => quiz('w_' + i)),
   });
 }
@@ -37,7 +37,7 @@ describe('сессия уровня', () => {
   });
 
   it('пустой список сразу считается законченным', () => {
-    const s = createSession({ levelId: 'x', exercises: [] });
+    const s = createSession({ sessionId: 'x', exercises: [] });
     expect(s.state.finished).toBe(true);
     expect(s.current()).toBeUndefined();
     expect(s.progress()).toBe(1);
@@ -100,7 +100,7 @@ describe('счёт и серии', () => {
   it('onAttempt получает каждую попытку — на это подключится повторение', () => {
     const seen: boolean[] = [];
     const s = createSession({
-      levelId: 'x',
+      sessionId: 'x',
       exercises: [quiz('w_1')],
       onAttempt: (a) => seen.push(a.correct),
     });
@@ -198,7 +198,7 @@ describe('устойчивость', () => {
     const spy = vi.fn(() => {
       throw new Error('подписчик упал');
     });
-    const s = createSession({ levelId: 'x', exercises: [quiz('w')], onAttempt: spy });
+    const s = createSession({ sessionId: 'x', exercises: [quiz('w')], onAttempt: spy });
     // сейчас исключение пробрасывается — фиксируем поведение явно
     expect(() => s.attempt({ correct: true, wordIds: [] })).toThrow();
     expect(s.state.correct).toBe(1);

@@ -6,6 +6,8 @@
 
 import { h } from '../core/dom';
 import { getState } from '../core/store';
+import { now } from '../core/time';
+import { computeLives } from '../domain/lives';
 import type { FlatLevel } from '../data/content';
 import { getLevelProgress } from '../domain/progress';
 import { MAX_STARS } from '../domain/stars';
@@ -17,6 +19,12 @@ import { plural } from '../core/time';
 type StartHandler = (level: FlatLevel) => void;
 
 let startHandler: StartHandler | null = null;
+let livesGate: (() => void) | null = null;
+
+/** Что показать, когда жизней нет. Подключается в app.ts. */
+export function setLivesGate(fn: (() => void) | null): void {
+  livesGate = fn;
+}
 
 /** Движок упражнений подключается сюда на вехе 3. */
 export function setLevelStartHandler(fn: StartHandler | null): void {
@@ -84,6 +92,11 @@ export function openLevelCard(level: FlatLevel): void {
         wide: true,
         onTap: () => {
           m.close('start');
+          // без жизней уровень не начинаем: сначала предложим восстановление
+          if (computeLives(getState().lives, now()).count <= 0) {
+            livesGate?.();
+            return;
+          }
           startHandler?.(level);
         },
       }),

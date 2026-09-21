@@ -8,6 +8,9 @@ import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
 import { toast } from '../ui/toast';
 import { canInstall, isStandalone, onInstallAvailability, promptInstall } from '../pwa/install-prompt';
+import { now } from '../core/time';
+import { visibleStreak } from '../domain/streak';
+import { activePet } from '../domain/shop';
 import { createSettingsScreen } from './settings';
 
 function statCard(iconName: IconName, value: string, label: string, tone: string): HTMLElement {
@@ -22,6 +25,7 @@ function statCard(iconName: IconName, value: string, label: string, tone: string
 
 export function createProfileScreen(): ScreenView {
   const grid = h('div', { class: 'stat-grid' });
+  const petLine = h('div', { class: 'p' });
   const installSlot = h('div', { class: 'profile__install' });
 
   function renderStats(): void {
@@ -33,10 +37,16 @@ export function createProfileScreen(): ScreenView {
       if (p.stars > 0) done++;
     }
     const known = Object.values(st.srs).filter((w) => w.introduced).length;
+    const streak = visibleStreak(st, now());
     const accuracy = st.stats.answers > 0 ? Math.round((st.stats.correct / st.stats.answers) * 100) : 0;
 
+    const pet = activePet(st);
+    petLine.textContent = pet
+      ? 'Питомец: ' + pet.title + (pet.bonus ? ' · ' + pet.description : '')
+      : 'Учим таджикский с нуля';
+
     grid.replaceChildren(
-      statCard('flame', String(st.streak.current), plural(st.streak.current, 'день', 'дня', 'дней'), 'orange'),
+      statCard('flame', String(streak), plural(streak, 'день', 'дня', 'дней'), 'orange'),
       statCard('star', String(stars), 'звёзд', 'gold'),
       statCard('map', String(done), plural(done, 'уровень', 'уровня', 'уровней'), 'green'),
       statCard('book', String(known), plural(known, 'слово', 'слова', 'слов'), 'blue'),
@@ -92,7 +102,7 @@ export function createProfileScreen(): ScreenView {
         { class: 'profile__head' },
         h('div', { class: 'profile__avatar' }, icon('paw')),
         h('div', { class: 'h2', text: 'Салом!' }),
-        h('div', { class: 'p', text: 'Учим таджикский с нуля' }),
+        petLine,
       ),
       h('section', { class: 'panel' }, h('div', { class: 'panel__title', text: 'Статистика' }), grid),
       h('div', { class: 'profile__actions' }, installSlot),
