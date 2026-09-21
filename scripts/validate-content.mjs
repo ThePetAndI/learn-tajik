@@ -4,7 +4,7 @@
  *
  * Запуск: npm run validate:content
  */
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
 
@@ -248,6 +248,32 @@ function checkReviewFile(reviewText) {
   }
 }
 
+const REVIEW_HEADER = `# На проверку
+
+Сюда попадает всё, что помечено \`"verified": false\`: слова, формы и обороты, в точности
+которых нет уверенности. Таблица собирается командой \`npm run review\`.
+
+Проверили и исправили — поставьте в JSON \`"verified": true\` и перезапустите \`npm run review\`.
+`;
+
+/** Перегенерирует REVIEW.md из полей verified: false. */
+async function writeReview(reviewPath) {
+  const rows = unverified.map((u) => {
+    const file = relative(ROOT, u.file).split('\\').join('/');
+    const note = (u.note || '—').split('|').join('\\|');
+    return '| `' + u.id + '` | ' + u.tg + ' | ' + u.ru + ' | ' + note + ' | `' + file + '` |';
+  });
+  const body =
+    rows.length === 0
+      ? '\nПока всё проверено.\n'
+      : '\n| id | таджикский | перевод | в чём сомнение | файл |\n' +
+        '|---|---|---|---|---|\n' +
+        rows.join('\n') +
+        '\n';
+  await writeFile(reviewPath, REVIEW_HEADER + body, 'utf8');
+  console.log('REVIEW.md обновлён: строк ' + rows.length);
+}
+
 async function main() {
   if (!(await exists(CONTENT))) {
     console.log('Папки content пока нет — пропускаю проверку (появится на вехе 4).');
@@ -260,7 +286,9 @@ async function main() {
   await checkCourse();
 
   const reviewPath = join(CONTENT, 'REVIEW.md');
-  if (unverified.length > 0) {
+  if (process.argv.includes('--write-review')) {
+    await writeReview(reviewPath);
+  } else if (unverified.length > 0) {
     if (await exists(reviewPath)) checkReviewFile(await readFile(reviewPath, 'utf8'));
     else warn(reviewPath, 'есть непроверенные элементы, но файла REVIEW.md нет');
   }

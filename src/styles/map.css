@@ -261,6 +261,14 @@
   color: #fff;
 }
 
+/* Открыт, но играть пока не во что: номер виден, диск приглушён */
+.map-node.is-open .map-node__disc {
+  background: linear-gradient(180deg, #dfe6ef, #bcc9d9);
+  box-shadow: 0 6px 0 #93a3b8, 0 10px 18px rgba(30, 60, 20, 0.22);
+  color: #7c8ca1;
+  text-shadow: none;
+}
+.map-node.is-open .map-node__num { text-shadow: none; }
 .map-node.is-empty .map-node__disc { filter: saturate(0.6); }
 
 .map-node.is-shake { animation: node-shake 420ms var(--ease-out); }

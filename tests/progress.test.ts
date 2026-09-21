@@ -122,6 +122,12 @@ describe('статус узла', () => {
     expect(statusOf(state, levels, 2)).toBe('locked');
   });
 
+  it('текущий ровно один', () => {
+    const state = createInitialState(T0);
+    const statuses = levels.map((_, i) => statusOf(state, levels, i));
+    expect(statuses.filter((st) => st === 'current')).toHaveLength(1);
+  });
+
   it('несуществующий индекс закрыт', () => {
     expect(statusOf(createInitialState(T0), levels, 42)).toBe('locked');
   });

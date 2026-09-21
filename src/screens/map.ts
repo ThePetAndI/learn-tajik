@@ -194,7 +194,7 @@ export function createMapScreen(): ScreenView {
     currentLevel = levels[curIdx] ?? null;
 
     for (const refs of nodeRefs.values()) {
-      const status = statusOf(state, levels, refs.level.index);
+      const status = statusOf(state, levels, refs.level.index, curIdx);
       const progress = getLevelProgress(state, refs.level.id);
       applyNodeState(refs, status, progress.stars);
     }
@@ -213,13 +213,20 @@ export function createMapScreen(): ScreenView {
     const { root, disc, stars: starsEl, level } = refs;
     root.classList.toggle('is-done', status === 'done');
     root.classList.toggle('is-current', status === 'current');
+    root.classList.toggle('is-open', status === 'open');
     root.classList.toggle('is-locked', status === 'locked');
     root.classList.toggle('is-boss', level.boss);
     root.classList.toggle('is-empty', !level.playable);
     root.setAttribute(
       'aria-label',
       'Уровень ' + (level.index + 1) + ': ' + level.title +
-        (status === 'locked' ? ', закрыт' : status === 'done' ? ', пройден, звёзд ' + stars : ', текущий'),
+        (status === 'locked'
+          ? ', закрыт'
+          : status === 'done'
+            ? ', пройден, звёзд ' + stars
+            : status === 'open'
+              ? ', заданий пока нет'
+              : ', текущий'),
     );
 
     clear(disc);

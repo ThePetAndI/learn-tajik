@@ -1,0 +1,298 @@
+{
+  "theme": "greetings",
+  "words": [
+    {
+      "id": "w_salom",
+      "tg": "салом",
+      "ru": "привет, здравствуйте",
+      "pos": "interj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Салом! Чӣ хел?",
+        "ru": "Привет! Как дела?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khayr",
+      "tg": "хайр",
+      "ru": "пока, до свидания",
+      "pos": "interj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Хайр, то боздид!",
+        "ru": "Пока, до встречи!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": "основное значение слова — «благо, добро»"
+    },
+    {
+      "id": "w_ha",
+      "tg": "ҳа",
+      "ru": "да",
+      "pos": "part",
+      "theme": "greetings",
+      "example": {
+        "tg": "Ҳа, раҳмат.",
+        "ru": "Да, спасибо."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ne",
+      "tg": "не",
+      "ru": "нет",
+      "pos": "part",
+      "theme": "greetings",
+      "example": {
+        "tg": "Не, раҳмат.",
+        "ru": "Нет, спасибо."
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_subh",
+      "tg": "субҳ",
+      "ru": "утро",
+      "pos": "noun",
+      "theme": "greetings",
+      "example": {
+        "tg": "Субҳ ба хайр!",
+        "ru": "Доброе утро!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shab",
+      "tg": "шаб",
+      "ru": "ночь",
+      "pos": "noun",
+      "theme": "greetings",
+      "example": {
+        "tg": "Шаб ба хайр!",
+        "ru": "Спокойной ночи!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ruz",
+      "tg": "рӯз",
+      "ru": "день",
+      "pos": "noun",
+      "theme": "greetings",
+      "example": {
+        "tg": "Рӯз ба хайр!",
+        "ru": "Добрый день!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khush",
+      "tg": "хуш",
+      "ru": "приятный, радостный",
+      "pos": "adj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Хуш омадед!",
+        "ru": "Добро пожаловать!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_chi",
+      "tg": "чӣ",
+      "ru": "что",
+      "pos": "pron",
+      "theme": "greetings",
+      "example": {
+        "tg": "Ин чӣ аст?",
+        "ru": "Что это?"
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить пример: «Ин чӣ аст?»"
+    },
+    {
+      "id": "w_nagz",
+      "tg": "нағз",
+      "ru": "хорошо, хороший",
+      "pos": "adj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Раҳмат, нағз!",
+        "ru": "Спасибо, хорошо!"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_khub",
+      "tg": "хуб",
+      "ru": "хороший, ладно",
+      "pos": "adj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Хуб, розӣ.",
+        "ru": "Хорошо, согласен."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить пример со словом «розӣ» (согласен)"
+    },
+    {
+      "id": "w_bad",
+      "tg": "бад",
+      "ru": "плохой, плохо",
+      "pos": "adj",
+      "theme": "greetings",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_rahmat",
+      "tg": "раҳмат",
+      "ru": "спасибо",
+      "pos": "interj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Раҳмат, шумо хеле меҳрубон.",
+        "ru": "Спасибо, вы очень добры."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить пример: «шумо хеле меҳрубон»"
+    },
+    {
+      "id": "w_tashakkur",
+      "tg": "ташаккур",
+      "ru": "спасибо (книжное)",
+      "pos": "interj",
+      "theme": "greetings",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "более официальное, чем «раҳмат»"
+    },
+    {
+      "id": "w_lutfan",
+      "tg": "лутфан",
+      "ru": "пожалуйста (при просьбе)",
+      "pos": "adv",
+      "theme": "greetings",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "в ответ на «спасибо» говорят иначе"
+    },
+    {
+      "id": "w_bubakhshed",
+      "tg": "бубахшед",
+      "ru": "извините",
+      "pos": "interj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Бубахшед, ин ҷо озод аст?",
+        "ru": "Извините, здесь свободно?"
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить пример: «ин ҷо озод аст?»"
+    },
+    {
+      "id": "w_man",
+      "tg": "ман",
+      "ru": "я",
+      "pos": "pron",
+      "theme": "greetings",
+      "example": {
+        "tg": "Ман Алӣ.",
+        "ru": "Я Али."
+      },
+      "audio": null,
+      "verified": false,
+      "note": "проверить, нужна ли связка: «Ман Алӣ ҳастам»"
+    },
+    {
+      "id": "w_tu",
+      "tg": "ту",
+      "ru": "ты",
+      "pos": "pron",
+      "theme": "greetings",
+      "example": {
+        "tg": "Ту чӣ хел?",
+        "ru": "Как ты?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shumo",
+      "tg": "шумо",
+      "ru": "вы",
+      "pos": "pron",
+      "theme": "greetings",
+      "example": {
+        "tg": "Шумо чӣ хел?",
+        "ru": "Как вы?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mo",
+      "tg": "мо",
+      "ru": "мы",
+      "pos": "pron",
+      "theme": "greetings",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_nom",
+      "tg": "ном",
+      "ru": "имя",
+      "pos": "noun",
+      "theme": "greetings",
+      "example": {
+        "tg": "Номи шумо чист?",
+        "ru": "Как вас зовут?"
+      },
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_dust",
+      "tg": "дӯст",
+      "ru": "друг",
+      "pos": "noun",
+      "theme": "greetings",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

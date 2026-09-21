@@ -12,7 +12,6 @@ import { MAX_STARS } from '../domain/stars';
 import { button } from '../ui/button';
 import { icon } from '../ui/icons';
 import { modal } from '../ui/modal';
-import { toast } from '../ui/toast';
 import { plural } from '../core/time';
 
 type StartHandler = (level: FlatLevel) => void;
@@ -85,8 +84,7 @@ export function openLevelCard(level: FlatLevel): void {
         wide: true,
         onTap: () => {
           m.close('start');
-          if (startHandler) startHandler(level);
-          else toast({ text: 'Упражнения подключаются на следующем шаге', iconName: 'bulb' });
+          startHandler?.(level);
         },
       }),
     );

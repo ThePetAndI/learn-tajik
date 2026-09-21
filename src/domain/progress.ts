@@ -8,7 +8,14 @@ import type { FlatLevel } from '../data/content';
 import type { LevelProgress, SaveState } from '../data/state';
 import { MAX_STARS, accuracy, starsFor } from './stars';
 
-export type LevelStatus = 'done' | 'current' | 'locked';
+/**
+ * 'done'    — пройден;
+ * 'current' — тот самый уровень, на котором игрок сейчас (ровно один на карте);
+ * 'open'    — открыт, но не текущий: так выглядят уровни без заданий, через
+ *             которые курс перешагнул;
+ * 'locked'  — закрыт.
+ */
+export type LevelStatus = 'done' | 'current' | 'open' | 'locked';
 
 export const EMPTY_PROGRESS: Readonly<LevelProgress> = Object.freeze({
   stars: 0,
@@ -26,25 +33,36 @@ export function isDone(state: SaveState, levelId: string): boolean {
 }
 
 /**
- * Уровень открыт, если он первый или предыдущий пройден.
- * Уровни без контента не блокируют карту — их просто нельзя запустить.
+ * Уровень открыт, если он первый или предыдущий играбельный уровень пройден.
+ *
+ * Уровень без контента пропускается при подсчёте: иначе один недописанный
+ * раздел запирал бы весь курс дальше по карте. Запустить его всё равно нельзя.
  */
 export function isUnlocked(state: SaveState, levels: readonly FlatLevel[], index: number): boolean {
   if (index <= 0) return true;
   if (index >= levels.length) return false;
-  const prev = levels[index - 1];
-  return prev ? isDone(state, prev.id) : false;
+  for (let i = index - 1; i >= 0; i--) {
+    const prev = levels[i];
+    if (!prev || !prev.playable) continue;
+    return isDone(state, prev.id);
+  }
+  // до этого места играбельных уровней нет — открываем
+  return true;
 }
 
 /**
- * Где игрок сейчас: первый непройденный уровень.
- * Если пройдено всё — последний уровень курса.
+ * Где игрок сейчас: первый непройденный играбельный уровень.
+ * Если играть больше не во что — последний играбельный, иначе последний вообще.
  */
 export function currentIndex(state: SaveState, levels: readonly FlatLevel[]): number {
+  let lastPlayable = -1;
   for (let i = 0; i < levels.length; i++) {
     const level = levels[i];
-    if (level && !isDone(state, level.id)) return i;
+    if (!level || !level.playable) continue;
+    lastPlayable = i;
+    if (!isDone(state, level.id)) return i;
   }
+  if (lastPlayable >= 0) return lastPlayable;
   return Math.max(0, levels.length - 1);
 }
 
@@ -52,11 +70,13 @@ export function statusOf(
   state: SaveState,
   levels: readonly FlatLevel[],
   index: number,
+  current: number = currentIndex(state, levels),
 ): LevelStatus {
   const level = levels[index];
   if (!level) return 'locked';
   if (isDone(state, level.id)) return 'done';
-  return isUnlocked(state, levels, index) ? 'current' : 'locked';
+  if (index === current) return 'current';
+  return isUnlocked(state, levels, index) ? 'open' : 'locked';
 }
 
 export interface SectionSummary {

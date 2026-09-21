@@ -1,0 +1,151 @@
+{
+  "theme": "greetings",
+  "phrases": [
+    {
+      "id": "p_assalom",
+      "tg": "Ассалому алайкум!",
+      "ru": "Здравствуйте!",
+      "theme": "greetings",
+      "words": [],
+      "audio": null,
+      "verified": true,
+      "note": "традиционное приветствие, вежливее чем «салом»"
+    },
+    {
+      "id": "p_vaalaykum",
+      "tg": "Ваалайкум ассалом!",
+      "ru": "И вам здравствуйте!",
+      "theme": "greetings",
+      "words": [],
+      "audio": null,
+      "verified": true,
+      "note": "ответ на «Ассалому алайкум»"
+    },
+    {
+      "id": "p_subh_ba_khayr",
+      "tg": "Субҳ ба хайр!",
+      "ru": "Доброе утро!",
+      "theme": "greetings",
+      "words": [
+        "w_subh",
+        "w_khayr"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_shab_ba_khayr",
+      "tg": "Шаб ба хайр!",
+      "ru": "Спокойной ночи!",
+      "theme": "greetings",
+      "words": [
+        "w_shab",
+        "w_khayr"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_ruz_ba_khayr",
+      "tg": "Рӯз ба хайр!",
+      "ru": "Добрый день!",
+      "theme": "greetings",
+      "words": [
+        "w_ruz",
+        "w_khayr"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить, насколько употребительно рядом с «субҳ ба хайр»"
+    },
+    {
+      "id": "p_shumo_chi_khel",
+      "tg": "Шумо чӣ хел?",
+      "ru": "Как вы?",
+      "theme": "greetings",
+      "words": [
+        "w_shumo",
+        "w_chi"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_tu_chi_khel",
+      "tg": "Ту чӣ хел?",
+      "ru": "Как ты?",
+      "theme": "greetings",
+      "words": [
+        "w_tu",
+        "w_chi"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_rahmat_nagz",
+      "tg": "Раҳмат, нағз!",
+      "ru": "Спасибо, хорошо!",
+      "theme": "greetings",
+      "words": [
+        "w_rahmat",
+        "w_nagz"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_khush_omaded",
+      "tg": "Хуш омадед!",
+      "ru": "Добро пожаловать!",
+      "theme": "greetings",
+      "words": [
+        "w_khush"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_to_bozdid",
+      "tg": "То боздид!",
+      "ru": "До свидания!",
+      "theme": "greetings",
+      "words": [],
+      "audio": null,
+      "verified": true,
+      "note": "«боздид» — встреча; дословно «до встречи»"
+    },
+    {
+      "id": "p_nomi_shumo_chist",
+      "tg": "Номи шумо чист?",
+      "ru": "Как вас зовут?",
+      "theme": "greetings",
+      "words": [
+        "w_nom",
+        "w_shumo"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму «чист» (стяжение «чӣ аст»)"
+    },
+    {
+      "id": "p_man_nagz",
+      "tg": "Ман нағз!",
+      "ru": "У меня хорошо!",
+      "theme": "greetings",
+      "words": [
+        "w_man",
+        "w_nagz"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить, нужна ли связка «ҳастам»"
+    }
+  ]
+}

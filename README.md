@@ -23,6 +23,7 @@ npm run dev
 | `npm test` | Юнит-тесты (vitest) |
 | `npm run typecheck` | Только проверка типов |
 | `npm run validate:content` | Проверка JSON-файлов курса |
+| `npm run review` | Пересобрать `content/REVIEW.md` из пометок `verified: false` |
 | `npm run fonts` | Перекачать Nunito из Google Fonts в `src/assets/fonts` |
 | `npm run fonts:check` | Убедиться, что в шрифте есть все 35 таджикских букв |
 | `npm run icons` | Перегенерировать иконки приложения из SVG |

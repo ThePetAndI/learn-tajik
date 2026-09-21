@@ -1,7 +1,7 @@
 /** Сборка приложения: каркас, вкладки, HUD, запуск. */
 
 import { h, qs } from './core/dom';
-import { mountRouter, registerTab, seedHistory, showTab } from './core/router';
+import { mountRouter, push, registerTab, seedHistory, showTab } from './core/router';
 import { getState, initStore } from './core/store';
 import { requestPersistentStorage } from './data/db';
 import { setHapticsEnabled } from './core/haptics';
@@ -11,6 +11,8 @@ import { applyReducedMotion, systemPrefersReducedMotion } from './ui/motion';
 import { modal } from './ui/modal';
 import { initInstallPrompt } from './pwa/install-prompt';
 import { initServiceWorker } from './pwa/register-sw';
+import { createLevelScreen } from './screens/level';
+import { setLevelStartHandler } from './screens/level-card';
 import { createMapScreen } from './screens/map';
 import { createProfileScreen } from './screens/profile';
 import { createStubScreen } from './screens/stub';
@@ -45,6 +47,9 @@ export async function bootstrap(): Promise<void> {
 
   mountRouter(stage, overlay);
   seedHistory();
+
+  // карта не знает про движок, движок не знает про карту — связь только здесь
+  setLevelStartHandler((level) => push(() => createLevelScreen(level), 'level:' + level.id));
 
   registerTab('map', createMapScreen);
   registerTab('shop', () =>

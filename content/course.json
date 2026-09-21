@@ -59,36 +59,80 @@
         {
           "id": "s01_l1",
           "title": "Салом!",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_salom",
+            "w_khayr",
+            "w_ha",
+            "w_ne"
+          ],
+          "phrases": [
+            "p_assalom",
+            "p_vaalaykum"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s01_l2",
           "title": "Доброе утро",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_subh",
+            "w_shab",
+            "w_ruz",
+            "w_khush"
+          ],
+          "phrases": [
+            "p_subh_ba_khayr",
+            "p_shab_ba_khayr",
+            "p_ruz_ba_khayr"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s01_l3",
           "title": "Как дела?",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_chi",
+            "w_nagz",
+            "w_khub",
+            "w_bad"
+          ],
+          "phrases": [
+            "p_shumo_chi_khel",
+            "p_tu_chi_khel",
+            "p_rahmat_nagz"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s01_l4",
           "title": "Спасибо",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_rahmat",
+            "w_tashakkur",
+            "w_lutfan",
+            "w_bubakhshed"
+          ],
+          "phrases": [
+            "p_man_nagz"
+          ],
           "exercises": "auto"
         },
         {
           "id": "s01_l5",
           "title": "До свидания",
-          "words": [],
-          "phrases": [],
+          "words": [
+            "w_man",
+            "w_tu",
+            "w_shumo",
+            "w_mo",
+            "w_nom",
+            "w_dust"
+          ],
+          "phrases": [
+            "p_nomi_shumo_chist",
+            "p_khush_omaded",
+            "p_to_bozdid"
+          ],
           "exercises": "auto",
           "boss": true
         }
