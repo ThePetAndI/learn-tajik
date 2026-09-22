@@ -12,7 +12,7 @@ import { levels, type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
 import { computeLives, spendLife } from '../domain/lives';
 import { awardSectionIfDone, getLevelProgress, recordLevelResult } from '../domain/progress';
-import { applyCoinBonus, coinMultiplier, levelCoinMultiplier } from '../domain/shop';
+import { applyCoinBonus, coinMultiplier, levelCoinMultiplier } from '../domain/bonuses';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';

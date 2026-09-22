@@ -3,22 +3,13 @@ import { mulberry32 } from '../src/core/rng';
 import { createInitialState, type SaveState } from '../src/data/state';
 import {
   BASE_MAX_LIVES,
-  MAX_PET_TIER,
-  SHOP_ITEMS,
-  buy,
-  canUpgradePet,
   coinMultiplier,
-  equip,
-  getItem,
   hintCost,
   levelCoinMultiplier,
   maxLivesFor,
-  nextTier,
-  openCase,
-  petTier,
-  rollCase,
-  upgradePet,
-} from '../src/domain/shop';
+} from '../src/domain/bonuses';
+import { getItem, MAX_PET_TIER, nextTier, petTier, SHOP_ITEMS } from '../src/domain/catalog';
+import { buy, canUpgradePet, equip, openCase, rollCase, upgradePet } from '../src/domain/shop';
 
 const T0 = Date.parse('2026-03-10T12:00:00Z');
 

@@ -13,7 +13,7 @@ import { pop, push, replaceTop, type ScreenView } from '../core/router';
 import { getState, update } from '../core/store';
 import { now, plural } from '../core/time';
 import { allPhrases, allWords, getWord, type Phrase, type Word } from '../data/content';
-import { applyCoinBonus, coinMultiplier } from '../domain/shop';
+import { applyCoinBonus, coinMultiplier } from '../domain/bonuses';
 import { recordAttemptWords, reviewSelection } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';

@@ -72,6 +72,7 @@ const MIGRATIONS: Record<number, Migration> = {
       reviews: int(stats.reviews, 0, 0, 1e6),
       mastered: int(stats.mastered, 0, 0, 1e6),
       gemsEarned: int(stats.gemsEarned, 0, 0, 1e9),
+      cases: int(stats.cases, 0, 0, 1e6),
     };
     raw.version = 2;
     return raw;
@@ -231,6 +232,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       reviews: int(stats.reviews, 0, 0, 1e6),
       mastered: int(stats.mastered, 0, 0, 1e6),
       gemsEarned: int(stats.gemsEarned, 0, 0, 1e9),
+      cases: int(stats.cases, 0, 0, 1e6),
     },
     settings: sanitizeSettings(raw.settings),
   };

@@ -18,7 +18,7 @@ import {
   recoveryCoins,
   recoveryWordIds,
 } from '../domain/recovery';
-import { applyCoinBonus, coinMultiplier } from '../domain/shop';
+import { applyCoinBonus, coinMultiplier } from '../domain/bonuses';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';

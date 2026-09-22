@@ -17,7 +17,8 @@ import {
   GEM_SECTION_FULL,
   nextStreakMilestone,
 } from '../domain/gems';
-import { activePet } from '../domain/shop';
+import { activePet, petBonus } from '../domain/catalog';
+import { perkLabels } from '../domain/perks';
 import { levels, sections } from '../data/content';
 import { breedOf } from '../ui/pet';
 import { createSettingsScreen } from './settings';
@@ -75,8 +76,10 @@ export function createProfileScreen(): ScreenView {
     const accuracy = st.stats.answers > 0 ? Math.round((st.stats.correct / st.stats.answers) * 100) : 0;
 
     const pet = activePet(st);
+    // бонус на текущей ступени, а не описание из каталога: оно про первую ступень
+    const bonus = pet ? perkLabels(petBonus(st, pet.id)) : [];
     petLine.textContent = pet
-      ? 'Питомец: ' + pet.title + (pet.bonus ? ' · ' + pet.description : '')
+      ? 'Питомец: ' + pet.title + (bonus.length > 0 ? ' · ' + bonus.join(', ') : '')
       : 'Учим таджикский с нуля';
     avatar.replaceChildren(icon(PET_ICON[breedOf(st.profile.petId)] ?? 'fox'));
 

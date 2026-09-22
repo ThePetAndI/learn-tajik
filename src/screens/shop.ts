@@ -7,23 +7,19 @@ import { getState, subscribe, update } from '../core/store';
 import { rngFor } from '../core/rng';
 import { now } from '../core/time';
 import {
-  MAX_PET_TIER,
-  SHOP_ITEMS,
   activePet,
   activeThemeId,
   boosterCount,
-  buy,
-  canBuy,
-  canUpgradePet,
-  equip,
   isOwned,
   itemsOfKind,
+  MAX_PET_TIER,
   nextTier,
-  openCase,
   petTier,
-  upgradePet,
+  SHOP_ITEMS,
   type ShopItem,
-} from '../domain/shop';
+} from '../domain/catalog';
+import { perksOf } from '../domain/bonuses';
+import { buy, canBuy, canUpgradePet, equip, openCase, priceOf, upgradePet } from '../domain/shop';
 import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
 import { toast } from '../ui/toast';
@@ -72,10 +68,11 @@ function showCaseResult(item: ShopItem, result: { boosters: Record<string, numbe
 }
 
 function priceLabel(item: ShopItem): string {
-  if (item.kind === 'booster' || item.kind === 'case') return String(item.price);
+  // цена со скидкой из дерева: показываем то, что реально спишется
+  if (item.kind === 'booster' || item.kind === 'case') return String(priceOf(getState(), item.id));
   if (isEquipped(item)) return 'Надето';
   if (isOwned(getState(), item.id)) return 'Надеть';
-  return String(item.price);
+  return String(priceOf(getState(), item.id));
 }
 
 export function createShopScreen(): ScreenView {
@@ -110,14 +107,14 @@ export function createShopScreen(): ScreenView {
       }
 
       if (item.kind === 'case') {
-        if (state.wallet.coins < item.price) {
+        if (state.wallet.coins < priceOf(state, item.id)) {
           haptics.wrong();
           toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
           return;
         }
         let opened: ReturnType<typeof openCase> = null;
         update((st) => {
-          opened = openCase(st, item.id, rngFor('case:' + item.id + ':' + now()));
+          opened = openCase(st, item.id, rngFor('case:' + item.id + ':' + now()), perksOf(st).loot);
         });
         if (opened) showCaseResult(item, opened);
         return;

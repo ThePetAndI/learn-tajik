@@ -21,7 +21,7 @@ import { createWordsScreen } from './screens/words';
 import { now } from './core/time';
 import { levels } from './data/content';
 import { reconcileGems } from './domain/reconcile';
-import { applyPetEffects } from './domain/shop';
+import { applyPerks } from './domain/bonuses';
 import { toast } from './ui/toast';
 
 export async function bootstrap(): Promise<void> {
@@ -40,7 +40,7 @@ export async function bootstrap(): Promise<void> {
   initServiceWorker();
 
   // бонусы питомца применяются при старте: максимум жизней зависит от него
-  update((st) => applyPetEffects(st, now()));
+  update((st) => applyPerks(st, now()));
 
   // лаъл за уже сделанное: у старого сохранения ледгер пуст, а заслуги есть
   let backpay = 0;

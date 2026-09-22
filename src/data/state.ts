@@ -124,6 +124,8 @@ export interface SaveState {
     mastered: number;
     /** сколько лаъл добыто за всё время */
     gemsEarned: number;
+    /** сколько сундуков открыто в лавке */
+    cases: number;
   };
   settings: Settings;
 }
@@ -161,6 +163,7 @@ export function createInitialState(ts: number): SaveState {
       reviews: 0,
       mastered: 0,
       gemsEarned: 0,
+      cases: 0,
     },
     settings: { ...DEFAULT_SETTINGS },
   };

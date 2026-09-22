@@ -23,19 +23,15 @@ import {
   recoveryWordIds,
 } from '../src/domain/recovery';
 import {
-  BASE_MAX_LIVES,
   applyCoinBonus,
-  applyPetEffects,
-  boosterCount,
-  buy,
-  canBuy,
+  applyPerks,
+  BASE_MAX_LIVES,
   coinMultiplier,
-  equip,
   hintCost,
-  isOwned,
   maxLivesFor,
-  useBooster,
-} from '../src/domain/shop';
+} from '../src/domain/bonuses';
+import { boosterCount, isOwned } from '../src/domain/catalog';
+import { buy, canBuy, equip, useBooster } from '../src/domain/shop';
 import { recordWordAttempt } from '../src/domain/srs';
 import {
   countDailyExercise,
@@ -363,11 +359,11 @@ describe('магазин', () => {
     expect(boosterCount(s, 'freeze')).toBe(0);
   });
 
-  it('applyPetEffects согласует максимум жизней с питомцем', () => {
+  it('applyPerks согласует максимум жизней с питомцем', () => {
     const s = fresh();
     s.profile.petId = 'pet_dog';
     s.inventory.owned.push('pet_dog');
-    applyPetEffects(s, T0);
+    applyPerks(s, T0);
     expect(s.lives.max).toBe(BASE_MAX_LIVES + 1);
   });
 });

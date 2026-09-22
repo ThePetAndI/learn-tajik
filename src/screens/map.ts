@@ -27,7 +27,7 @@ import { toast } from '../ui/toast';
 import { breedOf, createPet, type PetHandle } from '../ui/pet';
 import { now } from '../core/time';
 import { canOpenChest, canSpinWheel } from '../domain/daily';
-import { activeThemeId } from '../domain/shop';
+import { activeThemeId } from '../domain/catalog';
 import { visibleStreak } from '../domain/streak';
 import { openChestModal, openWheelModal } from './rewards';
 import { openLevelCard } from './level-card';

@@ -9,7 +9,9 @@
 import { clear, h, onTap } from '../core/dom';
 import { rngFor } from '../core/rng';
 import { getState, update } from '../core/store';
-import { boosterCount, hintCost as petHintCost, useBooster } from '../domain/shop';
+import { hintCost as petHintCost } from '../domain/bonuses';
+import { boosterCount } from '../domain/catalog';
+import { useBooster } from '../domain/shop';
 import { createSession, type Session } from '../game/engine';
 import { moduleFor } from '../game/registry';
 import type { Attempt, ExerciseContext, ExerciseInstance, ExerciseOutcome } from '../game/types';

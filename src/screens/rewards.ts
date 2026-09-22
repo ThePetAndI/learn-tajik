@@ -19,7 +19,8 @@ import {
 } from '../domain/daily';
 import { computeLives, refillLives } from '../domain/lives';
 import { hasRecoveryMaterial } from '../domain/recovery';
-import { boosterCount, getItem, useBooster } from '../domain/shop';
+import { boosterCount, getItem } from '../domain/catalog';
+import { useBooster } from '../domain/shop';
 import { dailyGoalReached, todayCount } from '../domain/streak';
 import { button } from '../ui/button';
 import { confetti } from '../ui/confetti';
