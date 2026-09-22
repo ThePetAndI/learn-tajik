@@ -10,6 +10,7 @@ import { formatDuration, now, plural } from '../core/time';
 import { allWords, getWord, type Word } from '../data/content';
 import {
   MAX_BOX,
+  getWordStat,
   isDue,
   wordDifficulty,
   wordsSummary,
@@ -22,7 +23,7 @@ import { icon, type IconName } from '../ui/icons';
 import { modal } from '../ui/modal';
 import { openReviewSession } from './review';
 
-type FilterId = 'all' | 'learning' | 'learned' | 'hard' | 'due';
+type FilterId = 'all' | 'learning' | 'learned' | 'hard' | 'due' | 'course';
 
 interface FilterDef {
   id: FilterId;
@@ -33,8 +34,14 @@ interface FilterDef {
 /** Слово считается выученным, начиная с четвёртой коробки — это интервал в две недели. */
 const LEARNED_BOX = 4;
 
+/*
+ * «Весь курс» отличается от остальных: он показывает и то, чего игрок ещё
+ * не видел. Раньше посмотреть слово наперёд или найти услышанное на улице
+ * было негде — словарь показывал только пройденное.
+ */
 const FILTERS: FilterDef[] = [
-  { id: 'all', label: 'Все', match: () => true },
+  { id: 'all', label: 'Мои слова', match: () => true },
+  { id: 'course', label: 'Весь курс', match: () => true },
   { id: 'learning', label: 'Учу', match: (s) => s.box < LEARNED_BOX },
   { id: 'learned', label: 'Выучено', match: (s) => s.box >= LEARNED_BOX },
   { id: 'hard', label: 'Трудные', match: (s) => wordDifficulty(s) >= 0.45 },
@@ -171,9 +178,13 @@ export function createWordsScreen(): ScreenView {
 
   function wordRow(word: Word, stat: WordStat, ts: number): HTMLElement {
     const due = isDue(stat, ts);
+    const unseen = stat.seen === 0;
     const row = h(
       'button',
-      { class: 'word-row' + (due ? ' is-due' : ''), attr: { type: 'button' } },
+      {
+        class: 'word-row' + (due ? ' is-due' : '') + (unseen ? ' is-unseen' : ''),
+        attr: { type: 'button' },
+      },
       h(
         'span',
         { class: 'word-row__text' },
@@ -204,16 +215,20 @@ export function createWordsScreen(): ScreenView {
     const def = FILTERS.find((f) => f.id === filter) ?? FILTERS[0];
     const rows: HTMLElement[] = [];
     let total = 0;
+    const whole = filter === 'course';
 
-    // сортируем по ступени: то, что хуже усвоено, — выше
-    const entries = Object.entries(state.srs)
-      .filter(([, stat]) => stat.seen > 0)
-      .sort((a, b) => a[1].box - b[1].box || b[1].wrong - a[1].wrong);
+    const entries: { word: Word; stat: WordStat }[] = whole
+      ? // порядок курса: так видно, что идёт за чем
+        allWords().map((word) => ({ word, stat: getWordStat(state, word.id, ts) }))
+      : Object.entries(state.srs)
+          .filter(([, stat]) => stat.seen > 0)
+          // то, что хуже усвоено, — выше
+          .sort((a, b) => a[1].box - b[1].box || b[1].wrong - a[1].wrong)
+          .map(([id, stat]) => ({ word: getWord(id) as Word, stat }))
+          .filter((e) => Boolean(e.word));
 
-    for (const [id, stat] of entries) {
-      if (!def?.match(stat, ts)) continue;
-      const word = getWord(id);
-      if (!word) continue;
+    for (const { word, stat } of entries) {
+      if (!whole && !def?.match(stat, ts)) continue;
       if (query && !word.tg.toLowerCase().includes(query) && !word.ru.toLowerCase().includes(query)) {
         continue;
       }
@@ -226,12 +241,13 @@ export function createWordsScreen(): ScreenView {
       clear(emptyBox);
       emptyBox.append(
         h('div', { class: 'empty-state__icon' }, icon('book')),
-        h('h2', { class: 'h2', text: sum.seen === 0 ? 'Слов пока нет' : 'Ничего не нашлось' }),
+        h('h2', { class: 'h2', text: sum.seen === 0 && !whole ? 'Слов пока нет' : 'Ничего не нашлось' }),
         h('p', {
           class: 'p',
           text:
-            sum.seen === 0
-              ? 'Пройди первый уровень — слова появятся здесь вместе с прогрессом.'
+            sum.seen === 0 && !whole
+              ? 'Пройди первый уровень — слова появятся здесь вместе с прогрессом. '
+                + 'Или посмотри весь курс наперёд.'
               : 'Попробуй другой фильтр или поиск.',
         }),
       );
@@ -249,10 +265,16 @@ export function createWordsScreen(): ScreenView {
     }
 
     const left = allWords().length - sum.seen;
-    footer.textContent =
-      left > 0
-        ? 'Впереди ещё ' + left + ' ' + plural(left, 'слово', 'слова', 'слов') + ' курса'
-        : 'Все слова курса уже встречались';
+    if (whole) {
+      footer.textContent =
+        'В курсе ' + allWords().length + ' ' +
+        plural(allWords().length, 'слово', 'слова', 'слов') + ', встречено ' + sum.seen;
+    } else {
+      footer.textContent =
+        left > 0
+          ? 'Впереди ещё ' + left + ' ' + plural(left, 'слово', 'слова', 'слов') + ' курса'
+          : 'Все слова курса уже встречались';
+    }
 
     reviewBtn.disabled = sum.seen < 4;
   }

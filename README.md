@@ -26,6 +26,7 @@ npm run dev
 | `npm run review` | Пересобрать `content/REVIEW.md` из пометок `verified: false` |
 | `npm run fonts` | Перекачать Nunito из Google Fonts в `src/assets/fonts` |
 | `npm run fonts:check` | Убедиться, что в шрифте есть все 35 таджикских букв |
+| `npm run audio:check` | Покрытие озвучкой и битые ссылки на файлы |
 | `npm run icons` | Перегенерировать иконки приложения из SVG |
 
 Service worker работает только в сборке, не в дев-режиме. Чтобы проверить офлайн:

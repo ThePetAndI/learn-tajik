@@ -8,6 +8,7 @@ import { setHapticsEnabled } from './core/haptics';
 import { createHud } from './ui/hud';
 import { createTabBar } from './ui/tabbar';
 import { applyReducedMotion, systemPrefersReducedMotion } from './ui/motion';
+import { setSoundEnabled } from './core/audio';
 import { initInstallPrompt } from './pwa/install-prompt';
 import { initServiceWorker } from './pwa/register-sw';
 import { createLevelScreen } from './screens/level';
@@ -27,6 +28,7 @@ export async function bootstrap(): Promise<void> {
   const state = getState();
   setHapticsEnabled(state.settings.haptics);
   applyReducedMotion(state.settings.reducedMotion || systemPrefersReducedMotion());
+  setSoundEnabled(state.settings.sound);
 
   // Просим браузер не удалять данные при нехватке места.
   void requestPersistentStorage();

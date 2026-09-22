@@ -35,7 +35,12 @@ export default defineConfig({
       injectRegister: null,
       injectManifest: {
         // всё, что нужно для офлайна: код, стили, шрифты, иконки
-        globPatterns: ['**/*.{js,css,html,woff2,png,svg,json,webmanifest}'],
+        // озвучка букв мала и нужна с первого урока — её в precache;
+        // озвучка слов кэшируется по мере проигрывания (см. src/pwa/sw.ts)
+        globPatterns: [
+          '**/*.{js,css,html,woff2,png,svg,json,webmanifest}',
+          'audio/letters/*.{mp3,m4a,ogg}',
+        ],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
       devOptions: {

@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "fonts": "node scripts/fetch-fonts.mjs",
     "fonts:check": "node scripts/check-font-coverage.mjs",
+    "audio:check": "node scripts/check-audio.mjs",
     "icons": "node scripts/gen-icons.mjs",
     "validate:content": "node scripts/validate-content.mjs",
     "review": "node scripts/validate-content.mjs --write-review"

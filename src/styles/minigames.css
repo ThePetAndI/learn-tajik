@@ -701,3 +701,22 @@
 }
 .rule-example__tg { font-size: 16px; font-weight: 900; flex: none; }
 .rule-example__ru { font-size: 12.5px; font-weight: 700; opacity: 0.82; text-align: right; }
+
+/* Кнопка озвучки. Появляется только там, где запись есть. */
+.intro-card__sound-row { display: flex; align-items: center; gap: 12px; }
+.speak {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  padding: 0;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--blue-1), var(--blue-2));
+  box-shadow: 0 4px 0 var(--blue-deep);
+  color: #fff;
+  font-size: 22px;
+  transition: transform var(--t-press) var(--ease-out), box-shadow var(--t-press);
+}
+.speak:active { transform: translateY(4px); box-shadow: none; }

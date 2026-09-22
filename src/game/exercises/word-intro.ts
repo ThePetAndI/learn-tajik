@@ -6,6 +6,7 @@
 
 import { h, onTap } from '../../core/dom';
 import { haptics } from '../../core/haptics';
+import { hasAudio, play } from '../../core/audio';
 import { button } from '../../ui/button';
 import { icon } from '../../ui/icons';
 import type {
@@ -29,13 +30,31 @@ export const wordIntroModule: ExerciseModule<WordIntroExercise> = {
       ctx.finish({ correct: true, message: 'Запомним' });
     });
 
+    // кнопка появляется только там, где есть запись: пока их нет, её нет нигде
+    function speakBtn(src: string): HTMLElement {
+      const b = h(
+        'button',
+        { class: 'speak', attr: { type: 'button' }, aria: { label: 'Послушать' } },
+        icon('speaker'),
+      );
+      onTap(b, () => play(src));
+      return b;
+    }
+
     const el = h(
       'div',
       { class: 'ex ex--intro' },
       h(
         'div',
         { class: 'intro-card' },
-        h('div', { class: 'intro-card__tg', text: ex.tg }),
+        hasAudio(ex.audio)
+          ? h(
+              'div',
+              { class: 'intro-card__sound-row' },
+              h('div', { class: 'intro-card__tg', text: ex.tg }),
+              speakBtn(ex.audio as string),
+            )
+          : h('div', { class: 'intro-card__tg', text: ex.tg }),
         h('div', { class: 'intro-card__ru', text: ex.ru }),
         ex.pos ? h('div', { class: 'intro-card__pos', text: ex.pos }) : null,
         ex.letters.length > 0

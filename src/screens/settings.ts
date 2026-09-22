@@ -20,6 +20,7 @@ import { confirmModal, modal } from '../ui/modal';
 import { toast } from '../ui/toast';
 import { canInstall, isStandalone, onInstallAvailability, promptInstall } from '../pwa/install-prompt';
 import { applyReducedMotion, systemPrefersReducedMotion } from '../ui/motion';
+import { setSoundEnabled } from '../core/audio';
 
 function switchRow(
   iconName: IconName,
@@ -241,6 +242,18 @@ export function createSettingsScreen(): ScreenView {
             s.settings.reducedMotion = v;
           });
           applyReducedMotion(v || systemPrefersReducedMotion());
+        },
+      ),
+      switchRow(
+        'speaker',
+        'Звук',
+        'Проигрывать озвучку слов и букв там, где она есть',
+        () => getState().settings.sound,
+        (v) => {
+          update((s) => {
+            s.settings.sound = v;
+          });
+          setSoundEnabled(v);
         },
       ),
       switchRow(
