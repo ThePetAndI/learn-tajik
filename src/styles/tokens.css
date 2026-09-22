@@ -5,6 +5,8 @@
   --pink-1:   #ff8fc0;  --pink-2:   #ff3d7f;  --pink-deep:   #c0155a;
   --gold-1:   #ffe066;  --gold-2:   #ffb000;  --gold-deep:   #c47a00;
   --purple-1: #6a4bd8;  --purple-2: #4e32b0;  --purple-deep: #33207d;
+  /* стык HUD и шапки экрана: на нём один градиент переходит в другой */
+  --purple-mid: #5c3ec4;
   --green-1:  #8fe36b;  --green-2:  #3fc23a;  --green-deep:  #2a8c27;
   --blue-1:   #7fd3ff;  --blue-2:   #2e9be6;  --blue-deep:   #1a6ba6;
   --red-1:    #ff9182;  --red-2:    #f04438;  --red-deep:    #b31d13;

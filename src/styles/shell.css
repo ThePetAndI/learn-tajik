@@ -35,7 +35,16 @@
   justify-content: space-between;
   gap: 8px;
   padding: calc(var(--sat) + 8px) 12px 10px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 55%, rgba(255, 255, 255, 0));
+  /*
+   * Раньше здесь была белая вуаль, уходящая в прозрачность. За ней виден
+   * фиолетовый фон приложения — и на каждом экране сверху получался мутный
+   * бело-фиолетовый градиент. Теперь HUD — верхняя часть той же фиолетовой
+   * шапки: его градиент заканчивается там, где начинается градиент шапки
+   * экрана, и стык не читается.
+   */
+  background: linear-gradient(180deg, var(--purple-1), var(--purple-mid));
+  /* без тени: она падала бы на шапку экрана и снова давала полосу на стыке.
+     Под HUD либо шапка со своей тенью, либо карта — там хватает контраста. */
   pointer-events: none;
 }
 .hud > * { pointer-events: auto; }
@@ -250,6 +259,15 @@ body.is-modal-open { overflow: hidden; }
   background: linear-gradient(180deg, var(--purple-1), var(--purple-2));
   color: #fff;
   box-shadow: 0 4px 14px rgba(40, 20, 80, 0.3);
+}
+
+/*
+ * Шапка вкладки идёт сразу под HUD: вырез уже закрыт им, второй отступ
+ * не нужен, а градиент продолжается с той же ноты, на которой HUD кончился.
+ */
+.app-stage .topbar {
+  padding-top: 10px;
+  background: linear-gradient(180deg, var(--purple-mid), var(--purple-2));
 }
 .topbar__title { flex: 1; font-size: 19px; font-weight: 900; text-align: center; }
 .topbar__btn {
