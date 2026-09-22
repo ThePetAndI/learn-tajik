@@ -20,6 +20,7 @@ import type {
 
 const LETTER_SIZE = 46;
 const PLATE_MAX = 290;
+const PLATE_MIN = 190;
 const HIT_RADIUS = 30;
 /** Промахи сверх этого числа идут в счёт ошибок. */
 const FREE_MISSES = 3;
@@ -111,11 +112,33 @@ export const letterWheelModule: ExerciseModule<LetterWheelExercise> = {
       line.setAttribute('viewBox', '0 0 ' + plateSize + ' ' + plateSize);
     }
 
-    function setPlateSize(width: number): void {
-      plateSize = Math.max(200, Math.min(PLATE_MAX, width - 40));
+    /** budget — сколько пикселей по высоте остаётся собственно под колесо. */
+    function setPlateSize(width: number, budget: number): void {
+      plateSize = Math.round(Math.max(PLATE_MIN, Math.min(PLATE_MAX, width - 40, budget)));
       plate.style.width = plateSize + 'px';
       plate.style.height = plateSize + 'px';
       layoutWheel();
+    }
+
+    /**
+     * Колесо считается и по ширине, и по остатку высоты: на коротком экране
+     * (360×640 — обычный бюджетный Android) круг в 290 пикселей выталкивал
+     * кнопки «перемешать» и «подсказка» за нижний край, и до них надо было
+     * догадаться домотать.
+     *
+     * Остаток считаем по факту: из высоты области вычитаем то, что заняло
+     * всё остальное. Прикидывать запас константой нельзя — список слов бывает
+     * из двух строк, а бывает из шести.
+     */
+    function fit(): void {
+      const host = el.parentElement;
+      const width = el.clientWidth || Math.min(window.innerWidth || 360, 520) - 2 * 16;
+      if (!host || host.clientHeight === 0) {
+        setPlateSize(width, PLATE_MAX);
+        return;
+      }
+      const others = el.scrollHeight - plateSize;
+      setPlateSize(width, host.clientHeight - others);
     }
 
     /* ——————————————— свайп ——————————————— */
@@ -306,19 +329,17 @@ export const letterWheelModule: ExerciseModule<LetterWheelExercise> = {
 
     // Раскладываем сразу по прикидке ширины экрана: ResizeObserver срабатывает
     // через кадр, и без этого колесо успевало показаться пустым.
-    setPlateSize(Math.min(window.innerWidth || 360, 520) - 2 * 16);
-    const ro =
-      typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver((entries) => {
-            const width = Math.round(entries[0]?.contentRect.width ?? 0);
-            if (width > 0) setPlateSize(width);
-          })
-        : null;
+    setPlateSize(Math.min(window.innerWidth || 360, 520) - 2 * 16, PLATE_MAX);
+    // второй проход после первой раскладки: только тогда известно,
+    // сколько места забрали список слов и кнопки
+    const raf = requestAnimationFrame(fit);
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => fit()) : null;
     ro?.observe(el);
 
     return {
       el,
       destroy: () => {
+        cancelAnimationFrame(raf);
         ro?.disconnect();
         plate.removeEventListener('pointerdown', onDown);
         plate.removeEventListener('pointermove', onMove);

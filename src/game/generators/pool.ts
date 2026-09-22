@@ -6,7 +6,7 @@
 
 import type { Rng } from '../../core/rng';
 import { sample, shuffle } from '../../core/rng';
-import type { Phrase, Word } from '../../data/content';
+import type { Dialogue, Izafet, Letter, Phrase, Word } from '../../data/content';
 import type { Exercise } from '../types';
 
 export interface LevelPool {
@@ -15,6 +15,19 @@ export interface LevelPool {
   phrases: Phrase[];
   /** Весь словарь курса — источник правдоподобных неверных вариантов. */
   vocabulary: readonly Word[];
+  /**
+   * Слова, пройденные до этого уровня. «Лишнее слово» и «по корзинам»
+   * берут чужие слова только отсюда: спрашивать о том, чего ещё не было,
+   * нельзя — это не задание, а угадайка.
+   */
+  priorWords: readonly Word[];
+  /** Буквы, с которыми знакомит уровень. Пусто везде, кроме раздела «Алфавит». */
+  letters: readonly Letter[];
+  /** Диалоги и изафеты темы уровня. */
+  dialogues: readonly Dialogue[];
+  izafets: readonly Izafet[];
+  /** Названия тем по-русски: «family» -> «Семья». Для корзин и «лишнего». */
+  themeTitles: Record<string, string>;
 }
 
 export type Generator = (pool: LevelPool, rng: Rng) => Exercise | null;
@@ -86,4 +99,42 @@ export function canSpell(word: string, available: Map<string, number>): boolean 
 /** Слово из одной части, без пробелов и дефисов — годится для колеса букв. */
 export function isSingleToken(word: string): boolean {
   return !/[\s-]/.test(word.trim());
+}
+
+/** Часть речи по-русски — подпись под вопросом. */
+export function posLabel(pos: string): string | undefined {
+  const map: Record<string, string> = {
+    noun: 'существительное',
+    verb: 'глагол',
+    adj: 'прилагательное',
+    adv: 'наречие',
+    pron: 'местоимение',
+    num: 'числительное',
+    prep: 'предлог',
+    conj: 'союз',
+    part: 'частица',
+    interj: 'междометие',
+    phrase: 'выражение',
+  };
+  return map[pos];
+}
+
+/** Самая частая тема среди слов — тема уровня. */
+export function mainTheme(words: readonly Word[]): string | undefined {
+  const counts = new Map<string, number>();
+  for (const w of words) counts.set(w.theme, (counts.get(w.theme) ?? 0) + 1);
+  let best: string | undefined;
+  let bestN = 0;
+  for (const [theme, n] of counts) {
+    if (n > bestN) {
+      best = theme;
+      bestN = n;
+    }
+  }
+  return best;
+}
+
+/** Человеческое название темы: «family» -> «Семья». */
+export function themeLabel(pool: LevelPool, theme: string): string {
+  return pool.themeTitles[theme] ?? theme;
 }

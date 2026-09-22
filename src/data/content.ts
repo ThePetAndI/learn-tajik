@@ -30,6 +30,8 @@ export interface Word {
   tg: string;
   ru: string;
   pos: PartOfSpeech;
+  /** Числовое значение — только у числительных, для мини-игры «число и слово». */
+  num?: number | null;
   theme: string;
   example?: Example | null;
   /** Задел на будущее: озвучки пока нет, поле всегда null. */
@@ -44,6 +46,37 @@ export interface Phrase {
   ru: string;
   theme: string;
   /** Слова, встречающиеся во фразе. */
+  words?: string[];
+  audio?: string | null;
+  verified: boolean;
+  note?: string;
+}
+
+/** Мини-диалог: реплика собеседника и верный ответ. */
+export interface Dialogue {
+  id: string;
+  theme: string;
+  ask: Example;
+  reply: Example;
+  /** Свои неверные варианты; если пусто — берутся реплики других диалогов. */
+  wrong?: Example[];
+  words?: string[];
+  audio?: string | null;
+  verified: boolean;
+  note?: string;
+}
+
+/** Изафетная пара: «падар» + и + «ман» = «падари ман». */
+export interface Izafet {
+  id: string;
+  theme: string;
+  /** Главное слово — к нему клеится изафет. */
+  head: string;
+  /** Зависимое слово. */
+  mod: string;
+  /** Полная форма. */
+  tg: string;
+  ru: string;
   words?: string[];
   audio?: string | null;
   verified: boolean;
@@ -73,6 +106,8 @@ export interface CourseLevel {
   title: string;
   words?: string[];
   phrases?: string[];
+  /** Буквы, с которыми знакомит уровень — только для kind: 'alphabet'. */
+  letters?: string[];
   exercises?: 'auto' | ExerciseSpec[];
   kind?: string;
   boss?: boolean;
@@ -92,6 +127,8 @@ export interface FlatLevel {
   title: string;
   wordIds: string[];
   phraseIds: string[];
+  /** Буквы уровня — пусто у всех, кроме раздела «Алфавит». */
+  letterChars: string[];
   exercises: 'auto' | ExerciseSpec[];
   kind: string;
   boss: boolean;
@@ -122,6 +159,8 @@ function pickDefault(mod: Module): unknown {
 const wordModules = import.meta.glob('../../content/words/*.json', { eager: true });
 const phraseModules = import.meta.glob('../../content/phrases/*.json', { eager: true });
 const courseModules = import.meta.glob('../../content/course.json', { eager: true });
+const dialogueModules = import.meta.glob('../../content/dialogues.json', { eager: true });
+const izafetModules = import.meta.glob('../../content/izafet.json', { eager: true });
 const alphabetModules = import.meta.glob('../../content/alphabet.json', { eager: true });
 
 function collect<T>(modules: Record<string, Module>, field: string): T[] {
@@ -139,10 +178,17 @@ function collect<T>(modules: Record<string, Module>, field: string): T[] {
 const wordList = collect<Word>(wordModules, 'words');
 const phraseList = collect<Phrase>(phraseModules, 'phrases');
 const letterList = collect<Letter>(alphabetModules, 'letters');
+const dialogueList = collect<Dialogue>(dialogueModules, 'dialogues');
+const izafetList = collect<Izafet>(izafetModules, 'izafet');
 
 export const words: ReadonlyMap<string, Word> = new Map(wordList.map((w) => [w.id, w]));
 export const phrases: ReadonlyMap<string, Phrase> = new Map(phraseList.map((p) => [p.id, p]));
 export const letters: readonly Letter[] = letterList;
+export const dialogues: readonly Dialogue[] = dialogueList;
+export const izafets: readonly Izafet[] = izafetList;
+
+/** Буква по её строчному начертанию. */
+const letterByChar = new Map(letterList.map((l) => [l.lower, l]));
 
 const byTheme = new Map<string, Word[]>();
 for (const w of wordList) {
@@ -172,6 +218,7 @@ export const levels: readonly FlatLevel[] = (() => {
         title: level.title,
         wordIds,
         phraseIds,
+        letterChars: level.letters ?? [],
         exercises: level.exercises ?? 'auto',
         kind,
         boss: level.boss === true,
@@ -206,6 +253,21 @@ export function getLevel(id: string): FlatLevel | undefined {
   return levelById.get(id);
 }
 
+export function getLetter(lower: string): Letter | undefined {
+  return letterByChar.get(lower.normalize('NFC').toLowerCase());
+}
+
+/** Диалоги и изафеты цепляются к уровню по теме его слов — править код не нужно. */
+export function dialoguesOfThemes(themes: readonly string[]): readonly Dialogue[] {
+  const set = new Set(themes);
+  return dialogueList.filter((d) => set.has(d.theme));
+}
+
+export function izafetsOfThemes(themes: readonly string[]): readonly Izafet[] {
+  const set = new Set(themes);
+  return izafetList.filter((z) => set.has(z.theme));
+}
+
 /** Слова темы — из них берутся правдоподобные неверные варианты. */
 export function wordsOfTheme(theme: string): readonly Word[] {
   return byTheme.get(theme) ?? [];
@@ -219,11 +281,21 @@ export function allPhrases(): readonly Phrase[] {
   return phraseList;
 }
 
+export function allDialogues(): readonly Dialogue[] {
+  return dialogueList;
+}
+
+export function allIzafets(): readonly Izafet[] {
+  return izafetList;
+}
+
 /** Сводка для экрана «Слова» и диагностики. */
 export function contentStats(): {
   words: number;
   phrases: number;
   letters: number;
+  dialogues: number;
+  izafets: number;
   sections: number;
   levels: number;
   playableLevels: number;
@@ -232,6 +304,8 @@ export function contentStats(): {
     words: wordList.length,
     phrases: phraseList.length,
     letters: letterList.length,
+    dialogues: dialogueList.length,
+    izafets: izafetList.length,
     sections: sections.length,
     levels: levels.length,
     playableLevels: levels.filter((l) => l.playable).length,

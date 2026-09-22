@@ -1,0 +1,334 @@
+{
+  "izafet": [
+    {
+      "id": "iz_padari_man",
+      "theme": "family",
+      "head": "падар",
+      "mod": "ман",
+      "tg": "падари ман",
+      "ru": "мой отец",
+      "words": [
+        "w_padar",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_modari_man",
+      "theme": "family",
+      "head": "модар",
+      "mod": "ман",
+      "tg": "модари ман",
+      "ru": "моя мать",
+      "words": [
+        "w_modar",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_barodari_man",
+      "theme": "family",
+      "head": "бародар",
+      "mod": "ман",
+      "tg": "бародари ман",
+      "ru": "мой брат",
+      "words": [
+        "w_barodar",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_khohari_tu",
+      "theme": "family",
+      "head": "хоҳар",
+      "mod": "ту",
+      "tg": "хоҳари ту",
+      "ru": "твоя сестра",
+      "words": [
+        "w_khohar",
+        "w_tu"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_dukhtari_khurd",
+      "theme": "family",
+      "head": "духтар",
+      "mod": "хурд",
+      "tg": "духтари хурд",
+      "ru": "младшая дочь",
+      "words": [
+        "w_dukhtar",
+        "w_khurd"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить, говорят ли «духтари хурд» о младшей дочери"
+    },
+    {
+      "id": "iz_pisari_kalon",
+      "theme": "family",
+      "head": "писар",
+      "mod": "калон",
+      "tg": "писари калон",
+      "ru": "старший сын",
+      "words": [
+        "w_pisar",
+        "w_kalon"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «писари калон» о старшем сыне"
+    },
+    {
+      "id": "iz_khonai_mo",
+      "theme": "house",
+      "head": "хона",
+      "mod": "мо",
+      "tg": "хонаи мо",
+      "ru": "наш дом",
+      "words": [
+        "w_khona",
+        "w_mo"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_dari_khona",
+      "theme": "house",
+      "head": "дар",
+      "mod": "хона",
+      "tg": "дари хона",
+      "ru": "дверь дома",
+      "words": [
+        "w_dar_prep",
+        "w_khona"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_nomi_tu",
+      "theme": "meeting",
+      "head": "ном",
+      "mod": "ту",
+      "tg": "номи ту",
+      "ru": "твоё имя",
+      "words": [
+        "w_nom",
+        "w_tu"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_dusti_man",
+      "theme": "meeting",
+      "head": "дӯст",
+      "mod": "ман",
+      "tg": "дӯсти ман",
+      "ru": "мой друг",
+      "words": [
+        "w_dust",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_kitobi_nav",
+      "theme": "basics",
+      "head": "китоб",
+      "mod": "нав",
+      "tg": "китоби нав",
+      "ru": "новая книга",
+      "words": [
+        "w_kitob",
+        "w_nav"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_obi_khunuk",
+      "theme": "food",
+      "head": "об",
+      "mod": "хунук",
+      "tg": "оби хунук",
+      "ru": "холодная вода",
+      "words": [
+        "w_ob",
+        "w_khunuk"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_noni_garm",
+      "theme": "food",
+      "head": "нон",
+      "mod": "гарм",
+      "tg": "нони гарм",
+      "ru": "горячий хлеб",
+      "words": [
+        "w_non",
+        "w_garm"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_shahri_kalon",
+      "theme": "city",
+      "head": "шаҳр",
+      "mod": "калон",
+      "tg": "шаҳри калон",
+      "ru": "большой город",
+      "words": [
+        "w_shahr",
+        "w_kalon"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_rohi_dur",
+      "theme": "travel",
+      "head": "роҳ",
+      "mod": "дур",
+      "tg": "роҳи дур",
+      "ru": "дальняя дорога",
+      "words": [
+        "w_roh",
+        "w_dur"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_ruzi_nagz",
+      "theme": "time",
+      "head": "рӯз",
+      "mod": "нағз",
+      "tg": "рӯзи нағз",
+      "ru": "хороший день",
+      "words": [
+        "w_ruz",
+        "w_nagz"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «нағз» против «хуб» в этом обороте"
+    },
+    {
+      "id": "iz_guli_surkh",
+      "theme": "nature",
+      "head": "гул",
+      "mod": "сурх",
+      "tg": "гули сурх",
+      "ru": "красный цветок",
+      "words": [
+        "w_gul",
+        "w_surkh"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_dasti_rost",
+      "theme": "health",
+      "head": "даст",
+      "mod": "рост",
+      "tg": "дасти рост",
+      "ru": "правая рука",
+      "words": [
+        "w_dast",
+        "w_rost"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «дасти рост» как «правая рука»"
+    },
+    {
+      "id": "iz_kori_nav",
+      "theme": "work",
+      "head": "кор",
+      "mod": "нав",
+      "tg": "кори нав",
+      "ru": "новая работа",
+      "words": [
+        "w_kor",
+        "w_nav"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_soati_panj",
+      "theme": "time",
+      "head": "соат",
+      "mod": "панҷ",
+      "tg": "соати панҷ",
+      "ru": "пять часов",
+      "words": [
+        "w_soat",
+        "w_panj"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить изафет в обозначении времени"
+    },
+    {
+      "id": "iz_markazi_shahr",
+      "theme": "city",
+      "head": "марказ",
+      "mod": "шаҳр",
+      "tg": "маркази шаҳр",
+      "ru": "центр города",
+      "words": [
+        "w_markaz",
+        "w_shahr"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "iz_oilai_man",
+      "theme": "family",
+      "head": "оила",
+      "mod": "ман",
+      "tg": "оилаи ман",
+      "ru": "моя семья",
+      "words": [
+        "w_oila",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    }
+  ]
+}

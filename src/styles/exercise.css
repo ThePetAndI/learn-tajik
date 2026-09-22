@@ -84,25 +84,33 @@
 
 .level__host {
   flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0 var(--gutter) 12px;
 }
 
-/* min-height + center: короткое задание стоит по центру экрана,
-   длинное растягивает блок и не обрезается сверху при прокрутке */
+/* flex: 1 0 auto + center: короткое задание стоит по центру экрана, длинное
+   растягивает блок и не обрезается сверху при прокрутке.
+   Раньше здесь было min-height: 100%, и из-за дробной высоты контейнера
+   на каждом задании оставалось 4 лишних пикселя прокрутки — экран заметно
+   ёрзал под пальцем на пустом месте. */
 .ex {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 14px;
-  min-height: 100%;
+  flex: 1 0 auto;
   padding: 8px 0;
 }
 .ex--enter { animation: ex-in var(--t-mid) var(--ease-out) both; }
+/* Появление сверху, а не снизу: сдвинутый вниз блок на время анимации
+   увеличивает область прокрутки контейнера, и экран успевает дрогнуть
+   под пальцем. Вверх сдвигать безопасно — туда прокрутки нет. */
 @keyframes ex-in {
-  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  from { opacity: 0; transform: translate3d(0, -10px, 0) scale(0.985); }
   to { opacity: 1; transform: none; }
 }
 .ex__action { margin-top: 4px; }

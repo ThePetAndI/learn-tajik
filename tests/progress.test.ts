@@ -26,6 +26,7 @@ function makeLevels(): FlatLevel[] {
         title: 'Уровень ' + (i + 1),
         wordIds: ['w_a', 'w_b'],
         phraseIds: [],
+    letterChars: [],
         exercises: 'auto',
         kind: 'words',
         boss: i === 2,

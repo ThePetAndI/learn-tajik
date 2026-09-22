@@ -17,7 +17,12 @@ export type ExerciseKind =
   | 'type_word'
   | 'missing_letter'
   | 'true_false'
-  | 'alphabet_intro';
+  | 'alphabet_intro'
+  | 'odd_one_out'
+  | 'dialogue_choice'
+  | 'number_word'
+  | 'category_sort'
+  | 'izafet_builder';
 
 interface ExerciseCommon {
   kind: ExerciseKind;
@@ -64,11 +69,125 @@ export interface LetterWheelExercise extends ExerciseCommon {
   targets: { wordId: string; tg: string; ru: string }[];
 }
 
+/** Напиши слово: ответ набирается руками, панель даёт ғ ӣ қ ӯ ҳ ҷ. */
+export interface TypeWordExercise extends ExerciseCommon {
+  kind: 'type_word';
+  /** Что переводим. */
+  ru: string;
+  /** Правильный ответ. */
+  tg: string;
+  /** Подпись под вопросом — часть речи или пример. */
+  hint?: string;
+}
+
+/** Пропущенная буква: в слове вырезана одна буква, её надо выбрать. */
+export interface MissingLetterExercise extends ExerciseCommon {
+  kind: 'missing_letter';
+  /** Часть слова до пропуска и после — между ними пустая клетка. */
+  before: string;
+  after: string;
+  ru: string;
+  /** Буквы на выбор. */
+  options: string[];
+  correct: number;
+  /** Пропущена одна из шести особых букв — подсвечиваем это в подписи. */
+  special: boolean;
+}
+
+/** Правда или ложь на время: «китоб = книга?». */
+export interface TrueFalseExercise extends ExerciseCommon {
+  kind: 'true_false';
+  tg: string;
+  /** Перевод, который проверяем — верный или подставной. */
+  ru: string;
+  /** Верна ли пара. */
+  truth: boolean;
+  /** Сколько секунд даётся на ответ. */
+  seconds: number;
+  /** Настоящий перевод — показываем, когда пара подставная. */
+  realRu: string;
+}
+
+/** Знакомство с буквой: карточка, затем проверка «найди эту букву». */
+export interface AlphabetIntroExercise extends ExerciseCommon {
+  kind: 'alphabet_intro';
+  lower: string;
+  upper: string;
+  /** Название буквы по-таджикски. */
+  name: string;
+  sound: string;
+  /** Русская буква с тем же звуком; null — такой в русском нет. */
+  ru: string | null;
+  note?: string;
+  examples: { tg: string; ru: string }[];
+  /** Плитки для проверки: среди похожих букв одна изученная. */
+  options: string[];
+  correct: number;
+}
+
+/** Лишнее слово: три из одной темы, одно из чужой. */
+export interface OddOneOutExercise extends ExerciseCommon {
+  kind: 'odd_one_out';
+  /** Название темы трёх слов — объясняет ответ. */
+  theme: string;
+  options: { wordId: string; tg: string; ru: string }[];
+  correct: number;
+}
+
+/** Выбери реплику: мини-диалог из двух ходов. */
+export interface DialogueChoiceExercise extends ExerciseCommon {
+  kind: 'dialogue_choice';
+  ask: { tg: string; ru: string };
+  options: { tg: string; ru: string }[];
+  correct: number;
+}
+
+/** Число и слово: таджикское числительное набирается цифрами. */
+export interface NumberWordExercise extends ExerciseCommon {
+  kind: 'number_word';
+  tg: string;
+  ru: string;
+  value: number;
+}
+
+/** Разложи слова по двум корзинам. */
+export interface CategorySortExercise extends ExerciseCommon {
+  kind: 'category_sort';
+  /** Подписи корзин. */
+  baskets: [string, string];
+  items: { wordId: string; tg: string; ru: string; basket: 0 | 1 }[];
+}
+
+/** Изафет: «падар» + «и» + «ман» = «падари ман». */
+export interface IzafetBuilderExercise extends ExerciseCommon {
+  kind: 'izafet_builder';
+  ru: string;
+  /** Полный верный ответ. */
+  tg: string;
+  /** Главное слово — к нему клеится «и». */
+  head: string;
+  /** Зависимое слово. */
+  mod: string;
+  /** Соединитель, почти всегда «и». */
+  suffix: string;
+  /** Слова на выбор, с лишними. */
+  bank: string[];
+}
+
 export type Exercise =
   | QuizExercise
   | MatchPairsExercise
   | BuildPhraseExercise
-  | LetterWheelExercise;
+  | LetterWheelExercise
+  | TypeWordExercise
+  | MissingLetterExercise
+  | TrueFalseExercise
+  | AlphabetIntroExercise
+  | OddOneOutExercise
+  | DialogueChoiceExercise
+  | NumberWordExercise
+  | CategorySortExercise
+  | IzafetBuilderExercise;
 
 /** Результат одной попытки внутри задания. */
 export interface Attempt {

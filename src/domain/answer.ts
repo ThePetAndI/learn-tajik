@@ -90,6 +90,53 @@ export function hasSpecialLetters(word: string): boolean {
   return /[ғӣқӯҳҷ]/i.test(word.normalize('NFC'));
 }
 
+/** Шесть букв, которых нет в русском алфавите. */
+export const SPECIAL_LETTERS = ['ғ', 'ӣ', 'қ', 'ӯ', 'ҳ', 'ҷ'] as const;
+
+/**
+ * Пары, которые путают: особая буква и её русский двойник.
+ * На этом держатся «пропущенная буква» и проверка в знакомстве с буквой —
+ * выбирать между ҳ и х осмысленно, между ҳ и б нет.
+ */
+export const LOOKALIKES: Record<string, string[]> = {
+  ғ: ['г'],
+  г: ['ғ'],
+  ӣ: ['и', 'й'],
+  и: ['ӣ', 'й'],
+  й: ['и', 'ӣ'],
+  қ: ['к'],
+  к: ['қ'],
+  ӯ: ['у'],
+  у: ['ӯ'],
+  ҳ: ['х'],
+  х: ['ҳ'],
+  ҷ: ['ч'],
+  ч: ['ҷ'],
+  // ь и щ в таджикском алфавите нет вовсе — как вариант ответа это честная ловушка
+  ъ: ['ь', 'э'],
+  о: ['а', 'у'],
+  а: ['о', 'я'],
+  е: ['ё', 'э'],
+  ё: ['е', 'э'],
+  э: ['е', 'ё'],
+  з: ['с'],
+  с: ['з'],
+  ш: ['щ', 'ч'],
+  б: ['п', 'в'],
+  п: ['б', 'ф'],
+};
+
+/** Буквы, похожие на данную — для вариантов ответа. */
+export function lookalikesOf(letter: string): string[] {
+  const key = letter.normalize('NFC').toLowerCase();
+  return (LOOKALIKES[key] ?? []).filter((l) => l !== key);
+}
+
+/** Есть ли такая буква среди шести особых. */
+export function isSpecialLetter(letter: string): boolean {
+  return (SPECIAL_LETTERS as readonly string[]).includes(letter.normalize('NFC').toLowerCase());
+}
+
 /** Список особых букв слова — для подсказки под ответом. */
 export function specialLettersOf(word: string): string[] {
   const found = new Set<string>();

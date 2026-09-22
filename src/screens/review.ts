@@ -16,7 +16,8 @@ import { allPhrases, allWords, getWord, type Phrase, type Word } from '../data/c
 import { applyCoinBonus, coinMultiplier } from '../domain/shop';
 import { recordAttemptWords, reviewSelection } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
-import { buildLevelExercises, makePool } from '../game/generators';
+import { buildLevelExercises } from '../game/generators';
+import { poolForWords } from '../game/level-pool';
 import { moduleFor } from '../game/registry';
 import type { Exercise } from '../game/types';
 import { button } from '../ui/button';
@@ -62,7 +63,7 @@ function collectPhrases(words: readonly Word[]): Phrase[] {
 }
 
 function buildReviewExercises(words: Word[], phrases: Phrase[], seed: string): Exercise[] {
-  const pool = makePool(words, phrases, allWords());
+  const pool = poolForWords(words, phrases);
   const out: Exercise[] = [];
   for (let batch = 0; batch < 3 && out.length < REVIEW_SIZE; batch++) {
     out.push(...buildLevelExercises(pool, seed + ':' + batch).filter((ex) => moduleFor(ex.kind)));

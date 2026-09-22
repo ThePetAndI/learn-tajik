@@ -8,14 +8,15 @@ import { haptics } from '../core/haptics';
 import { pop, replaceTop, type ScreenView } from '../core/router';
 import { getState, update } from '../core/store';
 import { now } from '../core/time';
-import { allWords, getPhrase, getWord, type FlatLevel } from '../data/content';
+import { type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
 import { computeLives, spendLife } from '../domain/lives';
 import { getLevelProgress, recordLevelResult } from '../domain/progress';
 import { applyCoinBonus, coinMultiplier } from '../domain/shop';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
-import { buildLevelExercises, makePool } from '../game/generators';
+import { buildLevelExercises } from '../game/generators';
+import { poolForLevel } from '../game/level-pool';
 import { moduleFor } from '../game/registry';
 import { icon } from '../ui/icons';
 import { confirmModal } from '../ui/modal';
@@ -25,11 +26,7 @@ import { createSessionView } from './session-view';
 
 export function createLevelScreen(level: FlatLevel): ScreenView {
   const attemptNo = getLevelProgress(getState(), level.id).attempts;
-  const pool = makePool(
-    level.wordIds.map(getWord).filter((w): w is NonNullable<typeof w> => Boolean(w)),
-    level.phraseIds.map(getPhrase).filter((p): p is NonNullable<typeof p> => Boolean(p)),
-    allWords(),
-  );
+  const pool = poolForLevel(level);
   const exercises = buildLevelExercises(pool, level.id + ':' + attemptNo).filter((ex) =>
     moduleFor(ex.kind),
   );

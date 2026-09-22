@@ -4,7 +4,7 @@ import type { Rng } from '../../core/rng';
 import { shuffle } from '../../core/rng';
 import type { Word } from '../../data/content';
 import type { QuizExercise } from '../types';
-import { pickDistractors, type LevelPool } from './pool';
+import { pickDistractors, posLabel, type LevelPool } from './pool';
 
 const OPTIONS = 4;
 
@@ -33,21 +33,4 @@ export function makeQuiz(
     options,
     correct,
   };
-}
-
-function posLabel(pos: string): string | undefined {
-  const map: Record<string, string> = {
-    noun: 'существительное',
-    verb: 'глагол',
-    adj: 'прилагательное',
-    adv: 'наречие',
-    pron: 'местоимение',
-    num: 'числительное',
-    prep: 'предлог',
-    conj: 'союз',
-    part: 'частица',
-    interj: 'междометие',
-    phrase: 'выражение',
-  };
-  return map[pos];
 }

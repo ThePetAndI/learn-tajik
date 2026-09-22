@@ -8,7 +8,7 @@ import { haptics } from '../core/haptics';
 import { pop, push, replaceTop, type ScreenView } from '../core/router';
 import { getState, update } from '../core/store';
 import { now } from '../core/time';
-import { allPhrases, allWords, getWord, type Phrase, type Word } from '../data/content';
+import { allPhrases, getWord, type Phrase, type Word } from '../data/content';
 import { computeLives } from '../domain/lives';
 import {
   RECOVERY_SIZE,
@@ -21,7 +21,8 @@ import {
 import { applyCoinBonus, coinMultiplier } from '../domain/shop';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
-import { buildLevelExercises, makePool } from '../game/generators';
+import { buildLevelExercises } from '../game/generators';
+import { poolForWords } from '../game/level-pool';
 import { moduleFor } from '../game/registry';
 import type { Exercise } from '../game/types';
 import { button } from '../ui/button';
@@ -64,7 +65,7 @@ function collectPhrases(words: readonly Word[]): Phrase[] {
 
 /** Набирает длинную очередь заданий: одного прохода генератора не хватает. */
 function buildRecoveryExercises(words: Word[], phrases: Phrase[], seed: string): Exercise[] {
-  const pool = makePool(words, phrases, allWords());
+  const pool = poolForWords(words, phrases);
   const out: Exercise[] = [];
   for (let batch = 0; batch < 4 && out.length < RECOVERY_SIZE; batch++) {
     out.push(...buildLevelExercises(pool, seed + ':' + batch).filter((ex) => moduleFor(ex.kind)));

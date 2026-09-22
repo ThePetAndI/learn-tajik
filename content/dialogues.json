@@ -1,0 +1,541 @@
+{
+  "dialogues": [
+    {
+      "id": "d_assalom",
+      "theme": "greetings",
+      "ask": {
+        "tg": "Ассалому алайкум!",
+        "ru": "Здравствуйте!"
+      },
+      "reply": {
+        "tg": "Ваалайкум ассалом!",
+        "ru": "И вам здравствуйте!"
+      },
+      "words": [],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "d_ahvol",
+      "theme": "greetings",
+      "ask": {
+        "tg": "Аҳволат чӣ хел?",
+        "ru": "Как твои дела?"
+      },
+      "reply": {
+        "tg": "Раҳмат, нағз.",
+        "ru": "Спасибо, хорошо."
+      },
+      "words": [
+        "w_chi",
+        "w_rahmat",
+        "w_nagz"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «аҳволат чӣ хел» против «корҳоят чӣ хел»"
+    },
+    {
+      "id": "d_shab",
+      "theme": "greetings",
+      "ask": {
+        "tg": "Шаб ба хайр!",
+        "ru": "Спокойной ночи!"
+      },
+      "reply": {
+        "tg": "Шумо ҳам шаб ба хайр!",
+        "ru": "И вам спокойной ночи!"
+      },
+      "words": [
+        "w_shab",
+        "w_ba",
+        "w_khayr",
+        "w_shumo",
+        "w_ham"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить ответную формулу"
+    },
+    {
+      "id": "d_rahmat",
+      "theme": "greetings",
+      "ask": {
+        "tg": "Раҳмат!",
+        "ru": "Спасибо!"
+      },
+      "reply": {
+        "tg": "Намеарзад.",
+        "ru": "Не за что."
+      },
+      "words": [
+        "w_rahmat"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «намеарзад» как ответ на спасибо"
+    },
+    {
+      "id": "d_khayr",
+      "theme": "greetings",
+      "ask": {
+        "tg": "Хайр!",
+        "ru": "Пока!"
+      },
+      "reply": {
+        "tg": "То боздид!",
+        "ru": "До свидания!"
+      },
+      "words": [
+        "w_khayr"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "d_nom",
+      "theme": "meeting",
+      "ask": {
+        "tg": "Номи шумо чист?",
+        "ru": "Как вас зовут?"
+      },
+      "reply": {
+        "tg": "Номи ман Алӣ.",
+        "ru": "Меня зовут Али."
+      },
+      "words": [
+        "w_shumo",
+        "w_man"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "форма «чист» (стяжение «чӣ аст»)"
+    },
+    {
+      "id": "d_kucho",
+      "theme": "meeting",
+      "ask": {
+        "tg": "Шумо аз куҷо ҳастед?",
+        "ru": "Вы откуда?"
+      },
+      "reply": {
+        "tg": "Ман аз Душанбе ҳастам.",
+        "ru": "Я из Душанбе."
+      },
+      "words": [
+        "w_shumo",
+        "w_az",
+        "w_kucho",
+        "w_man",
+        "w_dushanbe_city",
+        "w_hastam"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "нужна ли связка «ҳастам»"
+    },
+    {
+      "id": "d_shinos",
+      "theme": "meeting",
+      "ask": {
+        "tg": "Аз шиносоӣ шодам.",
+        "ru": "Рад знакомству."
+      },
+      "reply": {
+        "tg": "Ман ҳам шодам.",
+        "ru": "Я тоже рад."
+      },
+      "words": [
+        "w_az",
+        "w_man",
+        "w_ham"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот «аз шиносоӣ шодам»"
+    },
+    {
+      "id": "d_oila",
+      "theme": "family",
+      "ask": {
+        "tg": "Оилаи шумо калон аст?",
+        "ru": "У вас большая семья?"
+      },
+      "reply": {
+        "tg": "Ҳа, мо панҷ нафар.",
+        "ru": "Да, нас пятеро."
+      },
+      "words": [
+        "w_shumo",
+        "w_kalon",
+        "w_ast",
+        "w_ha",
+        "w_mo",
+        "w_panj"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить счёт людей через «нафар»"
+    },
+    {
+      "id": "d_padar_kor",
+      "theme": "family",
+      "ask": {
+        "tg": "Падарат кор мекунад?",
+        "ru": "Твой отец работает?"
+      },
+      "reply": {
+        "tg": "Ҳа, ӯ муаллим аст.",
+        "ru": "Да, он учитель."
+      },
+      "words": [
+        "w_kor",
+        "w_ha",
+        "w_u",
+        "w_muallim",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «падарат» (притяжательное окончание)"
+    },
+    {
+      "id": "d_chandsola",
+      "theme": "num",
+      "ask": {
+        "tg": "Шумо чандсола ҳастед?",
+        "ru": "Сколько вам лет?"
+      },
+      "reply": {
+        "tg": "Ман бист сола.",
+        "ru": "Мне двадцать лет."
+      },
+      "words": [
+        "w_shumo",
+        "w_man",
+        "w_bist",
+        "w_sola"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «чандсола» и ответ без связки"
+    },
+    {
+      "id": "d_chand_pul",
+      "theme": "num",
+      "ask": {
+        "tg": "Ин чанд пул аст?",
+        "ru": "Сколько это стоит?"
+      },
+      "reply": {
+        "tg": "Даҳ сомонӣ.",
+        "ru": "Десять сомони."
+      },
+      "words": [
+        "w_in",
+        "w_chand",
+        "w_pul",
+        "w_ast",
+        "w_dah",
+        "w_somoni"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот «чанд пул»"
+    },
+    {
+      "id": "d_choy",
+      "theme": "food",
+      "ask": {
+        "tg": "Чой менӯшед?",
+        "ru": "Будете чай?"
+      },
+      "reply": {
+        "tg": "Ҳа, раҳмат.",
+        "ru": "Да, спасибо."
+      },
+      "words": [
+        "w_choy",
+        "w_ha",
+        "w_rahmat"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму «менӯшед»"
+    },
+    {
+      "id": "d_non",
+      "theme": "food",
+      "ask": {
+        "tg": "Нон мехоҳед?",
+        "ru": "Хотите хлеба?"
+      },
+      "reply": {
+        "tg": "Не, раҳмат, сер шудам.",
+        "ru": "Нет, спасибо, я сыт."
+      },
+      "words": [
+        "w_non",
+        "w_ne",
+        "w_rahmat"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «сер шудам»"
+    },
+    {
+      "id": "d_narkh",
+      "theme": "bazaar",
+      "ask": {
+        "tg": "Нархи ин чанд аст?",
+        "ru": "Какая у этого цена?"
+      },
+      "reply": {
+        "tg": "Панҷ сомонӣ.",
+        "ru": "Пять сомони."
+      },
+      "words": [
+        "w_in",
+        "w_chand",
+        "w_ast",
+        "w_panj",
+        "w_somoni"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить оборот с «нарх»"
+    },
+    {
+      "id": "d_arzon",
+      "theme": "bazaar",
+      "ask": {
+        "tg": "Арзонтар мешавад?",
+        "ru": "Подешевле можно?"
+      },
+      "reply": {
+        "tg": "Не, нарх устувор.",
+        "ru": "Нет, цена твёрдая."
+      },
+      "words": [
+        "w_ne",
+        "w_narkh"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «нарх устувор»"
+    },
+    {
+      "id": "d_bozor",
+      "theme": "city",
+      "ask": {
+        "tg": "Бозор дар куҷост?",
+        "ru": "Где базар?"
+      },
+      "reply": {
+        "tg": "Рост равед, баъд ба чап.",
+        "ru": "Идите прямо, потом налево."
+      },
+      "words": [
+        "w_bozor",
+        "w_dar_prep",
+        "w_kucho_ast",
+        "w_rost",
+        "w_bad_potom",
+        "w_ba",
+        "w_chap"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «куҷост» и повелительную форму «равед»"
+    },
+    {
+      "id": "d_dur",
+      "theme": "city",
+      "ask": {
+        "tg": "Ин ҷо дур аст?",
+        "ru": "Это далеко?"
+      },
+      "reply": {
+        "tg": "Не, наздик аст.",
+        "ru": "Нет, близко."
+      },
+      "words": [
+        "w_in",
+        "w_jo",
+        "w_dur",
+        "w_ast",
+        "w_ne",
+        "w_nazdik"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "d_soat",
+      "theme": "time",
+      "ask": {
+        "tg": "Соат чанд аст?",
+        "ru": "Который час?"
+      },
+      "reply": {
+        "tg": "Соат панҷ.",
+        "ru": "Пять часов."
+      },
+      "words": [
+        "w_soat",
+        "w_chand",
+        "w_ast",
+        "w_panj"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "d_imruz",
+      "theme": "time",
+      "ask": {
+        "tg": "Имрӯз кадом рӯз аст?",
+        "ru": "Какой сегодня день?"
+      },
+      "reply": {
+        "tg": "Имрӯз душанбе.",
+        "ru": "Сегодня понедельник."
+      },
+      "words": [
+        "w_imruz",
+        "w_kadom",
+        "w_ruz",
+        "w_ast",
+        "w_dushanbe_city"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «кадом рӯз»"
+    },
+    {
+      "id": "d_dard",
+      "theme": "health",
+      "ask": {
+        "tg": "Чӣ дард мекунад?",
+        "ru": "Что болит?"
+      },
+      "reply": {
+        "tg": "Сарам дард мекунад.",
+        "ru": "У меня болит голова."
+      },
+      "words": [
+        "w_chi",
+        "w_dard"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «сарам» и оборот «дард кардан»"
+    },
+    {
+      "id": "d_kor",
+      "theme": "work",
+      "ask": {
+        "tg": "Шумо дар куҷо кор мекунед?",
+        "ru": "Где вы работаете?"
+      },
+      "reply": {
+        "tg": "Дар мактаб кор мекунам.",
+        "ru": "Работаю в школе."
+      },
+      "words": [
+        "w_shumo",
+        "w_dar_prep",
+        "w_kucho",
+        "w_kor",
+        "w_maktab"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "d_rah",
+      "theme": "travel",
+      "ask": {
+        "tg": "Ба Хуҷанд чӣ хел равам?",
+        "ru": "Как мне добраться до Худжанда?"
+      },
+      "reply": {
+        "tg": "Бо автобус.",
+        "ru": "На автобусе."
+      },
+      "words": [
+        "w_ba",
+        "w_chi",
+        "w_bo",
+        "w_avtobus"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму «равам»"
+    },
+    {
+      "id": "d_nafahmidam",
+      "theme": "speech",
+      "ask": {
+        "tg": "Фаҳмидед?",
+        "ru": "Поняли?"
+      },
+      "reply": {
+        "tg": "Бубахшед, нафаҳмидам.",
+        "ru": "Извините, не понял."
+      },
+      "words": [
+        "w_bubakhshed"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "d_in_chist",
+      "theme": "questions",
+      "ask": {
+        "tg": "Ин чист?",
+        "ru": "Что это?"
+      },
+      "reply": {
+        "tg": "Ин китоб аст.",
+        "ru": "Это книга."
+      },
+      "words": [
+        "w_in",
+        "w_kitob",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "форма «чист» (стяжение «чӣ аст»)"
+    },
+    {
+      "id": "d_khona",
+      "theme": "house",
+      "ask": {
+        "tg": "Хонаи шумо дар куҷост?",
+        "ru": "Где ваш дом?"
+      },
+      "reply": {
+        "tg": "Дар маркази шаҳр.",
+        "ru": "В центре города."
+      },
+      "words": [
+        "w_shumo",
+        "w_dar_prep",
+        "w_kucho_ast",
+        "w_shahr"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить «маркази шаҳр»"
+    }
+  ]
+}

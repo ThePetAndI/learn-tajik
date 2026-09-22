@@ -5,6 +5,7 @@ import './styles/buttons.css';
 import './styles/shell.css';
 import './styles/map.css';
 import './styles/exercise.css';
+import './styles/minigames.css';
 import './styles/economy.css';
 import './styles/words.css';
 import './styles/screens.css';

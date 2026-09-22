@@ -1,74 +1,192 @@
 /**
- * Сборка уровня: из слов и фраз получается последовательность заданий
- * разных типов. Всё детерминировано по ключу — одна и та же попытка
+ * Сборка уровня: из слов, фраз, диалогов и букв получается последовательность
+ * заданий разных типов. Всё детерминировано по ключу — одна и та же попытка
  * собирается одинаково, а тесты могут проверять результат.
  */
 
 import { rngFor, shuffle, type Rng } from '../../core/rng';
-import type { Phrase, Word } from '../../data/content';
+import type { Dialogue, Izafet, Letter, Phrase, Word } from '../../data/content';
 import type { Exercise } from '../types';
+import { makeAlphabetIntro } from './alphabet-intro';
 import { makeBuildPhrase } from './build-phrase';
+import { makeCategorySort } from './category-sort';
+import { makeDialogue } from './dialogue';
+import { makeIzafet } from './izafet';
 import { makeLetterWheel } from './letter-wheel';
 import { makeMatchPairs } from './match-pairs';
+import { makeMissingLetter } from './missing-letter';
+import { makeNumberWord } from './number-word';
+import { makeOddOneOut } from './odd-one-out';
 import type { LevelPool } from './pool';
 import { makeQuiz } from './quiz';
+import { makeTrueFalse } from './true-false';
+import { makeTypeWord } from './type-word';
 
 export { type LevelPool } from './pool';
-export { makeBuildPhrase, makeLetterWheel, makeMatchPairs, makeQuiz };
+export {
+  makeAlphabetIntro,
+  makeBuildPhrase,
+  makeCategorySort,
+  makeDialogue,
+  makeIzafet,
+  makeLetterWheel,
+  makeMatchPairs,
+  makeMissingLetter,
+  makeNumberWord,
+  makeOddOneOut,
+  makeQuiz,
+  makeTrueFalse,
+  makeTypeWord,
+};
 
 /** Уровень короче шести заданий не ощущается уровнем, длиннее десяти — утомляет. */
 export const MIN_EXERCISES = 6;
 export const MAX_EXERCISES = 10;
+/** Сколько букв показываем на уровне алфавита: больше — и уровень превращается в лекцию. */
+const MAX_INTROS = 2;
+
+/** Попытка собрать задание: вернёт null, если материала не хватило. */
+type Candidate = () => Exercise | null;
+
+/** Дополнительный материал уровня. Всё необязательное: чего нет — тех заданий не будет. */
+export type PoolExtras = Partial<Omit<LevelPool, 'words' | 'phrases' | 'vocabulary'>>;
 
 export function makePool(
   words: Word[],
   phrases: Phrase[],
   vocabulary: readonly Word[],
+  extras: PoolExtras = {},
 ): LevelPool {
-  return { words, phrases, vocabulary };
+  return {
+    words,
+    phrases,
+    vocabulary,
+    priorWords: extras.priorWords ?? [],
+    letters: extras.letters ?? [],
+    dialogues: extras.dialogues ?? [],
+    izafets: extras.izafets ?? [],
+    themeTitles: extras.themeTitles ?? {},
+  };
 }
 
 /**
- * Порядок продуман: сначала знакомство со словами узнаванием,
- * потом то же самое наоборот (это труднее), между ними — задания,
- * которые дают отдохнуть от однотипного выбора.
+ * Перебор материала по кругу: каждому заданию достаётся своё слово.
+ * Курсор двигается только на удачной попытке — слово, которое не подошло
+ * одному генератору, остаётся доступным следующему.
+ */
+function cycler<T>(items: readonly T[]) {
+  let cursor = 0;
+  return function forSome<R>(make: (item: T) => R | null): R | null {
+    for (let k = 0; k < items.length; k++) {
+      const item = items[(cursor + k) % items.length];
+      const made = item === undefined ? null : make(item);
+      if (made) {
+        cursor = (cursor + k + 1) % items.length;
+        return made;
+      }
+    }
+    return null;
+  };
+}
+
+/**
+ * Порядок продуман: сначала узнавание, потом обратный перевод (он труднее),
+ * письмо ближе к концу, а между ними — задания, которые дают отдохнуть
+ * от однотипного выбора.
+ *
+ * Специализированные генераторы стоят в слоте первыми: число, изафет и диалог
+ * появятся только там, где для них есть материал, и ничего не стоят там, где
+ * его нет.
  */
 export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[] {
   const rng: Rng = rngFor(seedKey);
   const words = shuffle(rng, pool.words);
   const phrases = shuffle(rng, pool.phrases);
-  if (words.length === 0 && phrases.length === 0) return [];
+  const letters = shuffle(rng, [...pool.letters]);
+  const dialogues = shuffle(rng, [...pool.dialogues]);
+  const izafets = shuffle(rng, [...pool.izafets]);
+  if (words.length === 0 && phrases.length === 0 && letters.length === 0) return [];
 
   const out: Exercise[] = [];
   const covered = new Set<string>();
   const used = new Set<string>();
+  const kinds = new Set<string>();
+
+  const forWord = cycler<Word>(words);
+  const forPhrase = cycler<Phrase>(phrases);
+  const forLetter = cycler<Letter>(letters);
+  const forDialogue = cycler<Dialogue>(dialogues);
+  const forIzafet = cycler<Izafet>(izafets);
 
   const push = (exercise: Exercise | null): boolean => {
     if (!exercise || out.length >= MAX_EXERCISES) return false;
     const key = exercise.kind + ':' + exercise.wordIds.join(',');
     if (used.has(key)) return false;
-    // два одинаковых задания подряд выглядят как баг
-    if (out[out.length - 1]?.kind === exercise.kind && exercise.kind !== 'quiz_tg_ru') return false;
+    // два одинаковых задания подряд выглядят как баг — кроме квиза и знакомства
+    // с буквой: «вот Ғ, вот Қ» подряд как раз и есть урок алфавита
+    if (
+      out[out.length - 1]?.kind === exercise.kind &&
+      exercise.kind !== 'quiz_tg_ru' &&
+      exercise.kind !== 'alphabet_intro'
+    ) {
+      return false;
+    }
     used.add(key);
+    kinds.add(exercise.kind);
     out.push(exercise);
     for (const id of exercise.wordIds) covered.add(id);
     return true;
   };
 
-  let wi = 0;
-  for (let k = 0; k < 2 && wi < words.length; k++, wi++) {
-    push(makeQuiz(pool, words[wi] as Word, 'tg_ru', rng));
-  }
+  /**
+   * Слот: пробуем кандидатов по порядку, пока один не встанет.
+   * Первым проходом берём только те типы, которых на уровне ещё не было —
+   * иначе одна и та же игра заняла бы два слота, а соседняя не появилась бы
+   * ни разу.
+   */
+  const slot = (...candidates: Candidate[]): void => {
+    const built: Array<Exercise | null> = [];
+    for (const make of candidates) {
+      if (out.length >= MAX_EXERCISES) return;
+      const exercise = make();
+      built.push(exercise);
+      if (exercise && !kinds.has(exercise.kind) && push(exercise)) return;
+    }
+    for (const exercise of built) {
+      if (push(exercise)) return;
+    }
+  };
 
-  push(makeMatchPairs(pool, rng));
+  /** Два равноправных кандидата в случайном порядке — чтобы попытки не повторялись. */
+  const alt = (a: Candidate, b: Candidate): [Candidate, Candidate] =>
+    rng() < 0.5 ? [a, b] : [b, a];
 
-  for (let k = 0; k < 2 && wi < words.length; k++, wi++) {
-    push(makeQuiz(pool, words[wi] as Word, 'ru_tg', rng));
-  }
+  const intro = () => forLetter((l) => makeAlphabetIntro(pool, l, rng));
+  const quizTg = () => forWord((w) => makeQuiz(pool, w, 'tg_ru', rng));
+  const quizRu = () => forWord((w) => makeQuiz(pool, w, 'ru_tg', rng));
+  const trueFalse = () => forWord((w) => makeTrueFalse(pool, w, rng));
+  const typeWord = () => forWord((w) => makeTypeWord(pool, w, rng));
+  const missing = () => forWord((w) => makeMissingLetter(pool, w, rng));
+  const number = () => forWord((w) => makeNumberWord(pool, w, rng));
+  const phrase = () => forPhrase((p) => makeBuildPhrase(pool, p, rng));
+  const dialogue = () => forDialogue((d) => makeDialogue(pool, d, rng));
+  const izafet = () => forIzafet((z) => makeIzafet(pool, z, rng));
+  const pairs = () => makeMatchPairs(pool, rng);
+  const sort = () => makeCategorySort(pool, rng);
+  const odd = () => makeOddOneOut(pool, rng);
+  const wheel = () => makeLetterWheel(pool, rng);
 
-  if (phrases[0]) push(makeBuildPhrase(pool, phrases[0], rng));
-  push(makeLetterWheel(pool, rng));
-  if (phrases[1]) push(makeBuildPhrase(pool, phrases[1], rng));
+  for (let k = 0; k < MAX_INTROS; k++) slot(intro);
+
+  slot(quizTg);
+  slot(trueFalse, quizTg);
+  slot(pairs, sort, quizTg);
+  slot(number, quizRu);
+  slot(dialogue, phrase, quizRu);
+  slot(missing, typeWord, quizRu);
+  slot(izafet, ...alt(wheel, phrase));
+  slot(...alt(sort, odd), wheel);
+  slot(typeWord, missing, trueFalse);
 
   // Каждое слово уровня должно встретиться хотя бы раз
   for (const word of words) {
@@ -85,9 +203,9 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
       push(makeQuiz(pool, word, dir, rng));
     }
     if (phrases.length > 0) {
-      for (const phrase of phrases) {
+      for (const p of phrases) {
         if (out.length >= MIN_EXERCISES) break;
-        push(makeBuildPhrase(pool, phrase, rng));
+        push(makeBuildPhrase(pool, p, rng));
       }
     }
   }

@@ -1,9 +1,18 @@
 /** Реестр мини-игр: тип задания -> модуль, который его показывает. */
 
+import { alphabetIntroModule } from './exercises/alphabet-intro';
 import { buildPhraseModule } from './exercises/build-phrase';
+import { categorySortModule } from './exercises/category-sort';
+import { dialogueModule } from './exercises/dialogue';
+import { izafetModule } from './exercises/izafet';
 import { letterWheelModule } from './exercises/letter-wheel';
 import { matchPairsModule } from './exercises/match-pairs';
+import { missingLetterModule } from './exercises/missing-letter';
+import { numberWordModule } from './exercises/number-word';
+import { oddOneOutModule } from './exercises/odd-one-out';
 import { quizModule } from './exercises/quiz';
+import { trueFalseModule } from './exercises/true-false';
+import { typeWordModule } from './exercises/type-word';
 import type { Exercise, ExerciseKind, ExerciseModule } from './types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -15,6 +24,15 @@ const REGISTRY: Partial<Record<ExerciseKind, AnyModule>> = {
   match_pairs: matchPairsModule,
   build_phrase: buildPhraseModule,
   letter_wheel: letterWheelModule,
+  type_word: typeWordModule,
+  missing_letter: missingLetterModule,
+  true_false: trueFalseModule,
+  alphabet_intro: alphabetIntroModule,
+  odd_one_out: oddOneOutModule,
+  dialogue_choice: dialogueModule,
+  number_word: numberWordModule,
+  category_sort: categorySortModule,
+  izafet_builder: izafetModule,
 };
 
 export function moduleFor(kind: ExerciseKind): AnyModule | undefined {

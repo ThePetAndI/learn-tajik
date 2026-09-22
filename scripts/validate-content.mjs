@@ -121,6 +121,13 @@ async function checkWords() {
       if (w.audio !== null && w.audio !== undefined && typeof w.audio !== 'string') {
         err(file, id + ': audio должно быть null или строкой');
       }
+      if (w.num !== undefined && w.num !== null) {
+        if (typeof w.num !== 'number' || !Number.isFinite(w.num) || w.num < 0) {
+          err(file, id + ': num должно быть неотрицательным числом');
+        } else if (w.pos !== 'num') {
+          warn(file, id + ': num стоит у слова, которое не числительное');
+        }
+      }
       if (w.example !== undefined && w.example !== null) {
         if (typeof w.example !== 'object') err(file, id + ': example должен быть объектом {tg, ru}');
         else {
@@ -183,12 +190,102 @@ async function checkAlphabet() {
     if (typeof l.lower !== 'string' || l.lower.length !== 1) err(file, id + ': поле lower — одна буква');
     if (typeof l.upper !== 'string' || l.upper.length !== 1) err(file, id + ': поле upper — одна буква');
     if (typeof l.sound !== 'string' || !l.sound) err(file, id + ': нужно описание звука (sound)');
+    if (typeof l.lower === 'string') alphabetChars.add(l.lower);
     if (typeof l.verified !== 'boolean') err(file, id + ': нужно поле verified');
     if (l.verified === false) unverified.push({ id: 'буква ' + id, file, tg: l.lower, ru: l.sound, note: l.note ?? '' });
     if (Array.isArray(l.examples)) {
       for (const wid of l.examples) {
         if (!wordIds.has(wid)) err(file, 'буква ' + id + ': пример ссылается на несуществующее слово ' + wid);
         else usedWordIds.add(wid);
+      }
+    }
+  }
+}
+
+const alphabetChars = new Set();
+const dialogueIds = new Set();
+const izafetIds = new Set();
+
+async function checkDialogues() {
+  const file = join(CONTENT, 'dialogues.json');
+  if (!(await exists(file))) {
+    warn(file, 'файла нет — мини-игра «выбери реплику» не появится');
+    return;
+  }
+  const data = await readJson(file);
+  if (!data) return;
+  if (!Array.isArray(data.dialogues)) {
+    err(file, 'ожидалось поле dialogues: []');
+    return;
+  }
+  for (const d of data.dialogues) {
+    const id = typeof d.id === 'string' ? d.id : '(без id)';
+    if (!/^d_[a-z0-9_]+$/.test(id)) err(file, id + ': id должен быть вида d_slug');
+    if (dialogueIds.has(id)) err(file, id + ': дубликат id');
+    dialogueIds.add(id);
+    for (const side of ['ask', 'reply']) {
+      const part = d[side];
+      if (!part || typeof part !== 'object') {
+        err(file, id + '.' + side + ': ожидался объект {tg, ru}');
+        continue;
+      }
+      checkTajik(file, id, side + '.tg', part.tg);
+      checkRu(file, id, side + '.ru', part.ru);
+    }
+    if (Array.isArray(d.wrong)) {
+      for (const [i, w] of d.wrong.entries()) {
+        checkTajik(file, id, 'wrong[' + i + '].tg', w?.tg);
+        checkRu(file, id, 'wrong[' + i + '].ru', w?.ru);
+      }
+    }
+    if (typeof d.theme !== 'string' || !d.theme) err(file, id + ': нет темы');
+    if (typeof d.verified !== 'boolean') err(file, id + ': нужно поле verified');
+    if (d.verified === false) {
+      unverified.push({ id, file, tg: d.ask?.tg + ' / ' + d.reply?.tg, ru: d.reply?.ru ?? '', note: d.note ?? '' });
+    }
+    if (Array.isArray(d.words)) {
+      for (const wid of d.words) {
+        if (!wordIds.has(wid)) err(file, id + ': ссылается на несуществующее слово ' + wid);
+      }
+    }
+  }
+}
+
+async function checkIzafet() {
+  const file = join(CONTENT, 'izafet.json');
+  if (!(await exists(file))) {
+    warn(file, 'файла нет — мини-игра «изафет» не появится');
+    return;
+  }
+  const data = await readJson(file);
+  if (!data) return;
+  if (!Array.isArray(data.izafet)) {
+    err(file, 'ожидалось поле izafet: []');
+    return;
+  }
+  for (const z of data.izafet) {
+    const id = typeof z.id === 'string' ? z.id : '(без id)';
+    if (!/^iz_[a-z0-9_]+$/.test(id)) err(file, id + ': id должен быть вида iz_slug');
+    if (izafetIds.has(id)) err(file, id + ': дубликат id');
+    izafetIds.add(id);
+    checkTajik(file, id, 'head', z.head);
+    checkTajik(file, id, 'mod', z.mod);
+    checkTajik(file, id, 'tg', z.tg);
+    checkRu(file, id, 'ru', z.ru);
+    // Форма собирается игроком как head + и + пробел + mod. Если строка tg
+    // выглядит иначе, задание не соберётся — и молча пропадёт.
+    if (typeof z.head === 'string' && typeof z.mod === 'string' && typeof z.tg === 'string') {
+      const built = z.head + 'и' + ' ' + z.mod;
+      if (built.normalize('NFC') !== z.tg.normalize('NFC')) {
+        err(file, id + ': «' + built + '» не совпадает с tg «' + z.tg + '» — задание не соберётся');
+      }
+    }
+    if (typeof z.theme !== 'string' || !z.theme) err(file, id + ': нет темы');
+    if (typeof z.verified !== 'boolean') err(file, id + ': нужно поле verified');
+    if (z.verified === false) unverified.push({ id, file, tg: z.tg, ru: z.ru, note: z.note ?? '' });
+    if (Array.isArray(z.words)) {
+      for (const wid of z.words) {
+        if (!wordIds.has(wid)) err(file, id + ': ссылается на несуществующее слово ' + wid);
       }
     }
   }
@@ -235,6 +332,14 @@ async function checkCourse() {
       }
       if (lvl.exercises !== undefined && lvl.exercises !== 'auto' && !Array.isArray(lvl.exercises)) {
         err(file, lid + ': exercises должно быть "auto" или массивом');
+      }
+      if (lvl.letters !== undefined) {
+        if (!Array.isArray(lvl.letters)) err(file, lid + ': letters должно быть массивом букв');
+        else {
+          for (const ch of lvl.letters) {
+            if (!alphabetChars.has(ch)) err(file, lid + ': буквы «' + ch + '» нет в alphabet.json');
+          }
+        }
       }
     }
   }
@@ -294,6 +399,8 @@ async function main() {
   await checkWords();
   await checkPhrases();
   await checkAlphabet();
+  await checkDialogues();
+  await checkIzafet();
   await checkCourse();
 
   const reviewPath = join(CONTENT, 'REVIEW.md');
@@ -307,6 +414,8 @@ async function main() {
   console.log(
     'Слов: ' + wordIds.size +
       ', фраз: ' + phraseIds.size +
+      ', диалогов: ' + dialogueIds.size +
+      ', изафетов: ' + izafetIds.size +
       ', разделов: ' + sectionIds.size +
       ', уровней: ' + levelIds.size +
       ', на проверку: ' + unverified.length,
