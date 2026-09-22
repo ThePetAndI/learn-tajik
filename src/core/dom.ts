@@ -150,17 +150,25 @@ export function onTap(el: Element, fn: (ev: PointerEvent | MouseEvent) => void):
   };
 }
 
-/** Ждём конца CSS-анимации, но не дольше fallbackMs (анимации могут быть выключены). */
+/**
+ * Ждём конца CSS-анимации, но не дольше fallbackMs (анимации могут быть выключены).
+ * Считаем только свою анимацию: animationend всплывает, и анимация внутри
+ * экрана — звёзды на итогах, появление задания — заканчивала ожидание раньше
+ * времени.
+ */
 export function afterAnimation(el: Element, fallbackMs = 400): Promise<void> {
   return new Promise((resolve) => {
     let done = false;
     const finish = () => {
       if (done) return;
       done = true;
-      el.removeEventListener('animationend', finish);
+      el.removeEventListener('animationend', onEnd);
       resolve();
     };
-    el.addEventListener('animationend', finish, { once: true });
+    const onEnd = (ev: Event) => {
+      if (ev.target === el) finish();
+    };
+    el.addEventListener('animationend', onEnd);
     setTimeout(finish, fallbackMs);
   });
 }

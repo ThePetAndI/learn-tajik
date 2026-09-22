@@ -71,10 +71,7 @@ export function showTab(id: TabId): void {
   closeAll();
 
   const prev = activeTab !== null ? tabViews.get(activeTab) : undefined;
-  if (prev) {
-    prev.onHide?.();
-    prev.el.remove();
-  }
+  prev?.onHide?.();
 
   let view = tabViews.get(id);
   if (!view) {
@@ -83,11 +80,24 @@ export function showTab(id: TabId): void {
     view = factory();
     tabViews.set(id, view);
   }
-  view.el.classList.add('screen--enter');
-  stage.append(view.el);
+
+  /*
+   * Старый экран остаётся лежать под новым, пока тот проявляется.
+   * Раньше он убирался сразу, и в промежутке был виден фиолетовый фон
+   * приложения: зелёная карта — тёмный фиолетовый — белый список слов.
+   * Именно эта вспышка и била по глазам.
+   */
+  const next = view;
+  next.el.classList.add('screen--enter');
+  stage.append(next.el);
   activeTab = id;
-  view.onShow?.();
-  void afterAnimation(view.el, 320).then(() => view?.el.classList.remove('screen--enter'));
+  next.onShow?.();
+  void afterAnimation(next.el, 320).then(() => {
+    next.el.classList.remove('screen--enter');
+    // за время перехода могли успеть вернуться назад — тогда старый экран снова активен
+    const stillActive = activeTab !== null && tabViews.get(activeTab) === prev;
+    if (prev && prev !== next && !stillActive) prev.el.remove();
+  });
   for (const fn of tabListeners) fn(id);
 }
 
@@ -141,18 +151,23 @@ export function closeAll(): void {
 export function replaceTop(factory: ViewFactory, key = ''): ScreenView | null {
   if (!overlayHost) throw new Error('Роутер не смонтирован');
   const top = stack.pop();
-  if (top) {
-    top.view.onHide?.();
-    top.view.el.remove();
-    top.view.destroy?.();
-  }
+  top?.view.onHide?.();
+
   const view = factory();
   view.el.classList.add('screen--enter');
   overlayHost.append(view.el);
   overlayHost.classList.remove('hidden');
   stack.push({ view, key });
   view.onShow?.();
-  void afterAnimation(view.el, 320).then(() => view.el.classList.remove('screen--enter'));
+  void afterAnimation(view.el, 320).then(() => {
+    view.el.classList.remove('screen--enter');
+    // прежний экран убираем под уже проявившимся новым: иначе на переходе
+    // «уровень — итоги» сквозь него на мгновение видна карта
+    if (top) {
+      top.view.el.remove();
+      top.view.destroy?.();
+    }
+  });
   notifyStack();
   return view;
 }

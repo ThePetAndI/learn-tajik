@@ -47,7 +47,9 @@ button { cursor: pointer; }
   background: var(--purple-2);
 }
 
-/* Экраны переключаются стопкой, анимируются transform/opacity */
+/* Экраны переключаются стопкой, анимируются transform/opacity.
+   Вкладки — только проявление, без масштаба: новый экран проступает
+   поверх старого, а зум на полноэкранной смене цвета читается как рывок. */
 .screen {
   position: absolute;
   inset: 0;
@@ -67,13 +69,11 @@ button { cursor: pointer; }
   overscroll-behavior: contain;
 }
 
-.screen--enter { animation: screen-in var(--t-mid) var(--ease-out) both; }
-.screen--exit  { animation: screen-out var(--t-mid) var(--ease-out) both; }
+.screen--enter { animation: screen-in var(--t-fast) linear both; }
 .screen--push  { animation: screen-push var(--t-mid) var(--ease-out) both; }
 .screen--pop   { animation: screen-pop var(--t-mid) var(--ease-out) both; }
 
-@keyframes screen-in   { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: none; } }
-@keyframes screen-out  { from { opacity: 1; } to { opacity: 0; transform: scale(1.03); } }
+@keyframes screen-in   { from { opacity: 0; } to { opacity: 1; } }
 @keyframes screen-push { from { transform: translate3d(100%, 0, 0); } to { transform: none; } }
 @keyframes screen-pop  { from { transform: none; } to { transform: translate3d(100%, 0, 0); } }
 
