@@ -71,6 +71,7 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
 
   const feedbackTitle = h('div', { class: 'feedback__title' });
   const feedbackText = h('div', { class: 'feedback__text' });
+  const feedbackWhy = h('div', { class: 'feedback__why' });
   const feedbackIcon = h('div', { class: 'feedback__icon' });
   const continueBtn = button({ label: 'Продолжить', tone: 'green', size: 'big', wide: true });
   const feedback = h(
@@ -82,6 +83,7 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
       feedbackIcon,
       h('div', { class: 'grow' }, feedbackTitle, feedbackText),
     ),
+    feedbackWhy,
     continueBtn,
   );
 
@@ -203,6 +205,14 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
       feedbackText.textContent = outcome.expected ? 'Правильно: ' + outcome.expected : '';
     }
     feedbackText.classList.toggle('hidden', feedbackText.textContent === '');
+
+    /*
+     * Разбор показываем только при ошибке. На верном ответе он лишний:
+     * человек и так справился, а лишний текст удлиняет урок. Ошибка же —
+     * самый учебный момент, и оставлять его без объяснения жалко.
+     */
+    feedbackWhy.textContent = !outcome.correct && outcome.explain ? outcome.explain : '';
+    feedbackWhy.classList.toggle('hidden', feedbackWhy.textContent === '');
 
     continueBtn.classList.remove('t-green', 't-red');
     continueBtn.classList.add(outcome.correct ? 't-green' : 't-red');

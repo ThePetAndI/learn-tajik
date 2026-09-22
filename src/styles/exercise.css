@@ -151,6 +151,16 @@
 .feedback.is-wrong .feedback__icon { background: var(--red-2); }
 .feedback__title { font-size: 19px; font-weight: 900; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2); }
 .feedback__text { font-size: 14.5px; font-weight: 800; opacity: 0.95; line-height: 1.35; }
+/* Разбор ошибки: почему верный ответ именно такой */
+.feedback__why {
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: rgba(20, 8, 40, 0.28);
+  border-left: 4px solid rgba(255, 255, 255, 0.45);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.4;
+}
 
 /* ————————————————————————— квиз ————————————————————————— */
 

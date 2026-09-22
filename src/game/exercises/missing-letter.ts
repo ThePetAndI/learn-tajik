@@ -49,6 +49,7 @@ export const missingLetterModule: ExerciseModule<MissingLetterExercise> = {
         correct,
         expected: ex.before + (ex.options[ex.correct] ?? '') + ex.after,
         given: ex.before + (ex.options[index] ?? '') + ex.after,
+        explain: ex.explain,
       });
     };
 

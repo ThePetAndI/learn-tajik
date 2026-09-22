@@ -36,6 +36,7 @@ export function makeMissingLetter(
   const shuffled = shuffle(rng, options);
   return {
     kind: 'missing_letter',
+    explain: explainLetter(pool, answer),
     wordIds: [word.id],
     before: chars.slice(0, index).join(''),
     after: chars.slice(index + 1).join(''),
@@ -91,4 +92,17 @@ function lettersAround(pool: LevelPool): string[] {
     }
   }
   return [...set];
+}
+
+/**
+ * Разбор для полосы ошибки: чем эта буква отличается от своего двойника.
+ * Берётся из описания звука в alphabet.json — второй раз писать то же самое
+ * в коде значит завести два источника правды, которые разойдутся.
+ */
+function explainLetter(pool: LevelPool, letter: string): string | undefined {
+  const entry = pool.alphabet.find((l) => l.lower === letter);
+  if (!entry || !entry.sound) return undefined;
+  const twin = lookalikesOf(letter).find((l) => pool.alphabet.some((a) => a.lower === l));
+  const head = entry.upper + entry.lower + ' — ' + entry.sound + '.';
+  return twin ? head + ' Не путать с «' + twin + '».' : head;
 }

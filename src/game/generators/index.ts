@@ -21,6 +21,7 @@ import type { LevelPool } from './pool';
 import { makeQuiz } from './quiz';
 import { makeTrueFalse } from './true-false';
 import { makeTypeWord } from './type-word';
+import { makeRuleCard } from './rule-card';
 import { makeWordIntro } from './word-intro';
 
 export { type LevelPool } from './pool';
@@ -37,6 +38,7 @@ export {
   makeOddOneOut,
   makeQuiz,
   makeTrueFalse,
+  makeRuleCard,
   makeTypeWord,
   makeWordIntro,
 };
@@ -51,6 +53,13 @@ const MAX_INTROS = 2;
  * но два десятка экранов подряд утомляют независимо от того, что на них.
  */
 const MAX_STEPS = 18;
+
+/**
+ * Экраны, которые не являются заданиями: правило и знакомство со словом.
+ * Ошибиться на них нельзя, попыток они не записывают, на звёзды не влияют —
+ * и в длину урока считаются отдельно от настоящих заданий.
+ */
+export const CARD_KINDS = new Set<ExerciseKind>(['rule_card', 'word_intro']);
 
 /**
  * Задания, где слово нужно вспомнить: перед ними знакомство обязательно.
@@ -88,10 +97,12 @@ export function makePool(
     vocabulary,
     priorWords: extras.priorWords ?? [],
     letters: extras.letters ?? [],
+    alphabet: extras.alphabet ?? [],
     dialogues: extras.dialogues ?? [],
     izafets: extras.izafets ?? [],
     themeTitles: extras.themeTitles ?? {},
     freshWords: extras.freshWords ?? new Set(),
+    rules: extras.rules ?? [],
   };
 }
 
@@ -236,7 +247,17 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
     }
   }
 
-  return withIntros(pool, out);
+  return withRules(pool, withIntros(pool, out));
+}
+
+/**
+ * Правила раздела идут самыми первыми, до знакомства со словами.
+ * Порядок не случайный: сначала «как это устроено», потом «вот слова»,
+ * потом «а теперь проверим». Читать правило после заданий поздно.
+ */
+function withRules(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] {
+  if (pool.rules.length === 0) return [...exercises];
+  return [...pool.rules.map(makeRuleCard), ...exercises];
 }
 
 /**

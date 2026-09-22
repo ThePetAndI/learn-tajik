@@ -6,7 +6,7 @@
 
 import type { Rng } from '../../core/rng';
 import { sample, shuffle } from '../../core/rng';
-import type { Dialogue, Izafet, Letter, Phrase, Word } from '../../data/content';
+import type { Dialogue, Izafet, Letter, Phrase, Rule, Word } from '../../data/content';
 import type { Exercise } from '../types';
 
 export interface LevelPool {
@@ -23,6 +23,8 @@ export interface LevelPool {
   priorWords: readonly Word[];
   /** Буквы, с которыми знакомит уровень. Пусто везде, кроме раздела «Алфавит». */
   letters: readonly Letter[];
+  /** Весь алфавит — из него берётся описание звука для разбора ошибки. */
+  alphabet: readonly Letter[];
   /** Диалоги и изафеты темы уровня. */
   dialogues: readonly Dialogue[];
   izafets: readonly Izafet[];
@@ -33,6 +35,11 @@ export interface LevelPool {
    * Пустое множество — знакомство не нужно (повторение, восстановление).
    */
   freshWords: ReadonlySet<string>;
+  /**
+   * Правила раздела. Не пусто только в первом уровне раздела и только пока
+   * он не пройден: правило нужно прочитать до заданий, а не после.
+   */
+  rules: readonly Rule[];
 }
 
 export type Generator = (pool: LevelPool, rng: Rng) => Exercise | null;

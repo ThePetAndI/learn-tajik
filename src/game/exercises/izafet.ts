@@ -115,6 +115,7 @@ export const izafetModule: ExerciseModule<IzafetBuilderExercise> = {
         lenient: result === 'lenient',
         expected: ex.tg,
         given: built,
+        explain: ex.explain,
       });
     });
 

@@ -14,7 +14,9 @@ import {
   getPhrase,
   getWord,
   izafetsOfThemes,
+  letters as alphabet,
   levels,
+  rulesOfSection,
   sections,
   type FlatLevel,
   type Letter,
@@ -22,6 +24,7 @@ import {
   type Word,
 } from '../data/content';
 import { getState } from '../core/store';
+import { isDone } from '../domain/progress';
 import { makePool, type LevelPool } from './generators';
 
 /**
@@ -117,9 +120,21 @@ export function poolForLevel(level: FlatLevel): LevelPool {
     .filter((l): l is Letter => Boolean(l));
   const themes = themesOf(words);
 
+  /*
+   * Правило показываем в первом уровне раздела и только пока он не пройден.
+   * Отдельное поле в сохранении для этого не нужно: пройденный первый уровень
+   * и означает, что правило уже читали.
+   */
+  const rules =
+    level.indexInSection === 0 && !isDone(getState(), level.id)
+      ? rulesOfSection(level.sectionId)
+      : [];
+
   return makePool(words, phrases, allWords(), {
     priorWords: priorWordsFor(level.index),
+    rules,
     letters,
+    alphabet,
     dialogues: dialoguesOfThemes(themes),
     izafets: izafetsOfThemes(themes),
     themeTitles,
@@ -136,6 +151,7 @@ export function poolForWords(words: Word[], phrases: Phrase[]): LevelPool {
   const themes = themesOf(words);
   return makePool(words, phrases, allWords(), {
     priorWords: words,
+    alphabet,
     dialogues: dialoguesOfThemes(themes),
     izafets: izafetsOfThemes(themes),
     themeTitles,

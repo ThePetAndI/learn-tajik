@@ -83,6 +83,19 @@ export interface Izafet {
   note?: string;
 }
 
+/** Правило грамматики — карточка в начале раздела. */
+export interface Rule {
+  id: string;
+  /** id раздела курса, к началу которого правило прикреплено. */
+  section: string;
+  title: string;
+  /** Текст; абзацы разделены пустой строкой. */
+  body: string;
+  examples: Example[];
+  verified: boolean;
+  note?: string;
+}
+
 export interface Letter {
   lower: string;
   upper: string;
@@ -161,6 +174,7 @@ const phraseModules = import.meta.glob('../../content/phrases/*.json', { eager: 
 const courseModules = import.meta.glob('../../content/course.json', { eager: true });
 const dialogueModules = import.meta.glob('../../content/dialogues.json', { eager: true });
 const izafetModules = import.meta.glob('../../content/izafet.json', { eager: true });
+const ruleModules = import.meta.glob('../../content/rules.json', { eager: true });
 const alphabetModules = import.meta.glob('../../content/alphabet.json', { eager: true });
 
 function collect<T>(modules: Record<string, Module>, field: string): T[] {
@@ -180,12 +194,14 @@ const phraseList = collect<Phrase>(phraseModules, 'phrases');
 const letterList = collect<Letter>(alphabetModules, 'letters');
 const dialogueList = collect<Dialogue>(dialogueModules, 'dialogues');
 const izafetList = collect<Izafet>(izafetModules, 'izafet');
+const ruleList = collect<Rule>(ruleModules, 'rules');
 
 export const words: ReadonlyMap<string, Word> = new Map(wordList.map((w) => [w.id, w]));
 export const phrases: ReadonlyMap<string, Phrase> = new Map(phraseList.map((p) => [p.id, p]));
 export const letters: readonly Letter[] = letterList;
 export const dialogues: readonly Dialogue[] = dialogueList;
 export const izafets: readonly Izafet[] = izafetList;
+export const rules: readonly Rule[] = ruleList;
 
 /** Буква по её строчному начертанию. */
 const letterByChar = new Map(letterList.map((l) => [l.lower, l]));
@@ -268,6 +284,11 @@ export function izafetsOfThemes(themes: readonly string[]): readonly Izafet[] {
   return izafetList.filter((z) => set.has(z.theme));
 }
 
+/** Правила раздела — показываются в его первом уровне. */
+export function rulesOfSection(sectionId: string): readonly Rule[] {
+  return ruleList.filter((r) => r.section === sectionId);
+}
+
 /** Слова темы — из них берутся правдоподобные неверные варианты. */
 export function wordsOfTheme(theme: string): readonly Word[] {
   return byTheme.get(theme) ?? [];
@@ -296,6 +317,7 @@ export function contentStats(): {
   letters: number;
   dialogues: number;
   izafets: number;
+  rules: number;
   sections: number;
   levels: number;
   playableLevels: number;
@@ -306,6 +328,7 @@ export function contentStats(): {
     letters: letterList.length,
     dialogues: dialogueList.length,
     izafets: izafetList.length,
+    rules: ruleList.length,
     sections: sections.length,
     levels: levels.length,
     playableLevels: levels.filter((l) => l.playable).length,

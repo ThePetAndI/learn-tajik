@@ -649,3 +649,55 @@
 }
 .intro-card__example-tg { font-size: 17px; font-weight: 900; line-height: 1.3; }
 .intro-card__example-ru { margin-top: 2px; font-size: 13px; font-weight: 700; opacity: 0.82; }
+
+/* ————————————————————————— правило раздела ————————————————————————— */
+
+.ex--rule { gap: 16px; }
+
+.rule-card {
+  padding: 18px 16px 16px;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--r-lg);
+  background: var(--glass-strong);
+  animation: intro-in var(--t-slow) var(--ease-pop) both;
+}
+
+.rule-card__head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.rule-card__mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border: 2.5px solid #fff;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 3px 0 var(--gold-deep);
+  color: var(--ink);
+  font-size: 20px;
+}
+.rule-card__title { font-size: 19px; font-weight: 900; line-height: 1.2; margin: 0; }
+
+.rule-card__body { display: flex; flex-direction: column; gap: 8px; }
+.rule-card__p {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.45;
+  /* правило читают, а не проглядывают: текст мягче заголовков, но не блёклый */
+  color: rgba(255, 255, 255, 0.94);
+  white-space: pre-line;
+}
+
+.rule-card__examples { display: flex; flex-direction: column; gap: 5px; margin-top: 14px; }
+.rule-example {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.18);
+}
+.rule-example__tg { font-size: 16px; font-weight: 900; flex: none; }
+.rule-example__ru { font-size: 12.5px; font-weight: 700; opacity: 0.82; text-align: right; }

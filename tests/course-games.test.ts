@@ -10,6 +10,7 @@
 import { describe, expect, it } from 'vitest';
 import { levels } from '../src/data/content';
 import {
+  CARD_KINDS,
   MAX_EXERCISES,
   MIN_EXERCISES,
   NEEDS_INTRO,
@@ -76,11 +77,11 @@ describe('мини-игры на реальном курсе', () => {
 
   it('длина уровня в рамках', () => {
     for (const b of built) {
-      // карточки знакомства — не задания: считаем отдельно
-      const tasks = b.exercises.filter((e) => e.kind !== 'word_intro');
+      // правила и знакомства — не задания: считаем отдельно
+      const tasks = b.exercises.filter((e) => !CARD_KINDS.has(e.kind));
       expect(tasks.length, b.levelId).toBeGreaterThanOrEqual(MIN_EXERCISES);
       expect(tasks.length, b.levelId).toBeLessThanOrEqual(MAX_EXERCISES);
-      expect(b.exercises.length, b.levelId + ': урок слишком длинный').toBeLessThanOrEqual(18);
+      expect(b.exercises.length, b.levelId + ': урок слишком длинный').toBeLessThanOrEqual(20);
     }
   });
 
@@ -106,6 +107,30 @@ describe('мини-игры на реальном курсе', () => {
         }
       }
     }
+  });
+
+  it('правило показывается в начале раздела, и только в первом уровне', () => {
+    const withRule = built.filter((b) => b.exercises.some((e) => e.kind === 'rule_card'));
+    expect(withRule.length, 'правил не нашлось вовсе').toBeGreaterThan(0);
+
+    for (const b of withRule) {
+      const level = levels.find((l) => l.id === b.levelId)!;
+      expect(level.indexInSection, b.levelId + ': правило не в первом уровне раздела').toBe(0);
+      // правило — самый первый экран, до знакомства со словами и до заданий
+      expect(b.exercises[0]!.kind, b.levelId + ': правило не первое').toBe('rule_card');
+    }
+  });
+
+  it('разбор ошибки есть там, где правило известно точно', () => {
+    const kinds = new Map<string, number>();
+    for (const b of built) {
+      for (const ex of b.exercises) {
+        if ('explain' in ex && ex.explain) kinds.set(ex.kind, (kinds.get(ex.kind) ?? 0) + 1);
+      }
+    }
+    // изафет и особые буквы объясняются правилом, а не догадкой
+    expect(kinds.get('izafet_builder') ?? 0).toBeGreaterThan(0);
+    expect(kinds.get('missing_letter') ?? 0).toBeGreaterThan(0);
   });
 
   it('на повторном проходе знакомств нет — только практика', () => {

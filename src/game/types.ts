@@ -9,6 +9,7 @@
 import type { Rng } from '../core/rng';
 
 export type ExerciseKind =
+  | 'rule_card'
   | 'word_intro'
   | 'quiz_tg_ru'
   | 'quiz_ru_tg'
@@ -29,6 +30,18 @@ interface ExerciseCommon {
   kind: ExerciseKind;
   /** Слова, которые задание проверяет — идут в статистику повторения. */
   wordIds: string[];
+}
+
+/**
+ * Правило грамматики: карточка в начале раздела, до первых заданий.
+ * Не проверка — попыток не записывает и на звёзды не влияет.
+ */
+export interface RuleCardExercise extends ExerciseCommon {
+  kind: 'rule_card';
+  title: string;
+  /** Текст правила; абзацы разделены пустой строкой. */
+  body: string;
+  examples: { tg: string; ru: string }[];
 }
 
 /**
@@ -110,6 +123,8 @@ export interface MissingLetterExercise extends ExerciseCommon {
   correct: number;
   /** Пропущена одна из шести особых букв — подсвечиваем это в подписи. */
   special: boolean;
+  /** Разбор для полосы обратной связи при ошибке. */
+  explain?: string;
 }
 
 /** Правда или ложь на время: «китоб = книга?». */
@@ -190,9 +205,12 @@ export interface IzafetBuilderExercise extends ExerciseCommon {
   suffix: string;
   /** Слова на выбор, с лишними. */
   bank: string[];
+  /** Разбор для полосы обратной связи при ошибке. */
+  explain?: string;
 }
 
 export type Exercise =
+  | RuleCardExercise
   | WordIntroExercise
   | QuizExercise
   | MatchPairsExercise
@@ -227,6 +245,11 @@ export interface ExerciseOutcome {
   lenient?: boolean;
   /** Своя подпись вместо стандартной. */
   message?: string;
+  /**
+   * Почему правильный ответ именно такой. Показывается при ошибке:
+   * без разбора самый учебный момент урока проходит впустую.
+   */
+  explain?: string;
 }
 
 export interface ExerciseContext {
