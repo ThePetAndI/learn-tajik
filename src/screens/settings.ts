@@ -19,7 +19,7 @@ import { icon, type IconName } from '../ui/icons';
 import { confirmModal, modal } from '../ui/modal';
 import { toast } from '../ui/toast';
 import { canInstall, isStandalone, onInstallAvailability, promptInstall } from '../pwa/install-prompt';
-import { applyReducedMotion } from '../ui/motion';
+import { applyReducedMotion, systemPrefersReducedMotion } from '../ui/motion';
 
 function switchRow(
   iconName: IconName,
@@ -139,7 +139,7 @@ async function doImport(): Promise<void> {
   if (!ok) return;
   await replaceState(st);
   setHapticsEnabled(st.settings.haptics);
-  applyReducedMotion(st.settings.reducedMotion);
+  applyReducedMotion(st.settings.reducedMotion || systemPrefersReducedMotion());
   for (const w of parsed.warnings) toast({ text: w, tone: 'default', ms: 4000 });
   toast({ text: 'Прогресс загружен', iconName: 'check', tone: 'good' });
 }
@@ -212,7 +212,7 @@ export function createSettingsScreen(): ScreenView {
       { class: 'panel' },
       h('div', { class: 'panel__title', text: 'Игра' }),
       switchRow(
-        'target',
+        'vibrate',
         'Вибрация',
         hapticsSupported()
           ? 'Короткий отклик на верный и неверный ответ'
@@ -230,13 +230,17 @@ export function createSettingsScreen(): ScreenView {
       switchRow(
         'sparkle',
         'Спокойные анимации',
-        'Меньше движения на экране',
+        // Если покой просит сама система, движения не будет при любом положении
+        // переключателя — молчать об этом значит врать выключенным тумблером
+        systemPrefersReducedMotion()
+          ? 'Включено в настройках системы — движения не будет в любом случае'
+          : 'Меньше движения на экране',
         () => getState().settings.reducedMotion,
         (v) => {
           update((s) => {
             s.settings.reducedMotion = v;
           });
-          applyReducedMotion(v);
+          applyReducedMotion(v || systemPrefersReducedMotion());
         },
       ),
       switchRow(

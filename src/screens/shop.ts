@@ -39,7 +39,9 @@ export function createShopScreen(): ScreenView {
 
   function makeCard(item: ShopItem): HTMLElement {
     const count = h('span', { class: 'shop-card__count' });
-    const action = button({ tone: 'orange', size: 'sm', label: priceLabel(item) });
+    // монета живёт внутри кнопки: отдельный глиф сбоку выглядел так,
+    // будто иконка отвалилась от кнопки
+    const action = button({ tone: 'orange', size: 'sm', label: priceLabel(item), icon: 'coin' });
 
     onTap(action, () => {
       const state = getState();
@@ -84,7 +86,7 @@ export function createShopScreen(): ScreenView {
         h('div', { class: 'shop-card__title' }, h('span', { text: item.title }), count),
         h('div', { class: 'shop-card__desc', text: item.description }),
       ),
-      h('div', { class: 'shop-card__buy' }, action, item.price > 0 ? icon('coin', 'shop-card__coin') : null),
+      h('div', { class: 'shop-card__buy' }, action),
     );
 
     cards.set(item.id, { root, action, count });
@@ -120,12 +122,10 @@ export function createShopScreen(): ScreenView {
       else refs.action.classList.add('t-orange');
       refs.action.disabled = equipped;
 
-      const coinIcon = refs.root.querySelector('.shop-card__coin');
+      // монету показываем только там, где на кнопке цена
+      const coinIcon = refs.action.querySelector('.icon');
       if (coinIcon) {
-        (coinIcon as HTMLElement).classList.toggle(
-          'hidden',
-          item.kind !== 'booster' && owned,
-        );
+        (coinIcon as SVGElement).classList.toggle('hidden', item.kind !== 'booster' && owned);
       }
 
       if (item.kind === 'booster') {

@@ -11,6 +11,8 @@ import { canInstall, isStandalone, onInstallAvailability, promptInstall } from '
 import { now } from '../core/time';
 import { visibleStreak } from '../domain/streak';
 import { activePet } from '../domain/shop';
+import { levels, sections } from '../data/content';
+import { breedOf } from '../ui/pet';
 import { createSettingsScreen } from './settings';
 
 function statCard(iconName: IconName, value: string, label: string, tone: string): HTMLElement {
@@ -23,10 +25,17 @@ function statCard(iconName: IconName, value: string, label: string, tone: string
   );
 }
 
+/** Иконка питомца для аватара — та же, что в магазине. */
+const PET_ICON: Record<string, IconName> = { fox: 'fox', cat: 'cat', dog: 'dog', bird: 'bird' };
+
 export function createProfileScreen(): ScreenView {
   const grid = h('div', { class: 'stat-grid' });
   const petLine = h('div', { class: 'p' });
   const installSlot = h('div', { class: 'profile__install' });
+  const avatar = h('div', { class: 'profile__avatar' }, icon('fox'));
+  const courseBar = h('span', { class: 'course-bar__fill' });
+  const courseText = h('div', { class: 'course-bar__text' });
+  const courseNote = h('div', { class: 'course-note' });
 
   function renderStats(): void {
     const st = getState();
@@ -44,6 +53,22 @@ export function createProfileScreen(): ScreenView {
     petLine.textContent = pet
       ? 'Питомец: ' + pet.title + (pet.bonus ? ' · ' + pet.description : '')
       : 'Учим таджикский с нуля';
+    avatar.replaceChildren(icon(PET_ICON[breedOf(st.profile.petId)] ?? 'fox'));
+
+    /* ——— прогресс по курсу ——— */
+    const playable = levels.filter((l) => l.playable);
+    const share = playable.length > 0 ? done / playable.length : 0;
+    courseBar.style.transform = 'scaleX(' + Math.min(1, share) + ')';
+    courseText.textContent =
+      done + ' из ' + playable.length + ' ' + plural(playable.length, 'уровня', 'уровней', 'уровней');
+
+    const openSections = sections.filter((sec) =>
+      sec.levels.some((l) => (st.levels[l.id]?.stars ?? 0) > 0),
+    ).length;
+    const maxStars = playable.length * 3;
+    courseNote.textContent =
+      'Разделов начато: ' + openSections + ' из ' + sections.length +
+      ' · звёзд ' + stars + ' из ' + maxStars;
 
     grid.replaceChildren(
       statCard('flame', String(streak), plural(streak, 'день', 'дня', 'дней'), 'orange'),
@@ -100,9 +125,17 @@ export function createProfileScreen(): ScreenView {
       h(
         'div',
         { class: 'profile__head' },
-        h('div', { class: 'profile__avatar' }, icon('paw')),
+        avatar,
         h('div', { class: 'h2', text: 'Салом!' }),
         petLine,
+      ),
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel__title', text: 'Курс' }),
+        h('div', { class: 'course-bar' }, courseBar),
+        courseText,
+        courseNote,
       ),
       h('section', { class: 'panel' }, h('div', { class: 'panel__title', text: 'Статистика' }), grid),
       h('div', { class: 'profile__actions' }, installSlot),

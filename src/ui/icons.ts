@@ -214,6 +214,66 @@ export const ICONS = {
     '<path d="M12 2.4 4.4 12h3L3.2 18.6h17.6L16.6 12h3L12 2.4Z"/>' +
       '<rect x="10.5" y="17.8" width="3" height="4.2" rx="1" fill="#000" fill-opacity=".3"/>',
   ),
+
+  /* ——— морды питомцев: у каждого своя, иначе все четверо — одна лапа ——— */
+  fox: F(
+    '<path d="M5.6 2.6 9.8 7.2 4 8.8Z"/><path d="M18.4 2.6 14.2 7.2 20 8.8Z"/>' +
+      '<path d="M12 5.4c4.3 0 7.6 2.8 7.6 6.6 0 2.4-1.2 4.4-3.1 5.8L12 21.6l-4.5-3.8c-1.9-1.4-3.1-3.4-3.1-5.8 0-3.8 3.3-6.6 7.6-6.6Z"/>' +
+      '<circle cx="9.1" cy="11.8" r="1.4" fill="#000" fill-opacity=".55"/>' +
+      '<circle cx="14.9" cy="11.8" r="1.4" fill="#000" fill-opacity=".55"/>' +
+      '<path d="M12 15.6c1.2 0 2 .7 2 1.4 0 .9-1.1 2.1-2 2.1s-2-1.2-2-2.1c0-.7.8-1.4 2-1.4Z" fill="#000" fill-opacity=".38"/>',
+  ),
+  cat: F(
+    '<path d="M4.6 4.2 7.4 10.2 3.9 11.4Z"/><path d="M19.4 4.2 16.6 10.2l3.5 1.2Z"/>' +
+      '<ellipse cx="12" cy="14" rx="7.7" ry="7"/>' +
+      '<path d="M8.6 12.1v2.2M15.4 12.1v2.2" stroke="#000" stroke-opacity=".55" stroke-width="2.1" fill="none"/>' +
+      '<path d="M3 13.4h3.4M3 16h3.4M21 13.4h-3.4M21 16h-3.4" stroke="currentColor" stroke-width="1.5" fill="none"/>',
+  ),
+  dog: F(
+    '<path d="M6 5.2c-1.9 0-3 2-3 5.2 0 3.4 1.2 5.8 2.9 5.8 1.3 0 2.1-1 2.1-2.5C8 11.4 7.7 5.2 6 5.2Z"/>' +
+      '<path d="M18 5.2c1.9 0 3 2 3 5.2 0 3.4-1.2 5.8-2.9 5.8-1.3 0-2.1-1-2.1-2.5 0-2.3.3-8.5 2-8.5Z"/>' +
+      '<ellipse cx="12" cy="12.6" rx="5.9" ry="6.6"/>' +
+      '<ellipse cx="12" cy="16.4" rx="3.2" ry="2.8" fill="#000" fill-opacity=".22"/>' +
+      '<ellipse cx="12" cy="14.6" rx="1.5" ry="1.2" fill="#000" fill-opacity=".5"/>' +
+      '<circle cx="9.6" cy="10.6" r="1.3" fill="#000" fill-opacity=".55"/>' +
+      '<circle cx="14.4" cy="10.6" r="1.3" fill="#000" fill-opacity=".55"/>',
+  ),
+  bird: F(
+    '<ellipse cx="11" cy="13.4" rx="7.4" ry="6.4"/>' +
+      '<circle cx="15.8" cy="9.4" r="4.2"/>' +
+      '<path d="M22.8 9.4 18.6 7.9v3l4.2-1.5Z"/>' +
+      '<path d="M2.2 16.6 1 11.6l4.6 2.5Z"/>' +
+      '<path d="M10.6 13.2c2.6 0 4.6 1.5 4.6 3.2s-2 3.2-4.6 3.2-4.6-1.5-4.6-3.2 2-3.2 4.6-3.2Z" fill="#000" fill-opacity=".22"/>' +
+      '<circle cx="16.6" cy="8.6" r="1.25" fill="#000" fill-opacity=".55"/>',
+  ),
+
+  /* ——— виды карты ——— */
+  meadow: F(
+    '<circle cx="7.4" cy="8.8" r="3.8"/>' +
+      '<rect x="6.6" y="11.2" width="1.7" height="3.8" rx=".85"/>' +
+      '<path d="M1.8 20.8c2.6-5 5-7.5 7.2-7.5 2.1 0 3.3 2.2 5 2.2s3-2.6 4.9-2.6c1.5 0 2.8 1.3 4.1 3.9v4H1.8Z"/>',
+  ),
+  desert: F(
+    '<circle cx="12" cy="7" r="4"/>' +
+      '<path d="M2 20.6c2-3.4 4.2-5.1 6.6-5.1s3.4 1.4 5 1.4 2.2-1.4 4.2-1.4c1.6 0 3 .9 4.2 2.6v2.5H2Z"/>' +
+      '<path d="M12 1.6v2M20.5 7h-2M5.5 7h-2M18 2.6l-1.4 1.4M6 2.6l1.4 1.4" stroke="currentColor" stroke-width="1.9" fill="none"/>',
+  ),
+  snow: F(
+    '<path d="M12 1.8v20.4M3.2 6.9l17.6 10.2M20.8 6.9 3.2 17.1" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
+      '<path d="m9.2 4.4 2.8 2.7 2.8-2.7M9.2 19.6l2.8-2.7 2.8 2.7" stroke="currentColor" stroke-width="2" fill="none"/>' +
+      '<circle cx="12" cy="12" r="2.2"/>',
+  ),
+  moon: F(
+    '<path d="M20.4 15.2A8.6 8.6 0 0 1 9 3.9a9.2 9.2 0 1 0 11.4 11.3Z"/>' +
+      '<path d="m18.4 3.2.85 1.85 1.85.85-1.85.85-.85 1.85-.85-1.85-1.85-.85 1.85-.85Z"/>',
+  ),
+
+  /* ——— настройки ——— */
+  vibrate: F(
+    '<rect x="8.2" y="3.4" width="7.6" height="17.2" rx="2.2"/>' +
+      '<rect x="10" y="6" width="4" height="10" rx="1" fill="#000" fill-opacity=".25"/>' +
+      '<path d="M4.8 9v6M1.8 10.6v2.8M19.2 9v6M22.2 10.6v2.8" stroke="currentColor" stroke-width="2.1" fill="none" stroke-linecap="round"/>',
+  ),
 } as const;
 
 export type IconName = keyof typeof ICONS;

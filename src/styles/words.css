@@ -108,14 +108,14 @@
 .words-search:focus { border-color: var(--purple-1); }
 .words-search::placeholder { color: var(--ink-mute); font-weight: 700; }
 
+/* Переносим в две строки, а не прокручиваем вбок: последний фильтр
+   обрезался на полуслове и выглядел как обрубленный текст, а не как намёк
+   на прокрутку. */
 .words-filters {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding-bottom: 2px;
 }
-.words-filters::-webkit-scrollbar { display: none; }
 
 .words-chip {
   flex: none;

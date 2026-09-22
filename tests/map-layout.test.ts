@@ -197,6 +197,22 @@ describe('декор', () => {
     }
   });
 
+  it('предметы не ложатся друг на друга', () => {
+    for (let seed = 1; seed < 80; seed++) {
+      const items = layoutDecor(nodes, WIDTH, 500, seed).filter((d) => d.kind !== 'cloud');
+      for (let i = 0; i < items.length; i++) {
+        for (let j = i + 1; j < items.length; j++) {
+          const a = items[i]!;
+          const b = items[j]!;
+          expect(
+            Math.hypot(a.x - b.x, a.y - b.y),
+            'seed ' + seed + ': ' + a.kind + ' и ' + b.kind + ' в одной точке',
+          ).toBeGreaterThanOrEqual(40);
+        }
+      }
+    }
+  });
+
   it('декор всё-таки появляется, а не отбраковывается целиком', () => {
     let total = 0;
     for (let seed = 1; seed < 40; seed++) {

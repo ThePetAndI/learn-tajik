@@ -319,15 +319,22 @@
 }
 
 .p-shadow { fill: rgba(38, 84, 24, 0.2); }
-.p-fur { fill: #ff9f42; }
-.p-fur-dark { fill: #ec8226; }
-.p-ear-in { fill: #ffc79f; }
-.p-belly { fill: #ffe3bd; }
+.p-fur { fill: var(--pet-fur, #ff9f42); }
+.p-fur-dark { fill: var(--pet-fur-dark, #ec8226); }
+.p-ear-in { fill: var(--pet-ear, #ffc79f); }
+.p-belly { fill: var(--pet-belly, #ffe3bd); }
 .p-eye { fill: #3b2a5e; }
 .p-eye-hi { fill: #ffffff; }
 .p-cheek { fill: #ff8fb4; opacity: 0.7; }
-.p-nose { fill: #6f4b2c; }
-.p-mouth { fill: none; stroke: #6f4b2c; stroke-width: 2.3; stroke-linecap: round; }
+.p-nose { fill: var(--pet-nose, #6f4b2c); }
+.p-beak { fill: #f2a13c; }
+.p-mouth { fill: none; stroke: var(--pet-nose, #6f4b2c); stroke-width: 2.3; stroke-linecap: round; }
+.p-whisker { fill: none; stroke: var(--pet-fur-dark, #ec8226); stroke-width: 1.8; stroke-linecap: round; opacity: 0.85; }
+
+/* Цвета по зверю — покупка в магазине должна быть видна на карте */
+.pet--cat  { --pet-fur: #b9a6d8; --pet-fur-dark: #9b84c6; --pet-ear: #f0c4dc; --pet-belly: #efe6fb; --pet-nose: #5a3f7a; }
+.pet--dog  { --pet-fur: #e4b878; --pet-fur-dark: #c2925a; --pet-ear: #f6dcb4; --pet-belly: #fbeed6; --pet-nose: #4d3524; }
+.pet--bird { --pet-fur: #66d4e0; --pet-fur-dark: #35b2c2; --pet-ear: #bff1f6; --pet-belly: #ddf8fb; --pet-nose: #1b6b78; }
 .pet--sleepy .p-eye { transform-box: fill-box; transform-origin: center; transform: scaleY(0.25); }
 
 /* ————————————————————————— кнопка уровня ————————————————————————— */
@@ -354,6 +361,13 @@
 /* ————————————————————————— карточка уровня ————————————————————————— */
 
 .modal__card--level { padding-top: 46px; }
+
+/*
+ * Значок уровня выступает над карточкой — продолжение узла с карты.
+ * У .modal__card стоит overflow-y: auto для длинных окон, и он срезал
+ * значок ровно пополам. Этой карточке прокрутка не нужна: она короткая.
+ */
+.modal__card--level { overflow: visible; }
 
 .level-card { display: flex; flex-direction: column; align-items: center; }
 .level-card__badge {

@@ -166,6 +166,8 @@ const GROUND_MARGIN_BOTTOM = 22;
 const NODE_CLEAR_X = 74;
 const NODE_CLEAR_Y = 60;
 const ROAD_CLEAR = 64;
+/** Насколько предметы декора держатся друг от друга: иначе камень ложится на цветок. */
+const DECOR_CLEAR = 40;
 
 /**
  * Где проходит дорожка на высоте y — линейная прикидка между соседними узлами.
@@ -185,9 +187,17 @@ export function roadXAt(nodes: readonly MapNode[], y: number): number {
   return last.x;
 }
 
-function spotIsFree(x: number, y: number, nodes: readonly MapNode[]): boolean {
+function spotIsFree(
+  x: number,
+  y: number,
+  nodes: readonly MapNode[],
+  placed: readonly DecorItem[] = [],
+): boolean {
   for (const node of nodes) {
     if (Math.abs(x - node.x) < NODE_CLEAR_X && Math.abs(y - node.y) < NODE_CLEAR_Y) return false;
+  }
+  for (const item of placed) {
+    if (Math.hypot(x - item.x, y - item.y) < DECOR_CLEAR) return false;
   }
   return Math.abs(x - roadXAt(nodes, y)) >= ROAD_CLEAR;
 }
@@ -224,7 +234,7 @@ export function layoutDecor(
         // Держим декор внутри блока раздела: содержимое обрезается по его границам,
         // а половина дерева на стыке выглядит как артефакт.
         if (y < GROUND_MARGIN_TOP || y > height - GROUND_MARGIN_BOTTOM) continue;
-        if (!spotIsFree(x, y, nodes)) continue;
+        if (!spotIsFree(x, y, nodes, items)) continue;
 
         const kind = GROUND_DECOR[Math.floor(rng() * GROUND_DECOR.length)] as DecorKind;
         items.push({

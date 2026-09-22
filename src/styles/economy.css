@@ -140,9 +140,9 @@
 .shop-card__count:empty { display: none; }
 .shop-card__desc { font-size: 12.5px; font-weight: 700; color: var(--ink-mute); line-height: 1.32; }
 
-.shop-card__buy { display: flex; align-items: center; gap: 4px; flex: none; }
-.shop-card__buy .btn { min-width: 62px; }
-.shop-card__coin { font-size: 19px; color: var(--gold-2); }
+.shop-card__buy { display: flex; align-items: center; flex: none; }
+.shop-card__buy .btn { min-width: 76px; gap: 5px; }
+.shop-card__buy .btn .icon { font-size: 17px; opacity: 0.9; }
 
 .shop-card.is-equipped .shop-card__icon { box-shadow: 0 3px 0 var(--cd), 0 0 0 3px var(--green-2); }
 .shop-note { padding: 0 var(--gutter) 8px; font-size: 12.5px; }

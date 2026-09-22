@@ -38,7 +38,7 @@ const FILTERS: FilterDef[] = [
   { id: 'learning', label: 'Учу', match: (s) => s.box < LEARNED_BOX },
   { id: 'learned', label: 'Выучено', match: (s) => s.box >= LEARNED_BOX },
   { id: 'hard', label: 'Трудные', match: (s) => wordDifficulty(s) >= 0.45 },
-  { id: 'due', label: 'К повторению', match: (s, ts) => isDue(s, ts) },
+  { id: 'due', label: 'К повтору', match: (s, ts) => isDue(s, ts) },
 ];
 
 function progressBar(stat: WordStat): HTMLElement {

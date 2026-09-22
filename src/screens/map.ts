@@ -24,7 +24,7 @@ import { button } from '../ui/button';
 import { decorLayer } from '../ui/decor';
 import { icon, type IconName } from '../ui/icons';
 import { toast } from '../ui/toast';
-import { createPet, type PetHandle } from '../ui/pet';
+import { breedOf, createPet, type PetHandle } from '../ui/pet';
 import { now } from '../core/time';
 import { canOpenChest, canSpinWheel } from '../domain/daily';
 import { activeThemeId } from '../domain/shop';
@@ -375,7 +375,9 @@ export function createMapScreen(): ScreenView {
     if (!currentLevel) return;
     const refs = nodeRefs.get(currentLevel.id);
     if (!refs) return;
-    if (!pet) pet = createPet('idle');
+    const breed = breedOf(getState().profile.petId);
+    if (!pet) pet = createPet('idle', breed);
+    else pet.setBreed(breed);
     const size = currentLevel.boss ? BOSS_SIZE : NODE_SIZE;
     // сбоку от узла, со стороны свободного поля — над узлом он закрывал бы баннер
     const side = refs.node.x < builtWidth / 2 ? 1 : -1;
