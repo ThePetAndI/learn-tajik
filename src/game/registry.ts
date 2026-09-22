@@ -13,12 +13,14 @@ import { oddOneOutModule } from './exercises/odd-one-out';
 import { quizModule } from './exercises/quiz';
 import { trueFalseModule } from './exercises/true-false';
 import { typeWordModule } from './exercises/type-word';
+import { wordIntroModule } from './exercises/word-intro';
 import type { Exercise, ExerciseKind, ExerciseModule } from './types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type AnyModule = ExerciseModule<any>;
 
 const REGISTRY: Partial<Record<ExerciseKind, AnyModule>> = {
+  word_intro: wordIntroModule,
   quiz_tg_ru: quizModule,
   quiz_ru_tg: quizModule,
   match_pairs: matchPairsModule,

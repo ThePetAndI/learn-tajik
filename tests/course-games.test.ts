@@ -9,7 +9,12 @@
 
 import { describe, expect, it } from 'vitest';
 import { levels } from '../src/data/content';
-import { MAX_EXERCISES, MIN_EXERCISES, buildLevelExercises } from '../src/game/generators';
+import {
+  MAX_EXERCISES,
+  MIN_EXERCISES,
+  NEEDS_INTRO,
+  buildLevelExercises,
+} from '../src/game/generators';
 import { poolForLevel } from '../src/game/level-pool';
 import { SUPPORTED_KINDS, moduleFor } from '../src/game/registry';
 import type { Exercise, ExerciseKind } from '../src/game/types';
@@ -71,9 +76,44 @@ describe('мини-игры на реальном курсе', () => {
 
   it('длина уровня в рамках', () => {
     for (const b of built) {
-      expect(b.exercises.length).toBeGreaterThanOrEqual(MIN_EXERCISES);
-      expect(b.exercises.length).toBeLessThanOrEqual(MAX_EXERCISES);
+      // карточки знакомства — не задания: считаем отдельно
+      const tasks = b.exercises.filter((e) => e.kind !== 'word_intro');
+      expect(tasks.length, b.levelId).toBeGreaterThanOrEqual(MIN_EXERCISES);
+      expect(tasks.length, b.levelId).toBeLessThanOrEqual(MAX_EXERCISES);
+      expect(b.exercises.length, b.levelId + ': урок слишком длинный').toBeLessThanOrEqual(18);
     }
+  });
+
+  /*
+   * Ради чего знакомство и заводилось: первое, что игрок узнаёт о слове,
+   * не должно быть вопросом о нём. Состояние в тестах пустое, то есть
+   * игрок видит курс впервые, — значит проверяется каждое слово курса.
+   */
+  it('ни одно слово не проверяют раньше, чем показали', () => {
+    for (const b of built) {
+      const known = new Set<string>();
+      for (const ex of b.exercises) {
+        // задания, где слово с переводом на экране, знакомят сами собой
+        if (!NEEDS_INTRO.has(ex.kind)) {
+          for (const id of ex.wordIds) known.add(id);
+          continue;
+        }
+        for (const id of ex.wordIds) {
+          expect(
+            known.has(id),
+            b.levelId + ': «' + id + '» спрашивают в «' + ex.kind + '» без знакомства',
+          ).toBe(true);
+        }
+      }
+    }
+  });
+
+  it('на повторном проходе знакомств нет — только практика', () => {
+    // freshWords берётся из состояния; если слово уже введено, карточки не будет
+    const pool = poolForLevel(levels.find((l) => l.playable)!);
+    const withoutFresh = { ...pool, freshWords: new Set<string>() };
+    const ex = buildLevelExercises(withoutFresh, 'повтор:1');
+    expect(ex.some((e) => e.kind === 'word_intro')).toBe(false);
   });
 
   it('знакомство с буквой бывает только в разделе «Алфавит»', () => {

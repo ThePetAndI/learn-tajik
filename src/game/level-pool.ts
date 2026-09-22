@@ -21,6 +21,7 @@ import {
   type Phrase,
   type Word,
 } from '../data/content';
+import { getState } from '../core/store';
 import { makePool, type LevelPool } from './generators';
 
 /**
@@ -86,6 +87,23 @@ function themesOf(words: readonly Word[]): string[] {
   return [...new Set(words.map((w) => w.theme))];
 }
 
+/**
+ * С какими словами игрок ещё не знаком. Незнакомо всё, что он ни разу
+ * не назвал верно: и то, что видит впервые, и то, что пока не даётся.
+ *
+ * Считаем по всему словарю, а не только по словам уровня: задания
+ * подтягивают слова и со стороны — пара из соседней темы, лишнее слово
+ * из пройденного раздела, — и их тоже нельзя спрашивать вслепую.
+ */
+function freshWords(): Set<string> {
+  const srs = getState().srs;
+  const out = new Set<string>();
+  for (const word of allWords()) {
+    if (!srs[word.id]?.introduced) out.add(word.id);
+  }
+  return out;
+}
+
 /** Пул уровня карты. */
 export function poolForLevel(level: FlatLevel): LevelPool {
   const words = level.wordIds
@@ -105,12 +123,14 @@ export function poolForLevel(level: FlatLevel): LevelPool {
     dialogues: dialoguesOfThemes(themes),
     izafets: izafetsOfThemes(themes),
     themeTitles,
+    freshWords: freshWords(),
   });
 }
 
 /**
  * Пул для сессий повторения и восстановления: слова берутся отовсюду,
  * букв и «пройденного раньше» здесь нет — на карте они уже позади.
+ * Знакомить тоже не с чем: повторяют только то, что уже знают.
  */
 export function poolForWords(words: Word[], phrases: Phrase[]): LevelPool {
   const themes = themesOf(words);

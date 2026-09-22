@@ -9,6 +9,7 @@
 import type { Rng } from '../core/rng';
 
 export type ExerciseKind =
+  | 'word_intro'
   | 'quiz_tg_ru'
   | 'quiz_ru_tg'
   | 'match_pairs'
@@ -28,6 +29,23 @@ interface ExerciseCommon {
   kind: ExerciseKind;
   /** Слова, которые задание проверяет — идут в статистику повторения. */
   wordIds: string[];
+}
+
+/**
+ * Знакомство со словом: карточка перед первой проверкой.
+ * Не задание — попытки не записывает и на звёзды не влияет.
+ */
+export interface WordIntroExercise extends ExerciseCommon {
+  kind: 'word_intro';
+  tg: string;
+  ru: string;
+  /** Часть речи по-русски. */
+  pos?: string;
+  example?: { tg: string; ru: string };
+  /** Особые буквы слова — то, на что стоит посмотреть заранее. */
+  letters: string[];
+  /** Задел на будущее: озвучки пока нет. */
+  audio?: string | null;
 }
 
 /** Квиз на четыре варианта, в обе стороны. */
@@ -175,6 +193,7 @@ export interface IzafetBuilderExercise extends ExerciseCommon {
 }
 
 export type Exercise =
+  | WordIntroExercise
   | QuizExercise
   | MatchPairsExercise
   | BuildPhraseExercise

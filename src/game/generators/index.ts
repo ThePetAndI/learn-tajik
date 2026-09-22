@@ -6,7 +6,7 @@
 
 import { rngFor, shuffle, type Rng } from '../../core/rng';
 import type { Dialogue, Izafet, Letter, Phrase, Word } from '../../data/content';
-import type { Exercise } from '../types';
+import type { Exercise, ExerciseKind } from '../types';
 import { makeAlphabetIntro } from './alphabet-intro';
 import { makeBuildPhrase } from './build-phrase';
 import { makeCategorySort } from './category-sort';
@@ -21,6 +21,7 @@ import type { LevelPool } from './pool';
 import { makeQuiz } from './quiz';
 import { makeTrueFalse } from './true-false';
 import { makeTypeWord } from './type-word';
+import { makeWordIntro } from './word-intro';
 
 export { type LevelPool } from './pool';
 export {
@@ -37,6 +38,7 @@ export {
   makeQuiz,
   makeTrueFalse,
   makeTypeWord,
+  makeWordIntro,
 };
 
 /** Уровень короче шести заданий не ощущается уровнем, длиннее десяти — утомляет. */
@@ -44,6 +46,29 @@ export const MIN_EXERCISES = 6;
 export const MAX_EXERCISES = 10;
 /** Сколько букв показываем на уровне алфавита: больше — и уровень превращается в лекцию. */
 const MAX_INTROS = 2;
+/**
+ * Потолок на всю сессию вместе с карточками знакомства. Карточка — один тап,
+ * но два десятка экранов подряд утомляют независимо от того, что на них.
+ */
+const MAX_STEPS = 18;
+
+/**
+ * Задания, где слово нужно вспомнить: перед ними знакомство обязательно.
+ * Остальные — «собери фразу», колесо букв, диалог, изафет — держат слово
+ * с переводом прямо на экране, пока игрок работает: вспоминать не из чего,
+ * и такое задание само служит знакомством.
+ */
+export const NEEDS_INTRO = new Set<ExerciseKind>([
+  'quiz_tg_ru',
+  'quiz_ru_tg',
+  'match_pairs',
+  'type_word',
+  'missing_letter',
+  'true_false',
+  'number_word',
+  'odd_one_out',
+  'category_sort',
+]);
 
 /** Попытка собрать задание: вернёт null, если материала не хватило. */
 type Candidate = () => Exercise | null;
@@ -66,6 +91,7 @@ export function makePool(
     dialogues: extras.dialogues ?? [],
     izafets: extras.izafets ?? [],
     themeTitles: extras.themeTitles ?? {},
+    freshWords: extras.freshWords ?? new Set(),
   };
 }
 
@@ -210,5 +236,59 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
     }
   }
 
+  return withIntros(pool, out);
+}
+
+/**
+ * Ставит карточку знакомства перед первой проверкой незнакомого слова.
+ *
+ * Именно перед первой, а не пачкой в начале урока: восемь карточек подряд
+ * читаются как словарь, а «вот слово — а теперь проверим» запоминается.
+ * Карточка не задание: попыток не записывает, на звёзды и монеты не влияет.
+ *
+ * Знакомим со всеми новыми словами уровня, без потолка на число карточек:
+ * иначе на большом уровне часть слов по-прежнему сваливалась бы на игрока
+ * сразу вопросом. Чтобы урок не растянулся, подрезается хвост заданий —
+ * но не ниже минимальной длины уровня.
+ */
+function withIntros(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] {
+  if (pool.freshWords.size === 0) return [...exercises];
+
+  const byId = new Map(pool.vocabulary.map((w) => [w.id, w]));
+  const freshIn = (list: readonly Exercise[]): Set<string> => {
+    const out = new Set<string>();
+    const shown = new Set<string>();
+    for (const ex of list) {
+      if (!NEEDS_INTRO.has(ex.kind)) {
+        for (const id of ex.wordIds) shown.add(id);
+        continue;
+      }
+      for (const id of ex.wordIds) {
+        if (shown.has(id)) continue;
+        if (pool.freshWords.has(id) && byId.has(id)) out.add(id);
+      }
+    }
+    return out;
+  };
+
+  const room = Math.max(MIN_EXERCISES, MAX_STEPS - freshIn(exercises).size);
+  const tasks = exercises.slice(0, room);
+  const needed = freshIn(tasks);
+
+  const shown = new Set<string>();
+  const out: Exercise[] = [];
+  for (const exercise of tasks) {
+    if (!NEEDS_INTRO.has(exercise.kind)) {
+      for (const id of exercise.wordIds) shown.add(id);
+      out.push(exercise);
+      continue;
+    }
+    for (const id of exercise.wordIds) {
+      if (shown.has(id) || !needed.has(id)) continue;
+      shown.add(id);
+      out.push(makeWordIntro(byId.get(id) as Word));
+    }
+    out.push(exercise);
+  }
   return out;
 }

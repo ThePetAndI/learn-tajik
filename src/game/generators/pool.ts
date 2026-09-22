@@ -28,6 +28,11 @@ export interface LevelPool {
   izafets: readonly Izafet[];
   /** Названия тем по-русски: «family» -> «Семья». Для корзин и «лишнего». */
   themeTitles: Record<string, string>;
+  /**
+   * Слова, с которыми игрок ещё не знаком: их не проверяют, пока не покажут.
+   * Пустое множество — знакомство не нужно (повторение, восстановление).
+   */
+  freshWords: ReadonlySet<string>;
 }
 
 export type Generator = (pool: LevelPool, rng: Rng) => Exercise | null;
