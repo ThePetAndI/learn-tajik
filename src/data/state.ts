@@ -92,6 +92,8 @@ export interface SaveState {
     items: Record<string, number>;
     /** купленные навсегда: питомцы, скины */
     owned: string[];
+    /** id питомца -> ступень прокачки, 1..5. Нет записи — первая ступень. */
+    petLevels: Record<string, number>;
   };
   /** achievementId -> когда получено */
   achievements: Record<string, number>;
@@ -127,7 +129,7 @@ export function createInitialState(ts: number): SaveState {
     daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0 },
     levels: {},
     srs: {},
-    inventory: { items: {}, owned: [] },
+    inventory: { items: {}, owned: [], petLevels: {} },
     achievements: {},
     stats: { answers: 0, correct: 0, levelsDone: 0, coinsEarned: 0, bestCombo: 0, recoveries: 0 },
     settings: { ...DEFAULT_SETTINGS },

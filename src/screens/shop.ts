@@ -4,21 +4,30 @@ import { h, onTap } from '../core/dom';
 import { haptics } from '../core/haptics';
 import type { ScreenView } from '../core/router';
 import { getState, subscribe, update } from '../core/store';
+import { rngFor } from '../core/rng';
 import { now } from '../core/time';
 import {
+  MAX_PET_TIER,
+  SHOP_ITEMS,
   activePet,
   activeThemeId,
   boosterCount,
   buy,
   canBuy,
+  canUpgradePet,
   equip,
   isOwned,
   itemsOfKind,
+  nextTier,
+  openCase,
+  petTier,
+  upgradePet,
   type ShopItem,
 } from '../domain/shop';
 import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
 import { toast } from '../ui/toast';
+import { modal } from '../ui/modal';
 
 function isEquipped(item: ShopItem): boolean {
   const state = getState();
@@ -27,15 +36,58 @@ function isEquipped(item: ShopItem): boolean {
   return false;
 }
 
+/** Показывает, что выпало из кейса. Отдельным окном: это маленький праздник. */
+function showCaseResult(item: ShopItem, result: { boosters: Record<string, number>; coins: number }): void {
+  const rows = Object.entries(result.boosters)
+    .map(([id, n]) => ({ item: itemsOfKind('booster').find((b) => b.id === id), n }))
+    .filter((r): r is { item: ShopItem; n: number } => Boolean(r.item))
+    .sort((a, b) => b.n - a.n);
+
+  const body = h(
+    'div',
+    { class: 'case-loot' },
+    ...rows.map((r) =>
+      h(
+        'div',
+        { class: 'case-loot__row t-' + r.item.tone },
+        h('span', { class: 'case-loot__icon' }, icon(r.item.icon as IconName)),
+        h('span', { class: 'case-loot__name', text: r.item.title }),
+        h('span', { class: 'case-loot__count', text: '×' + r.n }),
+      ),
+    ),
+    h(
+      'div',
+      { class: 'case-loot__coins' },
+      icon('coin'),
+      h('span', { text: '+' + result.coins }),
+    ),
+  );
+
+  haptics.reward();
+  modal({
+    title: item.title + ' открыт',
+    body,
+    actions: [{ label: 'Забрать', tone: 'orange', value: 'ok', primary: true }],
+  });
+}
+
 function priceLabel(item: ShopItem): string {
-  if (item.kind === 'booster') return String(item.price);
+  if (item.kind === 'booster' || item.kind === 'case') return String(item.price);
   if (isEquipped(item)) return 'Надето';
   if (isOwned(getState(), item.id)) return 'Надеть';
   return String(item.price);
 }
 
 export function createShopScreen(): ScreenView {
-  const cards = new Map<string, { root: HTMLElement; action: HTMLButtonElement; count: HTMLElement }>();
+  const cards = new Map<
+    string,
+    {
+      root: HTMLElement;
+      action: HTMLButtonElement;
+      count: HTMLElement;
+      tier?: { row: HTMLElement; pips: HTMLElement; label: HTMLElement; btn: HTMLButtonElement };
+    }
+  >();
 
   function makeCard(item: ShopItem): HTMLElement {
     const count = h('span', { class: 'shop-card__count' });
@@ -54,6 +106,20 @@ export function createShopScreen(): ScreenView {
         });
         haptics.reward();
         toast({ text: item.title + ' — надето', iconName: 'check', tone: 'good' });
+        return;
+      }
+
+      if (item.kind === 'case') {
+        if (state.wallet.coins < item.price) {
+          haptics.wrong();
+          toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
+          return;
+        }
+        let opened: ReturnType<typeof openCase> = null;
+        update((st) => {
+          opened = openCase(st, item.id, rngFor('case:' + item.id + ':' + now()));
+        });
+        if (opened) showCaseResult(item, opened);
         return;
       }
 
@@ -79,21 +145,53 @@ export function createShopScreen(): ScreenView {
     const root = h(
       'div',
       { class: 'shop-card t-' + item.tone, data: { item: item.id } },
-      h('span', { class: 'shop-card__icon' }, icon(item.icon as IconName)),
       h(
         'div',
-        { class: 'shop-card__text' },
-        h('div', { class: 'shop-card__title' }, h('span', { text: item.title }), count),
-        h('div', { class: 'shop-card__desc', text: item.description }),
+        { class: 'shop-card__main' },
+        h('span', { class: 'shop-card__icon' }, icon(item.icon as IconName)),
+        h(
+          'div',
+          { class: 'shop-card__text' },
+          h('div', { class: 'shop-card__title' }, h('span', { text: item.title }), count),
+          h('div', { class: 'shop-card__desc', text: item.description }),
+        ),
+        h('div', { class: 'shop-card__buy' }, action),
       ),
-      h('div', { class: 'shop-card__buy' }, action),
     );
 
-    cards.set(item.id, { root, action, count });
+    // ——— строка прокачки: только у питомцев и только после покупки ———
+    let tier: { row: HTMLElement; pips: HTMLElement; label: HTMLElement; btn: HTMLButtonElement } | undefined;
+    if (item.kind === 'pet' && item.tiers) {
+      const pips = h('span', { class: 'pet-tier__pips' });
+      const label = h('span', { class: 'pet-tier__label' });
+      const btn = button({ tone: 'purple', size: 'sm', label: '', icon: 'coin' });
+      onTap(btn, () => {
+        const check = canUpgradePet(getState(), item.id);
+        if (check === 'not-enough-coins') {
+          haptics.wrong();
+          toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
+          return;
+        }
+        if (check !== 'ok') return;
+        let gained = '';
+        update((st) => {
+          const next = nextTier(st, item.id);
+          gained = next?.label ?? '';
+          upgradePet(st, item.id, now());
+        });
+        haptics.reward();
+        toast({ text: item.title + ': ' + gained, iconName: 'sparkle', tone: 'gold' });
+      });
+      const row = h('div', { class: 'pet-tier' }, pips, label, btn);
+      root.append(row);
+      tier = { row, pips, label, btn };
+    }
+
+    cards.set(item.id, { root, action, count, tier });
     return root;
   }
 
-  function section(title: string, kind: 'pet' | 'theme' | 'booster'): HTMLElement {
+  function section(title: string, kind: ShopItem['kind']): HTMLElement {
     return h(
       'section',
       { class: 'panel shop-section' },
@@ -104,7 +202,7 @@ export function createShopScreen(): ScreenView {
 
   function refresh(): void {
     const state = getState();
-    for (const item of [...itemsOfKind('pet'), ...itemsOfKind('theme'), ...itemsOfKind('booster')]) {
+    for (const item of SHOP_ITEMS) {
       const refs = cards.get(item.id);
       if (!refs) continue;
       const owned = isOwned(state, item.id);
@@ -134,6 +232,23 @@ export function createShopScreen(): ScreenView {
       } else {
         refs.count.textContent = '';
       }
+
+      if (refs.tier) {
+        // прокачка появляется только у купленного питомца: у чужого она бессмысленна
+        refs.tier.row.classList.toggle('hidden', !owned);
+        const tier = petTier(state, item.id);
+        refs.tier.pips.replaceChildren(
+          ...Array.from({ length: MAX_PET_TIER }, (_, i) =>
+            h('span', { class: 'pet-tier__pip' + (i < tier ? ' is-on' : '') }),
+          ),
+        );
+        const next = nextTier(state, item.id);
+        refs.tier.label.textContent = next ? next.label : 'максимум';
+        refs.tier.btn.classList.toggle('hidden', !next);
+        const price = refs.tier.btn.querySelector('.btn__label');
+        if (price) price.textContent = next ? String(next.price) : '';
+        refs.tier.btn.disabled = canUpgradePet(state, item.id) === 'maxed';
+      }
     }
   }
 
@@ -153,9 +268,13 @@ export function createShopScreen(): ScreenView {
       section('Питомцы', 'pet'),
       section('Вид карты', 'theme'),
       section('Бустеры', 'booster'),
+      section('Сундуки', 'case'),
       h('p', {
         class: 'p shop-note',
-        text: 'Бонус питомца действует сразу, как только вы его наденете. Активен один питомец.',
+        text:
+          'Бонус питомца действует сразу, как только вы его наденете. Активен один питомец, ' +
+          'но прокачивать можно всех. Сундук отдаёт бустеров больше, чем стоит, — но какие ' +
+          'именно, решает случай.',
       }),
     ),
   );

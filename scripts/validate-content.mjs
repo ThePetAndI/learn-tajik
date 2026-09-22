@@ -291,6 +291,44 @@ async function checkIzafet() {
   }
 }
 
+const ruleIds = new Set();
+
+async function checkRules() {
+  const file = join(CONTENT, 'rules.json');
+  if (!(await exists(file))) {
+    warn(file, 'файла нет — разделы начнутся без объяснения правила');
+    return;
+  }
+  const data = await readJson(file);
+  if (!data) return;
+  if (!Array.isArray(data.rules)) {
+    err(file, 'ожидалось поле rules: []');
+    return;
+  }
+  for (const r of data.rules) {
+    const id = typeof r.id === 'string' ? r.id : '(без id)';
+    if (!/^r_[a-z0-9_]+$/.test(id)) err(file, id + ': id должен быть вида r_slug');
+    if (ruleIds.has(id)) err(file, id + ': дубликат id');
+    ruleIds.add(id);
+    if (typeof r.section !== 'string' || !r.section) err(file, id + ': нет раздела (section)');
+    else if (!sectionIds.has(r.section)) err(file, id + ': раздела «' + r.section + '» нет в course.json');
+    checkRu(file, id, 'title', r.title);
+    checkRu(file, id, 'body', r.body);
+    if (typeof r.verified !== 'boolean') err(file, id + ': нужно поле verified');
+    if (r.verified === false) {
+      unverified.push({ id, file, tg: r.title, ru: 'правило', note: r.note ?? '' });
+    }
+    if (!Array.isArray(r.examples) || r.examples.length === 0) {
+      warn(file, id + ': правило без примеров читается хуже');
+    } else {
+      for (const [i, e] of r.examples.entries()) {
+        checkTajik(file, id, 'examples[' + i + '].tg', e?.tg);
+        checkRu(file, id, 'examples[' + i + '].ru', e?.ru);
+      }
+    }
+  }
+}
+
 async function checkCourse() {
   const file = join(CONTENT, 'course.json');
   if (!(await exists(file))) {
@@ -402,6 +440,7 @@ async function main() {
   await checkDialogues();
   await checkIzafet();
   await checkCourse();
+  await checkRules();
 
   const reviewPath = join(CONTENT, 'REVIEW.md');
   if (process.argv.includes('--write-review')) {
@@ -416,6 +455,7 @@ async function main() {
       ', фраз: ' + phraseIds.size +
       ', диалогов: ' + dialogueIds.size +
       ', изафетов: ' + izafetIds.size +
+      ', правил: ' + ruleIds.size +
       ', разделов: ' + sectionIds.size +
       ', уровней: ' + levelIds.size +
       ', на проверку: ' + unverified.length,

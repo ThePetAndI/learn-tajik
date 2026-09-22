@@ -194,6 +194,8 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
     inventory: {
       items: sanitizeStringMapToNumber(inventory.items),
       owned: sanitizeStringArray(inventory.owned),
+      // старые сохранения поля не знают: пустая карта означает первую ступень
+      petLevels: sanitizeStringMapToNumber(inventory.petLevels),
     },
     achievements: sanitizeStringMapToNumber(raw.achievements),
     stats: {

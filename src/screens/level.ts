@@ -12,7 +12,7 @@ import { type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
 import { computeLives, spendLife } from '../domain/lives';
 import { getLevelProgress, recordLevelResult } from '../domain/progress';
-import { applyCoinBonus, coinMultiplier } from '../domain/shop';
+import { applyCoinBonus, coinMultiplier, levelCoinMultiplier } from '../domain/shop';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';
@@ -118,7 +118,12 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
           ts,
         );
         firstClear = outcome.firstClear;
-        levelCoins = applyCoinBonus(coinsForLevel(outcome.stars, outcome.firstClear), bonus);
+        // награда за уровень идёт со своим множителем: это бонус лиса,
+        // а монеты за ответы — бонус кошки, и складывать их в один нельзя
+        levelCoins = applyCoinBonus(
+          coinsForLevel(outcome.stars, outcome.firstClear),
+          levelCoinMultiplier(s),
+        );
       }
 
       const total = answerCoins + levelCoins;
