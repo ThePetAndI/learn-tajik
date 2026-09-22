@@ -17,6 +17,7 @@ export type ExerciseKind =
   | 'build_phrase'
   | 'letter_wheel'
   | 'type_word'
+  | 'type_phrase'
   | 'missing_letter'
   | 'true_false'
   | 'alphabet_intro'
@@ -109,6 +110,31 @@ export interface TypeWordExercise extends ExerciseCommon {
   tg: string;
   /** Подпись под вопросом — часть речи или пример. */
   hint?: string;
+}
+
+/**
+ * Напиши фразу: перевод предложения набирается целиком, без банка слов.
+ *
+ * Единственное задание курса, где нужно построить фразу с нуля: остальные
+ * дают материал на экране — выбрать из четырёх, собрать из готовых слов.
+ */
+export interface TypePhraseExercise extends ExerciseCommon {
+  kind: 'type_phrase';
+  /** Что переводим. */
+  ru: string;
+  /** Эталонный перевод целиком — показываем при ошибке. */
+  tg: string;
+  /**
+   * Верная последовательность слов. По ней рисуются ячейки (сколько слов
+   * ждём) и строится разбор — какое слово на своём месте, какое нет.
+   */
+  answer: string[];
+  /**
+   * Другие допустимые переводы той же фразы, уже разобранные на слова.
+   * Берутся из поля alt в контенте: там, где по-таджикски можно сказать
+   * двумя способами, засчитывать только один — значит наказывать за знание.
+   */
+  alt?: string[][];
 }
 
 /** Пропущенная буква: в слове вырезана одна буква, её надо выбрать. */
@@ -217,6 +243,7 @@ export type Exercise =
   | BuildPhraseExercise
   | LetterWheelExercise
   | TypeWordExercise
+  | TypePhraseExercise
   | MissingLetterExercise
   | TrueFalseExercise
   | AlphabetIntroExercise

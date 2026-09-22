@@ -76,6 +76,29 @@ export function compareTokens(given: readonly string[], expected: readonly strin
   return lenient ? 'lenient' : 'exact';
 }
 
+/**
+ * Сверка фразы, у которой допустимых переводов несколько, — для «Напиши фразу».
+ * Годится любой из вариантов; возвращаем и вердикт, и тот вариант, с которым
+ * сошлось: по нему строится разбор «какое слово на своём месте».
+ */
+export function comparePhrase(
+  given: readonly string[],
+  variants: readonly (readonly string[])[],
+): { result: MatchResult; against: readonly string[] } {
+  const first = variants[0] ?? [];
+  let best: { result: MatchResult; against: readonly string[] } = {
+    result: 'wrong',
+    against: first,
+  };
+  for (const variant of variants) {
+    const res = compareTokens(given, variant);
+    if (res === 'exact') return { result: res, against: variant };
+    // точное совпадение может найтись дальше — мягкое запоминаем, но не выходим
+    if (res === 'lenient' && best.result === 'wrong') best = { result: res, against: variant };
+  }
+  return best;
+}
+
 /** Разбивает таджикскую фразу на слова для банка слов. */
 export function tokenize(phrase: string): string[] {
   return phrase

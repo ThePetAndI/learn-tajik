@@ -163,6 +163,16 @@ async function checkPhrases() {
           if (!wordIds.has(wid)) err(file, id + ': ссылается на несуществующее слово ' + wid);
         }
       }
+      // alt — другие верные переводы той же фразы, для задания «Напиши фразу»
+      if (p.alt !== undefined) {
+        if (!Array.isArray(p.alt)) err(file, id + ': alt должно быть списком строк');
+        else {
+          p.alt.forEach((variant, i) => checkTajik(file, id, 'alt[' + i + ']', variant));
+          if (p.alt.some((variant) => variant === p.tg)) {
+            warn(file, id + ': alt повторяет основной перевод');
+          }
+        }
+      }
     }
   }
 }

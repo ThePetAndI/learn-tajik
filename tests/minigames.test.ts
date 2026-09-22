@@ -12,6 +12,7 @@ import {
   makeOddOneOut,
   makePool,
   makeTrueFalse,
+  makeTypePhrase,
   makeTypeWord,
 } from '../src/game/generators';
 import type {
@@ -22,6 +23,7 @@ import type {
   MissingLetterExercise,
   OddOneOutExercise,
   TrueFalseExercise,
+  TypePhraseExercise,
   TypeWordExercise,
 } from '../src/game/types';
 
@@ -88,6 +90,59 @@ describe('напиши слово', () => {
 
   it('не берёт слово с несколькими переводами — набирать нечего', () => {
     expect(makeTypeWord(pool(), word('w_x', 'нағз', 'хороший, хорошо'), rng())).toBeNull();
+  });
+});
+
+/* ————————————————————————— напиши фразу ————————————————————————— */
+
+const phrase = (tg: string, ru = 'Доброе утро!', extra: Partial<Phrase> = {}): Phrase => ({
+  id: 'p_x',
+  tg,
+  ru,
+  theme: 'greetings',
+  words: ['w_khayr'],
+  verified: true,
+  ...extra,
+});
+
+describe('напиши фразу', () => {
+  it('разбирает эталон на слова: по ним рисуются ячейки', () => {
+    const ex = makeTypePhrase(pool(), phrase('Субҳ ба хайр!'), rng()) as TypePhraseExercise;
+    expect(ex.answer).toEqual(['Субҳ', 'ба', 'хайр']);
+    // знаки препинания в ячейки не попадают, а в эталоне остаются
+    expect(ex.tg).toBe('Субҳ ба хайр!');
+  });
+
+  it('отказывается от длинных фраз: их набирают, а не переводят', () => {
+    expect(makeTypePhrase(pool(), phrase('Ман ҳар рӯз забони тоҷикиро меомӯзам'), rng())).toBeNull();
+  });
+
+  it('отказывается от одного слова — это уже «напиши слово»', () => {
+    expect(makeTypePhrase(pool(), phrase('Салом!'), rng())).toBeNull();
+  });
+
+  /*
+   * Самое строгое задание курса не имеет права опираться на форму,
+   * в которой мы сами не уверены: ошибкой будет засчитано отклонение
+   * от строки, которую ещё не проверил носитель.
+   */
+  it('не берёт непроверенную фразу', () => {
+    expect(makeTypePhrase(pool(), phrase('Субҳ ба хайр!', 'Доброе утро!', { verified: false }), rng()))
+      .toBeNull();
+  });
+
+  it('разбирает и запасные переводы — по ним ответ тоже засчитают', () => {
+    const ex = makeTypePhrase(
+      pool(),
+      phrase('Ман ба хона меравам.', 'Я иду домой.', { alt: ['Ба хона меравам.'] }),
+      rng(),
+    ) as TypePhraseExercise;
+    expect(ex.alt).toEqual([['Ба', 'хона', 'меравам']]);
+  });
+
+  it('без поля alt его нет и в задании', () => {
+    const ex = makeTypePhrase(pool(), phrase('Субҳ ба хайр!'), rng()) as TypePhraseExercise;
+    expect(ex.alt).toBeUndefined();
   });
 });
 

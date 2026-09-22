@@ -20,6 +20,7 @@ import { makeOddOneOut } from './odd-one-out';
 import type { LevelPool } from './pool';
 import { makeQuiz } from './quiz';
 import { makeTrueFalse } from './true-false';
+import { makeTypePhrase } from './type-phrase';
 import { makeTypeWord } from './type-word';
 import { makeRuleCard } from './rule-card';
 import { makeWordIntro } from './word-intro';
@@ -39,6 +40,7 @@ export {
   makeQuiz,
   makeTrueFalse,
   makeRuleCard,
+  makeTypePhrase,
   makeTypeWord,
   makeWordIntro,
 };
@@ -72,6 +74,7 @@ export const NEEDS_INTRO = new Set<ExerciseKind>([
   'quiz_ru_tg',
   'match_pairs',
   'type_word',
+  'type_phrase',
   'missing_letter',
   'true_false',
   'number_word',
@@ -213,6 +216,25 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
   const odd = () => makeOddOneOut(pool, rng);
   const wheel = () => makeLetterWheel(pool, rng);
 
+  /*
+   * Напиши фразу берём только ту, которую на этом же уровне уже собирали
+   * из слов. Фразу, которую видят впервые, набрать с нуля нельзя: это
+   * не проверка памяти, а проверка везения.
+   *
+   * Смотрим в уже собранный out, а не запоминаем фразу в момент создания:
+   * созданное задание ещё может не попасть в урок (дубликат, два одинаковых
+   * подряд), и тогда мы бы спрашивали про фразу, которой на уровне нет.
+   */
+  const typePhrase = (): Exercise | null => {
+    for (const ex of out) {
+      if (ex.kind !== 'build_phrase') continue;
+      const source = pool.phrases.find((p) => p.tg === ex.tg);
+      const made = source ? makeTypePhrase(pool, source, rng) : null;
+      if (made) return made;
+    }
+    return null;
+  };
+
   for (let k = 0; k < MAX_INTROS; k++) slot(intro);
 
   slot(quizTg);
@@ -223,7 +245,8 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
   slot(missing, typeWord, quizRu);
   slot(izafet, ...alt(wheel, phrase));
   slot(...alt(sort, odd), wheel);
-  slot(typeWord, missing, trueFalse);
+  // последним — письмо: сначала собрать фразу из слов, потом написать её сам
+  slot(typePhrase, typeWord, missing, trueFalse);
 
   // Каждое слово уровня должно встретиться хотя бы раз
   for (const word of words) {

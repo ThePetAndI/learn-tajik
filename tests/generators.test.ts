@@ -254,7 +254,8 @@ describe('сборка уровня', () => {
     const list = buildLevelExercises(makePool([], PHRASES, VOCAB), 'p:0');
     expect(list.length).toBeGreaterThan(0);
     // ни пар, ни колеса: своих слов у уровня нет, чужие подставлять нельзя
-    expect(list.every((ex) => ex.kind === 'build_phrase')).toBe(true);
+    const fromPhrases = new Set(['build_phrase', 'type_phrase']);
+    expect(list.every((ex) => fromPhrases.has(ex.kind))).toBe(true);
   });
 
   it('на разных ключах стабильно укладывается в рамки', () => {

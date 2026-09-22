@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   compareAnswer,
+  comparePhrase,
   compareTokens,
   foldTajik,
   hasSpecialLetters,
@@ -127,5 +128,58 @@ describe('особые буквы', () => {
     expect(specialLettersOf('тоҷикӣ')).toEqual(['ҷ', 'ӣ']);
     expect(specialLettersOf('ҳаҳ')).toEqual(['ҳ']);
     expect(specialLettersOf('салом')).toEqual([]);
+  });
+});
+
+/* ————————————————————————— фраза с вариантами ————————————————————————— */
+
+describe('сверка фразы с несколькими переводами', () => {
+  const MAIN = ['Ман', 'ба', 'хона', 'меравам'];
+  const ALT = ['Ба', 'хона', 'меравам'];
+
+  it('совпало с основным — точно, и разбор строится по нему', () => {
+    const r = comparePhrase(['ман', 'ба', 'хона', 'меравам'], [MAIN, ALT]);
+    expect(r.result).toBe('exact');
+    expect(r.against).toEqual(MAIN);
+  });
+
+  it('совпало с запасным — тоже точно, и разбор по запасному', () => {
+    const r = comparePhrase(['ба', 'хона', 'меравам'], [MAIN, ALT]);
+    expect(r.result).toBe('exact');
+    expect(r.against).toEqual(ALT);
+  });
+
+  /*
+   * Русские буквы вместо таджикских — не ошибка знания, а ошибка клавиатуры:
+   * ответ засчитывается, но правильное написание показывается.
+   */
+  it('русские буквы вместо таджикских засчитываются мягко', () => {
+    const r = comparePhrase(['субх', 'ба', 'хайр'], [['Субҳ', 'ба', 'хайр']]);
+    expect(r.result).toBe('lenient');
+  });
+
+  it('точное совпадение важнее мягкого, даже если мягкое встретилось первым', () => {
+    const r = comparePhrase(['ман', 'нағз'], [['ман', 'нагз'], ['ман', 'нағз']]);
+    expect(r.result).toBe('exact');
+    expect(r.against).toEqual(['ман', 'нағз']);
+  });
+
+  it('другой порядок — не ответ', () => {
+    expect(comparePhrase(['меравам', 'ба', 'хона', 'Ман'], [MAIN]).result).toBe('wrong');
+  });
+
+  it('лишнее или недостающее слово — не ответ', () => {
+    expect(comparePhrase(['ба', 'хона', 'меравам'], [MAIN]).result).toBe('wrong');
+    expect(comparePhrase(['Ман', 'ба', 'хона', 'меравам', 'зуд'], [MAIN]).result).toBe('wrong');
+  });
+
+  it('при полном промахе разбор строится по первому варианту', () => {
+    const r = comparePhrase(['салом'], [MAIN, ALT]);
+    expect(r.result).toBe('wrong');
+    expect(r.against).toEqual(MAIN);
+  });
+
+  it('знаки препинания и регистр не влияют', () => {
+    expect(comparePhrase(['ХУШ', 'омадед!'], [['Хуш', 'омадед']]).result).toBe('exact');
   });
 });

@@ -104,6 +104,64 @@
 .keycap--wide { grid-column: span 2; font-size: 20px; }
 .keycap .icon { font-size: 22px; }
 
+/* ————————————————————————— напиши фразу ————————————————————————— */
+
+/*
+ * Ячейки по числу слов. Пустые — только рамка: сколько слов ждём, видно,
+ * а какие именно — нет. Заполняются по мере набора, чтобы было понятно,
+ * на каком слове игрок сейчас.
+ */
+.writing__slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+}
+.writing__cell {
+  display: grid;
+  place-items: center;
+  min-width: 46px;
+  min-height: 38px;
+  padding: 4px 12px;
+  border: 3px dashed rgba(255, 255, 255, 0.45);
+  border-radius: var(--r-sm);
+  font-size: 17px;
+  font-weight: 900;
+  color: #fff;
+  transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
+}
+.writing__cell.is-filled {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.28);
+}
+.writing__cell.is-active {
+  border-color: #fff;
+  transform: translateY(-2px);
+}
+/* слово, купленное подсказкой: показано, но видно, что не своё */
+.writing__cell.is-given {
+  border-style: solid;
+  border-color: var(--gold-1);
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--gold-1);
+}
+.writing__cell.is-right {
+  border-style: solid;
+  border-color: var(--green-1);
+  background: linear-gradient(180deg, var(--green-1), var(--green-2));
+}
+.writing__cell.is-wrong {
+  border-style: solid;
+  border-color: var(--red-1);
+  background: linear-gradient(180deg, var(--red-1), var(--red-2));
+}
+/* слов написали больше, чем ждём — заметно до проверки, а не после */
+.writing__slots.is-over .writing__cell { border-color: var(--gold-1); }
+
+.ex--writing .typing__input { font-size: 20px; }
+
 /* ————————————————————————— пропущенная буква ————————————————————————— */
 
 .ex--gap { gap: 16px; }

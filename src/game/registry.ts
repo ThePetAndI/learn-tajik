@@ -13,6 +13,7 @@ import { oddOneOutModule } from './exercises/odd-one-out';
 import { quizModule } from './exercises/quiz';
 import { ruleCardModule } from './exercises/rule-card';
 import { trueFalseModule } from './exercises/true-false';
+import { typePhraseModule } from './exercises/type-phrase';
 import { typeWordModule } from './exercises/type-word';
 import { wordIntroModule } from './exercises/word-intro';
 import type { Exercise, ExerciseKind, ExerciseModule } from './types';
@@ -29,6 +30,7 @@ const REGISTRY: Partial<Record<ExerciseKind, AnyModule>> = {
   build_phrase: buildPhraseModule,
   letter_wheel: letterWheelModule,
   type_word: typeWordModule,
+  type_phrase: typePhraseModule,
   missing_letter: missingLetterModule,
   true_false: trueFalseModule,
   alphabet_intro: alphabetIntroModule,

@@ -8,7 +8,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { levels } from '../src/data/content';
+import { allPhrases, levels } from '../src/data/content';
 import {
   CARD_KINDS,
   MAX_EXERCISES,
@@ -109,6 +109,45 @@ describe('мини-игры на реальном курсе', () => {
     }
   });
 
+  /*
+   * Самая жёсткая гарантия курса. «Напиши фразу» — единственное задание,
+   * где на экране нет ни слова материала: ни вариантов, ни банка. Фразу,
+   * которую видят впервые, набрать с нуля нельзя — это не проверка памяти,
+   * а проверка везения. Поэтому её сначала собирают из слов, и только потом,
+   * на том же уровне, просят написать.
+   */
+  it('фразу просят написать только после того, как её собирали из слов', () => {
+    let found = 0;
+    for (const b of built) {
+      const assembled = new Set<string>();
+      for (const ex of b.exercises) {
+        if (ex.kind === 'build_phrase') assembled.add(ex.tg);
+        if (ex.kind !== 'type_phrase') continue;
+        found++;
+        expect(
+          assembled.has(ex.tg),
+          b.levelId + ': «' + ex.tg + '» просят написать, ни разу не показав',
+        ).toBe(true);
+      }
+    }
+    expect(found, '«напиши фразу» не встретилось ни разу').toBeGreaterThan(0);
+  });
+
+  it('писать просят только проверенные фразы', () => {
+    const unverified = new Set(
+      allPhrases().filter((p) => !p.verified).map((p) => p.tg),
+    );
+    for (const b of built) {
+      for (const ex of b.exercises) {
+        if (ex.kind !== 'type_phrase') continue;
+        expect(
+          unverified.has(ex.tg),
+          b.levelId + ': «' + ex.tg + '» непроверена, а её просят написать',
+        ).toBe(false);
+      }
+    }
+  });
+
   it('правило показывается в начале раздела, и только в первом уровне', () => {
     const withRule = built.filter((b) => b.exercises.some((e) => e.kind === 'rule_card'));
     expect(withRule.length, 'правил не нашлось вовсе').toBeGreaterThan(0);
@@ -169,6 +208,7 @@ describe('мини-игры на реальном курсе', () => {
     const last = built.filter((b) => b.section === 'Живая речь');
     const kinds = new Set(last.flatMap((b) => b.exercises.map((e) => e.kind)));
     expect(kinds).toContain('type_word');
+    expect(kinds).toContain('type_phrase');
     expect(kinds).toContain('true_false');
     expect(kinds).toContain('missing_letter');
   });
