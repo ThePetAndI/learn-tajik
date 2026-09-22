@@ -8,8 +8,11 @@
 
 import { dayKey, daysBetween } from '../core/time';
 import type { SaveState } from '../data/state';
+import { awardStreak } from './gems';
 
 export interface StreakChange {
+  /** Сколько лаъл принесла веха серии, если сегодня её взяли. */
+  gems: number;
   /** Стрик увеличился сегодня впервые. */
   advanced: boolean;
   /** Стрик прервался и начался заново. */
@@ -30,6 +33,7 @@ export function touchStreak(state: SaveState, ts: number): StreakChange {
 
   if (last === today) {
     return {
+      gems: 0,
       advanced: false,
       broken: false,
       frozen: false,
@@ -48,6 +52,7 @@ export function touchStreak(state: SaveState, ts: number): StreakChange {
     if (gap <= 0) {
       // часы перевели назад — не наказываем и не награждаем
       return {
+        gems: 0,
         advanced: false,
         broken: false,
         frozen: false,
@@ -70,8 +75,11 @@ export function touchStreak(state: SaveState, ts: number): StreakChange {
 
   state.streak.lastDayKey = today;
   if (state.streak.current > state.streak.best) state.streak.best = state.streak.current;
+  // вехи серии платят лаъл; выдаются все, которые серия переросла
+  const gems = awardStreak(state, state.streak.current, ts);
 
   return {
+    gems,
     advanced: true,
     broken,
     frozen,

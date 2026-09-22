@@ -150,3 +150,59 @@
   gap: 10px;
   padding: 4px var(--gutter) 0;
 }
+
+/* ————————————————————————— лаъл в профиле ————————————————————————— */
+
+.gem-panel__head { display: flex; align-items: center; justify-content: space-between; }
+.gem-panel__head .panel__title { margin-bottom: 0; }
+.gem-panel__balance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px 4px 10px;
+  border: 2.5px solid #fff;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, var(--ruby-1), var(--ruby-2));
+  box-shadow: 0 3px 0 var(--ruby-deep);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.gem-panel__balance .icon { font-size: 19px; }
+.gem-panel__note { margin: 8px 0 10px; color: var(--ink-2); font-size: 13px; line-height: 1.4; }
+
+.gem-panel__rows { display: flex; flex-direction: column; gap: 6px; }
+.gem-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  background: var(--paper-2);
+}
+.gem-row__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--purple-1);
+  font-size: 18px;
+}
+.gem-row__text { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.gem-row__what { color: var(--ink); font-size: 14px; font-weight: 900; line-height: 1.2; }
+.gem-row__progress { color: var(--ink-mute); font-size: 12px; font-weight: 800; line-height: 1.3; }
+.gem-row__reward {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 3px;
+  color: var(--ruby-2);
+  font-size: 14px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.gem-row__reward .icon { font-size: 15px; }

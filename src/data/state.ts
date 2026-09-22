@@ -3,7 +3,7 @@
  * При изменении структуры: поднять SAVE_VERSION и добавить шаг в migrate() (persist.ts).
  */
 
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
 /** Прогресс по одному уровню карты. */
 export interface LevelProgress {
@@ -35,6 +35,12 @@ export interface WordStat {
   lastAt: number;
   /** true после первого верного ответа — слово попало в «Слова» */
   introduced: boolean;
+  /**
+   * Слово дошло до последней коробки повторения хотя бы раз.
+   * Флаг, а не вычисление по box: лаъл за освоение выдаётся один раз,
+   * а коробка может и просесть после ошибки.
+   */
+  mastered: boolean;
 }
 
 export interface Settings {
@@ -62,6 +68,8 @@ export interface SaveState {
   };
   wallet: {
     coins: number;
+    /** Лаъл — вторая валюта, за глубину, а не за объём (см. domain/gems). */
+    gems: number;
   };
   lives: {
     count: number;
@@ -95,7 +103,10 @@ export interface SaveState {
     /** id питомца -> ступень прокачки, 1..5. Нет записи — первая ступень. */
     petLevels: Record<string, number>;
   };
-  /** achievementId -> когда получено */
+  /**
+   * Разовые достижения: ключ -> когда получено. Заодно служит ледгером
+   * наград в лаъл — по нему видно, что за это уже платили (domain/gems).
+   */
   achievements: Record<string, number>;
   stats: {
     answers: number;
@@ -105,6 +116,14 @@ export interface SaveState {
     bestCombo: number;
     /** число завершённых сессий восстановления */
     recoveries: number;
+    /** уровней пройдено с первого раза без ошибок */
+    perfect: number;
+    /** завершённых сессий повторения */
+    reviews: number;
+    /** слов доведено до последней коробки */
+    mastered: number;
+    /** сколько лаъл добыто за всё время */
+    gemsEarned: number;
   };
   settings: Settings;
 }
@@ -123,7 +142,7 @@ export function createInitialState(ts: number): SaveState {
     createdAt: ts,
     updatedAt: ts,
     profile: { name: '', petId: null, themeId: 'meadow' },
-    wallet: { coins: 50 },
+    wallet: { coins: 50, gems: 0 },
     lives: { count: 5, max: 5, updatedAt: ts },
     streak: { current: 0, best: 0, lastDayKey: null, freezes: 0 },
     daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0 },
@@ -131,7 +150,18 @@ export function createInitialState(ts: number): SaveState {
     srs: {},
     inventory: { items: {}, owned: [], petLevels: {} },
     achievements: {},
-    stats: { answers: 0, correct: 0, levelsDone: 0, coinsEarned: 0, bestCombo: 0, recoveries: 0 },
+    stats: {
+      answers: 0,
+      correct: 0,
+      levelsDone: 0,
+      coinsEarned: 0,
+      bestCombo: 0,
+      recoveries: 0,
+      perfect: 0,
+      reviews: 0,
+      mastered: 0,
+      gemsEarned: 0,
+    },
     settings: { ...DEFAULT_SETTINGS },
   };
 }
@@ -148,5 +178,6 @@ export function createWordStat(ts: number): WordStat {
     dueAt: ts,
     lastAt: 0,
     introduced: false,
+    mastered: false,
   };
 }

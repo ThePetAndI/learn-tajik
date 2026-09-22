@@ -56,7 +56,26 @@ type Migration = (raw: Record<string, unknown>) => Record<string, unknown>;
  * и добавить сюда шаг с прошлым номером.
  */
 const MIGRATIONS: Record<number, Migration> = {
-  // 0: (raw) => { ... ; raw.version = 1; return raw; },
+  /*
+   * 1 -> 2: появился лаъл. Старые сохранения его не знают, и начислять
+   * задним числом нечего: лаъл платят за достижения, а не за счётчики.
+   * Кошелёк начинается с нуля, ледгер наград пуст — значит вехи, которые
+   * игрок уже перерос, выдадутся при первом же подходящем событии.
+   */
+  1: (raw) => {
+    const wallet = isObj(raw.wallet) ? raw.wallet : {};
+    raw.wallet = { ...wallet, gems: num(wallet.gems, 0, 0, 1e9) };
+    const stats = isObj(raw.stats) ? raw.stats : {};
+    raw.stats = {
+      ...stats,
+      perfect: int(stats.perfect, 0, 0, 1e6),
+      reviews: int(stats.reviews, 0, 0, 1e6),
+      mastered: int(stats.mastered, 0, 0, 1e6),
+      gemsEarned: int(stats.gemsEarned, 0, 0, 1e9),
+    };
+    raw.version = 2;
+    return raw;
+  },
 };
 
 function migrate(raw: Record<string, unknown>): Record<string, unknown> {
@@ -121,6 +140,7 @@ function sanitizeSrs(v: unknown, ts: number): Record<string, WordStat> {
       dueAt: num(raw.dueAt, ts, 0, Number.MAX_SAFE_INTEGER),
       lastAt: num(raw.lastAt, 0, 0, Number.MAX_SAFE_INTEGER),
       introduced: bool(raw.introduced, false),
+      mastered: bool(raw.mastered, false),
     };
   }
   return out;
@@ -171,6 +191,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
     },
     wallet: {
       coins: int(wallet.coins, base.wallet.coins, 0, 1e9),
+      gems: int(wallet.gems, base.wallet.gems, 0, 1e9),
     },
     lives: {
       max: maxLives,
@@ -197,6 +218,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       // старые сохранения поля не знают: пустая карта означает первую ступень
       petLevels: sanitizeStringMapToNumber(inventory.petLevels),
     },
+    // ледгер разовых наград: ключей много (по одному на слово), потолок выше
     achievements: sanitizeStringMapToNumber(raw.achievements),
     stats: {
       answers: int(stats.answers, 0, 0, 1e9),
@@ -205,6 +227,10 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       coinsEarned: int(stats.coinsEarned, 0, 0, 1e9),
       bestCombo: int(stats.bestCombo, 0, 0, 1e5),
       recoveries: int(stats.recoveries, 0, 0, 1e6),
+      perfect: int(stats.perfect, 0, 0, 1e6),
+      reviews: int(stats.reviews, 0, 0, 1e6),
+      mastered: int(stats.mastered, 0, 0, 1e6),
+      gemsEarned: int(stats.gemsEarned, 0, 0, 1e9),
     },
     settings: sanitizeSettings(raw.settings),
   };

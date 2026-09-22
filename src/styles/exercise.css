@@ -487,6 +487,33 @@
 }
 .results__coins .icon { font-size: 28px; color: #fff; filter: drop-shadow(0 1px 0 rgba(0,0,0,.2)); }
 
+/* монеты и лаъл — рядом, одной строкой: это одна награда, просто в двух валютах */
+.results__loot { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.results__gems {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 3px solid #fff;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, var(--ruby-1), var(--ruby-2));
+  box-shadow: 0 5px 0 var(--ruby-deep);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  animation: results-star 500ms 560ms var(--ease-pop) both;
+}
+.results__gems .icon { font-size: 26px; color: #fff; }
+.results__gem-why {
+  max-width: 320px;
+  margin-top: -4px;
+  font-size: 13.5px;
+  font-weight: 800;
+  text-align: center;
+  opacity: 0.85;
+}
+
 .results__stats {
   width: 100%;
   max-width: 320px;

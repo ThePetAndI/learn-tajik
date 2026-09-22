@@ -8,10 +8,10 @@ import { haptics } from '../core/haptics';
 import { pop, replaceTop, type ScreenView } from '../core/router';
 import { getState, update } from '../core/store';
 import { now } from '../core/time';
-import { type FlatLevel } from '../data/content';
+import { levels, type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
 import { computeLives, spendLife } from '../domain/lives';
-import { getLevelProgress, recordLevelResult } from '../domain/progress';
+import { awardSectionIfDone, getLevelProgress, recordLevelResult } from '../domain/progress';
 import { applyCoinBonus, coinMultiplier, levelCoinMultiplier } from '../domain/shop';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
@@ -47,6 +47,13 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
   renderHearts();
 
   let outOfLives = false;
+  /*
+   * Лаъл приходит из разных мест: слово дошло до последней коробки прямо
+   * посреди уровня, серия взяла веху на первом ответе дня. Считать каждое
+   * по отдельности — значит протащить счётчик через все модули. Проще
+   * снять показание в начале и сравнить в конце: так ничего не потеряется.
+   */
+  const gemsAtStart = getState().stats.gemsEarned;
 
   const view = createSessionView({
     exercises,
@@ -103,6 +110,7 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
     let levelCoins = 0;
     let firstClear = false;
     let answerCoins = result.coinsFromAnswers;
+    const gems = { total: 0, perfect: 0, section: 0 };
 
     update((s) => {
       const bonus = coinMultiplier(s);
@@ -118,6 +126,8 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
           ts,
         );
         firstClear = outcome.firstClear;
+        gems.perfect = outcome.gems;
+        gems.section = awardSectionIfDone(s, levels, level.sectionId, ts);
         // награда за уровень идёт со своим множителем: это бонус лиса,
         // а монеты за ответы — бонус кошки, и складывать их в один нельзя
         levelCoins = applyCoinBonus(
@@ -132,6 +142,7 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
       s.stats.answers += result.attempts;
       s.stats.correct += result.correct;
       if (result.bestCombo > s.stats.bestCombo) s.stats.bestCombo = result.bestCombo;
+      gems.total = s.stats.gemsEarned - gemsAtStart;
     });
 
     if (failed) haptics.fail();
@@ -143,6 +154,7 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
           levelCoins,
           firstClear,
           failed,
+          gems,
         }),
       'results:' + level.id,
     );

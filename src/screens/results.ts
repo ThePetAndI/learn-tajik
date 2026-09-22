@@ -18,6 +18,18 @@ export interface ResultsExtra {
   firstClear: boolean;
   /** Уровень прерван: кончились жизни. */
   failed?: boolean;
+  /** Лаъл за уровень: всего и за что именно. */
+  gems?: { total: number; perfect: number; section: number };
+}
+
+/** Откуда пришёл лаъл — одной строкой под счётчиками. */
+function gemReason(gems: NonNullable<ResultsExtra['gems']>): string {
+  const parts: string[] = [];
+  if (gems.perfect > 0) parts.push('без единой ошибки +' + gems.perfect);
+  if (gems.section > 0) parts.push('раздел закрыт +' + gems.section);
+  const other = gems.total - gems.perfect - gems.section;
+  if (other > 0) parts.push('освоенные слова и серия +' + other);
+  return parts.join(' · ');
 }
 
 function statRow(iconName: IconName, label: string, value: string): HTMLElement {
@@ -88,8 +100,25 @@ export function createResultsScreen(
       failed
         ? h('div', { class: 'results__broken' }, icon('heartEmpty'))
         : stars,
-      totalCoins > 0
-        ? h('div', { class: 'results__coins' }, icon('coin'), h('span', { text: '+' + totalCoins }))
+      totalCoins > 0 || (extra.gems?.total ?? 0) > 0
+        ? h(
+            'div',
+            { class: 'results__loot' },
+            totalCoins > 0
+              ? h('div', { class: 'results__coins' }, icon('coin'), h('span', { text: '+' + totalCoins }))
+              : null,
+            (extra.gems?.total ?? 0) > 0
+              ? h(
+                  'div',
+                  { class: 'results__gems' },
+                  icon('gem'),
+                  h('span', { text: '+' + (extra.gems?.total ?? 0) }),
+                )
+              : null,
+          )
+        : null,
+      extra.gems && extra.gems.total > 0
+        ? h('div', { class: 'results__gem-why', text: 'Лаъл: ' + gemReason(extra.gems) })
         : null,
       h(
         'div',

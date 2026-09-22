@@ -12,6 +12,7 @@
 
 import { DAY, MINUTE } from '../core/time';
 import { createWordStat, type SaveState, type WordStat } from '../data/state';
+import { awardMastery } from './gems';
 
 /** Коробки Лейтнера: базовый интервал в днях для каждой ступени. */
 export const BOX_INTERVALS = [0, 1, 3, 7, 16, 35, 90] as const;
@@ -53,6 +54,8 @@ export function recordWordAttempt(
     const base = BOX_INTERVALS[stat.box] ?? 0;
     stat.interval = base * (stat.ease / 2.5);
     stat.dueAt = ts + stat.interval * DAY;
+    // последняя коробка — это месяцы верных ответов подряд; за такое платят
+    if (stat.box >= MAX_BOX) stat.mastered = true;
   } else {
     stat.wrong += 1;
     stat.streak = 0;
@@ -63,6 +66,8 @@ export function recordWordAttempt(
   }
 
   state.srs[wordId] = stat;
+  // награда после записи: выдаётся один раз на слово, ледгер в achievements
+  if (stat.mastered) awardMastery(state, wordId, ts);
   return stat;
 }
 

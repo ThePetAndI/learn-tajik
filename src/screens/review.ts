@@ -113,6 +113,8 @@ export function createReviewScreen(opts: ReviewOptions): ScreenView {
         s.stats.coinsEarned += coins;
         s.stats.answers += result.attempts;
         s.stats.correct += result.correct;
+        // сессии повторения считаются: на них завязаны задания дерева прокачки
+        s.stats.reviews += 1;
       });
       haptics.levelUp();
       replaceTop(

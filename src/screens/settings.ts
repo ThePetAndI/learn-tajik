@@ -12,7 +12,9 @@ import {
   parseImport,
   pickJsonFile,
 } from '../data/persist';
+import { levels as courseLevels } from '../data/content';
 import { createInitialState } from '../data/state';
+import { reconcileGems } from '../domain/reconcile';
 import { now } from '../core/time';
 import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
@@ -138,6 +140,8 @@ async function doImport(): Promise<void> {
     'red',
   );
   if (!ok) return;
+  // файл мог прийти из версии без лаъл — выдаём заслуженное, как на старте
+  reconcileGems(st, courseLevels, now());
   await replaceState(st);
   setHapticsEnabled(st.settings.haptics);
   applyReducedMotion(st.settings.reducedMotion || systemPrefersReducedMotion());

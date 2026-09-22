@@ -6,6 +6,7 @@
 
 import type { FlatLevel } from '../data/content';
 import type { LevelProgress, SaveState } from '../data/state';
+import { awardPerfect, awardSection } from './gems';
 import { MAX_STARS, accuracy, starsFor } from './stars';
 
 /**
@@ -145,6 +146,8 @@ export interface LevelResult {
   /** Звёзд стало больше, чем было. */
   improved: boolean;
   accuracy: number;
+  /** Лаъл за этот уровень: без ошибок — впервые для уровня. */
+  gems: number;
 }
 
 /**
@@ -174,6 +177,7 @@ export function recordLevelResult(
 
   const firstClear = previousStars === 0;
   if (firstClear) state.stats.levelsDone += 1;
+  const gems = mistakes === 0 ? awardPerfect(state, levelId, ts) : 0;
 
   return {
     stars,
@@ -181,5 +185,31 @@ export function recordLevelResult(
     firstClear,
     improved: stars > previousStars,
     accuracy: acc,
+    gems,
   };
+}
+
+/**
+ * Лаъл за раздел: за «пройден целиком» и отдельно за «все уровни на три
+ * звезды». Вызывается после записи уровня — сам проверяет, закрыт ли раздел,
+ * и ничего не делает, если нет или если за это уже платили.
+ */
+export function awardSectionIfDone(
+  state: SaveState,
+  levels: readonly FlatLevel[],
+  sectionId: string,
+  ts: number,
+): number {
+  let playable = 0;
+  let done = 0;
+  let full = 0;
+  for (const level of levels) {
+    if (level.sectionId !== sectionId || !level.playable) continue;
+    playable++;
+    const stars = getLevelProgress(state, level.id).stars;
+    if (stars > 0) done++;
+    if (stars >= MAX_STARS) full++;
+  }
+  if (playable === 0 || done < playable) return 0;
+  return awardSection(state, sectionId, full === playable, ts);
 }

@@ -19,7 +19,10 @@ import { openLivesModal } from './screens/rewards';
 import { createShopScreen } from './screens/shop';
 import { createWordsScreen } from './screens/words';
 import { now } from './core/time';
+import { levels } from './data/content';
+import { reconcileGems } from './domain/reconcile';
 import { applyPetEffects } from './domain/shop';
+import { toast } from './ui/toast';
 
 export async function bootstrap(): Promise<void> {
   const root = qs<HTMLElement>('#app');
@@ -38,6 +41,12 @@ export async function bootstrap(): Promise<void> {
 
   // бонусы питомца применяются при старте: максимум жизней зависит от него
   update((st) => applyPetEffects(st, now()));
+
+  // лаъл за уже сделанное: у старого сохранения ледгер пуст, а заслуги есть
+  let backpay = 0;
+  update((st) => {
+    backpay = reconcileGems(st, levels, now());
+  });
 
   const hud = createHud({
     onLives: openLivesModal,
@@ -64,6 +73,10 @@ export async function bootstrap(): Promise<void> {
 
   showTab('map');
   tabbar.setActive('map');
+
+  if (backpay > 0) {
+    toast({ text: 'Лаъл за уже сделанное: +' + backpay, iconName: 'gem', tone: 'gold', ms: 4500 });
+  }
 
   // Заставку убираем только когда шрифт готов — иначе на секунду мелькает системный.
   await waitForFonts();

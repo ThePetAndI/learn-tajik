@@ -69,6 +69,7 @@
 .hud__pill--lives .icon { color: var(--red-2); }
 .hud__pill--coins .icon { color: var(--gold-2); }
 .hud__pill--stars .icon { color: #ffb400; }
+.hud__pill--gems .icon { color: var(--ruby-2); }
 .hud__pill--lives.is-empty { filter: grayscale(0.7); }
 .hud__pill--coins { padding-right: 4px; }
 .hud__value { min-width: 12px; text-align: center; font-variant-numeric: tabular-nums; }

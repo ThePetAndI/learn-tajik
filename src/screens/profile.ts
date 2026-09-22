@@ -10,6 +10,13 @@ import { toast } from '../ui/toast';
 import { canInstall, isStandalone, onInstallAvailability, promptInstall } from '../pwa/install-prompt';
 import { now } from '../core/time';
 import { visibleStreak } from '../domain/streak';
+import {
+  GEM_MASTERED,
+  GEM_PERFECT,
+  GEM_SECTION,
+  GEM_SECTION_FULL,
+  nextStreakMilestone,
+} from '../domain/gems';
 import { activePet } from '../domain/shop';
 import { levels, sections } from '../data/content';
 import { breedOf } from '../ui/pet';
@@ -36,6 +43,24 @@ export function createProfileScreen(): ScreenView {
   const courseBar = h('span', { class: 'course-bar__fill' });
   const courseText = h('div', { class: 'course-bar__text' });
   const courseNote = h('div', { class: 'course-note' });
+  const gemBalance = h('span', { class: 'gem-panel__value' });
+  const gemRows = h('div', { class: 'gem-panel__rows' });
+
+  /** Строка «за что платят лаъл»: повод, награда, сколько уже взято. */
+  function gemRow(iconName: IconName, what: string, reward: string, progress: string): HTMLElement {
+    return h(
+      'div',
+      { class: 'gem-row' },
+      h('span', { class: 'gem-row__icon' }, icon(iconName)),
+      h(
+        'span',
+        { class: 'gem-row__text' },
+        h('span', { class: 'gem-row__what', text: what }),
+        h('span', { class: 'gem-row__progress', text: progress }),
+      ),
+      h('span', { class: 'gem-row__reward' }, icon('gem'), h('span', { text: reward })),
+    );
+  }
 
   function renderStats(): void {
     const st = getState();
@@ -69,6 +94,21 @@ export function createProfileScreen(): ScreenView {
     courseNote.textContent =
       'Разделов начато: ' + openSections + ' из ' + sections.length +
       ' · звёзд ' + stars + ' из ' + maxStars;
+
+    /* ——— лаъл: за что платят и сколько уже взято ——— */
+    gemBalance.textContent = String(st.wallet.gems);
+    const sectionsClosed = Object.keys(st.achievements).filter((k) => k.startsWith('section:')).length;
+    const milestone = nextStreakMilestone(st.streak.best);
+    gemRows.replaceChildren(
+      gemRow('book', 'Слово освоено до конца', '+' + GEM_MASTERED,
+        'освоено ' + st.stats.mastered + ' · это месяцы повторений'),
+      gemRow('target', 'Уровень без единой ошибки', '+' + GEM_PERFECT,
+        'таких уровней ' + st.stats.perfect),
+      gemRow('map', 'Раздел пройден', '+' + GEM_SECTION + ' / +' + GEM_SECTION_FULL,
+        'закрыто ' + sectionsClosed + ' из ' + sections.length + ' · второе — за все звёзды'),
+      gemRow('flame', 'Веха серии', milestone ? '+' + milestone.gems : '—',
+        milestone ? 'следующая — ' + milestone.days + ' ' + plural(milestone.days, 'день', 'дня', 'дней') : 'все вехи взяты'),
+    );
 
     grid.replaceChildren(
       statCard('flame', String(streak), plural(streak, 'день', 'дня', 'дней'), 'orange'),
@@ -136,6 +176,24 @@ export function createProfileScreen(): ScreenView {
         h('div', { class: 'course-bar' }, courseBar),
         courseText,
         courseNote,
+      ),
+      h(
+        'section',
+        { class: 'panel gem-panel' },
+        h(
+          'div',
+          { class: 'gem-panel__head' },
+          h('div', { class: 'panel__title', text: 'Лаъл' }),
+          h('div', { class: 'gem-panel__balance' }, icon('gem'), gemBalance),
+        ),
+        h('p', {
+          class: 'p gem-panel__note',
+          text:
+            'Лаъл — по-таджикски рубин: его добывают на Памире, в горе Кӯҳи Лаъл. ' +
+            'Монеты даются за каждый ответ, лаъл — только за то, что сделано всерьёз, ' +
+            'и каждый раз один раз.',
+        }),
+        gemRows,
       ),
       h('section', { class: 'panel' }, h('div', { class: 'panel__title', text: 'Статистика' }), grid),
       h('div', { class: 'profile__actions' }, installSlot),
