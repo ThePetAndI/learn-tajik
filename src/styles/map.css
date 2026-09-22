@@ -1,9 +1,13 @@
 /* Карта уровней: луг, дорожка, узлы, питомец. */
 
-.screen--map {
-  background: linear-gradient(180deg, var(--meadow-1) 0%, var(--meadow-2) 42%, var(--meadow-3) 100%);
-  background-attachment: local;
-}
+/*
+ * Луг красится на прокручиваемом содержимом, а не на экране.
+ * На экране градиент стоял на месте, пока мир под ним ехал, и место,
+ * где градиент меняет наклон, читалось как горизонтальный шов поперёк карты.
+ * На всю высоту курса тот же градиент растянут настолько, что переходов
+ * не видно вовсе.
+ */
+.screen--map { background: var(--meadow-2); }
 
 .map__scroll {
   position: relative;
@@ -13,6 +17,7 @@
 .map__inner {
   position: relative;
   width: 100%;
+  background: linear-gradient(180deg, var(--meadow-1) 0%, var(--meadow-2) 42%, var(--meadow-3) 100%);
 }
 
 /* Небо над первым разделом */

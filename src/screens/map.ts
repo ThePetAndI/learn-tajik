@@ -125,9 +125,14 @@ export function createMapScreen(): ScreenView {
     inner.append(h('div', { class: 'map__sky' }));
 
     let startIndex = 0;
+    // Куда пришла дорожка предыдущего раздела. Считать это заново по номеру
+    // узла нельзя: раздел заканчивается узлом повторения, а он стоит на
+    // полшага дальше последнего уровня — и стык расходился на два десятка
+    // пикселей вбок.
+    let prevX: number | null = null;
+
     sections.forEach((section, si) => {
       const count = section.levels.length;
-      const prevX = startIndex > 0 ? nodeX(startIndex - 1, width) : null;
       const nextX = startIndex + count < levels.length ? nodeX(startIndex + count, width) : null;
       const layout = layoutSection({
         width,
@@ -141,6 +146,7 @@ export function createMapScreen(): ScreenView {
       });
       inner.append(buildSection(section.id, si, layout, width));
       startIndex += count;
+      prevX = layout.review?.x ?? layout.nodes[layout.nodes.length - 1]?.x ?? prevX;
     });
 
     inner.append(h('div', { class: 'map__tail', style: { height: TAIL_SPACE + 'px' } }));

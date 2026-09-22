@@ -15,8 +15,6 @@ export const TOP_PAD = 60;
 export const BOTTOM_PAD = 34;
 /** Шаг синусоиды: полный цикл примерно за шесть узлов. */
 const WAVE_STEP = 1.02;
-/** Сколько места занимает баннер следующего раздела — нужно для наклона на стыке. */
-const BANNER_GAP = 112;
 const WAVE_PHASE = -0.45;
 
 export interface Pt {
@@ -146,8 +144,18 @@ export function layoutSection(opts: LayoutOptions): SectionLayout {
   if (review) points.push({ x: review.x, y: review.y });
   if (nextX !== null) points.push({ x: round((lastX + nextX) / 2), y: height });
 
+  /*
+   * Призрачные точки задают наклон дорожки на стыке. Они обязаны стоять
+   * ровно там, где у соседнего раздела стоит его крайний узел, — иначе
+   * касательные с двух сторон стыка разные, кривая приходит под одним углом,
+   * а уходит под другим, и на границе видно излом и ступеньку в обводке.
+   *
+   * Сверху: последний узел предыдущего раздела на BOTTOM_PAD выше границы.
+   * Снизу: первый узел следующего раздела на bannerHeight + TOP_PAD ниже.
+   */
   const ghostBefore = prevX !== null ? { x: prevX, y: -BOTTOM_PAD } : null;
-  const ghostAfter = nextX !== null ? { x: nextX, y: height + BANNER_GAP } : null;
+  const ghostAfter =
+    nextX !== null ? { x: nextX, y: height + bannerHeight + TOP_PAD } : null;
 
   return {
     height,
@@ -168,6 +176,8 @@ const NODE_CLEAR_Y = 60;
 const ROAD_CLEAR = 64;
 /** Насколько предметы декора держатся друг от друга: иначе камень ложится на цветок. */
 const DECOR_CLEAR = 40;
+/** Облако широкое: от края блока держим больше, чем для наземного декора. */
+const CLOUD_MARGIN = 46;
 
 /**
  * Где проходит дорожка на высоте y — линейная прикидка между соседними узлами.
@@ -249,18 +259,28 @@ export function layoutDecor(
     }
   }
 
-  // Облака летят поверх всего, им дорожка не мешает
+  /*
+   * Облака рисуются поверх остального, но не над дорожкой: белое облако
+   * на песчаной дорожке читается не как облако, а как дырка в ней.
+   * По краям тоже держим запас — облако широкое и свисало за границу блока.
+   */
   const clouds = 1 + Math.floor(rng() * 2);
-  const cloudTop = 28;
-  const cloudSpan = Math.max(30, height - cloudTop - 28);
+  const cloudTop = 34;
+  const cloudSpan = Math.max(30, height - cloudTop - 34);
   for (let i = 0; i < clouds; i++) {
-    items.push({
-      kind: 'cloud',
-      x: round(margin + rng() * (width - margin * 2)),
-      y: round(cloudTop + rng() * cloudSpan),
-      scale: round(0.8 + rng() * 0.6),
-      flip: rng() < 0.5,
-    });
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const x = round(CLOUD_MARGIN + rng() * Math.max(8, width - CLOUD_MARGIN * 2));
+      const y = round(cloudTop + rng() * cloudSpan);
+      if (Math.abs(x - roadXAt(nodes, y)) < ROAD_CLEAR) continue;
+      items.push({
+        kind: 'cloud',
+        x,
+        y,
+        scale: round(0.8 + rng() * 0.6),
+        flip: rng() < 0.5,
+      });
+      break;
+    }
   }
 
   return items;

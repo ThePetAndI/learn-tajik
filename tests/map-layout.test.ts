@@ -13,7 +13,13 @@ import {
 const WIDTH = 375;
 const BANNER = 78;
 
-function section(startIndex: number, count: number, prevX: number | null, nextX: number | null) {
+function section(
+  startIndex: number,
+  count: number,
+  prevX: number | null,
+  nextX: number | null,
+  reviewNode = false,
+) {
   return layoutSection({
     width: WIDTH,
     startIndex,
@@ -22,7 +28,34 @@ function section(startIndex: number, count: number, prevX: number | null, nextX:
     prevX,
     nextX,
     seed: startIndex + 1,
+    reviewNode,
   });
+}
+
+
+/** Все сегменты кривой: две контрольные точки и конец. */
+function segments(d: string): { c1: Pt; c2: Pt; end: Pt }[] {
+  const out: { c1: Pt; c2: Pt; end: Pt }[] = [];
+  const re = /C\s*(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(d))) {
+    out.push({
+      c1: { x: Number(m[1]), y: Number(m[2]) },
+      c2: { x: Number(m[3]), y: Number(m[4]) },
+      end: { x: Number(m[5]), y: Number(m[6]) },
+    });
+  }
+  return out;
+}
+
+function startPoint(d: string): Pt {
+  const m = /M\s*(-?[\d.]+)\s+(-?[\d.]+)/.exec(d);
+  return { x: Number(m?.[1] ?? 0), y: Number(m?.[2] ?? 0) };
+}
+
+interface Pt {
+  x: number;
+  y: number;
 }
 
 /** Конечные точки кривых — последняя пара координат каждого сегмента C. */
@@ -213,6 +246,20 @@ describe('декор', () => {
     }
   });
 
+  it('облака не ложатся на дорожку и не свисают за край', () => {
+    for (let seed = 1; seed < 80; seed++) {
+      for (const item of layoutDecor(nodes, WIDTH, 500, seed)) {
+        if (item.kind !== 'cloud') continue;
+        expect(
+          Math.abs(item.x - roadXAt(nodes, item.y)),
+          'seed ' + seed + ': облако на дорожке',
+        ).toBeGreaterThanOrEqual(60);
+        expect(item.x).toBeGreaterThanOrEqual(40);
+        expect(item.x).toBeLessThanOrEqual(WIDTH - 40);
+      }
+    }
+  });
+
   it('декор всё-таки появляется, а не отбраковывается целиком', () => {
     let total = 0;
     for (let seed = 1; seed < 40; seed++) {
@@ -224,5 +271,72 @@ describe('декор', () => {
   it('детерминирован по seed', () => {
     expect(layoutDecor(nodes, WIDTH, 500, 42)).toEqual(layoutDecor(nodes, WIDTH, 500, 42));
     expect(layoutDecor(nodes, WIDTH, 500, 42)).not.toEqual(layoutDecor(nodes, WIDTH, 500, 43));
+  });
+});
+
+describe('стык разделов', () => {
+  /*
+   * Дорожка рисуется по разделам, и каждый кусок обрезается границей блока.
+   * Если касательные с двух сторон стыка не совпадают, кривая приходит под
+   * одним углом, а уходит под другим: на границе видно излом и ступеньку.
+   */
+  const A = section(0, 5, null, nodeX(5, WIDTH));
+  const B = section(5, 5, nodeX(4, WIDTH), nodeX(10, WIDTH));
+
+  it('дорожка приходит в ту же точку, где начинается следующая', () => {
+    const endA = segments(A.path).at(-1)!.end;
+    const startB = startPoint(B.path);
+    expect(endA.x).toBeCloseTo(startB.x, 0);
+    expect(Math.round(endA.y)).toBe(Math.round(A.height));
+    expect(Math.round(startB.y)).toBe(0);
+  });
+
+  it('наклон дорожки на стыке совпадает с двух сторон', () => {
+    const lastA = segments(A.path).at(-1)!;
+    const firstB = segments(B.path)[0]!;
+    const endA = lastA.end;
+    const startB = startPoint(B.path);
+
+    // направление, с которым кривая входит в стык сверху
+    const inDir = { x: endA.x - lastA.c2.x, y: endA.y - lastA.c2.y };
+    // направление, с которым она выходит снизу
+    const outDir = { x: firstB.c1.x - startB.x, y: firstB.c1.y - startB.y };
+
+    const angle = (v: { x: number; y: number }) => Math.atan2(v.y, v.x);
+    const diff = Math.abs(angle(inDir) - angle(outDir));
+    expect(diff, 'излом на стыке: ' + Math.round((diff * 180) / Math.PI) + '°').toBeLessThan(0.02);
+  });
+
+  /*
+   * Так карта строится на самом деле: у каждого раздела есть узел повторения,
+   * и следующий раздел должен приходить в точку, где кончился предыдущий,
+   * а не туда, где стоял его последний уровень.
+   */
+  it('цепочка разделов с узлами повторения сходится точка в точку', () => {
+    const counts = [5, 5, 5, 5];
+    let start = 0;
+    let prev: number | null = null;
+    const built: ReturnType<typeof section>[] = [];
+
+    for (let i = 0; i < counts.length; i++) {
+      const count = counts[i] as number;
+      const next = i + 1 < counts.length ? nodeX(start + count, WIDTH) : null;
+      const layout = section(start, count, prev, next, true);
+      built.push(layout);
+      start += count;
+      prev = layout.review?.x ?? null;
+    }
+
+    for (let i = 0; i + 1 < built.length; i++) {
+      const endA = segments((built[i] as { path: string }).path).at(-1)!.end;
+      const startB = startPoint((built[i + 1] as { path: string }).path);
+      expect(endA.x, 'стык ' + i + '/' + (i + 1) + ': дорожка прыгает вбок').toBe(startB.x);
+    }
+  });
+
+  it('первый и последний раздел курса обходятся без призрачных точек', () => {
+    const only = section(0, 5, null, null);
+    expect(startPoint(only.path).y).toBeCloseTo(BANNER + TOP_PAD, 0);
+    expect(segments(only.path).at(-1)!.end.y).toBeCloseTo(BANNER + TOP_PAD + 4 * NODE_SPACING, 0);
   });
 });
