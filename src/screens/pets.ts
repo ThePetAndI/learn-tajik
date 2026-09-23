@@ -244,6 +244,59 @@ function openSlotSheet(slot: GearSlot): void {
   }
 }
 
+/* ————————————————————————— покупка питомца ————————————————————————— */
+
+/**
+ * Карточка некупленного питомца: как он выглядит, что даёт сразу и до чего
+ * прокачивается. Покупка — только отдельной кнопкой с ценой.
+ */
+function openPetBuySheet(item: ShopItem): void {
+  const state = getState();
+  const price = priceOf(state, item.id);
+  const lack = Math.max(0, price - state.wallet.coins);
+  const tiers = item.tiers ?? [];
+  const first = tiers[0];
+  const last = tiers[tiers.length - 1];
+  const preview = createPet('happy', breedOf(item.id));
+
+  const body = h(
+    'div',
+    { class: 'pbuy t-' + item.tone },
+    h('div', { class: 'pbuy__pet' }, preview.el),
+    h('div', { class: 'pbuy__title', text: item.title }),
+    h('p', { class: 'pbuy__about', text: item.description }),
+    h(
+      'div',
+      { class: 'pbuy__perks' },
+      first ? h('div', { class: 'pbuy__perk' }, icon('check'), h('span', { text: 'Сразу: ' + first.label })) : null,
+      last && last !== first
+        ? h('div', { class: 'pbuy__perk is-future' }, icon('up'), h('span', { text: 'На ' + tiers.length + '-й ступени: ' + last.label }))
+        : null,
+    ),
+  );
+
+  const buyBtn = button({
+    label: lack > 0 ? 'Не хватает монет' : 'Купить за ' + price,
+    sub: lack > 0 ? 'нужно ещё ' + lack : undefined,
+    icon: lack > 0 ? undefined : 'coin',
+    tone: lack > 0 ? 'lock' : 'orange',
+    size: 'big',
+    wide: true,
+    disabled: lack > 0,
+  });
+  const m = modal({ body: h('div', {}, body, buyBtn), closeButton: true, class: 'modal__card--gear' });
+
+  onTap(buyBtn, () => {
+    if (canBuy(getState(), item.id) !== 'ok') return;
+    update((s) => {
+      buy(s, item.id, now());
+    });
+    haptics.reward();
+    m.close('ok');
+    toast({ text: item.title + ' теперь с вами', iconName: 'paw', tone: 'gold' });
+  });
+}
+
 /* ————————————————————————— сундук снаряжения ————————————————————————— */
 
 function showDrops(chest: GearChest, drops: GearDrop[]): void {
@@ -285,7 +338,18 @@ function showDrops(chest: GearChest, drops: GearDrop[]): void {
 
 function chestCard(chest: GearChest): HTMLElement & { refresh: () => void } {
   const oddsLine = h('div', { class: 'gchest__odds' });
-  const priceBtn = button({ tone: chest.gems > 0 ? 'pink' : 'orange', size: 'sm', label: '', icon: chest.gems > 0 ? 'gem' : 'coin' });
+  /*
+   * Подпись с ценой задаётся сразу. С пустой подписью фабрика кнопок делает
+   * круглую кнопку-значок без места под текст — и цена потом некуда вписать:
+   * так сундуки и стояли без цены.
+   */
+  const start = gearChestPrice(getState(), chest);
+  const priceBtn = button({
+    tone: chest.gems > 0 ? 'ruby' : 'orange',
+    size: 'sm',
+    label: String(chest.gems > 0 ? start.gems : start.coins),
+    icon: chest.gems > 0 ? 'gem' : 'coin',
+  });
   onTap(priceBtn, () => {
     const check = canOpenGearChest(getState(), chest.id);
     if (check === 'not-enough-coins') return poorToast('coins');
@@ -364,33 +428,37 @@ export function createPetsView(): PetsView {
     const state = getState();
     const owned = isOwned(state, item.id);
     const active = activePet(state)?.id === item.id;
+    /*
+     * Купленный и некупленный питомец должны различаться с первого взгляда:
+     * раньше оба были одинаковыми цветными плитками, и тап по чужому молча
+     * списывал 350 монет. Теперь некупленный — белая плитка с замком и
+     * ценником, а тап открывает карточку, где покупка — отдельная кнопка.
+     */
     const chip = h(
       'button',
-      { class: 'ppet t-' + item.tone + (active ? ' is-active' : '') + (owned ? '' : ' is-locked'), attr: { type: 'button' } },
+      {
+        class: 'ppet t-' + item.tone + (active ? ' is-active' : '') + (owned ? '' : ' is-locked'),
+        attr: { type: 'button' },
+        aria: { label: owned ? item.title : item.title + ', купить за ' + priceOf(state, item.id) },
+      },
       h('span', { class: 'ppet__icon' }, icon(item.icon as IconName)),
+      owned ? null : h('span', { class: 'ppet__lock' }, icon('lock')),
       h('span', { class: 'ppet__name', text: item.title }),
       owned
-        ? h('span', { class: 'ppet__tier', text: 'ступень ' + petTier(state, item.id) })
+        ? h('span', { class: 'ppet__tier', text: active ? 'с вами' : 'ступень ' + petTier(state, item.id) })
         : h('span', { class: 'ppet__price' }, icon('coin'), h('span', { text: String(priceOf(state, item.id)) })),
     );
     onTap(chip, () => {
-      const st = getState();
-      if (isOwned(st, item.id)) {
-        if (active) return;
-        update((s) => {
-          equip(s, item.id, now());
-        });
-        haptics.reward();
+      haptics.tap();
+      if (!isOwned(getState(), item.id)) {
+        openPetBuySheet(item);
         return;
       }
-      const check = canBuy(st, item.id);
-      if (check === 'not-enough-coins') return poorToast('coins');
-      if (check !== 'ok') return;
+      if (active) return;
       update((s) => {
-        buy(s, item.id, now());
+        equip(s, item.id, now());
       });
       haptics.reward();
-      toast({ text: item.title + ' теперь с вами', iconName: 'paw', tone: 'gold' });
     });
     return chip;
   }
@@ -487,7 +555,7 @@ export function createPetsView(): PetsView {
     const wornIds = new Set(Object.values(outfit));
     gearGrid.replaceChildren(
       ...(owned.length === 0
-        ? [h('p', { class: 'p gnote', text: 'Пока пусто. Первая вещь — в сундуке странника.' })]
+        ? [h('p', { class: 'p gnote ggrid__empty', text: 'Пока пусто. Первая вещь — в сундуке странника.' })]
         : owned.map((item) => {
             const level = gearLevel(state, item.id);
             const canUp = canUpgradeGear(state, item.id) === 'ok';

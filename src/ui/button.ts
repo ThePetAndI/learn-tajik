@@ -13,6 +13,7 @@ export type Tone =
   | 'blue'
   | 'red'
   | 'teal'
+  | 'ruby'
   | 'lock'
   | 'white';
 

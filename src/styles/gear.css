@@ -143,6 +143,7 @@
 
 .ppets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .ppet {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -158,10 +159,84 @@
 .ppet__icon { font-size: 26px; line-height: 1; }
 .ppet__name { font-size: 12.5px; font-weight: 900; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
 .ppet__tier { font-size: 10.5px; font-weight: 800; opacity: 0.92; }
-.ppet__price { display: inline-flex; align-items: center; gap: 2px; font-size: 11.5px; font-weight: 900; }
-.ppet__price .icon { font-size: 12px; }
 .ppet.is-active { outline: 3px solid var(--purple-1); outline-offset: 2px; }
-.ppet.is-locked { filter: saturate(0.35) brightness(1.08); }
+
+/*
+ * Некупленный питомец — не цветная плитка, а белая карточка с замком
+ * и ценником. Раньше он отличался от купленного лишь бледностью, и тап
+ * по нему выглядел как выбор, а был покупкой.
+ */
+.ppet.is-locked {
+  border-color: #e6ddf5;
+  background: #fff;
+  box-shadow: 0 4px 0 #d6cbee;
+  color: var(--ink);
+}
+.ppet.is-locked .ppet__icon { color: color-mix(in srgb, var(--c2) 45%, #c4b8dc); }
+.ppet.is-locked .ppet__name { color: var(--ink-2); text-shadow: none; }
+.ppet.is-locked:active { box-shadow: 0 1px 0 #d6cbee; }
+.ppet__lock {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--lock-2);
+  color: #fff;
+  font-size: 11px;
+}
+/* ценник — маленькая оранжевая кнопка: сразу понятно, что это покупка */
+.ppet__price {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 3px;
+  padding: 2px 8px 2px 5px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, var(--orange-1), var(--orange-2));
+  box-shadow: 0 2px 0 var(--orange-deep);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.ppet__price .icon { font-size: 12px; }
+
+/* ——— карточка покупки питомца ——— */
+.pbuy { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-bottom: 14px; text-align: center; }
+.pbuy__pet {
+  display: grid;
+  place-items: center;
+  width: 128px;
+  height: 128px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #fff 0%, color-mix(in srgb, var(--c1) 30%, #f3eefc) 72%);
+  box-shadow: 0 5px 0 #d6cbee;
+}
+.pbuy__pet .pet { position: static; width: 100px; height: 100px; transform: none; }
+.pbuy__pet .pet__svg { width: 100%; height: 100%; }
+.pbuy__title { color: var(--ink); font-size: 22px; font-weight: 900; }
+.pbuy__about { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+.pbuy__perks { display: flex; flex-direction: column; gap: 6px; align-self: stretch; margin-top: 4px; }
+.pbuy__perk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, #eafbe3, #d8f5cc);
+  color: var(--green-deep);
+  font-size: 14px;
+  font-weight: 900;
+  text-align: left;
+}
+.pbuy__perk .icon { flex: none; font-size: 17px; color: var(--green-2); }
+.pbuy__perk.is-future { background: var(--paper-2); color: var(--ink-2); }
+.pbuy__perk.is-future .icon { color: var(--purple-1); }
 .ppet:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--cd); }
 
 .ptier {
@@ -195,6 +270,8 @@
 
 .ggrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .ggrid__count { grid-column: 1 / -1; color: var(--ink-mute); font-size: 12px; font-weight: 800; text-align: center; }
+/* подпись пустого инвентаря — на всю ширину, а не в одну узкую колонку сетки */
+.ggrid__empty { grid-column: 1 / -1; margin: 0; text-align: center; }
 .gcard {
   position: relative;
   display: flex;
