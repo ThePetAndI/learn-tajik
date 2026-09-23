@@ -332,7 +332,7 @@
 .p-eye-hi { fill: #ffffff; }
 .p-cheek { fill: #ff8fb4; opacity: 0.7; }
 .p-nose { fill: var(--pet-nose, #6f4b2c); }
-.p-beak { fill: #f2a13c; }
+.p-beak { fill: var(--pet-beak, #f2a13c); }
 .p-mouth { fill: none; stroke: var(--pet-nose, #6f4b2c); stroke-width: 2.3; stroke-linecap: round; }
 .p-whisker { fill: none; stroke: var(--pet-fur-dark, #ec8226); stroke-width: 1.8; stroke-linecap: round; opacity: 0.85; }
 
@@ -340,6 +340,33 @@
 .pet--cat  { --pet-fur: #b9a6d8; --pet-fur-dark: #9b84c6; --pet-ear: #f0c4dc; --pet-belly: #efe6fb; --pet-nose: #5a3f7a; }
 .pet--dog  { --pet-fur: #e4b878; --pet-fur-dark: #c2925a; --pet-ear: #f6dcb4; --pet-belly: #fbeed6; --pet-nose: #4d3524; }
 .pet--bird { --pet-fur: #66d4e0; --pet-fur-dark: #35b2c2; --pet-ear: #bff1f6; --pet-belly: #ddf8fb; --pet-nose: #1b6b78; }
+/* питомцы из лона */
+.pet--kabk   { --pet-fur: #aab7cb; --pet-fur-dark: #8795ab; --pet-ear: #dfe5ee; --pet-belly: #f5ecd9; --pet-nose: #2b2433; --pet-beak: #e0473a; }
+.pet--bulbul { --pet-fur: #9a7a5f; --pet-fur-dark: #3b2f2a; --pet-ear: #d9c6b1; --pet-belly: #f1e5cf; --pet-nose: #3b2f2a; --pet-beak: #3b2f2a; }
+.pet--hirs   { --pet-fur: #9a6a44; --pet-fur-dark: #7a4f30; --pet-ear: #e3b48f; --pet-belly: #ead1b0; --pet-nose: #3a2518; }
+.pet--ohu    { --pet-fur: #cf9258; --pet-fur-dark: #ab6e3a; --pet-ear: #f4cfa8; --pet-belly: #f8e8d2; --pet-nose: #3b2a1e; }
+.pet--uqob   { --pet-fur: #a8763f; --pet-fur-dark: #6e4722; --pet-ear: #e6c68c; --pet-belly: #ecd198; --pet-nose: #3b2a1e; --pet-beak: #f2c230; }
+.pet--babr   { --pet-fur: #dde2e8; --pet-fur-dark: #b5bfca; --pet-ear: #f2d6de; --pet-belly: #f8f9fb; --pet-nose: #e793a9; }
+
+/*
+ * Звёзды: свечение растёт со звёздами, на пятой питомец становится золотым —
+ * «более крутая версия» должна читаться с первого взгляда, а не из подписи.
+ */
+.pet--rank-2 .pet__svg { filter: drop-shadow(0 0 3px rgba(63, 169, 245, 0.75)); }
+.pet--rank-3 .pet__svg { filter: drop-shadow(0 0 4px rgba(207, 77, 242, 0.8)); }
+.pet--rank-4 .pet__svg { filter: drop-shadow(0 0 5px rgba(255, 171, 26, 0.9)); }
+.pet--rank-5 .pet__svg { filter: drop-shadow(0 0 6px rgba(255, 196, 40, 1)) drop-shadow(0 0 2px #fff); }
+.pet--rank-5 {
+  --pet-fur: #ffcf4a;
+  --pet-fur-dark: #e8a817;
+  --pet-ear: #fff0b8;
+  --pet-belly: #fff4cf;
+}
+
+/* лицо питомца в плитках: без тени и покачивания */
+.pet-face { display: inline-grid; place-items: center; }
+.pet-face .pet__svg { width: 100%; height: 100%; animation: none; }
+.pet-face .p-shadow { display: none; }
 .pet--sleepy .p-eye { transform-box: fill-box; transform-origin: center; transform: scaleY(0.25); }
 
 /* ————————————————————————— кнопка уровня ————————————————————————— */

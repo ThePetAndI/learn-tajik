@@ -27,7 +27,7 @@ import { toast } from '../ui/toast';
 import { breedOf, createPet, type PetHandle } from '../ui/pet';
 import { now } from '../core/time';
 import { canOpenChest, canSpinWheel } from '../domain/daily';
-import { activePet, activeThemeId } from '../domain/catalog';
+import { activePet, activeThemeId, petRank } from '../domain/catalog';
 import { wornBy } from '../domain/gear-items';
 import { visibleStreak } from '../domain/streak';
 import { openChestModal, openWheelModal } from './rewards';
@@ -385,11 +385,15 @@ export function createMapScreen(): ScreenView {
     const st = getState();
     const breed = breedOf(st.profile.petId);
     // на карте питомец ходит в своём наряде — ради этого его и собирали
-    const outfit = wornBy(st, activePet(st)?.id ?? 'pet_fox');
-    if (!pet) pet = createPet('idle', breed, outfit);
+    const petId = activePet(st)?.id ?? 'pet_fox';
+    const outfit = wornBy(st, petId);
+    // и со своими звёздами: пятизвёздный питомец на карте золотой
+    const rank = petRank(st, petId);
+    if (!pet) pet = createPet('idle', breed, outfit, rank);
     else {
       pet.setBreed(breed);
       pet.setOutfit(outfit);
+      pet.setRank(rank);
     }
     const size = currentLevel.boss ? BOSS_SIZE : NODE_SIZE;
     // сбоку от узла, со стороны свободного поля — над узлом он закрывал бы баннер

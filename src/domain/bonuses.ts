@@ -11,14 +11,35 @@ import { petPerks } from './catalog';
 import { COMBO_BONUS_MAX } from './economy';
 import { gearPerks } from './gear-items';
 import { LIFE_REGEN_MS, setMaxLives, syncLives } from './lives';
-import { combinePerks, type Perks } from './perks';
+import { INTEGER_PERKS, combinePerks, type Perks } from './perks';
 import { treePerks } from './tree-nodes';
 
 export const BASE_MAX_LIVES = 5;
 
-/** Все бонусы игрока, сведённые вместе и обрезанные потолками. */
+/** Умножает все оси бонуса на одно число — для «силы питомца» и «силы снаряжения». */
+function scaled(perks: Partial<Perks>, factor: number): Partial<Perks> {
+  if (factor === 1) return perks;
+  const out: Partial<Perks> = {};
+  for (const [key, value] of Object.entries(perks) as [keyof Perks, number][]) {
+    out[key] = INTEGER_PERKS.has(key) ? Math.round(value * factor) : value * factor;
+  }
+  return out;
+}
+
+/**
+ * Все бонусы игрока, сведённые вместе и обрезанные потолками.
+ *
+ * В два прохода: сначала дерево — от него зависит, во сколько раз сильнее
+ * питомец и снаряжение («Меҳр», «Зевар»), — потом всё вместе. Умножение
+ * касается только своего источника: «питомец сильнее на 20%» не должно
+ * усиливать заодно и дерево.
+ */
 export function perksOf(state: SaveState): Perks {
-  return combinePerks([petPerks(state), ...treePerks(state), ...gearPerks(state)]);
+  const tree = treePerks(state);
+  const base = combinePerks(tree);
+  const pet = scaled(petPerks(state), 1 + base.petPower);
+  const gear = gearPerks(state).map((g) => scaled(g, 1 + base.gearPower));
+  return combinePerks([pet, ...tree, ...gear]);
 }
 
 /** Множитель монет за ответы. */

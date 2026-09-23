@@ -17,10 +17,10 @@ import {
   GEM_SECTION_FULL,
   nextStreakMilestone,
 } from '../domain/gems';
-import { activePet, petBonus } from '../domain/catalog';
+import { activePet, petBonus, petRank } from '../domain/catalog';
 import { perkLabels } from '../domain/perks';
 import { levels, sections } from '../data/content';
-import { breedOf } from '../ui/pet';
+import { breedOf, petFace } from '../ui/pet';
 import { createSettingsScreen } from './settings';
 
 function statCard(iconName: IconName, value: string, label: string, tone: string): HTMLElement {
@@ -34,13 +34,11 @@ function statCard(iconName: IconName, value: string, label: string, tone: string
 }
 
 /** Иконка питомца для аватара — та же, что в магазине. */
-const PET_ICON: Record<string, IconName> = { fox: 'fox', cat: 'cat', dog: 'dog', bird: 'bird' };
-
 export function createProfileScreen(): ScreenView {
   const grid = h('div', { class: 'stat-grid' });
   const petLine = h('div', { class: 'p' });
   const installSlot = h('div', { class: 'profile__install' });
-  const avatar = h('div', { class: 'profile__avatar' }, icon('fox'));
+  const avatar = h('div', { class: 'profile__avatar' });
   const courseBar = h('span', { class: 'course-bar__fill' });
   const courseText = h('div', { class: 'course-bar__text' });
   const courseNote = h('div', { class: 'course-note' });
@@ -81,7 +79,8 @@ export function createProfileScreen(): ScreenView {
     petLine.textContent = pet
       ? 'Питомец: ' + pet.title + (bonus.length > 0 ? ' · ' + bonus.join(', ') : '')
       : 'Учим таджикский с нуля';
-    avatar.replaceChildren(icon(PET_ICON[breedOf(st.profile.petId)] ?? 'fox'));
+    // в аватаре — лицо самого питомца, со звёздами: значков на каждого зверя не напасёшься
+    avatar.replaceChildren(petFace(breedOf(st.profile.petId), pet ? petRank(st, pet.id) : 1, 'profile__face'));
 
     /* ——— прогресс по курсу ——— */
     const playable = levels.filter((l) => l.playable);

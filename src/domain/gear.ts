@@ -11,10 +11,10 @@ import type { Rng } from '../core/rng';
 import type { SaveState } from '../data/state';
 import { applyPerks, perksOf, shopPrice } from './bonuses';
 import { isOwned } from './catalog';
+import { pickRarity } from './rarity';
 import {
   PITY_EVERY,
   RARITIES,
-  RARITY_ORDER,
   chestWeights,
   gearLevel,
   gearOfRarity,
@@ -23,20 +23,9 @@ import {
   type GearChest,
   type GearItem,
   type GearSlot,
-  type Rarity,
 } from './gear-items';
 
 /* ————————————————————————— бросок ————————————————————————— */
-
-function pickRarity(weights: Record<Rarity, number>, rng: Rng): Rarity {
-  const total = RARITY_ORDER.reduce((sum, r) => sum + weights[r], 0);
-  let roll = rng() * total;
-  for (const r of RARITY_ORDER) {
-    roll -= weights[r];
-    if (roll < 0) return r;
-  }
-  return 'common';
-}
 
 /**
  * Что выпадет из сундука. Чистая функция — её проверяют тесты.
@@ -53,10 +42,10 @@ export function rollGear(
   const weights = chestWeights(chest, luck);
 
   for (let i = 0; i < chest.count; i++) {
-    let rarity = pickRarity(weights, rng);
+    let rarity = pickRarity(weights, rng());
     // гарантия: невезение не бесконечно
     if (streak >= PITY_EVERY - 1 && (rarity === 'common' || rarity === 'rare')) {
-      rarity = pickRarity({ common: 0, rare: 0, epic: weights.epic, legendary: weights.legendary }, rng);
+      rarity = pickRarity({ common: 0, rare: 0, epic: weights.epic, legendary: weights.legendary }, rng());
     }
     const pool = gearOfRarity(rarity);
     const item = pool[Math.floor(rng() * pool.length)] ?? pool[0];
@@ -106,12 +95,14 @@ export function openGearChest(state: SaveState, id: string, rng: Rng, ts: number
   state.stats.cases += 1;
 
   const drops: GearDrop[] = [];
+  // «Ювелир» из дерева: повторные вещи дают больше осколков
+  const shardFactor = 1 + perksOf(state).shardBonus;
   for (const item of items) {
     if (gearLevel(state, item.id) === 0) {
       state.inventory.gear[item.id] = 1;
       drops.push({ item, isNew: true, shards: 0 });
     } else {
-      const shards = RARITIES[item.rarity].shards;
+      const shards = Math.round(RARITIES[item.rarity].shards * shardFactor);
       state.inventory.shards += shards;
       drops.push({ item, isNew: false, shards });
     }

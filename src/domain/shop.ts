@@ -22,7 +22,7 @@ import {
 
 /* ————————————————————————— покупка ————————————————————————— */
 
-export type BuyResult = 'ok' | 'no-such-item' | 'already-owned' | 'not-enough-coins';
+export type BuyResult = 'ok' | 'no-such-item' | 'already-owned' | 'chest-only' | 'not-enough-coins';
 
 /** Сколько предмет стоит этому игроку — со скидкой из дерева. */
 export function priceOf(state: SaveState, id: string): number {
@@ -33,6 +33,9 @@ export function priceOf(state: SaveState, id: string): number {
 export function canBuy(state: SaveState, id: string): BuyResult {
   const item = getItem(id);
   if (!item) return 'no-such-item';
+  // питомцы из лона не продаются: цена у них в каталоге 0, и без этой проверки
+  // их можно было бы «купить» даром
+  if (item.chestOnly) return 'chest-only';
   // бустеры покупаются сколько угодно раз, остальное — один
   if (item.kind !== 'booster' && isOwned(state, id)) return 'already-owned';
   if (state.wallet.coins < priceOf(state, id)) return 'not-enough-coins';

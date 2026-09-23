@@ -337,6 +337,25 @@ export const ICONS = {
       '<ellipse cx="9.2" cy="12.2" rx="1.5" ry="2.1" fill="#fff" fill-opacity=".38"/>',
   ),
 
+  /* ——— питомцы из лона ——— */
+  // лона — гнездо: два яйца над плетёной чашей
+  nest: F(
+    '<ellipse cx="9.2" cy="9.6" rx="3.4" ry="4.4"/>' +
+      '<ellipse cx="14.8" cy="8.8" rx="3.4" ry="4.6" stroke="#000" stroke-opacity=".22" stroke-width="1"/>' +
+      '<path d="M2.4 12.2h19.2c0 4.7-4.3 8.4-9.6 8.4s-9.6-3.7-9.6-8.4Z"/>' +
+      '<path d="M2.6 12.2h18.8M4.6 15.4c4.4 1.3 10.4 1.3 14.8 0M6.6 18.4c3.4.8 7.4.8 10.8 0" stroke="#000" stroke-opacity=".26" stroke-width="1.2" fill="none"/>',
+  ),
+  egg: F(
+    '<path d="M12 2.6c4 0 6.8 6 6.8 10.6 0 4.5-3 7.9-6.8 7.9s-6.8-3.4-6.8-7.9C5.2 8.6 8 2.6 12 2.6Z"/>' +
+      '<circle cx="9.5" cy="10.6" r="1.4" fill="#000" fill-opacity=".2"/>' +
+      '<circle cx="14.2" cy="14.8" r="1.7" fill="#000" fill-opacity=".2"/>' +
+      '<circle cx="13.6" cy="7.4" r="1" fill="#000" fill-opacity=".2"/>',
+  ),
+  // обмен: две встречные стрелки
+  swap: S(
+    '<path d="M5 8.4h13M14.6 4.8l3.6 3.6-3.6 3.6M19 15.6H6M9.4 12l-3.6 3.6 3.6 3.6" stroke="currentColor" stroke-width="2.6"/>',
+  ),
+
   /* ——— настройки ——— */
   vibrate: F(
     '<rect x="8.2" y="3.4" width="7.6" height="17.2" rx="2.2"/>' +

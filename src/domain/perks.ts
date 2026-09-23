@@ -39,6 +39,18 @@ export interface Perks {
   loot: number;
   /** Доля удачи в сундуках снаряжения: сдвигает шансы к редкому. */
   luck: number;
+  /** Доля удачи в лоне: сдвигает шансы к редким питомцам. */
+  petLuck: number;
+  /** Доля к бонусу питомца: множит всё, что даёт его ступень со звёздами. */
+  petPower: number;
+  /** Доля к бонусам снаряжения. */
+  gearPower: number;
+  /** Скидка на соединение копий в звезду, 0..1. */
+  mergeDiscount: number;
+  /** Шанс, что повторный питомец даст две копии вместо одной, 0..1. */
+  extraCopy: number;
+  /** Доля к осколкам из повторных вещей. */
+  shardBonus: number;
   /** Слов в сессии повторения сверх обычного. */
   review: number;
 }
@@ -60,8 +72,28 @@ export const NO_PERKS: Readonly<Perks> = Object.freeze({
   chest: 0,
   loot: 0,
   luck: 0,
+  petLuck: 0,
+  petPower: 0,
+  gearPower: 0,
+  mergeDiscount: 0,
+  extraCopy: 0,
+  shardBonus: 0,
   review: 0,
 });
+
+/**
+ * Оси-счётчики: жизни, щиты, серия. Их бонус целый — «+2,9 жизни» не бывает.
+ * Когда бонус умножается (звёзды питомца), такие оси округляются.
+ */
+export const INTEGER_PERKS: ReadonlySet<PerkKey> = new Set<PerkKey>([
+  'flatCoins',
+  'lives',
+  'shield',
+  'combo',
+  'spins',
+  'chest',
+  'review',
+]);
 
 /**
  * Потолки. Бонусы помогают, но не отменяют саму игру: две бесплатные ошибки
@@ -82,6 +114,12 @@ export const PERK_CAPS: Readonly<Perks> = Object.freeze({
   chest: 2,
   loot: 1.5,
   luck: 2,
+  petLuck: 2,
+  petPower: 1,
+  gearPower: 1,
+  mergeDiscount: 0.5,
+  extraCopy: 0.5,
+  shardBonus: 1,
   review: 10,
 });
 
@@ -89,7 +127,7 @@ export const PERK_CAPS: Readonly<Perks> = Object.freeze({
  * Скидки не суммируются: 50% и 50% — это не бесплатно, а 75%.
  * Каждая следующая действует на то, что осталось после предыдущей.
  */
-const DISCOUNTS: readonly PerkKey[] = ['hintDiscount', 'shopDiscount'];
+const DISCOUNTS: readonly PerkKey[] = ['hintDiscount', 'shopDiscount', 'mergeDiscount'];
 
 export function combinePerks(sources: readonly Partial<Perks>[]): Perks {
   const out: Perks = { ...NO_PERKS };
@@ -149,6 +187,18 @@ export function perkLabel(key: PerkKey, value: number): string {
       return '+' + pct(value) + ' монет из сундуков';
     case 'luck':
       return '+' + pct(value) + ' удачи';
+    case 'petLuck':
+      return '+' + pct(value) + ' удачи лоны';
+    case 'petPower':
+      return 'питомец сильнее на ' + pct(value);
+    case 'gearPower':
+      return 'снаряжение сильнее на ' + pct(value);
+    case 'mergeDiscount':
+      return 'звёзды питомцев −' + pct(value);
+    case 'extraCopy':
+      return pct(value) + ' шанс на двойную копию';
+    case 'shardBonus':
+      return '+' + pct(value) + ' осколков';
     case 'review':
       return '+' + value + ' слов в повторении';
   }

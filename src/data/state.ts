@@ -3,7 +3,7 @@
  * При изменении структуры: поднять SAVE_VERSION и добавить шаг в migrate() (persist.ts).
  */
 
-export const SAVE_VERSION = 3;
+export const SAVE_VERSION = 4;
 
 /** Прогресс по одному уровню карты. */
 export interface LevelProgress {
@@ -122,6 +122,12 @@ export interface SaveState {
     worn: Record<string, Record<string, string>>;
     /** Сколько вещей подряд выпало без эпической — для гарантии (gear-items.PITY_EVERY). */
     pity: number;
+    /** id питомца -> звёзды, 1..5. Нет записи — одна звезда. */
+    petRanks: Record<string, number>;
+    /** id питомца -> лишние копии: из лона, когда такой питомец уже есть. */
+    petCopies: Record<string, number>;
+    /** Сколько питомцев подряд выпало без эпического — для гарантии в лоне. */
+    petPity: number;
   };
   /** id узла дерева прокачки -> когда открыт. */
   tree: Record<string, number>;
@@ -179,7 +185,18 @@ export function createInitialState(ts: number): SaveState {
     daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0, spins: 0 },
     levels: {},
     srs: {},
-    inventory: { items: {}, owned: [], petLevels: {}, gear: {}, shards: 0, worn: {}, pity: 0 },
+    inventory: {
+      items: {},
+      owned: [],
+      petLevels: {},
+      gear: {},
+      shards: 0,
+      worn: {},
+      pity: 0,
+      petRanks: {},
+      petCopies: {},
+      petPity: 0,
+    },
     tree: {},
     seen: {},
     achievements: {},

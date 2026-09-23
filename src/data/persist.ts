@@ -89,6 +89,16 @@ const MIGRATIONS: Record<number, Migration> = {
     raw.version = 3;
     return raw;
   },
+  /*
+   * 3 -> 4: у питомцев появились звёзды и копии. У всех, кто уже есть, —
+   * одна звезда и ни одной копии: соединять пока нечего.
+   */
+  3: (raw) => {
+    const inventory = isObj(raw.inventory) ? raw.inventory : {};
+    raw.inventory = { ...inventory, petRanks: {}, petCopies: {}, petPity: 0 };
+    raw.version = 4;
+    return raw;
+  },
 };
 
 function migrate(raw: Record<string, unknown>): Record<string, unknown> {
@@ -255,6 +265,9 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       shards: int(inventory.shards, 0, 0, 1e7),
       worn: sanitizeWorn(inventory.worn),
       pity: int(inventory.pity, 0, 0, 1000),
+      petRanks: sanitizeStringMapToNumber(inventory.petRanks, 1),
+      petCopies: sanitizeStringMapToNumber(inventory.petCopies),
+      petPity: int(inventory.petPity, 0, 0, 1000),
     },
     tree: sanitizeStringMapToNumber(raw.tree),
     seen: sanitizeStringMapToNumber(raw.seen),

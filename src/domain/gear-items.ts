@@ -16,9 +16,11 @@
 import type { SaveState } from '../data/state';
 import { activePet } from './catalog';
 import type { PerkKey, Perks } from './perks';
+import { luckyWeights, oddsOf, type Rarity } from './rarity';
+
+export { RARITY_ORDER, type Rarity } from './rarity';
 
 export type GearSlot = 'head' | 'neck' | 'charm';
-export type Rarity = 'common' | 'rare' | 'epic' | 'legendary';
 
 export const SLOTS: readonly { id: GearSlot; title: string; tg: string; icon: string }[] = [
   { id: 'head', title: 'Голова', tg: 'кулоҳ', icon: 'hat' },
@@ -46,8 +48,6 @@ export const RARITIES: Record<Rarity, RarityInfo> = {
   epic: { id: 'epic', title: 'Эпический', power: 2.6, maxLevel: 9, shards: 30, coins: 200, shardCost: 9 },
   legendary: { id: 'legendary', title: 'Легендарный', power: 4, maxLevel: 10, shards: 80, coins: 450, shardCost: 15 },
 };
-
-export const RARITY_ORDER: readonly Rarity[] = ['common', 'rare', 'epic', 'legendary'];
 
 /** Какие оси бывают у снаряжения и сколько даёт обычный предмет первого уровня. */
 const UNIT: Partial<Record<PerkKey, number>> = {
@@ -225,19 +225,9 @@ export function getGearChest(id: string): GearChest | undefined {
   return GEAR_CHESTS.find((c) => c.id === id);
 }
 
-/**
- * Удача сдвигает шансы от обычного к редкому. Обычное становится реже,
- * легендарное — чаще всех остальных: удача ощущается именно там.
- */
+/** Веса с учётом удачи (см. rarity.luckyWeights). */
 export function chestWeights(chest: GearChest, luck: number): Record<Rarity, number> {
-  const l = Math.max(0, luck);
-  const w = chest.weights;
-  return {
-    common: w.common / (1 + l),
-    rare: w.rare * (1 + 0.5 * l),
-    epic: w.epic * (1 + l),
-    legendary: w.legendary * (1 + 1.5 * l),
-  };
+  return luckyWeights(chest.weights, luck);
 }
 
 /**
@@ -245,11 +235,7 @@ export function chestWeights(chest: GearChest, luck: number): Record<Rarity, num
  * шансами — это уже не игра, а лотерея; здесь их видно до покупки.
  */
 export function chestOdds(chest: GearChest, luck: number): Record<Rarity, number> {
-  const w = chestWeights(chest, luck);
-  const total = RARITY_ORDER.reduce((sum, r) => sum + w[r], 0);
-  const out = {} as Record<Rarity, number>;
-  for (const r of RARITY_ORDER) out[r] = total > 0 ? (w[r] / total) * 100 : 0;
-  return out;
+  return oddsOf(chestWeights(chest, luck));
 }
 
 /**
