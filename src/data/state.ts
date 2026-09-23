@@ -3,7 +3,7 @@
  * При изменении структуры: поднять SAVE_VERSION и добавить шаг в migrate() (persist.ts).
  */
 
-export const SAVE_VERSION = 4;
+export const SAVE_VERSION = 5;
 
 /** Прогресс по одному уровню карты. */
 export interface LevelProgress {
@@ -41,6 +41,12 @@ export interface WordStat {
    * а коробка может и просесть после ошибки.
    */
   mastered: boolean;
+}
+
+/** Угощение, которое питомец сейчас ест: id еды и сколько уроков осталось. */
+export interface Meal {
+  id: string;
+  left: number;
 }
 
 export interface Settings {
@@ -102,6 +108,10 @@ export interface SaveState {
     todayCount: number;
     /** сколько раз колесо крутили в день lastWheelDay: дерево даёт лишние вращения */
     spins: number;
+    /** день, к которому относится dealsBought: товар дня меняется в полночь */
+    dealDay: string | null;
+    /** какие товары дня уже куплены сегодня — каждый продаётся один раз */
+    dealsBought: string[];
   };
   /** levelId -> прогресс */
   levels: Record<string, LevelProgress>;
@@ -128,6 +138,8 @@ export interface SaveState {
     petCopies: Record<string, number>;
     /** Сколько питомцев подряд выпало без эпического — для гарантии в лоне. */
     petPity: number;
+    /** Что питомец сейчас ест. null — ничего: угощение кончилось или его не было. */
+    meal: Meal | null;
   };
   /** id узла дерева прокачки -> когда открыт. */
   tree: Record<string, number>;
@@ -161,6 +173,10 @@ export interface SaveState {
     gemsEarned: number;
     /** сколько сундуков открыто в лавке */
     cases: number;
+    /** сколько раз питомца угощали */
+    meals: number;
+    /** сколько товаров дня куплено за всё время */
+    deals: number;
   };
   settings: Settings;
 }
@@ -182,7 +198,15 @@ export function createInitialState(ts: number): SaveState {
     wallet: { coins: 50, gems: 0, gemDust: 0 },
     lives: { count: 5, max: 5, updatedAt: ts },
     streak: { current: 0, best: 0, lastDayKey: null, freezes: 0 },
-    daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0, spins: 0 },
+    daily: {
+      lastChestDay: null,
+      lastWheelDay: null,
+      todayKey: null,
+      todayCount: 0,
+      spins: 0,
+      dealDay: null,
+      dealsBought: [],
+    },
     levels: {},
     srs: {},
     inventory: {
@@ -196,6 +220,7 @@ export function createInitialState(ts: number): SaveState {
       petRanks: {},
       petCopies: {},
       petPity: 0,
+      meal: null,
     },
     tree: {},
     seen: {},
@@ -212,6 +237,8 @@ export function createInitialState(ts: number): SaveState {
       mastered: 0,
       gemsEarned: 0,
       cases: 0,
+      meals: 0,
+      deals: 0,
     },
     settings: { ...DEFAULT_SETTINGS },
   };

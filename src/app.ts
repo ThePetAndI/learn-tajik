@@ -2,7 +2,7 @@
 
 import { h, qs } from './core/dom';
 import { mountRouter, push, registerTab, seedHistory, showTab } from './core/router';
-import { getState, initStore, update } from './core/store';
+import { getState, initStore, subscribe, update } from './core/store';
 import { requestPersistentStorage } from './data/db';
 import { setHapticsEnabled } from './core/haptics';
 import { createHud } from './ui/hud';
@@ -23,6 +23,7 @@ import { now } from './core/time';
 import { levels } from './data/content';
 import { reconcileGems } from './domain/reconcile';
 import { applyPerks } from './domain/bonuses';
+import { claimableCount } from './domain/collection';
 import { toast } from './ui/toast';
 
 export async function bootstrap(): Promise<void> {
@@ -75,6 +76,11 @@ export async function bootstrap(): Promise<void> {
 
   showTab('map');
   tabbar.setActive('map');
+
+  // награда коллекции ждёт в магазине — точка на вкладке, чтобы о ней узнали
+  const dots = (): void => tabbar.setDot('shop', claimableCount(getState()) > 0);
+  subscribe(dots);
+  dots();
 
   if (backpay > 0) {
     toast({ text: 'Лаъл за уже сделанное: +' + backpay, iconName: 'gem', tone: 'gold', ms: 4500 });

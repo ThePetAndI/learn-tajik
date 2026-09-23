@@ -82,11 +82,21 @@ export function canOpenGearChest(state: SaveState, id: string): ChestCheck {
   return 'ok';
 }
 
-/** Покупает и открывает сундук. null — не хватило или нет такого. */
-export function openGearChest(state: SaveState, id: string, rng: Rng, ts: number): GearDrop[] | null {
-  if (canOpenGearChest(state, id) !== 'ok') return null;
-  const chest = getGearChest(id) as GearChest;
-  const price = gearChestPrice(state, chest);
+/**
+ * Покупает и открывает сундук. null — не хватило или нет такого.
+ * pay — своя цена вместо обычной: так сундук продаёт товар дня.
+ */
+export function openGearChest(
+  state: SaveState,
+  id: string,
+  rng: Rng,
+  ts: number,
+  pay?: { coins: number; gems: number },
+): GearDrop[] | null {
+  const chest = getGearChest(id);
+  if (!chest) return null;
+  const price = pay ?? gearChestPrice(state, chest);
+  if (state.wallet.coins < price.coins || state.wallet.gems < price.gems) return null;
 
   const { items, pity } = rollGear(chest, perksOf(state).luck, state.inventory.pity, rng);
   state.wallet.coins -= price.coins;

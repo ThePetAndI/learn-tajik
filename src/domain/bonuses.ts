@@ -2,13 +2,14 @@
  * Сводные бонусы игрока и всё, что из них следует.
  *
  * Единственное место, где источники бонусов встречаются: питомец, дерево,
- * снаряжение. Потребители — уровень, лавка, жизни, повторение — спрашивают
+ * снаряжение, угощение. Потребители — уровень, лавка, жизни, повторение — спрашивают
  * только отсюда и не знают, откуда взялось число.
  */
 
 import type { SaveState } from '../data/state';
 import { petPerks } from './catalog';
 import { COMBO_BONUS_MAX } from './economy';
+import { mealPerks } from './foods';
 import { gearPerks } from './gear-items';
 import { LIFE_REGEN_MS, setMaxLives, syncLives } from './lives';
 import { INTEGER_PERKS, combinePerks, type Perks } from './perks';
@@ -30,16 +31,17 @@ function scaled(perks: Partial<Perks>, factor: number): Partial<Perks> {
  * Все бонусы игрока, сведённые вместе и обрезанные потолками.
  *
  * В два прохода: сначала дерево — от него зависит, во сколько раз сильнее
- * питомец и снаряжение («Меҳр», «Зевар»), — потом всё вместе. Умножение
- * касается только своего источника: «питомец сильнее на 20%» не должно
- * усиливать заодно и дерево.
+ * питомец, снаряжение и угощение («Меҳр», «Зевар», «Дастархон»), — потом
+ * всё вместе. Умножение касается только своего источника: «питомец сильнее
+ * на 20%» не должно усиливать заодно и дерево.
  */
 export function perksOf(state: SaveState): Perks {
   const tree = treePerks(state);
   const base = combinePerks(tree);
   const pet = scaled(petPerks(state), 1 + base.petPower);
   const gear = gearPerks(state).map((g) => scaled(g, 1 + base.gearPower));
-  return combinePerks([pet, ...tree, ...gear]);
+  const meal = scaled(mealPerks(state), 1 + base.foodPower);
+  return combinePerks([pet, ...tree, ...gear, meal]);
 }
 
 /** Множитель монет за ответы. */

@@ -1,6 +1,6 @@
 /**
  * Магазин. Две половины:
- *  «Лавка»   — вид карты, бустеры и сундуки с бустерами;
+ *  «Лавка»   — товар дня, вид карты, бустеры и сундуки с бустерами;
  *  «Питомцы» — питомцы, их ступени и снаряжение (screens/pets.ts).
  *
  * Питомцы ушли в отдельную половину, когда у них появился наряд: сцена
@@ -28,6 +28,7 @@ import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
 import { modal } from '../ui/modal';
 import { toast } from '../ui/toast';
+import { createDealsPanel } from './deal-cards';
 import { createPetsView } from './pets';
 
 type Segment = 'store' | 'pets';
@@ -157,6 +158,7 @@ export function createShopScreen(): ScreenView {
 
   function refreshStore(): void {
     const state = getState();
+    deals.refresh();
     for (const [id, refs] of cards) {
       const item = itemsOfKind('theme').concat(itemsOfKind('booster'), itemsOfKind('case')).find((i) => i.id === id);
       if (!item) continue;
@@ -183,9 +185,11 @@ export function createShopScreen(): ScreenView {
 
   /* ——————————————— половины ——————————————— */
 
+  const deals = createDealsPanel();
   const store = h(
     'div',
     { class: 'shop-store' },
+    deals.el,
     section('Вид карты', 'theme'),
     section('Бустеры', 'booster'),
     section('Сундуки с бустерами', 'case'),

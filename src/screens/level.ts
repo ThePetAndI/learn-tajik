@@ -10,7 +10,9 @@ import { getState, update } from '../core/store';
 import { now } from '../core/time';
 import { levels, type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
+import { currentMeal } from '../domain/foods';
 import { computeLives, spendLife } from '../domain/lives';
+import { consumeMeal } from '../domain/meals';
 import { awardSectionIfDone, getLevelProgress, recordLevelResult } from '../domain/progress';
 import { answerCoinsFor, applyCoinBonus, levelCoinMultiplier, shieldFor } from '../domain/bonuses';
 import { recordAttemptWords } from '../domain/srs';
@@ -21,7 +23,7 @@ import { moduleFor } from '../game/registry';
 import { icon } from '../ui/icons';
 import { confirmModal } from '../ui/modal';
 import { toast } from '../ui/toast';
-import { createResultsScreen } from './results';
+import { createResultsScreen, type ResultsExtra } from './results';
 import { createSessionView } from './session-view';
 
 export function createLevelScreen(level: FlatLevel): ScreenView {
@@ -166,6 +168,7 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
     let firstClear = false;
     let answerCoins = result.coinsFromAnswers;
     const gems = { total: 0, perfect: 0, section: 0 };
+    let meal: ResultsExtra['meal'];
 
     update((s) => {
       answerCoins = answerCoinsFor(s, result.coinsFromAnswers, result.correct);
@@ -197,6 +200,13 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
       s.stats.correct += result.correct;
       if (result.bestCombo > s.stats.bestCombo) s.stats.bestCombo = result.bestCombo;
       gems.total = s.stats.gemsEarned - gemsAtStart;
+
+      // угощение доедается последним: его бонус уже вошёл в награду за этот урок
+      const eating = currentMeal(s);
+      if (!failed && eating) {
+        const done = consumeMeal(s, ts) !== null;
+        meal = { food: eating.food, left: done ? 0 : eating.left - 1 };
+      }
     });
 
     if (failed) haptics.fail();
@@ -209,6 +219,7 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
           firstClear,
           failed,
           gems,
+          meal,
         }),
       'results:' + level.id,
     );

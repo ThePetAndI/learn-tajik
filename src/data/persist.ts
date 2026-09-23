@@ -10,6 +10,7 @@ import {
   createInitialState,
   createWordStat,
   type LevelProgress,
+  type Meal,
   type SaveState,
   type Settings,
   type WordStat,
@@ -97,6 +98,20 @@ const MIGRATIONS: Record<number, Migration> = {
     const inventory = isObj(raw.inventory) ? raw.inventory : {};
     raw.inventory = { ...inventory, petRanks: {}, petCopies: {}, petPity: 0 };
     raw.version = 4;
+    return raw;
+  },
+  /*
+   * 4 -> 5: угощения и товар дня. Питомец ничего не ест, сегодня ничего
+   * не куплено, счётчики с нуля.
+   */
+  4: (raw) => {
+    const inventory = isObj(raw.inventory) ? raw.inventory : {};
+    raw.inventory = { ...inventory, meal: null };
+    const daily = isObj(raw.daily) ? raw.daily : {};
+    raw.daily = { ...daily, dealDay: null, dealsBought: [] };
+    const stats = isObj(raw.stats) ? raw.stats : {};
+    raw.stats = { ...stats, meals: 0, deals: 0 };
+    raw.version = 5;
     return raw;
   },
 };
@@ -193,6 +208,13 @@ function sanitizeWorn(v: unknown): Record<string, Record<string, string>> {
   return out;
 }
 
+/** Угощение: id строкой и сколько уроков осталось; съеденное — null. */
+function sanitizeMeal(v: unknown): Meal | null {
+  if (!isObj(v) || typeof v.id !== 'string' || v.id.length > 32) return null;
+  const left = int(v.left, 0, 0, 50);
+  return left > 0 ? { id: v.id, left } : null;
+}
+
 function sanitizeStringArray(v: unknown, maxItems = 500): string[] {
   if (!Array.isArray(v)) return [];
   const seen = new Set<string>();
@@ -253,6 +275,8 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       todayKey: strOrNull(daily.todayKey, 10),
       todayCount: int(daily.todayCount, 0, 0, 1e5),
       spins: int(daily.spins, 0, 0, 10),
+      dealDay: strOrNull(daily.dealDay, 10),
+      dealsBought: sanitizeStringArray(daily.dealsBought, 20),
     },
     levels: sanitizeLevels(raw.levels),
     srs: sanitizeSrs(raw.srs, ts),
@@ -268,6 +292,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       petRanks: sanitizeStringMapToNumber(inventory.petRanks, 1),
       petCopies: sanitizeStringMapToNumber(inventory.petCopies),
       petPity: int(inventory.petPity, 0, 0, 1000),
+      meal: sanitizeMeal(inventory.meal),
     },
     tree: sanitizeStringMapToNumber(raw.tree),
     seen: sanitizeStringMapToNumber(raw.seen),
@@ -285,6 +310,8 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       mastered: int(stats.mastered, 0, 0, 1e6),
       gemsEarned: int(stats.gemsEarned, 0, 0, 1e9),
       cases: int(stats.cases, 0, 0, 1e6),
+      meals: int(stats.meals, 0, 0, 1e6),
+      deals: int(stats.deals, 0, 0, 1e6),
     },
     settings: sanitizeSettings(raw.settings),
   };

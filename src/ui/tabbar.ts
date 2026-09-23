@@ -26,6 +26,8 @@ const TABS: TabDef[] = [
 export interface TabBarHandle {
   el: HTMLElement;
   setActive: (id: TabId) => void;
+  /** Точка на вкладке: там что-то ждёт — например, награда коллекции. */
+  setDot: (id: TabId, on: boolean) => void;
   destroy: () => void;
 }
 
@@ -41,7 +43,7 @@ export function createTabBar(): TabBarHandle {
         data: { tab: t.id },
         aria: { label: t.label },
       },
-      h('span', { class: 'tab__icon' }, icon(t.iconName)),
+      h('span', { class: 'tab__icon' }, icon(t.iconName), h('span', { class: 'tab__dot' })),
       h('span', { class: 'tab__label', text: t.label }),
     );
     onTap(btn, () => {
@@ -62,11 +64,16 @@ export function createTabBar(): TabBarHandle {
     }
   }
 
+  function setDot(id: TabId, on: boolean): void {
+    buttons.get(id)?.classList.toggle('has-dot', on);
+  }
+
   const unsub = onTabChange(setActive);
 
   return {
     el,
     setActive,
+    setDot,
     destroy: () => {
       unsub();
       el.remove();

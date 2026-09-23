@@ -254,11 +254,12 @@ export function gearCards(state: SaveState, wornIds: Set<string | undefined>): H
 
 /* ————————————————————————— сундук снаряжения ————————————————————————— */
 
-function showDrops(chest: GearChest, drops: GearDrop[]): void {
+/** Вещи из сундука — по одной. title — чем их достали: сундук, товар дня, награда. */
+export function showDrops(title: string, drops: GearDrop[]): void {
   const box = h('div', { class: 'gdrops' });
   const done = button({ label: 'Забрать', tone: 'green', size: 'big', wide: true });
   done.classList.add('hidden');
-  const m = modal({ title: chest.title, body: h('div', {}, box, done), class: 'modal__card--gear' });
+  const m = modal({ title, body: h('div', {}, box, done), class: 'modal__card--gear' });
   onTap(done, () => m.close('ok'));
 
   // вещи появляются по одной: так видно каждую, а не сразу кучу
@@ -314,7 +315,7 @@ export function gearChestCard(chest: GearChest): HTMLElement & { refresh: () => 
     update((st) => {
       drops = openGearChest(st, chest.id, rngFor('gear:' + chest.id + ':' + now()), now());
     });
-    if (drops) showDrops(chest, drops);
+    if (drops) showDrops(chest.title, drops);
   });
 
   const el = h(

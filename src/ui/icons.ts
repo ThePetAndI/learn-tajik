@@ -356,6 +356,61 @@ export const ICONS = {
     '<path d="M5 8.4h13M14.6 4.8l3.6 3.6-3.6 3.6M19 15.6H6M9.4 12l-3.6 3.6 3.6 3.6" stroke="currentColor" stroke-width="2.6"/>',
   ),
 
+  /* ——— угощения: слова из урока «Еда» ——— */
+  // нон — круглая лепёшка с узором, выбитым в середине
+  non: F(
+    '<circle cx="12" cy="12" r="9.2"/>' +
+      '<circle cx="12" cy="12" r="4.8" fill="#000" fill-opacity=".16"/>' +
+      '<circle cx="12" cy="12" r="7.3" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="1.2"/>' +
+      '<g fill="#000" fill-opacity=".24"><circle cx="12" cy="9.8" r=".9"/><circle cx="14" cy="13.1" r=".9"/><circle cx="10" cy="13.1" r=".9"/></g>',
+  ),
+  // чой — пиала с паром
+  choy: F(
+    '<path d="M3.4 10.2h17.2c0 4.9-3.7 8.6-8.6 8.6s-8.6-3.7-8.6-8.6Z"/>' +
+      '<rect x="8.8" y="18.2" width="6.4" height="2.4" rx="1.1"/>' +
+      '<path d="M4 10.2h16" stroke="#000" stroke-opacity=".24" stroke-width="1.4" fill="none"/>' +
+      '<path d="M9.4 7.6c-1.1-1.3 1.1-2.3 0-3.8M14.6 7.6c-1.1-1.3 1.1-2.3 0-3.8" stroke="currentColor" stroke-width="1.7" fill="none"/>',
+  ),
+  // шир — кувшин молока
+  shir: F(
+    '<path d="M8.2 3.4h7.6l-.7 3.2c2.1 1.4 3.3 3.8 3.3 6.6v5.1a2.4 2.4 0 0 1-2.4 2.4H8a2.4 2.4 0 0 1-2.4-2.4v-5.1c0-2.8 1.2-5.2 3.3-6.6l-.7-3.2Z"/>' +
+      '<path d="M5.8 13.4h12.4" stroke="#000" stroke-opacity=".2" stroke-width="1.5" fill="none"/>' +
+      '<path d="M8.9 6.6h6.2" stroke="#000" stroke-opacity=".2" stroke-width="1.2" fill="none"/>',
+  ),
+  // шӯрбо — миска горячего супа
+  shurbo: F(
+    '<path d="M3 11.4h18c0 4.5-4 8.2-9 8.2s-9-3.7-9-8.2Z"/>' +
+      '<rect x="2.2" y="10" width="19.6" height="2.6" rx="1.3"/>' +
+      '<path d="M7.8 7.6c-1-1.2 1-2 0-3.4M12 7.6c-1-1.2 1-2 0-3.4M16.2 7.6c-1-1.2 1-2 0-3.4" stroke="currentColor" stroke-width="1.6" fill="none"/>' +
+      '<path d="M6.4 15.4c3.4 1.4 7.8 1.4 11.2 0" stroke="#000" stroke-opacity=".2" stroke-width="1.3" fill="none"/>',
+  ),
+  // ҳалво — брусок халвы с орехами
+  halvo: F(
+    '<path d="M3.6 9.6 12 5l8.4 4.6L12 14.2 3.6 9.6Z"/>' +
+      '<path d="M3.6 9.6v5.2l8.4 4.6v-5.2L3.6 9.6Z" fill-opacity=".82"/>' +
+      '<path d="M20.4 9.6v5.2L12 19.4v-5.2l8.4-4.6Z" fill-opacity=".66"/>' +
+      '<g fill="#000" fill-opacity=".22"><circle cx="10" cy="9" r=".9"/><circle cx="13.6" cy="8.2" r=".9"/><circle cx="12.6" cy="10.8" r=".9"/></g>',
+  ),
+  // тарбуз — долька арбуза с косточками
+  tarbuz: F(
+    '<path d="M2.4 9.4h19.2a9.6 9.6 0 0 1-19.2 0Z"/>' +
+      '<path d="M3.8 10.8a8.2 8.2 0 0 0 16.4 0" stroke="#000" stroke-opacity=".24" stroke-width="1.6" fill="none"/>' +
+      '<g fill="#000" fill-opacity=".3"><ellipse cx="8.6" cy="12.6" rx=".8" ry="1.2"/><ellipse cx="12" cy="14.2" rx=".8" ry="1.2"/><ellipse cx="15.4" cy="12.6" rx=".8" ry="1.2"/></g>',
+  ),
+  // ош — горка плова на блюде
+  osh: F(
+    '<ellipse cx="12" cy="16.8" rx="9.8" ry="3.4"/>' +
+      '<path d="M5.2 16c.6-4.8 3.5-7.6 6.8-7.6s6.2 2.8 6.8 7.6Z"/>' +
+      '<path d="M5.2 16h13.6" stroke="#000" stroke-opacity=".22" stroke-width="1.2" fill="none"/>' +
+      '<g fill="#000" fill-opacity=".2"><circle cx="9.4" cy="13.2" r=".7"/><circle cx="12" cy="11.6" r=".7"/><circle cx="14.6" cy="13.2" r=".7"/><circle cx="11" cy="14.4" r=".7"/><circle cx="13.4" cy="14.6" r=".7"/></g>' +
+      '<circle cx="12" cy="8.2" r="1.9" fill="#000" fill-opacity=".26"/>',
+  ),
+  // ценник — товар дня
+  tag: F(
+    '<path d="M3 12.4V4.4A1.4 1.4 0 0 1 4.4 3h8l8.6 8.6-9.4 9.4L3 12.4Z"/>' +
+      '<circle cx="7.6" cy="7.6" r="1.9" fill="#000" fill-opacity=".3"/>',
+  ),
+
   /* ——— настройки ——— */
   vibrate: F(
     '<rect x="8.2" y="3.4" width="7.6" height="17.2" rx="2.2"/>' +

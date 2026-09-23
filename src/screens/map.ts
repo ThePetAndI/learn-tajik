@@ -31,6 +31,8 @@ import { activePet, activeThemeId, petRank } from '../domain/catalog';
 import { wornBy } from '../domain/gear-items';
 import { visibleStreak } from '../domain/streak';
 import { openChestModal, openWheelModal } from './rewards';
+import { mealSummary } from './food-cards';
+import { currentMeal } from '../domain/foods';
 import { openLevelCard } from './level-card';
 
 const BANNER_HEIGHT = 78;
@@ -81,7 +83,22 @@ export function createMapScreen(): ScreenView {
 
   const streakChip = h('div', { class: 'map-daily__streak' }, icon('flame'), h('span', { text: '0' }));
 
-  const dailyBar = h('div', { class: 'map-daily' }, streakChip, chestBtn, wheelBtn);
+  // что питомец ест: угощение действует на уроки, и видеть его надо здесь, у уроков
+  const mealIcon = h('span', { class: 'map-daily__meal-icon' });
+  const mealLeft = h('span', { class: 'map-daily__left' });
+  const mealBtn = h(
+    'button',
+    { class: 'map-daily__btn map-daily__meal hidden', attr: { type: 'button' }, aria: { label: 'Угощение' } },
+    mealIcon,
+    mealLeft,
+  );
+  onTap(mealBtn, () => {
+    haptics.tap();
+    const text = mealSummary(getState());
+    if (text) toast({ text, iconName: 'paw', tone: 'gold', ms: 3200 });
+  });
+
+  const dailyBar = h('div', { class: 'map-daily' }, streakChip, chestBtn, wheelBtn, mealBtn);
 
   const el = h('div', { class: 'screen screen--map' }, scroll, dailyBar, ctaBar);
 
@@ -336,6 +353,12 @@ export function createMapScreen(): ScreenView {
     streakChip.classList.toggle('is-on', streak > 0);
     const label = streakChip.querySelector('span');
     if (label) label.textContent = String(streak);
+    const meal = currentMeal(state);
+    mealBtn.className = 'map-daily__btn map-daily__meal' + (meal ? ' t-' + meal.food.tone : ' hidden');
+    if (meal) {
+      mealIcon.replaceChildren(icon(meal.food.icon as IconName));
+      mealLeft.textContent = String(meal.left);
+    }
     el.dataset.theme = activeThemeId(state);
   }
 

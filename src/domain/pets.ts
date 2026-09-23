@@ -147,14 +147,24 @@ export function canOpenPetChest(state: SaveState, id: string): PetChestCheck {
   return 'ok';
 }
 
-/** Покупает и открывает лону. null — не хватило или нет такой. */
-export function openPetChest(state: SaveState, id: string, rng: Rng, ts: number): PetDrop | null {
-  if (canOpenPetChest(state, id) !== 'ok') return null;
-  const chest = getPetChest(id) as PetChest;
+/**
+ * Покупает и открывает лону. null — не хватило или нет такой.
+ * pay — своя цена вместо обычной: так лону продаёт товар дня.
+ */
+export function openPetChest(
+  state: SaveState,
+  id: string,
+  rng: Rng,
+  ts: number,
+  pay?: { coins: number; gems: number },
+): PetDrop | null {
+  const chest = getPetChest(id);
+  if (!chest) return null;
+  const price = pay ?? petChestPrice(state, chest);
+  if (state.wallet.coins < price.coins || state.wallet.gems < price.gems) return null;
   const rolled = rollPet(chest, perksOf(state).petLuck, state.inventory.petPity, rng);
   if (!rolled) return null;
 
-  const price = petChestPrice(state, chest);
   state.wallet.coins -= price.coins;
   state.wallet.gems -= price.gems;
   state.inventory.petPity = rolled.pity;
@@ -162,6 +172,15 @@ export function openPetChest(state: SaveState, id: string, rng: Rng, ts: number)
   const drop = grantPet(state, rolled.pet, rng);
   applyPerks(state, ts);
   return drop;
+}
+
+/** Копия уже знакомого питомца — так её продаёт товар дня. false — питомца нет. */
+export function giveCopy(state: SaveState, id: string, ts: number): boolean {
+  const pet = getItem(id);
+  if (!pet || pet.kind !== 'pet' || !isOwned(state, id)) return false;
+  state.inventory.petCopies[id] = petCopies(state, id) + 1;
+  applyPerks(state, ts);
+  return true;
 }
 
 /* ————————————————————————— звёзды ————————————————————————— */

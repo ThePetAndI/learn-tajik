@@ -3,7 +3,8 @@
  *
  * Сверху — сцена: активный питомец в полный рост, в своём наряде и со своими
  * звёздами, под ним три слота. Ниже — коллекция питомцев с ростом активного,
- * лона, откуда питомцы выходят, обмен копий, инвентарь снаряжения и сундуки.
+ * лона, откуда питомцы выходят, обмен копий, инвентарь снаряжения, сундуки
+ * и в самом конце — коллекция с наградами за собранное.
  * Всё, что меняет питомца, сразу видно на сцене: ради этого наряд и звёзды
  * рисуются на нём, а не лежат строчкой в списке.
  */
@@ -12,11 +13,14 @@ import { h, onTap } from '../core/dom';
 import { haptics } from '../core/haptics';
 import { getState, subscribe } from '../core/store';
 import { activePet, allPets, isOwned, petBonus, petRank } from '../domain/catalog';
+import { COLLECTION, claimableCount, goalStatus } from '../domain/collection';
 import { GEAR_CHESTS, SLOTS, gearLevel, gearPerk, getGear, wornBy } from '../domain/gear-items';
 import { PET_CHESTS } from '../domain/pets';
 import { combinePerks, perkLabels } from '../domain/perks';
 import { icon, type IconName } from '../ui/icons';
 import { breedOf, createPet } from '../ui/pet';
+import { collectionRows } from './collection-cards';
+import { mealRow } from './food-cards';
 import { gearCards, gearChestCard, gearChestNote, openSlotSheet, thumb } from './gear-cards';
 import { nestCard, nestNote, petProgress, petTile, starRow, swapRows } from './pet-cards';
 import { rarityChip } from './shop-bits';
@@ -33,6 +37,7 @@ export function createPetsView(): PetsView {
   const stageName = h('div', { class: 'pstage__name' });
   const stageMeta = h('div', { class: 'pstage__meta' });
   const stageBonus = h('div', { class: 'pstage__bonus' });
+  const stageMeal = h('div', { class: 'pstage__meal' });
   const slotRow = h('div', { class: 'pstage__slots' });
 
   const petCount = h('span', { class: 'pcount' });
@@ -45,6 +50,26 @@ export function createPetsView(): PetsView {
   const gearGrid = h('div', { class: 'ggrid' });
   const chests = GEAR_CHESTS.map(gearChestCard);
   const pityNote = h('p', { class: 'p gnote' });
+  const goalCount = h('span', { class: 'pcount' });
+  const goalList = h('div', { class: 'cgoals' });
+  const goalPanel = h(
+    'section',
+    { class: 'panel', data: { panel: 'collection' } },
+    h('div', { class: 'panel__head' }, h('div', { class: 'panel__title', text: 'Коллекция' }), goalCount),
+    goalList,
+  );
+  // награда ждёт в самом низу страницы — наверху о ней напоминает полоска
+  const claimBanner = h(
+    'button',
+    { class: 'cbanner hidden', attr: { type: 'button' } },
+    icon('crown'),
+    h('span', { class: 'cbanner__text' }),
+    icon('chevronDown'),
+  );
+  onTap(claimBanner, () => {
+    haptics.tap();
+    goalPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 
   function refresh(): void {
     const state = getState();
@@ -69,6 +94,7 @@ export function createPetsView(): PetsView {
     }
     const bonuses = perkLabels(combinePerks(sources));
     stageBonus.textContent = bonuses.length > 0 ? bonuses.join(' · ') : 'Пока просто друг';
+    stageMeal.replaceChildren(mealRow(pet));
 
     slotRow.replaceChildren(
       ...SLOTS.map((slot) => {
@@ -104,6 +130,17 @@ export function createPetsView(): PetsView {
     gearGrid.replaceChildren(...gearCards(state, new Set(Object.values(outfit))));
     for (const chest of chests) chest.refresh();
     pityNote.textContent = gearChestNote(state);
+
+    /* ——— коллекция ——— */
+    const ready = claimableCount(state);
+    const claimed = COLLECTION.filter((g) => goalStatus(state, g) === 'claimed').length;
+    goalCount.textContent = claimed + ' из ' + COLLECTION.length;
+    goalList.replaceChildren(...collectionRows());
+    claimBanner.classList.toggle('hidden', ready === 0);
+    const bannerText = claimBanner.querySelector('.cbanner__text');
+    if (bannerText) {
+      bannerText.textContent = ready === 1 ? 'Награда коллекции ждёт' : 'Награды коллекции ждут: ' + ready;
+    }
   }
 
   const el = h(
@@ -116,8 +153,10 @@ export function createPetsView(): PetsView {
       stageName,
       stageMeta,
       stageBonus,
+      stageMeal,
       slotRow,
     ),
+    claimBanner,
     h(
       'section',
       { class: 'panel' },
@@ -159,6 +198,7 @@ export function createPetsView(): PetsView {
       ...chests,
       pityNote,
     ),
+    goalPanel,
   );
 
   const unsub = subscribe(refresh);

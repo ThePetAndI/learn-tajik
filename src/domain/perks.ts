@@ -51,6 +51,14 @@ export interface Perks {
   extraCopy: number;
   /** Доля к осколкам из повторных вещей. */
   shardBonus: number;
+  /** Скидка на товар дня сверх его собственной, 0..1. */
+  dealDiscount: number;
+  /** Товаров дня сверх обычных трёх. */
+  dealSlots: number;
+  /** Доля к силе угощений. */
+  foodPower: number;
+  /** Уроков, на которые угощения хватает, сверх обычного. */
+  foodLength: number;
   /** Слов в сессии повторения сверх обычного. */
   review: number;
 }
@@ -78,6 +86,10 @@ export const NO_PERKS: Readonly<Perks> = Object.freeze({
   mergeDiscount: 0,
   extraCopy: 0,
   shardBonus: 0,
+  dealDiscount: 0,
+  dealSlots: 0,
+  foodPower: 0,
+  foodLength: 0,
   review: 0,
 });
 
@@ -92,6 +104,8 @@ export const INTEGER_PERKS: ReadonlySet<PerkKey> = new Set<PerkKey>([
   'combo',
   'spins',
   'chest',
+  'dealSlots',
+  'foodLength',
   'review',
 ]);
 
@@ -120,6 +134,10 @@ export const PERK_CAPS: Readonly<Perks> = Object.freeze({
   mergeDiscount: 0.5,
   extraCopy: 0.5,
   shardBonus: 1,
+  dealDiscount: 0.4,
+  dealSlots: 3,
+  foodPower: 1,
+  foodLength: 3,
   review: 10,
 });
 
@@ -127,7 +145,7 @@ export const PERK_CAPS: Readonly<Perks> = Object.freeze({
  * Скидки не суммируются: 50% и 50% — это не бесплатно, а 75%.
  * Каждая следующая действует на то, что осталось после предыдущей.
  */
-const DISCOUNTS: readonly PerkKey[] = ['hintDiscount', 'shopDiscount', 'mergeDiscount'];
+const DISCOUNTS: readonly PerkKey[] = ['hintDiscount', 'shopDiscount', 'mergeDiscount', 'dealDiscount'];
 
 export function combinePerks(sources: readonly Partial<Perks>[]): Perks {
   const out: Perks = { ...NO_PERKS };
@@ -199,6 +217,14 @@ export function perkLabel(key: PerkKey, value: number): string {
       return pct(value) + ' шанс на двойную копию';
     case 'shardBonus':
       return '+' + pct(value) + ' осколков';
+    case 'dealDiscount':
+      return 'товар дня −' + pct(value);
+    case 'dealSlots':
+      return '+' + value + ' ' + (value === 1 ? 'товар дня' : 'товара дня');
+    case 'foodPower':
+      return 'угощения сильнее на ' + pct(value);
+    case 'foodLength':
+      return '+' + value + ' ' + (value === 1 ? 'урок' : 'урока') + ' к угощению';
     case 'review':
       return '+' + value + ' слов в повторении';
   }

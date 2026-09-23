@@ -3,11 +3,12 @@
 import { h } from '../core/dom';
 import { closeAll, pop, type ScreenView } from '../core/router';
 import { getState } from '../core/store';
-import { now } from '../core/time';
+import { now, plural } from '../core/time';
 import type { FlatLevel } from '../data/content';
 import { computeLives } from '../domain/lives';
 import { hasRecoveryMaterial } from '../domain/recovery';
 import { MAX_STARS, starsTitle } from '../domain/stars';
+import type { Food } from '../domain/foods';
 import type { SessionResult } from '../game/engine';
 import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
@@ -20,6 +21,8 @@ export interface ResultsExtra {
   failed?: boolean;
   /** Лаъл за уровень: всего и за что именно. */
   gems?: { total: number; perfect: number; section: number };
+  /** Угощение, которое питомец ел на этом уроке, и сколько уроков ему осталось. */
+  meal?: { food: Food; left: number };
 }
 
 /** Откуда пришёл лаъл — одной строкой под счётчиками. */
@@ -133,6 +136,16 @@ export function createResultsScreen(
               extra.firstClear ? 'За первое прохождение' : 'За уровень',
               '+' + extra.levelCoins,
             ),
+        // угощение кончается тихо, если об этом не сказать: бонус пропал бы без объяснений
+        extra.meal
+          ? statRow(
+              extra.meal.food.icon as IconName,
+              'Угощение: ' + extra.meal.food.tg,
+              extra.meal.left > 0
+                ? 'ещё ' + extra.meal.left + ' ' + plural(extra.meal.left, 'урок', 'урока', 'уроков')
+                : 'доедено',
+            )
+          : null,
       ),
       failed
         ? h('p', {
