@@ -20,6 +20,7 @@
  */
 
 import type { SaveState } from '../data/state';
+import { perksOf } from './bonuses';
 
 export const GEM_MASTERED = 1;
 export const GEM_PERFECT = 2;
@@ -60,11 +61,19 @@ export function grantOnce(state: SaveState, key: string, gems: number, ts: numbe
 
 /**
  * Единственная дверь, через которую лаъл попадает в кошелёк.
- * Множители из дерева прокачки применяются здесь, а не у каждого вызова.
+ * Множитель из дерева прокачки применяется здесь, а не у каждого вызова.
+ *
+ * Дробная часть не выбрасывается, а копится в gemDust: награда в один лаъл
+ * с бонусом +10% иначе округлялась бы обратно в один, и бонус не работал бы
+ * вовсе на самых частых наградах. С пылью десятое освоенное слово принесёт
+ * лишний лаъл — ровно столько, сколько обещано.
  */
 export function addGems(state: SaveState, n: number): number {
-  const amount = Math.max(0, Math.floor(n));
-  if (amount === 0) return 0;
+  const base = Math.max(0, Math.floor(n));
+  if (base === 0) return 0;
+  const exact = base * (1 + perksOf(state).gems) + (state.wallet.gemDust ?? 0);
+  const amount = Math.floor(exact);
+  state.wallet.gemDust = Math.min(0.999, exact - amount);
   state.wallet.gems += amount;
   state.stats.gemsEarned += amount;
   return amount;

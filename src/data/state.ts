@@ -70,12 +70,22 @@ export interface SaveState {
     coins: number;
     /** Лаъл — вторая валюта, за глубину, а не за объём (см. domain/gems). */
     gems: number;
+    /**
+     * Дробная часть лаъл, 0..1. Бонус +10% к награде в один лаъл без неё
+     * терялся бы при округлении целиком; так он копится и честно доходит.
+     */
+    gemDust: number;
   };
   lives: {
     count: number;
     max: number;
     /** момент, от которого отсчитывается регенерация */
     updatedAt: number;
+    /**
+     * Сколько миллисекунд восстанавливается одна жизнь. Производное от бонусов,
+     * как и max: хранится, чтобы модуль жизней оставался чистым. Нет — 30 минут.
+     */
+    regenMs?: number;
   };
   streak: {
     current: number;
@@ -90,6 +100,8 @@ export interface SaveState {
     /** сколько упражнений сделано сегодня */
     todayKey: string | null;
     todayCount: number;
+    /** сколько раз колесо крутили в день lastWheelDay: дерево даёт лишние вращения */
+    spins: number;
   };
   /** levelId -> прогресс */
   levels: Record<string, LevelProgress>;
@@ -102,7 +114,15 @@ export interface SaveState {
     owned: string[];
     /** id питомца -> ступень прокачки, 1..5. Нет записи — первая ступень. */
     petLevels: Record<string, number>;
+    /** id аксессуара -> его уровень. Нет записи — аксессуар не найден. */
+    gear: Record<string, number>;
+    /** Осколки: из повторных находок и разобранного снаряжения, идут на улучшение. */
+    shards: number;
+    /** id питомца -> слот -> id надетого аксессуара. У каждого питомца свой наряд. */
+    worn: Record<string, Record<string, string>>;
   };
+  /** id узла дерева прокачки -> когда открыт. */
+  tree: Record<string, number>;
   /**
    * Разовые достижения: ключ -> когда получено. Заодно служит ледгером
    * наград в лаъл — по нему видно, что за это уже платили (domain/gems).
@@ -144,13 +164,14 @@ export function createInitialState(ts: number): SaveState {
     createdAt: ts,
     updatedAt: ts,
     profile: { name: '', petId: null, themeId: 'meadow' },
-    wallet: { coins: 50, gems: 0 },
+    wallet: { coins: 50, gems: 0, gemDust: 0 },
     lives: { count: 5, max: 5, updatedAt: ts },
     streak: { current: 0, best: 0, lastDayKey: null, freezes: 0 },
-    daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0 },
+    daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0, spins: 0 },
     levels: {},
     srs: {},
-    inventory: { items: {}, owned: [], petLevels: {} },
+    inventory: { items: {}, owned: [], petLevels: {}, gear: {}, shards: 0, worn: {} },
+    tree: {},
     achievements: {},
     stats: {
       answers: 0,

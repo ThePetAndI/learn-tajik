@@ -16,6 +16,15 @@ export interface LivesState {
   count: number;
   max: number;
   updatedAt: number;
+  /** Сколько восстанавливается одна жизнь; нет — LIFE_REGEN_MS. Задаёт дерево. */
+  regenMs?: number;
+}
+
+/** Скорость восстановления: не быстрее пяти минут и не медленнее получаса. */
+function regenOf(lives: LivesState): number {
+  const ms = lives.regenMs;
+  if (typeof ms !== 'number' || !Number.isFinite(ms)) return LIFE_REGEN_MS;
+  return Math.min(LIFE_REGEN_MS, Math.max(5 * MINUTE, ms));
 }
 
 export interface LivesView {
@@ -41,25 +50,26 @@ export function computeLives(lives: LivesState, ts: number): LivesView {
     return { count: max, max, updatedAt: ts, msToNext: 0, full: true };
   }
 
+  const regen = regenOf(lives);
   const elapsed = ts - lives.updatedAt;
   if (elapsed < 0) {
     // время уехало назад — начинаем отсчёт заново, жизни не теряем
-    return { count, max, updatedAt: ts, msToNext: LIFE_REGEN_MS, full: false };
+    return { count, max, updatedAt: ts, msToNext: regen, full: false };
   }
 
-  const gained = Math.floor(elapsed / LIFE_REGEN_MS);
+  const gained = Math.floor(elapsed / regen);
   const next = Math.min(max, count + gained);
 
   if (next >= max) {
     return { count: max, max, updatedAt: ts, msToNext: 0, full: true };
   }
 
-  const anchor = lives.updatedAt + gained * LIFE_REGEN_MS;
+  const anchor = lives.updatedAt + gained * regen;
   return {
     count: next,
     max,
     updatedAt: anchor,
-    msToNext: Math.max(0, LIFE_REGEN_MS - (ts - anchor)),
+    msToNext: Math.max(0, regen - (ts - anchor)),
     full: false,
   };
 }

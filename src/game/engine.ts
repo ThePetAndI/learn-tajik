@@ -40,6 +40,8 @@ export interface SessionOptions {
   exercises: Exercise[];
   /** Вызывается на каждую попытку — сюда подключится интервальное повторение. */
   onAttempt?: (attempt: Attempt) => void;
+  /** Потолок бонуса за серию; без него — обычный из economy. */
+  comboCap?: number;
 }
 
 export interface Session {
@@ -76,7 +78,7 @@ export function createSession(opts: SessionOptions): Session {
       state.attempts++;
       if (attempt.correct) {
         // монеты считаются от серии ДО этого ответа
-        state.coinsFromAnswers += coinsForAnswer(state.combo);
+        state.coinsFromAnswers += coinsForAnswer(state.combo, opts.comboCap);
         state.correct++;
         state.combo++;
         if (state.combo > state.bestCombo) state.bestCombo = state.combo;

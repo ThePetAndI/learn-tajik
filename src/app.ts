@@ -17,6 +17,7 @@ import { createMapScreen } from './screens/map';
 import { createProfileScreen } from './screens/profile';
 import { openLivesModal } from './screens/rewards';
 import { createShopScreen } from './screens/shop';
+import { createTreeScreen } from './screens/tree';
 import { createWordsScreen } from './screens/words';
 import { now } from './core/time';
 import { levels } from './data/content';
@@ -68,6 +69,7 @@ export async function bootstrap(): Promise<void> {
 
   registerTab('map', createMapScreen);
   registerTab('shop', createShopScreen);
+  registerTab('tree', createTreeScreen);
   registerTab('words', createWordsScreen);
   registerTab('profile', createProfileScreen);
 

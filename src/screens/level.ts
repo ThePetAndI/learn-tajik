@@ -12,7 +12,7 @@ import { levels, type FlatLevel } from '../data/content';
 import { coinsForLevel } from '../domain/economy';
 import { computeLives, spendLife } from '../domain/lives';
 import { awardSectionIfDone, getLevelProgress, recordLevelResult } from '../domain/progress';
-import { applyCoinBonus, coinMultiplier, levelCoinMultiplier } from '../domain/bonuses';
+import { answerCoinsFor, applyCoinBonus, levelCoinMultiplier, shieldFor } from '../domain/bonuses';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';
@@ -48,6 +48,11 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
 
   let outOfLives = false;
   /*
+   * Щит из дерева: столько ошибок за уровень не стоят жизни. Звезду ошибка
+   * всё равно снимает — щит бережёт запас жизней, а не делает ошибку невидимой.
+   */
+  let shields = shieldFor(getState());
+  /*
    * Лаъл приходит из разных мест: слово дошло до последней коробки прямо
    * посреди уровня, серия взяла веху на первом ответе дня. Считать каждое
    * по отдельности — значит протащить счётчик через все модули. Проще
@@ -63,17 +68,29 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
 
     onAttempt: (attempt) => {
       const ts = now();
+      let shielded = false;
       update((s) => {
         recordAttemptWords(s, attempt.wordIds, attempt.correct, ts);
         countDailyExercise(s, ts);
         touchStreak(s, ts);
         if (!attempt.correct) {
-          if (!spendLife(s, ts)) outOfLives = true;
-          if (computeLives(s.lives, ts).count <= 0) outOfLives = true;
+          if (shields > 0) {
+            shields--;
+            shielded = true;
+          } else {
+            if (!spendLife(s, ts)) outOfLives = true;
+            if (computeLives(s.lives, ts).count <= 0) outOfLives = true;
+          }
         }
       });
       renderHearts();
-      if (!attempt.correct) {
+      if (shielded) {
+        toast({
+          text: shields > 0 ? 'Щит принял удар — жизнь цела' : 'Щит принял удар — больше щитов нет',
+          iconName: 'shield',
+          ms: 1800,
+        });
+      } else if (!attempt.correct) {
         hearts.classList.remove('is-hit');
         void hearts.offsetWidth;
         hearts.classList.add('is-hit');
@@ -113,8 +130,7 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
     const gems = { total: 0, perfect: 0, section: 0 };
 
     update((s) => {
-      const bonus = coinMultiplier(s);
-      answerCoins = applyCoinBonus(result.coinsFromAnswers, bonus);
+      answerCoins = answerCoinsFor(s, result.coinsFromAnswers, result.correct);
 
       if (!failed) {
         const outcome = recordLevelResult(

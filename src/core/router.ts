@@ -6,7 +6,7 @@
 
 import { afterAnimation } from './dom';
 
-export type TabId = 'shop' | 'map' | 'words' | 'profile';
+export type TabId = 'shop' | 'tree' | 'map' | 'words' | 'profile';
 
 export interface ScreenView {
   el: HTMLElement;

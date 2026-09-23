@@ -13,10 +13,13 @@ import {
   canSpinWheel,
   chestOpenedToday,
   openChest,
+  spinsLeftToday,
+  spinsUsedToday,
   spinWheel,
   wheelSpunToday,
   type Reward,
 } from '../domain/daily';
+import { spinsPerDay } from '../domain/bonuses';
 import { computeLives, refillLives } from '../domain/lives';
 import { hasRecoveryMaterial } from '../domain/recovery';
 import { boosterCount, getItem } from '../domain/catalog';
@@ -98,20 +101,27 @@ export function openChestModal(): void {
     chest.classList.add('is-open');
     haptics.reward();
 
-    let reward: Reward | null = null;
+    let rewards: Reward[] | null = null;
     update((st) => {
-      reward = openChest(st, rngFor('chest:' + ts), now());
+      rewards = openChest(st, rngFor('chest:' + ts), now());
     });
-    if (!reward) {
+    if (!rewards) {
       m.close(null);
       return;
     }
-    const got = reward as Reward;
+    const got = rewards as Reward[];
 
     void sleep(280).then(() => {
+      // «Щедрый день» в дереве кладёт в сундук больше одной награды
       prize.replaceChildren(
-        h('span', { class: 'prize__icon' }, icon(rewardIcon(got))),
-        h('span', { class: 'prize__title', text: rewardTitle(got) }),
+        ...got.map((reward) =>
+          h(
+            'span',
+            { class: 'prize__item' },
+            h('span', { class: 'prize__icon' }, icon(rewardIcon(reward))),
+            h('span', { class: 'prize__title', text: rewardTitle(reward) }),
+          ),
+        ),
       );
       prize.classList.add('is-shown');
       const rect = chest.getBoundingClientRect();
@@ -176,6 +186,7 @@ function wheelSvg(): SVGSVGElement {
 
 export function openWheelModal(): void {
   const ts = now();
+  const left = spinsLeftToday(getState(), ts);
   if (wheelSpunToday(getState(), ts)) {
     modal({
       title: 'Колесо уже крутили',
@@ -190,7 +201,16 @@ export function openWheelModal(): void {
   const prize = h('div', { class: 'prize' });
   const spinBtn = button({ label: 'Крутить!', tone: 'orange', size: 'big', wide: true });
   const body = h('div', { class: 'reward-body' }, wrap, prize, spinBtn);
-  const m = modal({ title: 'Колесо удачи', text: 'Раз в день — бесплатно', body, closeButton: true });
+  const perDay = spinsPerDay(getState());
+  const m = modal({
+    title: 'Колесо удачи',
+    text:
+      perDay > 1
+        ? 'Сегодня осталось ' + left + ' из ' + perDay + ' — бесплатно'
+        : 'Раз в день — бесплатно',
+    body,
+    closeButton: true,
+  });
 
   let spun = false;
   onTap(spinBtn, () => {
@@ -201,7 +221,8 @@ export function openWheelModal(): void {
 
     let result: { index: number; reward: Reward } | null = null;
     update((st) => {
-      result = spinWheel(st, rngFor('wheel:' + ts), now());
+      // в ключе номер вращения: иначе второе за день выпало бы так же, как первое
+      result = spinWheel(st, rngFor('wheel:' + ts + ':' + spinsUsedToday(st, ts)), now());
     });
     if (!result) {
       m.close(null);

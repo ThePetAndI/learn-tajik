@@ -1,4 +1,8 @@
-/** Нижний таб-бар: Магазин, Карта, Слова, Профиль. */
+/**
+ * Нижний таб-бар: Магазин, Древо, Карта, Слова, Профиль.
+ * Карта — посередине: это главный экран, и до центра большой палец
+ * дотягивается проще всего.
+ */
 
 import { h, onTap } from '../core/dom';
 import { haptics } from '../core/haptics';
@@ -13,6 +17,7 @@ interface TabDef {
 
 const TABS: TabDef[] = [
   { id: 'shop', label: 'Магазин', iconName: 'shop' },
+  { id: 'tree', label: 'Древо', iconName: 'tree' },
   { id: 'map', label: 'Карта', iconName: 'map' },
   { id: 'words', label: 'Слова', iconName: 'book' },
   { id: 'profile', label: 'Профиль', iconName: 'user' },

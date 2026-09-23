@@ -57,14 +57,17 @@ type Migration = (raw: Record<string, unknown>) => Record<string, unknown>;
  */
 const MIGRATIONS: Record<number, Migration> = {
   /*
-   * 1 -> 2: появился лаъл. Старые сохранения его не знают, и начислять
-   * задним числом нечего: лаъл платят за достижения, а не за счётчики.
-   * Кошелёк начинается с нуля, ледгер наград пуст — значит вехи, которые
-   * игрок уже перерос, выдадутся при первом же подходящем событии.
+   * 1 -> 2: лаъл, дерево прокачки, снаряжение питомцев. Всё новое начинается
+   * с нуля: кошелёк лаъл пуст, дерево не посажено, сундуки не открыты.
+   * Лаъл за уже сделанное выдаёт сверка на старте (domain/reconcile) —
+   * по тем же ключам, что и обычные награды, так что дважды не заплатит.
    */
   1: (raw) => {
     const wallet = isObj(raw.wallet) ? raw.wallet : {};
-    raw.wallet = { ...wallet, gems: num(wallet.gems, 0, 0, 1e9) };
+    raw.wallet = { ...wallet, gems: num(wallet.gems, 0, 0, 1e9), gemDust: 0 };
+    const inventory = isObj(raw.inventory) ? raw.inventory : {};
+    raw.inventory = { ...inventory, gear: {}, shards: 0, worn: {} };
+    raw.tree = {};
     const stats = isObj(raw.stats) ? raw.stats : {};
     raw.stats = {
       ...stats,
@@ -156,6 +159,21 @@ function sanitizeStringMapToNumber(v: unknown, min = 0): Record<string, number> 
   return out;
 }
 
+/** id питомца -> слот -> id аксессуара. Всё, что не строка, выбрасывается. */
+function sanitizeWorn(v: unknown): Record<string, Record<string, string>> {
+  const out: Record<string, Record<string, string>> = {};
+  if (!isObj(v)) return out;
+  for (const [petId, slots] of Object.entries(v)) {
+    if (!isObj(slots) || petId.length > 32) continue;
+    const clean: Record<string, string> = {};
+    for (const [slot, gearId] of Object.entries(slots)) {
+      if (typeof gearId === 'string' && gearId.length <= 32 && slot.length <= 16) clean[slot] = gearId;
+    }
+    out[petId] = clean;
+  }
+  return out;
+}
+
 function sanitizeStringArray(v: unknown, maxItems = 500): string[] {
   if (!Array.isArray(v)) return [];
   const seen = new Set<string>();
@@ -193,11 +211,16 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
     wallet: {
       coins: int(wallet.coins, base.wallet.coins, 0, 1e9),
       gems: int(wallet.gems, base.wallet.gems, 0, 1e9),
+      gemDust: num(wallet.gemDust, 0, 0, 0.999),
     },
     lives: {
       max: maxLives,
       count: int(lives.count, base.lives.count, 0, maxLives),
       updatedAt: num(lives.updatedAt, ts, 0, Number.MAX_SAFE_INTEGER),
+      // от пяти минут до получаса: быстрее дерево не разгоняет, медленнее не бывает
+      ...(typeof lives.regenMs === 'number' && Number.isFinite(lives.regenMs)
+        ? { regenMs: num(lives.regenMs, 30 * 60_000, 5 * 60_000, 30 * 60_000) }
+        : {}),
     },
     streak: {
       current: int(streak.current, base.streak.current, 0, 1e5),
@@ -210,6 +233,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       lastWheelDay: strOrNull(daily.lastWheelDay, 10),
       todayKey: strOrNull(daily.todayKey, 10),
       todayCount: int(daily.todayCount, 0, 0, 1e5),
+      spins: int(daily.spins, 0, 0, 10),
     },
     levels: sanitizeLevels(raw.levels),
     srs: sanitizeSrs(raw.srs, ts),
@@ -218,7 +242,11 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       owned: sanitizeStringArray(inventory.owned),
       // старые сохранения поля не знают: пустая карта означает первую ступень
       petLevels: sanitizeStringMapToNumber(inventory.petLevels),
+      gear: sanitizeStringMapToNumber(inventory.gear, 1),
+      shards: int(inventory.shards, 0, 0, 1e7),
+      worn: sanitizeWorn(inventory.worn),
     },
+    tree: sanitizeStringMapToNumber(raw.tree),
     // ледгер разовых наград: ключей много (по одному на слово), потолок выше
     achievements: sanitizeStringMapToNumber(raw.achievements),
     stats: {

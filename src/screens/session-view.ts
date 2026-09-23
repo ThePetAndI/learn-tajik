@@ -9,7 +9,7 @@
 import { clear, h, onTap } from '../core/dom';
 import { rngFor } from '../core/rng';
 import { getState, update } from '../core/store';
-import { hintCost as petHintCost } from '../domain/bonuses';
+import { comboCapFor, hintCost as petHintCost } from '../domain/bonuses';
 import { boosterCount } from '../domain/catalog';
 import { useBooster } from '../domain/shop';
 import { createSession, type Session } from '../game/engine';
@@ -52,7 +52,12 @@ export interface SessionView {
 const PRAISE = ['Верно!', 'Отлично!', 'Точно!', 'Так и есть!', 'Молодец!'];
 
 export function createSessionView(opts: SessionViewOptions): SessionView {
-  const session = createSession({ sessionId: opts.sessionId, exercises: opts.exercises });
+  // потолок бонуса серии поднимает дерево — касается любой сессии, не только уровня
+  const session = createSession({
+    sessionId: opts.sessionId,
+    exercises: opts.exercises,
+    comboCap: comboCapFor(getState()),
+  });
 
   let instance: ExerciseInstance | null = null;
   let awaitingContinue = false;

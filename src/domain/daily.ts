@@ -6,6 +6,7 @@
 import { pick, weightedPick, type Rng } from '../core/rng';
 import { dayKey } from '../core/time';
 import type { SaveState } from '../data/state';
+import { chestRewardsFor, spinsPerDay } from './bonuses';
 import { addLives, refillLives } from './lives';
 import { dailyGoalReached } from './streak';
 
@@ -45,13 +46,18 @@ export function rollChest(rng: Rng): Reward {
   return weightedPick(rng, CHEST_REWARDS, (r) => r.weight).reward;
 }
 
-/** Открывает сундук и применяет награду. null — открывать нечего. */
-export function openChest(state: SaveState, rng: Rng, ts: number): Reward | null {
+/**
+ * Открывает сундук и применяет награды. Обычно награда одна, «Щедрый день»
+ * в дереве добавляет ещё. null — открывать нечего.
+ */
+export function openChest(state: SaveState, rng: Rng, ts: number): Reward[] | null {
   if (!canOpenChest(state, ts)) return null;
-  const reward = rollChest(rng);
+  const rewards: Reward[] = [];
+  const n = chestRewardsFor(state);
+  for (let i = 0; i < n; i++) rewards.push(rollChest(rng));
   state.daily.lastChestDay = dayKey(ts);
-  applyReward(state, reward, ts);
-  return reward;
+  for (const reward of rewards) applyReward(state, reward, ts);
+  return rewards;
 }
 
 /* ————————————————————————— колесо удачи ————————————————————————— */
@@ -71,8 +77,23 @@ export const WHEEL_SECTORS: Reward[] = [
 /** Веса по номеру сектора: крупные награды реже. */
 const WHEEL_WEIGHTS = [26, 16, 20, 12, 12, 8, 4, 2];
 
+/**
+ * Сколько вращений уже сделано сегодня. Старое сохранение счётчика не знает:
+ * если день совпал, а счётчик пуст — значит, крутили один раз.
+ */
+export function spinsUsedToday(state: SaveState, ts: number): number {
+  if (state.daily.lastWheelDay !== dayKey(ts)) return 0;
+  return Math.max(1, state.daily.spins);
+}
+
+/** Сколько вращений осталось на сегодня — дерево даёт до трёх в день. */
+export function spinsLeftToday(state: SaveState, ts: number): number {
+  return Math.max(0, spinsPerDay(state) - spinsUsedToday(state, ts));
+}
+
+/** Все вращения на сегодня уже сделаны. */
 export function wheelSpunToday(state: SaveState, ts: number): boolean {
-  return state.daily.lastWheelDay === dayKey(ts);
+  return spinsLeftToday(state, ts) === 0;
 }
 
 export function canSpinWheel(state: SaveState, ts: number): boolean {
@@ -93,6 +114,7 @@ export function spinWheel(
   if (!canSpinWheel(state, ts)) return null;
   const index = rollWheel(rng);
   const reward = WHEEL_SECTORS[index] as Reward;
+  state.daily.spins = spinsUsedToday(state, ts) + 1;
   state.daily.lastWheelDay = dayKey(ts);
   applyReward(state, reward, ts);
   return { index, reward };

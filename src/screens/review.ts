@@ -13,7 +13,7 @@ import { pop, push, replaceTop, type ScreenView } from '../core/router';
 import { getState, update } from '../core/store';
 import { now, plural } from '../core/time';
 import { allPhrases, allWords, getWord, type Phrase, type Word } from '../data/content';
-import { applyCoinBonus, coinMultiplier } from '../domain/bonuses';
+import { answerCoinsFor, reviewExtraFor } from '../domain/bonuses';
 import { recordAttemptWords, reviewSelection } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';
@@ -62,24 +62,31 @@ function collectPhrases(words: readonly Word[]): Phrase[] {
     .slice(0, 6);
 }
 
-function buildReviewExercises(words: Word[], phrases: Phrase[], seed: string): Exercise[] {
+function buildReviewExercises(
+  words: Word[],
+  phrases: Phrase[],
+  seed: string,
+  size: number,
+): Exercise[] {
   const pool = poolForWords(words, phrases);
   const out: Exercise[] = [];
-  for (let batch = 0; batch < 3 && out.length < REVIEW_SIZE; batch++) {
+  for (let batch = 0; batch < 3 && out.length < size; batch++) {
     out.push(...buildLevelExercises(pool, seed + ':' + batch).filter((ex) => moduleFor(ex.kind)));
   }
-  return out.slice(0, REVIEW_SIZE);
+  return out.slice(0, size);
 }
 
 export function createReviewScreen(opts: ReviewOptions): ScreenView {
   const ts = now();
   const candidates =
     opts.candidates.length > 0 ? opts.candidates : allWords().map((w) => w.id);
-  const wordIds = reviewSelection(getState(), candidates, REVIEW_WORDS, ts);
+  // «Повторение» и «Книжник» в дереве делают сессию длиннее
+  const extra = reviewExtraFor(getState());
+  const wordIds = reviewSelection(getState(), candidates, REVIEW_WORDS + extra, ts);
   const words = wordIds.map(getWord).filter((w): w is Word => Boolean(w));
   const phrases = collectPhrases(words);
   const seed = opts.sessionId + ':' + ts;
-  const exercises = buildReviewExercises(words, phrases, seed);
+  const exercises = buildReviewExercises(words, phrases, seed, REVIEW_SIZE + extra);
 
   const badge = h(
     'div',
@@ -108,7 +115,7 @@ export function createReviewScreen(opts: ReviewOptions): ScreenView {
       view.destroy();
       let coins = result.coinsFromAnswers;
       update((s) => {
-        coins = applyCoinBonus(reviewCoins(result.coinsFromAnswers), coinMultiplier(s));
+        coins = answerCoinsFor(s, reviewCoins(result.coinsFromAnswers), result.correct);
         s.wallet.coins += coins;
         s.stats.coinsEarned += coins;
         s.stats.answers += result.attempts;

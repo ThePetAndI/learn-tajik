@@ -19,11 +19,12 @@ export const FIRST_CLEAR_MULTIPLIER = 2;
 /**
  * Монеты за верный ответ с учётом уже набранной серии.
  * combo — сколько верных подряд было ДО этого ответа.
+ * cap — потолок бонуса; дерево прокачки его поднимает.
  */
-export function coinsForAnswer(combo: number): number {
+export function coinsForAnswer(combo: number, cap: number = COMBO_BONUS_MAX): number {
   const streak = Math.max(0, combo) + 1;
   const steps = Math.floor(streak / COMBO_STEP);
-  const bonus = Math.min(COMBO_BONUS_MAX, steps * COMBO_BONUS_STEP);
+  const bonus = Math.min(cap, steps * COMBO_BONUS_STEP);
   return COINS_PER_CORRECT + bonus;
 }
 
