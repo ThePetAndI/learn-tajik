@@ -1,11 +1,14 @@
 /**
- * Дарахти дониш — экран дерева прокачки.
+ * Деревья прокачки — экран вкладки «Древо».
  *
- * Узлы стоят по сетке: четыре колонки — четыре ветки, ряд — глубина.
- * Горизонталь задана в процентах, вертикаль — в пикселях: так дерево
- * тянется по ширине любого телефона, а рёбра, нарисованные в SVG с той же
- * системой координат (viewBox по ширине — 100 единиц), совпадают с узлами
- * без пересчёта при повороте экрана.
+ * Деревьев три: Дониш (учёба), Ҳайвонот (питомцы), Бозор (лавка и угощения).
+ * Переключатель сверху, как половины магазина. Бонусы всех деревьев
+ * складываются вместе — переключатель только выбирает, какое показать.
+ *
+ * Узлы стоят по сетке: колонки — ветки, ряд — глубина. Горизонталь задана
+ * в процентах, вертикаль — в пикселях: так дерево тянется по ширине любого
+ * телефона, а рёбра, нарисованные в SVG с той же системой координат (viewBox
+ * по ширине — 100 единиц), совпадают с узлами без пересчёта при повороте.
  *
  * Рёбра — кривые, а не прямые: прямоугольная схема читается как блок-схема
  * из учебника, дерево должно ветвиться.
@@ -19,14 +22,17 @@ import { now, plural } from '../core/time';
 import { perkLabels } from '../domain/perks';
 import { canUnlock, unlockNode } from '../domain/tree';
 import {
-  BRANCHES,
-  TREE,
+  TREES,
+  getBranch,
   getNode,
+  getTree,
   nodeStatus,
   taskLabel,
   taskProgress,
   treeProgress,
   type NodeStatus,
+  type TreeDef,
+  type TreeId,
   type TreeNode,
 } from '../domain/tree-nodes';
 import { button } from '../ui/button';
@@ -39,29 +45,30 @@ import { toast } from '../ui/toast';
 const ROW_H = 124;
 const TOP = 58;
 const BOTTOM = 96;
-const ROWS = Math.max(...TREE.map((n) => n.row)) + 1;
-const HEIGHT = TOP + (ROWS - 1) * ROW_H + BOTTOM;
 /** Радиус кружка узла — рёбра начинаются и кончаются на его краю, а не в центре. */
 const ORB_R = 30;
 
-const TONE_OF: Record<string, string> = Object.fromEntries(BRANCHES.map((b) => [b.id, b.tone]));
-
 function toneOf(node: TreeNode): string {
-  return node.branch ? (TONE_OF[node.branch] ?? 'purple') : 'green';
+  return getBranch(node.branch)?.tone ?? 'green';
+}
+
+function heightOf(def: TreeDef): number {
+  const rows = Math.max(...def.nodes.map((n) => n.row)) + 1;
+  return TOP + (rows - 1) * ROW_H + BOTTOM;
 }
 
 /** Центр узла: x — в процентах ширины, y — в пикселях. */
-function center(node: TreeNode): { x: number; y: number } {
-  return { x: ((node.col + 0.5) / BRANCHES.length) * 100, y: TOP + node.row * ROW_H };
+function center(node: TreeNode, cols: number): { x: number; y: number } {
+  return { x: ((node.col + 0.5) / cols) * 100, y: TOP + node.row * ROW_H };
 }
 
 /* ————————————————————————— рёбра ————————————————————————— */
 
 type EdgeState = 'owned' | 'open' | 'locked';
 
-function edgePath(from: TreeNode, to: TreeNode): string {
-  const a = center(from);
-  const b = center(to);
+function edgePath(from: TreeNode, to: TreeNode, cols: number): string {
+  const a = center(from, cols);
+  const b = center(to, cols);
   const y1 = a.y + ORB_R;
   const y2 = b.y - ORB_R - 8;
   const bend = (y2 - y1) * 0.55;
@@ -115,7 +122,7 @@ const BADGE: Partial<Record<NodeStatus, IconName>> = {
 function openNodeSheet(node: TreeNode, onUnlocked: (node: TreeNode) => void): void {
   const state = getState();
   const status = nodeStatus(state, node);
-  const branch = BRANCHES.find((b) => b.id === node.branch);
+  const branch = getBranch(node.branch);
   const perks = perkLabels(node.perks);
 
   const parents = node.parents
@@ -225,36 +232,27 @@ function openNodeSheet(node: TreeNode, onUnlocked: (node: TreeNode) => void): vo
   const m = modal({ body: h('div', {}, body, ...actions), closeButton: true, class: 'modal__card--tree' });
 }
 
-/* ————————————————————————— экран ————————————————————————— */
+/* ————————————————————————— одно дерево ————————————————————————— */
 
-export function createTreeScreen(): ScreenView {
+interface TreeView {
+  def: TreeDef;
+  heads: HTMLElement;
+  canvas: HTMLElement;
+  render: () => void;
+}
+
+function buildTree(def: TreeDef): TreeView {
+  const cols = def.branches.length;
+  const height = heightOf(def);
   const edgesLayer = s('svg', {
     class: 'tree__edges',
-    viewBox: '0 0 100 ' + HEIGHT,
+    viewBox: '0 0 100 ' + height,
     preserveAspectRatio: 'none',
     'aria-hidden': 'true',
   });
 
   const nodeEls = new Map<string, HTMLButtonElement>();
-  const canvas = h('div', { class: 'tree__canvas', style: { height: HEIGHT + 'px' } }, edgesLayer);
-  const counter = h('span', { class: 'tree__counter' });
-
-  for (const node of TREE) {
-    const c = center(node);
-    const btn = h('button', {
-      class: 'tnode t-' + toneOf(node) + (node.branch === null ? ' tnode--big' : ''),
-      attr: { type: 'button' },
-      data: { node: node.id },
-      aria: { label: node.title },
-      style: { left: c.x + '%', top: c.y + 'px' },
-    });
-    onTap(btn, () => {
-      haptics.tap();
-      openNodeSheet(node, celebrate);
-    });
-    nodeEls.set(node.id, btn);
-    canvas.append(btn);
-  }
+  const canvas = h('div', { class: 'tree__canvas', style: { height: height + 'px' } }, edgesLayer);
 
   /** Праздник на открытие: вспышка на узле и тост с тем, что он дал. */
   function celebrate(node: TreeNode): void {
@@ -270,18 +268,35 @@ export function createTreeScreen(): ScreenView {
     toast({ text: node.title + ': ' + perkLabels(node.perks).join(', '), iconName: 'up', tone: 'gold', ms: 3200 });
   }
 
+  for (const node of def.nodes) {
+    const c = center(node, cols);
+    const btn = h('button', {
+      class: 'tnode t-' + toneOf(node) + (node.branch === null ? ' tnode--big' : ''),
+      attr: { type: 'button' },
+      data: { node: node.id },
+      aria: { label: node.title },
+      style: { left: c.x + '%', top: c.y + 'px' },
+    });
+    onTap(btn, () => {
+      haptics.tap();
+      openNodeSheet(node, celebrate);
+    });
+    nodeEls.set(node.id, btn);
+    canvas.append(btn);
+  }
+
   function render(): void {
     const state = getState();
-    const status = new Map(TREE.map((n) => [n.id, nodeStatus(state, n)]));
+    const status = new Map(def.nodes.map((n) => [n.id, nodeStatus(state, n)]));
 
     // рёбра: сначала закрытые, поверх — открытые, чтобы открытый путь не прятался
     const edges: { d: string; st: EdgeState; tone: string }[] = [];
-    for (const node of TREE) {
+    for (const node of def.nodes) {
       for (const pid of node.parents) {
         const parent = getNode(pid);
         if (!parent) continue;
         edges.push({
-          d: edgePath(parent, node),
+          d: edgePath(parent, node, cols),
           st: edgeState(status.get(pid) ?? 'locked', status.get(node.id) ?? 'locked'),
           tone: toneOf(node.branch ? node : parent),
         });
@@ -299,7 +314,7 @@ export function createTreeScreen(): ScreenView {
       ),
     );
 
-    for (const node of TREE) {
+    for (const node of def.nodes) {
       const el = nodeEls.get(node.id);
       if (!el) continue;
       const st = status.get(node.id) ?? 'locked';
@@ -319,15 +334,12 @@ export function createTreeScreen(): ScreenView {
       if (st !== 'owned') parts.push(costChips(node, state.wallet.coins, state.wallet.gems));
       el.replaceChildren(...parts);
     }
-
-    const p = treeProgress(state);
-    counter.textContent = p.owned + ' из ' + p.total;
   }
 
-  const branchHeads = h(
+  const heads = h(
     'div',
     { class: 'tree__branches' },
-    ...BRANCHES.map((b) =>
+    ...def.branches.map((b) =>
       h(
         'div',
         { class: 'tbranch t-' + b.tone },
@@ -338,37 +350,90 @@ export function createTreeScreen(): ScreenView {
     ),
   );
 
+  return { def, heads, canvas, render };
+}
+
+/* ————————————————————————— экран ————————————————————————— */
+
+/** Какое дерево открыто — между заходами на вкладку оно запоминается. */
+let currentTree: TreeId = 'donish';
+
+export function createTreeScreen(): ScreenView {
+  const title = h('span');
+  const intro = h('p', { class: 'p tree__intro' });
+  const body = h('div', { class: 'screen-body tree__body' });
+  const views = new Map<TreeId, TreeView>();
+  const segButtons = new Map<TreeId, HTMLButtonElement>();
+
+  function viewOf(id: TreeId): TreeView {
+    let view = views.get(id);
+    if (!view) {
+      view = buildTree(getTree(id));
+      views.set(id, view);
+    }
+    return view;
+  }
+
+  function render(): void {
+    const state = getState();
+    viewOf(currentTree).render();
+    // на кнопке дерева — сколько узлов в нём открыто: видно, где ещё не начинали
+    for (const [id, btn] of segButtons) {
+      const q = treeProgress(state, id);
+      const count = btn.querySelector('.segbar__count');
+      if (count) count.textContent = q.owned + '/' + q.total;
+    }
+  }
+
+  function show(id: TreeId): void {
+    currentTree = id;
+    const view = viewOf(id);
+    title.textContent = view.def.title;
+    intro.textContent = view.def.intro;
+    body.style.setProperty('--cols', String(view.def.branches.length));
+    body.replaceChildren(intro, view.heads, view.canvas);
+    body.scrollTop = 0;
+    for (const [tid, btn] of segButtons) {
+      btn.classList.toggle('is-active', tid === id);
+      btn.setAttribute('aria-selected', tid === id ? 'true' : 'false');
+    }
+    render();
+  }
+
+  const segBar = h(
+    'div',
+    { class: 'segbar segbar--3', aria: { role: 'tablist' } },
+    ...TREES.map((def) => {
+      const btn = h(
+        'button',
+        { class: 'segbar__btn', attr: { type: 'button' }, aria: { role: 'tab' } },
+        icon(def.icon as IconName),
+        h('span', { class: 'segbar__label' }, h('span', { text: def.short }), h('span', { class: 'segbar__count' })),
+      );
+      onTap(btn, () => {
+        if (currentTree === def.id) return;
+        haptics.tap();
+        show(def.id);
+      });
+      segButtons.set(def.id, btn);
+      return btn;
+    }),
+  );
+
   const el = h(
     'div',
     { class: 'screen screen--tree' },
     h(
       'header',
-      { class: 'topbar' },
-      h('div', { class: 'topbar__spacer' }),
-      h(
-        'div',
-        { class: 'topbar__title tree__title' },
-        h('span', { text: 'Дарахти дониш' }),
-        counter,
-      ),
-      h('div', { class: 'topbar__spacer' }),
+      { class: 'topbar topbar--seg' },
+      h('div', { class: 'topbar__title tree__title' }, title),
+      segBar,
     ),
-    h(
-      'div',
-      { class: 'screen-body tree__body' },
-      h('p', {
-        class: 'p tree__intro',
-        text:
-          '«Древо знаний». Узлы открываются за монеты и лаъл, а у многих есть ещё и задание — ' +
-          'настоящая веха в учёбе. Купить её нельзя, только пройти.',
-      }),
-      branchHeads,
-      canvas,
-    ),
+    body,
   );
 
   const unsub = subscribe(render);
-  render();
+  show(currentTree);
 
   return {
     el,
@@ -376,3 +441,4 @@ export function createTreeScreen(): ScreenView {
     destroy: () => unsub(),
   };
 }
+

@@ -1,9 +1,8 @@
-/* ————————————————————————— Дарахти дониш ————————————————————————— */
+/* ————————————————————————— деревья прокачки ————————————————————————— */
 
 .screen--tree .screen-body { padding-bottom: calc(var(--sab) + 24px); }
 
 .tree__title { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
-.tree__counter { font-size: 12px; font-weight: 800; opacity: 0.82; letter-spacing: 0.02em; }
 
 .tree__intro {
   margin: 12px var(--gutter) 4px;
@@ -22,7 +21,8 @@
   top: 0;
   z-index: 5;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* колонок столько, сколько веток у дерева: четыре у Дониш, по три у остальных */
+  grid-template-columns: repeat(var(--cols, 4), 1fr);
   gap: 4px;
   padding: 8px 6px 8px;
   background: linear-gradient(180deg, var(--paper-2) 78%, rgba(247, 243, 255, 0));
@@ -72,8 +72,8 @@
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  width: 25%;
-  max-width: 108px;
+  width: calc(100% / var(--cols, 4));
+  max-width: 120px;
   padding: 0;
   border: 0;
   background: none;
@@ -303,3 +303,12 @@
   .tnode.is-ready .tnode__orb::after { animation: none; }
   .tnode.is-fresh .tnode__orb { animation: none; }
 }
+
+/* ——— переключатель деревьев ——— */
+
+/* двойной класс: базовый .segbar с двумя колонками подключается позже и иначе перебивает */
+.segbar.segbar--3 { grid-template-columns: repeat(3, 1fr); }
+.segbar__label { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.05; }
+.segbar__count { font-size: 11px; font-weight: 800; opacity: 0.75; font-variant-numeric: tabular-nums; }
+.segbar--3 .segbar__btn { gap: 5px; min-height: 44px; padding: 0 6px; font-size: 14px; }
+.segbar--3 .segbar__btn .icon { font-size: 17px; }
