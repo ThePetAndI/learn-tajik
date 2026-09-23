@@ -27,7 +27,8 @@ import { toast } from '../ui/toast';
 import { breedOf, createPet, type PetHandle } from '../ui/pet';
 import { now } from '../core/time';
 import { canOpenChest, canSpinWheel } from '../domain/daily';
-import { activeThemeId } from '../domain/catalog';
+import { activePet, activeThemeId } from '../domain/catalog';
+import { wornBy } from '../domain/gear-items';
 import { visibleStreak } from '../domain/streak';
 import { openChestModal, openWheelModal } from './rewards';
 import { openLevelCard } from './level-card';
@@ -381,9 +382,15 @@ export function createMapScreen(): ScreenView {
     if (!currentLevel) return;
     const refs = nodeRefs.get(currentLevel.id);
     if (!refs) return;
-    const breed = breedOf(getState().profile.petId);
-    if (!pet) pet = createPet('idle', breed);
-    else pet.setBreed(breed);
+    const st = getState();
+    const breed = breedOf(st.profile.petId);
+    // на карте питомец ходит в своём наряде — ради этого его и собирали
+    const outfit = wornBy(st, activePet(st)?.id ?? 'pet_fox');
+    if (!pet) pet = createPet('idle', breed, outfit);
+    else {
+      pet.setBreed(breed);
+      pet.setOutfit(outfit);
+    }
     const size = currentLevel.boss ? BOSS_SIZE : NODE_SIZE;
     // сбоку от узла, со стороны свободного поля — над узлом он закрывал бы баннер
     const side = refs.node.x < builtWidth / 2 ? 1 : -1;

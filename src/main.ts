@@ -10,6 +10,7 @@ import './styles/economy.css';
 import './styles/words.css';
 import './styles/screens.css';
 import './styles/tree.css';
+import './styles/gear.css';
 
 import { bootstrap } from './app';
 

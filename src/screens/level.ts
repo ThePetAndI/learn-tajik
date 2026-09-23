@@ -33,10 +33,22 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
 
   /* ——————————————————— сердечки в шапке ——————————————————— */
 
+  /*
+   * Щит из дерева: столько ошибок за уровень не стоят жизни. Звезду ошибка
+   * всё равно снимает — щит бережёт запас жизней, а не делает ошибку невидимой.
+   */
+  let shields = shieldFor(getState());
+
   const hearts = h('div', { class: 'level__hearts' });
   function renderHearts(): void {
     const lives = computeLives(getState().lives, now());
     hearts.replaceChildren();
+    // щиты стоят перед сердечками: сначала удар примут они
+    if (shields > 0) {
+      hearts.append(
+        h('span', { class: 'level__shield' }, icon('shield'), h('span', { text: String(shields) })),
+      );
+    }
     for (let i = 0; i < lives.max; i++) {
       const on = i < lives.count;
       const heart = h('span', { class: 'level__heart ' + (on ? 'is-on' : 'is-off') },
@@ -47,11 +59,6 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
   renderHearts();
 
   let outOfLives = false;
-  /*
-   * Щит из дерева: столько ошибок за уровень не стоят жизни. Звезду ошибка
-   * всё равно снимает — щит бережёт запас жизней, а не делает ошибку невидимой.
-   */
-  let shields = shieldFor(getState());
   /*
    * Лаъл приходит из разных мест: слово дошло до последней коробки прямо
    * посреди уровня, серия взяла веху на первом ответе дня. Считать каждое

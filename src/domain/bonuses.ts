@@ -9,6 +9,7 @@
 import type { SaveState } from '../data/state';
 import { petPerks } from './catalog';
 import { COMBO_BONUS_MAX } from './economy';
+import { gearPerks } from './gear-items';
 import { LIFE_REGEN_MS, setMaxLives, syncLives } from './lives';
 import { combinePerks, type Perks } from './perks';
 import { treePerks } from './tree-nodes';
@@ -17,7 +18,7 @@ export const BASE_MAX_LIVES = 5;
 
 /** Все бонусы игрока, сведённые вместе и обрезанные потолками. */
 export function perksOf(state: SaveState): Perks {
-  return combinePerks([petPerks(state), ...treePerks(state)]);
+  return combinePerks([petPerks(state), ...treePerks(state), ...gearPerks(state)]);
 }
 
 /** Множитель монет за ответы. */

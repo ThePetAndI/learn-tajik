@@ -120,6 +120,8 @@ export interface SaveState {
     shards: number;
     /** id питомца -> слот -> id надетого аксессуара. У каждого питомца свой наряд. */
     worn: Record<string, Record<string, string>>;
+    /** Сколько вещей подряд выпало без эпической — для гарантии (gear-items.PITY_EVERY). */
+    pity: number;
   };
   /** id узла дерева прокачки -> когда открыт. */
   tree: Record<string, number>;
@@ -170,7 +172,7 @@ export function createInitialState(ts: number): SaveState {
     daily: { lastChestDay: null, lastWheelDay: null, todayKey: null, todayCount: 0, spins: 0 },
     levels: {},
     srs: {},
-    inventory: { items: {}, owned: [], petLevels: {}, gear: {}, shards: 0, worn: {} },
+    inventory: { items: {}, owned: [], petLevels: {}, gear: {}, shards: 0, worn: {}, pity: 0 },
     tree: {},
     achievements: {},
     stats: {

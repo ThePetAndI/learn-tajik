@@ -1,4 +1,12 @@
-/** Магазин: питомцы, скины карты и бустеры. */
+/**
+ * Магазин. Две половины:
+ *  «Лавка»   — вид карты, бустеры и сундуки с бустерами;
+ *  «Питомцы» — питомцы, их ступени и снаряжение (screens/pets.ts).
+ *
+ * Питомцы ушли в отдельную половину, когда у них появился наряд: сцена
+ * с питомцем в полный рост, слоты и инвентарь не помещаются в строчку
+ * списка, а в общем списке с бустерами они терялись.
+ */
 
 import { h, onTap } from '../core/dom';
 import { haptics } from '../core/haptics';
@@ -6,34 +14,30 @@ import type { ScreenView } from '../core/router';
 import { getState, subscribe, update } from '../core/store';
 import { rngFor } from '../core/rng';
 import { now } from '../core/time';
+import { perksOf } from '../domain/bonuses';
 import {
-  activePet,
   activeThemeId,
   boosterCount,
   isOwned,
   itemsOfKind,
-  MAX_PET_TIER,
-  nextTier,
-  petTier,
-  SHOP_ITEMS,
   type ShopItem,
+  type ShopKind,
 } from '../domain/catalog';
-import { perksOf } from '../domain/bonuses';
-import { buy, canBuy, canUpgradePet, equip, openCase, priceOf, upgradePet } from '../domain/shop';
+import { buy, canBuy, equip, openCase, priceOf, type CaseResult } from '../domain/shop';
 import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
-import { toast } from '../ui/toast';
 import { modal } from '../ui/modal';
+import { toast } from '../ui/toast';
+import { createPetsView } from './pets';
+
+type Segment = 'store' | 'pets';
 
 function isEquipped(item: ShopItem): boolean {
-  const state = getState();
-  if (item.kind === 'pet') return (activePet(state)?.id ?? '') === item.id;
-  if (item.kind === 'theme') return activeThemeId(state) === item.id.replace(/^theme_/, '');
-  return false;
+  return item.kind === 'theme' && activeThemeId(getState()) === item.id.replace(/^theme_/, '');
 }
 
-/** Показывает, что выпало из кейса. Отдельным окном: это маленький праздник. */
-function showCaseResult(item: ShopItem, result: { boosters: Record<string, number>; coins: number }): void {
+/** Показывает, что выпало из сундука. Отдельным окном: это маленький праздник. */
+function showCaseResult(item: ShopItem, result: CaseResult): void {
   const rows = Object.entries(result.boosters)
     .map(([id, n]) => ({ item: itemsOfKind('booster').find((b) => b.id === id), n }))
     .filter((r): r is { item: ShopItem; n: number } => Boolean(r.item))
@@ -51,12 +55,7 @@ function showCaseResult(item: ShopItem, result: { boosters: Record<string, numbe
         h('span', { class: 'case-loot__count', text: '×' + r.n }),
       ),
     ),
-    h(
-      'div',
-      { class: 'case-loot__coins' },
-      icon('coin'),
-      h('span', { text: '+' + result.coins }),
-    ),
+    h('div', { class: 'case-loot__coins' }, icon('coin'), h('span', { text: '+' + result.coins })),
   );
 
   haptics.reward();
@@ -68,23 +67,21 @@ function showCaseResult(item: ShopItem, result: { boosters: Record<string, numbe
 }
 
 function priceLabel(item: ShopItem): string {
+  if (item.kind === 'theme') {
+    if (isEquipped(item)) return 'Надето';
+    if (isOwned(getState(), item.id)) return 'Надеть';
+  }
   // цена со скидкой из дерева: показываем то, что реально спишется
-  if (item.kind === 'booster' || item.kind === 'case') return String(priceOf(getState(), item.id));
-  if (isEquipped(item)) return 'Надето';
-  if (isOwned(getState(), item.id)) return 'Надеть';
   return String(priceOf(getState(), item.id));
 }
 
+function poor(): void {
+  haptics.wrong();
+  toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
+}
+
 export function createShopScreen(): ScreenView {
-  const cards = new Map<
-    string,
-    {
-      root: HTMLElement;
-      action: HTMLButtonElement;
-      count: HTMLElement;
-      tier?: { row: HTMLElement; pips: HTMLElement; label: HTMLElement; btn: HTMLButtonElement };
-    }
-  >();
+  const cards = new Map<string, { root: HTMLElement; action: HTMLButtonElement; count: HTMLElement }>();
 
   function makeCard(item: ShopItem): HTMLElement {
     const count = h('span', { class: 'shop-card__count' });
@@ -94,9 +91,8 @@ export function createShopScreen(): ScreenView {
 
     onTap(action, () => {
       const state = getState();
-      const owned = isOwned(state, item.id);
 
-      if (item.kind !== 'booster' && owned) {
+      if (item.kind === 'theme' && isOwned(state, item.id)) {
         if (isEquipped(item)) return;
         update((s) => {
           equip(s, item.id, now());
@@ -107,12 +103,8 @@ export function createShopScreen(): ScreenView {
       }
 
       if (item.kind === 'case') {
-        if (state.wallet.coins < priceOf(state, item.id)) {
-          haptics.wrong();
-          toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
-          return;
-        }
-        let opened: ReturnType<typeof openCase> = null;
+        if (state.wallet.coins < priceOf(state, item.id)) return poor();
+        let opened: CaseResult | null = null;
         update((st) => {
           opened = openCase(st, item.id, rngFor('case:' + item.id + ':' + now()), perksOf(st).loot);
         });
@@ -121,13 +113,8 @@ export function createShopScreen(): ScreenView {
       }
 
       const check = canBuy(state, item.id);
-      if (check === 'not-enough-coins') {
-        haptics.wrong();
-        toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
-        return;
-      }
+      if (check === 'not-enough-coins') return poor();
       if (check !== 'ok') return;
-
       update((s) => {
         buy(s, item.id, now());
       });
@@ -155,40 +142,11 @@ export function createShopScreen(): ScreenView {
         h('div', { class: 'shop-card__buy' }, action),
       ),
     );
-
-    // ——— строка прокачки: только у питомцев и только после покупки ———
-    let tier: { row: HTMLElement; pips: HTMLElement; label: HTMLElement; btn: HTMLButtonElement } | undefined;
-    if (item.kind === 'pet' && item.tiers) {
-      const pips = h('span', { class: 'pet-tier__pips' });
-      const label = h('span', { class: 'pet-tier__label' });
-      const btn = button({ tone: 'purple', size: 'sm', label: '', icon: 'coin' });
-      onTap(btn, () => {
-        const check = canUpgradePet(getState(), item.id);
-        if (check === 'not-enough-coins') {
-          haptics.wrong();
-          toast({ text: 'Не хватает монет', iconName: 'coin', tone: 'bad' });
-          return;
-        }
-        if (check !== 'ok') return;
-        let gained = '';
-        update((st) => {
-          const next = nextTier(st, item.id);
-          gained = next?.label ?? '';
-          upgradePet(st, item.id, now());
-        });
-        haptics.reward();
-        toast({ text: item.title + ': ' + gained, iconName: 'sparkle', tone: 'gold' });
-      });
-      const row = h('div', { class: 'pet-tier' }, pips, label, btn);
-      root.append(row);
-      tier = { row, pips, label, btn };
-    }
-
-    cards.set(item.id, { root, action, count, tier });
+    cards.set(item.id, { root, action, count });
     return root;
   }
 
-  function section(title: string, kind: ShopItem['kind']): HTMLElement {
+  function section(title: string, kind: ShopKind): HTMLElement {
     return h(
       'section',
       { class: 'panel shop-section' },
@@ -197,91 +155,113 @@ export function createShopScreen(): ScreenView {
     );
   }
 
-  function refresh(): void {
+  function refreshStore(): void {
     const state = getState();
-    for (const item of SHOP_ITEMS) {
-      const refs = cards.get(item.id);
-      if (!refs) continue;
-      const owned = isOwned(state, item.id);
+    for (const [id, refs] of cards) {
+      const item = itemsOfKind('theme').concat(itemsOfKind('booster'), itemsOfKind('case')).find((i) => i.id === id);
+      if (!item) continue;
+      const owned = item.kind === 'theme' && isOwned(state, id);
       const equipped = isEquipped(item);
-
-      refs.root.classList.toggle('is-owned', owned && item.kind !== 'booster');
+      refs.root.classList.toggle('is-owned', owned);
       refs.root.classList.toggle('is-equipped', equipped);
 
       const label = refs.action.querySelector('.btn__label');
       if (label) label.textContent = priceLabel(item);
-
       refs.action.classList.remove('t-orange', 't-green', 't-lock');
-      if (equipped) refs.action.classList.add('t-lock');
-      else if (owned && item.kind !== 'booster') refs.action.classList.add('t-green');
-      else refs.action.classList.add('t-orange');
+      refs.action.classList.add(equipped ? 't-lock' : owned ? 't-green' : 't-orange');
       refs.action.disabled = equipped;
-
       // монету показываем только там, где на кнопке цена
-      const coinIcon = refs.action.querySelector('.icon');
-      if (coinIcon) {
-        (coinIcon as SVGElement).classList.toggle('hidden', item.kind !== 'booster' && owned);
-      }
+      const coin = refs.action.querySelector('.icon');
+      if (coin) (coin as SVGElement).classList.toggle('hidden', owned);
 
       if (item.kind === 'booster') {
-        const have = item.id === 'freeze' ? state.streak.freezes : boosterCount(state, item.id);
+        const have = id === 'freeze' ? state.streak.freezes : boosterCount(state, id);
         refs.count.textContent = have > 0 ? '×' + have : '';
-      } else {
-        refs.count.textContent = '';
-      }
-
-      if (refs.tier) {
-        // прокачка появляется только у купленного питомца: у чужого она бессмысленна
-        refs.tier.row.classList.toggle('hidden', !owned);
-        const tier = petTier(state, item.id);
-        refs.tier.pips.replaceChildren(
-          ...Array.from({ length: MAX_PET_TIER }, (_, i) =>
-            h('span', { class: 'pet-tier__pip' + (i < tier ? ' is-on' : '') }),
-          ),
-        );
-        const next = nextTier(state, item.id);
-        refs.tier.label.textContent = next ? next.label : 'максимум';
-        refs.tier.btn.classList.toggle('hidden', !next);
-        const price = refs.tier.btn.querySelector('.btn__label');
-        if (price) price.textContent = next ? String(next.price) : '';
-        refs.tier.btn.disabled = canUpgradePet(state, item.id) === 'maxed';
       }
     }
   }
+
+  /* ——————————————— половины ——————————————— */
+
+  const store = h(
+    'div',
+    { class: 'shop-store' },
+    section('Вид карты', 'theme'),
+    section('Бустеры', 'booster'),
+    section('Сундуки с бустерами', 'case'),
+    h('p', {
+      class: 'p shop-note',
+      text:
+        'Сундук с бустерами отдаёт больше, чем стоит, — но какие именно бустеры, решает случай. ' +
+        'Питомцы и их снаряжение — во второй половине магазина.',
+    }),
+  );
+  const pets = createPetsView();
+
+  let segment: Segment = 'pets';
+  const segButtons = new Map<Segment, HTMLButtonElement>();
+  const body = h('div', { class: 'screen-body' });
+
+  function show(next: Segment): void {
+    segment = next;
+    for (const [id, btn] of segButtons) {
+      btn.classList.toggle('is-active', id === next);
+      btn.setAttribute('aria-selected', id === next ? 'true' : 'false');
+    }
+    body.replaceChildren(next === 'store' ? store : pets.el);
+    body.scrollTop = 0;
+    if (next === 'store') refreshStore();
+    else pets.refresh();
+  }
+
+  const segBar = h(
+    'div',
+    { class: 'segbar', aria: { role: 'tablist' } },
+    ...(
+      [
+        ['pets', 'Питомцы', 'paw'],
+        ['store', 'Лавка', 'shop'],
+      ] as [Segment, string, IconName][]
+    ).map(([id, label, ic]) => {
+      const btn = h(
+        'button',
+        { class: 'segbar__btn', attr: { type: 'button' }, aria: { role: 'tab' } },
+        icon(ic),
+        h('span', { text: label }),
+      );
+      onTap(btn, () => {
+        if (segment === id) return;
+        haptics.tap();
+        show(id);
+      });
+      segButtons.set(id, btn);
+      return btn;
+    }),
+  );
 
   const el = h(
     'div',
     { class: 'screen screen--shop' },
     h(
       'header',
-      { class: 'topbar' },
-      h('div', { class: 'topbar__spacer' }),
+      { class: 'topbar topbar--seg' },
       h('div', { class: 'topbar__title', text: 'Магазин' }),
-      h('div', { class: 'topbar__spacer' }),
+      segBar,
     ),
-    h(
-      'div',
-      { class: 'screen-body' },
-      section('Питомцы', 'pet'),
-      section('Вид карты', 'theme'),
-      section('Бустеры', 'booster'),
-      section('Сундуки', 'case'),
-      h('p', {
-        class: 'p shop-note',
-        text:
-          'Бонус питомца действует сразу, как только вы его наденете. Активен один питомец, ' +
-          'но прокачивать можно всех. Сундук отдаёт бустеров больше, чем стоит, — но какие ' +
-          'именно, решает случай.',
-      }),
-    ),
+    body,
   );
 
-  const unsub = subscribe(refresh);
-  refresh();
+  const unsub = subscribe(() => {
+    if (segment === 'store') refreshStore();
+  });
+  show('pets');
 
   return {
     el,
-    onShow: refresh,
-    destroy: () => unsub(),
+    onShow: () => (segment === 'store' ? refreshStore() : pets.refresh()),
+    destroy: () => {
+      unsub();
+      pets.destroy();
+    },
   };
 }

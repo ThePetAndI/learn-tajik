@@ -1,0 +1,362 @@
+/* ————————————————————————— магазин: две половины ————————————————————————— */
+
+.topbar--seg { flex-direction: column; align-items: stretch; gap: 8px; padding-bottom: 12px; }
+.topbar--seg .topbar__title { text-align: center; }
+
+.segbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.18);
+}
+.segbar__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 900;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.segbar__btn .icon { font-size: 18px; }
+.segbar__btn.is-active {
+  background: #fff;
+  box-shadow: 0 3px 0 rgba(40, 20, 80, 0.25);
+  color: var(--purple-2);
+}
+
+.panel__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.panel__head .panel__title { margin-bottom: 0; }
+
+/* ————————————————————————— редкость ————————————————————————— */
+
+.r-common    { --rar: var(--rar-common); }
+.r-rare      { --rar: var(--rar-rare); }
+.r-epic      { --rar: var(--rar-epic); }
+.r-legendary { --rar: var(--rar-legendary); }
+
+.rarity {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  background: var(--rar);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* значок вещи: сама вещь на светлом фоне, рамка цвета редкости */
+.gthumb {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 3px solid var(--rar);
+  border-radius: var(--r-md);
+  background: radial-gradient(circle at 50% 40%, #fff 40%, color-mix(in srgb, var(--rar) 18%, #fff));
+}
+.gthumb .gear-thumb { width: 78%; height: 78%; }
+.gthumb--big { width: 76px; height: 76px; border-width: 4px; }
+/* легендарное чуть светится — так его узнают через комнату */
+.gthumb.r-legendary { box-shadow: 0 0 0 3px rgba(255, 171, 26, 0.25), 0 0 16px rgba(255, 171, 26, 0.45); }
+.gthumb.r-epic { box-shadow: 0 0 12px rgba(207, 77, 242, 0.35); }
+
+.gpips { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+.gpip { width: 10px; height: 10px; border-radius: 3px; background: #e4dcf3; }
+.gpip.is-on { background: var(--rar); }
+
+/* ————————————————————————— сцена ————————————————————————— */
+
+.pets { padding-bottom: calc(var(--sab) + 24px); }
+
+.pstage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px var(--gutter) 4px;
+  text-align: center;
+}
+.pstage__pet {
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #fff 0%, #ece4fb 70%);
+  box-shadow: 0 6px 0 #d6cbee, 0 12px 26px rgba(60, 35, 110, 0.18);
+}
+/* на сцене питомец стоит, а не парит над узлом карты */
+.pstage__pet .pet { position: static; width: 118px; height: 118px; transform: none; }
+.pstage__pet .pet__svg { width: 100%; height: 100%; }
+.pstage__name { margin-top: 8px; color: var(--ink); font-size: 22px; font-weight: 900; }
+.pstage__bonus { max-width: 330px; color: var(--ink-2); font-size: 13px; font-weight: 800; line-height: 1.35; }
+
+.pstage__slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 360px;
+  margin-top: 12px;
+}
+.pslot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px 6px;
+  border: 3px dashed #d6cbee;
+  border-radius: var(--r-md);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+.pslot.is-filled { border-style: solid; border-color: var(--rar); }
+.pslot__empty {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+  color: #c3b6de;
+  font-size: 28px;
+}
+.pslot__label { max-width: 100%; font-size: 11.5px; font-weight: 900; line-height: 1.15; overflow-wrap: anywhere; }
+.pslot:active { transform: translateY(2px); }
+
+/* ————————————————————————— выбор питомца ————————————————————————— */
+
+.ppets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.ppet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 8px 2px 6px;
+  border: 3px solid #fff;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--c1), var(--c2));
+  box-shadow: 0 4px 0 var(--cd);
+  color: #fff;
+  font: inherit;
+}
+.ppet__icon { font-size: 26px; line-height: 1; }
+.ppet__name { font-size: 12.5px; font-weight: 900; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
+.ppet__tier { font-size: 10.5px; font-weight: 800; opacity: 0.92; }
+.ppet__price { display: inline-flex; align-items: center; gap: 2px; font-size: 11.5px; font-weight: 900; }
+.ppet__price .icon { font-size: 12px; }
+.ppet.is-active { outline: 3px solid var(--purple-1); outline-offset: 2px; }
+.ppet.is-locked { filter: saturate(0.35) brightness(1.08); }
+.ppet:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--cd); }
+
+.ptier {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+}
+.ptier__info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ptier__label { color: var(--ink-2); font-size: 13px; font-weight: 800; }
+
+/* ————————————————————————— инвентарь ————————————————————————— */
+
+.gshards {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px 3px 7px;
+  border-radius: var(--r-pill);
+  background: #efe7ff;
+  color: var(--purple-2);
+  font-size: 14px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.gshards .icon { font-size: 16px; }
+
+.ggrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ggrid__count { grid-column: 1 / -1; color: var(--ink-mute); font-size: 12px; font-weight: 800; text-align: center; }
+.gcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px 6px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--rar) 10%, #fff);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--rar) 40%, transparent);
+  color: var(--ink);
+  font: inherit;
+}
+.gcard__title { max-width: 100%; font-size: 11.5px; font-weight: 900; line-height: 1.15; overflow-wrap: anywhere; }
+.gcard__level { color: var(--ink-mute); font-size: 11px; font-weight: 800; }
+.gcard__badge,
+.gcard__up {
+  position: absolute;
+  top: 4px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 11px;
+}
+.gcard__badge { left: 4px; background: var(--green-2); }
+/* стрелка «можно улучшить» — чтобы не открывать каждую вещь в поисках */
+.gcard__up { right: 4px; background: var(--purple-1); }
+.gcard:active { transform: translateY(2px); }
+
+.gnote { margin: 10px 0 0; color: var(--ink-mute); font-size: 12.5px; line-height: 1.4; }
+
+/* ————————————————————————— сундуки снаряжения ————————————————————————— */
+
+.gchest {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--c1) 14%, #fff);
+}
+.gchest__main { display: flex; align-items: center; gap: 10px; }
+.gchest__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 3px solid #fff;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--c1), var(--c2));
+  box-shadow: 0 3px 0 var(--cd);
+  color: #fff;
+  font-size: 24px;
+}
+.gchest__text { flex: 1; min-width: 0; }
+.gchest__title { color: var(--ink); font-size: 15px; font-weight: 900; }
+.gchest__about { color: var(--ink-2); font-size: 12.5px; font-weight: 800; line-height: 1.3; }
+.gchest__odds { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 8px; }
+.godds { display: inline-flex; align-items: center; gap: 4px; color: var(--ink-2); font-size: 12px; font-weight: 900; }
+.godds__dot { width: 10px; height: 10px; border-radius: 3px; background: var(--rar); }
+
+/* ————————————————————————— карточка вещи ————————————————————————— */
+
+.modal__card--gear { padding-top: 22px; text-align: left; }
+.gsheet { display: flex; flex-direction: column; gap: 12px; }
+.gsheet__head { display: flex; align-items: center; gap: 14px; padding-right: 30px; }
+.gsheet__names { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.gsheet__title { color: var(--ink); font-size: 21px; font-weight: 900; line-height: 1.15; }
+.gsheet__tg { color: var(--purple-1); font-size: 14px; font-weight: 900; font-style: italic; }
+.gsheet__meta { display: flex; align-items: center; gap: 8px; color: var(--ink-mute); font-size: 12.5px; font-weight: 800; }
+.gsheet__about { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+.gsheet__level { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.gsheet__level-label { color: var(--ink); font-size: 14px; font-weight: 900; }
+.gsheet__bonus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, #eafbe3, #d8f5cc);
+  color: var(--green-deep);
+  font-size: 15px;
+  font-weight: 900;
+}
+.gsheet__bonus .icon { font-size: 18px; color: var(--green-2); }
+.gsheet__next { color: var(--ink-mute); font-size: 13px; }
+.gsheet__actions { display: flex; flex-direction: column; gap: 10px; }
+.gsheet__max {
+  padding: 10px;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--rar-legendary) 20%, #fff);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+}
+
+/* выбор вещи для слота */
+.gpick { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+.gpick__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+  color: var(--ink);
+  font: inherit;
+}
+.gpick__row.is-worn { background: #e9f9e2; box-shadow: inset 0 0 0 2px var(--green-1); }
+.gpick__text { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.gpick__title { font-size: 15px; font-weight: 900; }
+.gpick__bonus { color: var(--ink-2); font-size: 12.5px; font-weight: 800; }
+.gpick__worn {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--green-2);
+  color: #fff;
+  font-size: 14px;
+}
+.gpick__empty { color: var(--ink-2); font-size: 14px; }
+
+/* ————————————————————————— находки из сундука ————————————————————————— */
+
+.gdrops {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 8px;
+  margin-bottom: 14px;
+}
+/* три в ряд: караван из пяти вещей иначе растягивался на три строки */
+.gdrop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 88px;
+  animation: gdrop-in 460ms var(--ease-pop) both;
+}
+.gdrop__title { color: var(--ink); font-size: 12.5px; font-weight: 900; line-height: 1.15; text-align: center; }
+.gdrop__note { color: var(--purple-1); font-size: 12px; font-weight: 900; }
+.gdrop__note.is-new { color: var(--green-deep); }
+@keyframes gdrop-in {
+  0% { opacity: 0; transform: translateY(18px) scale(0.6) rotate(-8deg); }
+  100% { opacity: 1; transform: none; }
+}
+.gdrop.r-legendary .gthumb { animation: gdrop-glow 1.6s ease-in-out infinite alternate; }
+@keyframes gdrop-glow {
+  from { box-shadow: 0 0 10px rgba(255, 171, 26, 0.45); }
+  to { box-shadow: 0 0 26px rgba(255, 171, 26, 0.85); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gdrop, .gdrop.r-legendary .gthumb { animation: none; }
+}

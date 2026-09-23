@@ -66,7 +66,7 @@ const MIGRATIONS: Record<number, Migration> = {
     const wallet = isObj(raw.wallet) ? raw.wallet : {};
     raw.wallet = { ...wallet, gems: num(wallet.gems, 0, 0, 1e9), gemDust: 0 };
     const inventory = isObj(raw.inventory) ? raw.inventory : {};
-    raw.inventory = { ...inventory, gear: {}, shards: 0, worn: {} };
+    raw.inventory = { ...inventory, gear: {}, shards: 0, worn: {}, pity: 0 };
     raw.tree = {};
     const stats = isObj(raw.stats) ? raw.stats : {};
     raw.stats = {
@@ -245,6 +245,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       gear: sanitizeStringMapToNumber(inventory.gear, 1),
       shards: int(inventory.shards, 0, 0, 1e7),
       worn: sanitizeWorn(inventory.worn),
+      pity: int(inventory.pity, 0, 0, 1000),
     },
     tree: sanitizeStringMapToNumber(raw.tree),
     // ледгер разовых наград: ключей много (по одному на слово), потолок выше

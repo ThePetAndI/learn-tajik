@@ -10,6 +10,20 @@
 }
 .level__heart.is-on { color: #ff5e52; filter: drop-shadow(0 1.5px 0 rgba(0, 0, 0, 0.2)); }
 .level__heart.is-off { color: rgba(255, 255, 255, 0.35); }
+/* щиты из дерева: примут удар раньше сердечек */
+.level__shield {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 4px;
+  padding: 1px 7px 1px 4px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+.level__shield .icon { font-size: 17px; color: var(--ruby-1); }
 .level__hearts.is-hit { animation: hearts-hit 460ms var(--ease-out); }
 @keyframes hearts-hit {
   0%, 100% { transform: translateX(0) scale(1); }

@@ -15,7 +15,7 @@ import { h, onTap, s } from '../core/dom';
 import { haptics } from '../core/haptics';
 import type { ScreenView } from '../core/router';
 import { getState, subscribe, update } from '../core/store';
-import { now } from '../core/time';
+import { now, plural } from '../core/time';
 import { perkLabels } from '../domain/perks';
 import { canUnlock, unlockNode } from '../domain/tree';
 import {
@@ -192,7 +192,7 @@ function openNodeSheet(node: TreeNode, onUnlocked: (node: TreeNode) => void): vo
   if (status !== 'owned') {
     const check = canUnlock(state, node.id);
     const priceText =
-      (node.coins > 0 ? node.coins + ' монет' : '') +
+      (node.coins > 0 ? node.coins + ' ' + plural(node.coins, 'монета', 'монеты', 'монет') : '') +
       (node.coins > 0 && node.gems > 0 ? ' и ' : '') +
       (node.gems > 0 ? node.gems + ' лаъл' : '');
     const reason: Record<string, string> = {

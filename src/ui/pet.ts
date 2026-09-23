@@ -7,6 +7,7 @@
  */
 
 import { svgFrom } from '../core/dom';
+import { GEAR_ART } from './gear-art';
 
 export type PetMood = 'idle' | 'happy' | 'sleepy';
 export type PetBreed = 'fox' | 'cat' | 'dog' | 'bird';
@@ -59,7 +60,25 @@ const MOUTH: Record<PetBreed, string> = {
   bird: '',
 };
 
-function petSvg(breed: PetBreed): string {
+/**
+ * Наряд поверх питомца. Порядок слоёв важен: сначала шея (ложится на подбородок),
+ * потом оберег (висит на ней), последней — шапка: она сидит поверх ушей.
+ */
+export interface Outfit {
+  head?: string;
+  neck?: string;
+  charm?: string;
+}
+
+function outfitSvg(outfit: Outfit): string {
+  return (
+    (outfit.neck ? GEAR_ART[outfit.neck] ?? '' : '') +
+    (outfit.charm ? GEAR_ART[outfit.charm] ?? '' : '') +
+    (outfit.head ? GEAR_ART[outfit.head] ?? '' : '')
+  );
+}
+
+export function petSvg(breed: PetBreed, outfit: Outfit = {}): string {
   return (
     '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" class="pet__svg" aria-hidden="true" focusable="false">' +
     '<ellipse cx="32" cy="58" rx="17" ry="4" class="p-shadow"/>' +
@@ -74,6 +93,7 @@ function petSvg(breed: PetBreed): string {
     '<ellipse cx="47" cy="39" rx="4" ry="2.8" class="p-cheek"/>' +
     NOSE[breed] +
     MOUTH[breed] +
+    outfitSvg(outfit) +
     '</svg>'
   );
 }
@@ -83,16 +103,23 @@ export interface PetHandle {
   setMood: (mood: PetMood) => void;
   /** Сменить зверя — например, после покупки в магазине. */
   setBreed: (breed: PetBreed) => void;
+  /** Переодеть: что надето на голове, шее и оберегом. */
+  setOutfit: (outfit: Outfit) => void;
   cheer: () => void;
 }
 
-export function createPet(mood: PetMood = 'idle', breed: PetBreed = 'fox'): PetHandle {
+function sameOutfit(a: Outfit, b: Outfit): boolean {
+  return a.head === b.head && a.neck === b.neck && a.charm === b.charm;
+}
+
+export function createPet(mood: PetMood = 'idle', breed: PetBreed = 'fox', outfit: Outfit = {}): PetHandle {
   const el = document.createElement('div');
   let current = breed;
   let currentMood = mood;
+  let currentOutfit: Outfit = { ...outfit };
 
   function paint(): void {
-    el.replaceChildren(svgFrom(petSvg(current)));
+    el.replaceChildren(svgFrom(petSvg(current, currentOutfit)));
     el.className = 'pet pet--' + currentMood + ' pet--' + current;
   }
   paint();
@@ -107,6 +134,11 @@ export function createPet(mood: PetMood = 'idle', breed: PetBreed = 'fox'): PetH
     setBreed: (next) => {
       if (next === current) return;
       current = next;
+      paint();
+    },
+    setOutfit: (next) => {
+      if (sameOutfit(next, currentOutfit)) return;
+      currentOutfit = { ...next };
       paint();
     },
     cheer: () => {
