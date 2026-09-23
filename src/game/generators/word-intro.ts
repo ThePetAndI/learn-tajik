@@ -12,9 +12,10 @@ import { specialLettersOf } from '../../domain/answer';
 import type { WordIntroExercise } from '../types';
 import { posLabel } from './pool';
 
-export function makeWordIntro(word: Word): WordIntroExercise {
+export function makeWordIntro(word: Word, remind = false): WordIntroExercise {
   return {
     kind: 'word_intro',
+    ...(remind ? { remind: true } : {}),
     wordIds: [word.id],
     tg: word.tg,
     ru: word.ru,

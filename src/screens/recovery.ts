@@ -1,6 +1,7 @@
 /**
  * Режим «Восстановление»: мини-сессия на самых трудных словах.
- * Восемь верных подряд возвращают жизнь, вся сессия — полный запас.
+ * Сначала слова показываются заново, потом по ним задания.
+ * Каждые три верных ответа возвращают жизнь, вся сессия — полный запас.
  */
 
 import { h } from '../core/dom';
@@ -11,8 +12,9 @@ import { now } from '../core/time';
 import { allPhrases, getWord, type Phrase, type Word } from '../data/content';
 import { computeLives } from '../domain/lives';
 import {
+  CORRECT_FOR_LIFE,
   RECOVERY_SIZE,
-  STREAK_FOR_LIFE,
+  RECOVERY_WORDS,
   createRecoveryProgress,
   recordRecoveryAnswer,
   recoveryCoins,
@@ -21,7 +23,7 @@ import {
 import { applyCoinBonus, coinMultiplier } from '../domain/bonuses';
 import { recordAttemptWords } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
-import { buildLevelExercises } from '../game/generators';
+import { CARD_KINDS, buildLevelExercises } from '../game/generators';
 import { poolForWords } from '../game/level-pool';
 import { moduleFor } from '../game/registry';
 import type { Exercise } from '../game/types';
@@ -42,12 +44,12 @@ function collectWords(): Word[] {
   const ts = now();
   const ids = recoveryWordIds(state, ts);
   const words = ids.map(getWord).filter((w): w is Word => Boolean(w));
-  if (words.length >= 6) return words;
+  if (words.length >= RECOVERY_WORDS) return words;
 
   // играли мало — берём всё, что вообще показывали
   const seen = new Set(words.map((w) => w.id));
   for (const [id, stat] of Object.entries(state.srs)) {
-    if (words.length >= 10) break;
+    if (words.length >= RECOVERY_WORDS) break;
     if (seen.has(id) || stat.seen === 0) continue;
     const word = getWord(id);
     if (word) {
@@ -65,12 +67,27 @@ function collectPhrases(words: readonly Word[]): Phrase[] {
 
 /** Набирает длинную очередь заданий: одного прохода генератора не хватает. */
 function buildRecoveryExercises(words: Word[], phrases: Phrase[], seed: string): Exercise[] {
-  const pool = poolForWords(words, phrases);
+  /*
+   * Каждое слово перед первым заданием показывается заново карточкой.
+   * Восстановление собирает как раз те слова, что не даются: игрок их видел,
+   * но не запомнил, и спрашивать их без напоминания — то же, что вслепую.
+   * Карточки идут только в первой пачке: дальше слова уже освежены.
+   */
+  const remind = poolForWords(words, phrases, words.map((w) => w.id));
+  const plain = poolForWords(words, phrases);
   const out: Exercise[] = [];
-  for (let batch = 0; batch < 4 && out.length < RECOVERY_SIZE; batch++) {
-    out.push(...buildLevelExercises(pool, seed + ':' + batch).filter((ex) => moduleFor(ex.kind)));
+  let tasks = 0;
+  for (let batch = 0; batch < 4 && tasks < RECOVERY_SIZE; batch++) {
+    const built = buildLevelExercises(batch === 0 ? remind : plain, seed + ':' + batch).filter((ex) =>
+      moduleFor(ex.kind),
+    );
+    for (const ex of built) {
+      if (tasks >= RECOVERY_SIZE) break;
+      out.push(ex);
+      if (!CARD_KINDS.has(ex.kind)) tasks++;
+    }
   }
-  return out.slice(0, RECOVERY_SIZE);
+  return out;
 }
 
 export function createRecoveryScreen(): ScreenView {
@@ -83,17 +100,18 @@ export function createRecoveryScreen(): ScreenView {
   /* ——————————————————— индикатор в шапке ——————————————————— */
 
   const livesLabel = h('span', { class: 'recovery__lives-value', text: '0' });
-  const toNext = h('span', { class: 'recovery__to-next', text: String(STREAK_FOR_LIFE) });
+  const toNext = h('span', { class: 'recovery__to-next', text: String(CORRECT_FOR_LIFE) });
   const headerSlot = h(
     'div',
     { class: 'recovery__meter' },
     h('span', { class: 'recovery__lives' }, icon('heart'), livesLabel),
-    h('span', { class: 'recovery__chain' }, icon('flame'), toNext),
+    // до следующей жизни: сколько верных ответов осталось
+    h('span', { class: 'recovery__chain' }, icon('check'), toNext),
   );
 
   function renderMeter(step?: { toNextLife: number }): void {
     livesLabel.textContent = '+' + progress.livesGained;
-    toNext.textContent = String(step?.toNextLife ?? STREAK_FOR_LIFE - progress.streak);
+    toNext.textContent = String(step?.toNextLife ?? CORRECT_FOR_LIFE - progress.toward);
   }
   renderMeter();
 
@@ -103,6 +121,7 @@ export function createRecoveryScreen(): ScreenView {
     seedKey: seed,
     showCombo: false,
     headerSlot,
+    retryMistakes: 2,
 
     onAttempt: (attempt) => {
       const ts = now();

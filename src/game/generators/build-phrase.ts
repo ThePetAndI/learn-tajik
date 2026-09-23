@@ -52,6 +52,7 @@ export function makeBuildPhrase(
 
   return {
     kind: 'build_phrase',
+    phraseId: phrase.id,
     wordIds: phrase.words ?? [],
     ru: phrase.ru,
     tg: phrase.tg,

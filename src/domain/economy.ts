@@ -52,3 +52,15 @@ export function sessionRewards(
   const level = coinsForLevel(stars, firstClear);
   return { answers: answerCoins, level, total: answerCoins + level };
 }
+
+/**
+ * Доля монет за сессию повторения от обычной ставки.
+ * Повторение можно запускать сколько угодно раз и оно не тратит жизни —
+ * по полной ставке оно приносило бы больше уровня, и выгоднее было бы
+ * не проходить карту, а крутить одно и то же. Награда повторения — память.
+ */
+export const REVIEW_COIN_RATE = 0.5;
+
+export function reviewCoins(answerCoins: number): number {
+  return Math.max(1, Math.round(answerCoins * REVIEW_COIN_RATE));
+}

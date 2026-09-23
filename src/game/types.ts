@@ -11,6 +11,7 @@ import type { Rng } from '../core/rng';
 export type ExerciseKind =
   | 'rule_card'
   | 'word_intro'
+  | 'phrase_intro'
   | 'quiz_tg_ru'
   | 'quiz_ru_tg'
   | 'match_pairs'
@@ -60,6 +61,24 @@ export interface WordIntroExercise extends ExerciseCommon {
   letters: string[];
   /** Задел на будущее: озвучки пока нет. */
   audio?: string | null;
+  /** Слово уже встречалось, карточка напоминает о нём — например, в восстановлении. */
+  remind?: boolean;
+}
+
+/**
+ * Знакомство с фразой или разговором: карточка перед первым заданием на них.
+ * Не задание — попыток не записывает. Показывает перевод целиком и каждое
+ * слово по отдельности: без этого «Ман ба хона меравам» — набор незнакомых
+ * звуков, и собрать её можно только наугад.
+ */
+export interface PhraseIntroExercise extends ExerciseCommon {
+  kind: 'phrase_intro';
+  /** «p:id» для фразы, «d:id» для разговора — по нему отмечается «уже видел». */
+  key: string;
+  /** Одна строка у фразы, две у разговора: реплика собеседника и ответ. */
+  lines: { tg: string; ru: string; who?: 'them' | 'me' }[];
+  /** Слова по отдельности, в словарной форме. */
+  gloss: { tg: string; ru: string }[];
 }
 
 /** Квиз на четыре варианта, в обе стороны. */
@@ -82,6 +101,8 @@ export interface MatchPairsExercise extends ExerciseCommon {
 /** Собери фразу из банка слов. */
 export interface BuildPhraseExercise extends ExerciseCommon {
   kind: 'build_phrase';
+  /** Какая фраза — по нему перед заданием ставится карточка, если её не видели. */
+  phraseId?: string;
   /** Что переводим. */
   ru: string;
   /** Эталонный перевод целиком — показываем при ошибке. */
@@ -120,6 +141,7 @@ export interface TypeWordExercise extends ExerciseCommon {
  */
 export interface TypePhraseExercise extends ExerciseCommon {
   kind: 'type_phrase';
+  phraseId?: string;
   /** Что переводим. */
   ru: string;
   /** Эталонный перевод целиком — показываем при ошибке. */
@@ -196,6 +218,8 @@ export interface OddOneOutExercise extends ExerciseCommon {
 /** Выбери реплику: мини-диалог из двух ходов. */
 export interface DialogueChoiceExercise extends ExerciseCommon {
   kind: 'dialogue_choice';
+  /** Какой разговор — ответы до выбора видны только по-таджикски, его надо показать заранее. */
+  dialogueId?: string;
   ask: { tg: string; ru: string };
   options: { tg: string; ru: string }[];
   correct: number;
@@ -238,6 +262,7 @@ export interface IzafetBuilderExercise extends ExerciseCommon {
 export type Exercise =
   | RuleCardExercise
   | WordIntroExercise
+  | PhraseIntroExercise
   | QuizExercise
   | MatchPairsExercise
   | BuildPhraseExercise

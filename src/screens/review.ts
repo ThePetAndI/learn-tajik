@@ -14,6 +14,7 @@ import { getState, update } from '../core/store';
 import { now, plural } from '../core/time';
 import { allPhrases, allWords, getWord, type Phrase, type Word } from '../data/content';
 import { answerCoinsFor, reviewExtraFor } from '../domain/bonuses';
+import { reviewCoins } from '../domain/economy';
 import { recordAttemptWords, reviewSelection } from '../domain/srs';
 import { countDailyExercise, touchStreak } from '../domain/streak';
 import { buildLevelExercises } from '../game/generators';
@@ -30,17 +31,6 @@ import { createSessionView } from './session-view';
 export const REVIEW_SIZE = 12;
 /** Сколько слов берём в работу. */
 export const REVIEW_WORDS = 10;
-/**
- * Доля монет от обычной ставки.
- * Повторение можно запускать сколько угодно раз и оно не тратит жизни —
- * по полной ставке оно приносило бы больше уровня, и выгоднее было бы
- * не проходить карту, а крутить одно и то же. Награда повторения — память.
- */
-export const REVIEW_COIN_RATE = 0.5;
-
-export function reviewCoins(answerCoins: number): number {
-  return Math.max(1, Math.round(answerCoins * REVIEW_COIN_RATE));
-}
 
 export interface ReviewOptions {
   title: string;

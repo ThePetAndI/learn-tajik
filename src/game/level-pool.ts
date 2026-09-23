@@ -91,6 +91,80 @@ function themesOf(words: readonly Word[]): string[] {
 }
 
 /**
+ * Тема урока — самая частая среди его слов. Разговоры и изафеты берутся
+ * только по ней: раньше брались по всем темам слов урока, и урок про буквы,
+ * где слова-примеры собраны со всего курса, получал разговор про «шаб ба хайр».
+ */
+function mainThemeOf(words: readonly Word[]): string[] {
+  const counts = new Map<string, number>();
+  for (const w of words) counts.set(w.theme, (counts.get(w.theme) ?? 0) + 1);
+  let best = '';
+  let bestN = 0;
+  for (const [theme, n] of counts) {
+    if (n > bestN) {
+      best = theme;
+      bestN = n;
+    }
+  }
+  return best ? [best] : [];
+}
+
+/** Фразы и разговоры, которые игроку уже объясняли. */
+function seenPhrases(): Set<string> {
+  return new Set(Object.keys(getState().seen));
+}
+
+/** Особые буквы, которые к этому уровню уже прошли в разделе «Алфавит». */
+function taughtLettersUpTo(index: number): Set<string> {
+  const out = new Set<string>();
+  for (const level of levels) {
+    if (level.index > index) break;
+    for (const ch of level.letterChars) out.add(ch);
+  }
+  return out;
+}
+
+/** Фразы прошлых уроков этого раздела, которые игрок уже видел. */
+function pastPhrasesOf(level: FlatLevel): Phrase[] {
+  const seen = getState().seen;
+  const out: Phrase[] = [];
+  for (const other of levels) {
+    if (other.sectionId !== level.sectionId || other.index >= level.index) continue;
+    for (const id of other.phraseIds) {
+      const phrase = getPhrase(id);
+      if (phrase && seen['p:' + id] !== undefined && !out.some((p) => p.id === id)) out.push(phrase);
+    }
+  }
+  return out;
+}
+
+/** Сколько слов проверяет урок алфавита. Урок учит буквам, а не словарю. */
+const ALPHABET_WORDS = 6;
+
+/**
+ * Слова урока алфавита: те, что показывают его буквы, — и только с теми
+ * особыми буквами, которые уже прошли. Иначе «пропущенная буква» спросила бы
+ * «ҷ» в уроке про «о», за три урока до того, как «ҷ» объяснят.
+ */
+function alphabetWords(level: FlatLevel, letters: readonly Letter[], listed: readonly Word[]): Word[] {
+  const taught = taughtLettersUpTo(level.index);
+  const own = new Set(letters.map((l) => l.lower));
+  const readable = (w: Word): boolean =>
+    [...w.tg.normalize('NFC').toLowerCase()].every((ch) => !'ғӣқӯҳҷ'.includes(ch) || taught.has(ch));
+  const shows = (w: Word): boolean => [...w.tg.normalize('NFC').toLowerCase()].some((ch) => own.has(ch));
+
+  const out: Word[] = [];
+  const add = (w: Word | undefined): void => {
+    if (!w || out.length >= ALPHABET_WORDS || out.some((x) => x.id === w.id)) return;
+    if (readable(w) && shows(w)) out.push(w);
+  };
+  // сначала слова из примеров к буквам: их игрок видит прямо на карточке буквы
+  for (const letter of letters) for (const id of letter.examples ?? []) add(getWord(id));
+  for (const w of listed) add(w);
+  return out;
+}
+
+/**
  * С какими словами игрок ещё не знаком. Незнакомо всё, что он ни разу
  * не назвал верно: и то, что видит впервые, и то, что пока не даётся.
  *
@@ -118,7 +192,8 @@ export function poolForLevel(level: FlatLevel): LevelPool {
   const letters = level.letterChars
     .map(getLetter)
     .filter((l): l is Letter => Boolean(l));
-  const themes = themesOf(words);
+  const isAlphabet = letters.length > 0;
+  const themes = mainThemeOf(words);
 
   /*
    * Правило показываем в первом уровне раздела и только пока он не пройден.
@@ -130,24 +205,56 @@ export function poolForLevel(level: FlatLevel): LevelPool {
       ? rulesOfSection(level.sectionId)
       : [];
 
+  /*
+   * Урок алфавита — только буквы и слова, которые их показывают. Фраз,
+   * разговоров и изафетов в нём нет: первый урок раньше нёс три буквы,
+   * восемь слов, девять фраз и разговор — для человека, который ещё
+   * не умеет читать эти буквы.
+   */
+  /*
+   * Чужие слова для «лишнего», корзин и колеса — только из тех, что игрок
+   * действительно выучил. По порядку курса «пройденными» числились и слова
+   * из списков алфавита, которые уроки алфавита теперь не проверяют, — и во
+   * втором уроке приветствий корзины просили разложить «жизнь» и «победу».
+   */
+  const fresh = freshWords();
+  const prior = priorWordsFor(level.index).filter((w) => !fresh.has(w.id));
+
+  if (isAlphabet) {
+    return makePool(alphabetWords(level, letters, words), [], allWords(), {
+      priorWords: prior,
+      rules,
+      letters,
+      alphabet,
+      themeTitles,
+      freshWords: fresh,
+      seenPhrases: seenPhrases(),
+    });
+  }
+
   return makePool(words, phrases, allWords(), {
-    priorWords: priorWordsFor(level.index),
+    priorWords: prior,
     rules,
     letters,
     alphabet,
     dialogues: dialoguesOfThemes(themes),
     izafets: izafetsOfThemes(themes),
     themeTitles,
-    freshWords: freshWords(),
+    freshWords: fresh,
+    seenPhrases: seenPhrases(),
+    pastPhrases: pastPhrasesOf(level),
   });
 }
 
 /**
  * Пул для сессий повторения и восстановления: слова берутся отовсюду,
  * букв и «пройденного раньше» здесь нет — на карте они уже позади.
- * Знакомить тоже не с чем: повторяют только то, что уже знают.
+ *
+ * remind — слова, которые перед заданиями стоит показать заново. Восстановление
+ * работает на словах, которые не даются: человек их видел, но не запомнил,
+ * и спрашивать их без напоминания — то же, что спрашивать вслепую.
  */
-export function poolForWords(words: Word[], phrases: Phrase[]): LevelPool {
+export function poolForWords(words: Word[], phrases: Phrase[], remind: readonly string[] = []): LevelPool {
   const themes = themesOf(words);
   return makePool(words, phrases, allWords(), {
     priorWords: words,
@@ -155,5 +262,8 @@ export function poolForWords(words: Word[], phrases: Phrase[]): LevelPool {
     dialogues: dialoguesOfThemes(themes),
     izafets: izafetsOfThemes(themes),
     themeTitles,
+    freshWords: new Set(remind),
+    seenPhrases: seenPhrases(),
+    reminder: remind.length > 0,
   });
 }

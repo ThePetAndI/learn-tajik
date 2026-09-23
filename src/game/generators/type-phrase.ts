@@ -20,6 +20,7 @@ import type { Rng } from '../../core/rng';
 import type { Phrase } from '../../data/content';
 import { tokenize } from '../../domain/answer';
 import type { TypePhraseExercise } from '../types';
+import { phraseKey } from './phrase-intro';
 import type { LevelPool } from './pool';
 
 const MIN_TOKENS = 2;
@@ -28,11 +29,13 @@ const MAX_TOKENS = 4;
 const MAX_LETTERS = 22;
 
 export function makeTypePhrase(
-  _pool: LevelPool,
+  pool: LevelPool,
   phrase: Phrase,
   _rng: Rng,
 ): TypePhraseExercise | null {
   if (!phrase.verified) return null;
+  // как и слово: писать фразу просят, только если её объясняли до этого урока
+  if (!pool.seenPhrases.has(phraseKey(phrase.id))) return null;
 
   const answer = tokenize(phrase.tg);
   if (answer.length < MIN_TOKENS || answer.length > MAX_TOKENS) return null;
@@ -44,6 +47,7 @@ export function makeTypePhrase(
 
   return {
     kind: 'type_phrase',
+    phraseId: phrase.id,
     wordIds: phrase.words ?? [],
     ru: phrase.ru,
     tg: phrase.tg,

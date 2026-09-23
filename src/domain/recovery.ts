@@ -1,9 +1,13 @@
 /**
  * Режим «Восстановление» — главный способ вернуть жизни.
  *
- * Идея простая: кончились жизни — не сиди и жди таймер, а прогони слова,
- * которые даются тебе хуже всего. Восемь верных подряд возвращают жизнь,
- * пройденная целиком сессия — весь запас.
+ * Кончились жизни — не сиди и жди таймер, а прогони слова, которые даются
+ * хуже всего. Сначала они показываются заново, потом по ним задания. Каждые
+ * три верных ответа возвращают жизнь, пройденная целиком сессия — весь запас.
+ *
+ * Раньше жизнь давали за восемь верных подряд, и первая же ошибка обнуляла
+ * счёт. На словах, которые как раз и не даются, это почти невыполнимо:
+ * человек, потерявший жизни в первом уроке, застревал и здесь.
  */
 
 import type { SaveState } from '../data/state';
@@ -11,11 +15,11 @@ import { addLives, refillLives } from './lives';
 import { hardestWords } from './srs';
 
 /** Сколько заданий в сессии восстановления. */
-export const RECOVERY_SIZE = 20;
-/** Верных подряд, чтобы получить жизнь. */
-export const STREAK_FOR_LIFE = 8;
-/** Сколько слов берём в работу. */
-export const RECOVERY_WORDS = 12;
+export const RECOVERY_SIZE = 12;
+/** Сколько верных ответов — не обязательно подряд — возвращают жизнь. */
+export const CORRECT_FOR_LIFE = 3;
+/** Сколько слов берём в работу: меньше слов — каждое успевает запомниться. */
+export const RECOVERY_WORDS = 6;
 /**
  * Доля монет от обычной ставки.
  * Награда восстановления — жизни, а не заработок: сессия длинная, серия в ней
@@ -32,14 +36,14 @@ export function recoveryCoins(answerCoins: number): number {
 export interface RecoveryProgress {
   answered: number;
   correct: number;
-  /** Верных подряд прямо сейчас. */
-  streak: number;
+  /** Верных ответов, накопленных к следующей жизни. Ошибка их не сжигает. */
+  toward: number;
   livesGained: number;
   completed: boolean;
 }
 
 export function createRecoveryProgress(): RecoveryProgress {
-  return { answered: 0, correct: 0, streak: 0, livesGained: 0, completed: false };
+  return { answered: 0, correct: 0, toward: 0, livesGained: 0, completed: false };
 }
 
 export interface RecoveryStep {
@@ -47,7 +51,7 @@ export interface RecoveryStep {
   grantedLife: boolean;
   /** Сессия завершена этим ответом. */
   finished: boolean;
-  /** Сколько верных подряд осталось до следующей жизни. */
+  /** Сколько верных ответов осталось до следующей жизни. */
   toNextLife: number;
 }
 
@@ -64,21 +68,19 @@ export function recordRecoveryAnswer(
   progress.answered += 1;
   let grantedLife = false;
 
+  // ошибка ничего не отнимает — ни жизней, ни накопленного: восстановление
+  // не должно загонять в тупик того, кто и так застрял
   if (correct) {
     progress.correct += 1;
-    progress.streak += 1;
-    if (progress.streak >= STREAK_FOR_LIFE) {
-      progress.streak = 0;
+    progress.toward += 1;
+    if (progress.toward >= CORRECT_FOR_LIFE) {
+      progress.toward = 0;
       const added = addLives(state, 1, ts);
       if (added > 0) {
         progress.livesGained += added;
         grantedLife = true;
       }
     }
-  } else {
-    // ошибка обнуляет серию, но жизней здесь не отнимает:
-    // восстановление не должно загонять в тупик
-    progress.streak = 0;
   }
 
   const finished = progress.answered >= RECOVERY_SIZE;
@@ -92,7 +94,7 @@ export function recordRecoveryAnswer(
   return {
     grantedLife,
     finished,
-    toNextLife: Math.max(0, STREAK_FOR_LIFE - progress.streak),
+    toNextLife: Math.max(0, CORRECT_FOR_LIFE - progress.toward),
   };
 }
 

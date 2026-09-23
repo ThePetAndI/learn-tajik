@@ -15,7 +15,7 @@ import {
 import { computeLives, spendLife } from '../src/domain/lives';
 import {
   RECOVERY_SIZE,
-  STREAK_FOR_LIFE,
+  CORRECT_FOR_LIFE,
   createRecoveryProgress,
   hasRecoveryMaterial,
   recordRecoveryAnswer,
@@ -378,11 +378,11 @@ function withHardWords(s: SaveState, n: number): void {
 }
 
 describe('восстановление', () => {
-  it('восемь верных подряд возвращают жизнь', () => {
+  it('каждые три верных ответа возвращают жизнь', () => {
     const s = fresh();
     s.lives.count = 0;
     const p = createRecoveryProgress();
-    for (let i = 0; i < STREAK_FOR_LIFE - 1; i++) {
+    for (let i = 0; i < CORRECT_FOR_LIFE - 1; i++) {
       expect(recordRecoveryAnswer(s, p, true, T0).grantedLife).toBe(false);
     }
     const step = recordRecoveryAnswer(s, p, true, T0);
@@ -391,15 +391,31 @@ describe('восстановление', () => {
     expect(p.livesGained).toBe(1);
   });
 
-  it('ошибка обнуляет серию, но жизней не отнимает', () => {
+  /*
+   * Раньше жизнь давали за восемь верных подряд, и ошибка обнуляла счёт.
+   * На словах, которые как раз не даются, это почти невыполнимо — человек,
+   * потерявший жизни, застревал и в восстановлении. Теперь ошибка не сжигает
+   * накопленное: верные ответы не обязаны идти подряд.
+   */
+  it('ошибка не сжигает накопленные верные ответы и жизней не отнимает', () => {
     const s = fresh();
     s.lives.count = 0;
     const p = createRecoveryProgress();
     recordRecoveryAnswer(s, p, true, T0);
+    recordRecoveryAnswer(s, p, false, T0);
     recordRecoveryAnswer(s, p, true, T0);
     recordRecoveryAnswer(s, p, false, T0);
-    expect(p.streak).toBe(0);
-    expect(s.lives.count).toBe(0);
+    const step = recordRecoveryAnswer(s, p, true, T0);
+    expect(step.grantedLife).toBe(true);
+    expect(s.lives.count).toBe(1);
+  });
+
+  it('даже при половине ошибок сессия возвращает больше одной жизни ещё до конца', () => {
+    const s = fresh();
+    s.lives.count = 0;
+    const p = createRecoveryProgress();
+    for (let i = 0; i < RECOVERY_SIZE - 1; i++) recordRecoveryAnswer(s, p, i % 2 === 0, T0);
+    expect(p.livesGained).toBeGreaterThanOrEqual(2);
   });
 
   it('пройденная сессия возвращает полный запас', () => {

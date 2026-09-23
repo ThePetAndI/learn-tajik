@@ -80,6 +80,15 @@ const MIGRATIONS: Record<number, Migration> = {
     raw.version = 2;
     return raw;
   },
+  /*
+   * 2 -> 3: отметки «эту фразу уже объясняли». Старому игроку объяснят заново
+   * каждую фразу при первой встрече — лишняя карточка лучше вопроса вслепую.
+   */
+  2: (raw) => {
+    raw.seen = isObj(raw.seen) ? raw.seen : {};
+    raw.version = 3;
+    return raw;
+  },
 };
 
 function migrate(raw: Record<string, unknown>): Record<string, unknown> {
@@ -248,6 +257,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
       pity: int(inventory.pity, 0, 0, 1000),
     },
     tree: sanitizeStringMapToNumber(raw.tree),
+    seen: sanitizeStringMapToNumber(raw.seen),
     // ледгер разовых наград: ключей много (по одному на слово), потолок выше
     achievements: sanitizeStringMapToNumber(raw.achievements),
     stats: {

@@ -708,6 +708,58 @@
 .intro-card__example-tg { font-size: 17px; font-weight: 900; line-height: 1.3; }
 .intro-card__example-ru { margin-top: 2px; font-size: 13px; font-weight: 700; opacity: 0.82; }
 
+/* ————————————————————————— знакомство с фразой ————————————————————————— */
+
+.pintro { align-items: stretch; gap: 12px; }
+.pintro__lines { display: flex; flex-direction: column; gap: 10px; }
+.pintro__line { display: flex; align-items: flex-end; gap: 8px; }
+/* в разговоре ответ игрока справа, как в мессенджере */
+.pintro__line.is-me { flex-direction: row-reverse; }
+.pintro__who {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 16px;
+}
+.pintro__bubble {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.16);
+  text-align: center;
+}
+.pintro__lines.is-talk .pintro__bubble { flex: 0 1 auto; text-align: left; }
+.pintro__line.is-me .pintro__bubble { background: rgba(255, 255, 255, 0.28); }
+.pintro__tg { font-size: 26px; font-weight: 900; line-height: 1.2; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18); }
+.pintro__lines.is-talk .pintro__tg { font-size: 21px; }
+.pintro__ru { margin-top: 3px; font-size: 16px; font-weight: 900; color: #ffe9a8; }
+
+.pintro__gloss {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: rgba(0, 0, 0, 0.12);
+}
+.pintro__gloss-title {
+  margin-bottom: 2px;
+  font-size: 11.5px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.pintro__word { display: flex; align-items: baseline; gap: 10px; }
+.pintro__word-tg { min-width: 38%; font-size: 17px; font-weight: 900; }
+.pintro__word-ru { font-size: 14.5px; font-weight: 800; opacity: 0.9; }
+.pintro__whole { font-size: 13.5px; font-weight: 800; text-align: center; opacity: 0.8; }
+
 /* ————————————————————————— правило раздела ————————————————————————— */
 
 .ex--rule { gap: 16px; }

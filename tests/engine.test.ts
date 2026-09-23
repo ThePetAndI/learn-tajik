@@ -204,3 +204,71 @@ describe('устойчивость', () => {
     expect(s.state.correct).toBe(1);
   });
 });
+
+/* ————————————————————————— повтор ошибок в конце ————————————————————————— */
+
+describe('повтор ошибок в конце урока', () => {
+  function withRetry(count: number, cap: number, onAttempt?: (a: { correct: boolean }) => void) {
+    return createSession({
+      sessionId: 'x',
+      exercises: Array.from({ length: count }, (_, i) => quiz('w_' + i)),
+      retryMistakes: cap,
+      onAttempt,
+    });
+  }
+
+  it('задание с ошибкой возвращается в конце', () => {
+    const s = withRetry(3, 3);
+    s.attempt({ correct: false, wordIds: ['w_0'] });
+    expect(s.willRetry()).toBe(true);
+    expect(s.state.total).toBe(4);
+    s.advance();
+    s.advance();
+    s.advance();
+    expect(s.isRetry()).toBe(true);
+    expect(s.current()?.wordIds).toEqual(['w_0']);
+  });
+
+  it('повторов не больше потолка', () => {
+    const s = withRetry(5, 2);
+    for (let i = 0; i < 5; i++) {
+      s.attempt({ correct: false, wordIds: ['w_' + i] });
+      s.advance();
+    }
+    expect(s.state.total).toBe(7);
+  });
+
+  it('одно задание возвращается один раз, сколько бы ошибок в нём ни было', () => {
+    const s = withRetry(3, 3);
+    // «найди пары»: несколько попыток внутри одного задания
+    s.attempt({ correct: false, wordIds: ['w_0'] });
+    s.attempt({ correct: false, wordIds: ['w_0'] });
+    expect(s.state.total).toBe(4);
+  });
+
+  /*
+   * Повтор — тренировка: верный ответ уже показали. Звезду за ошибку снимает
+   * первый проход, второй раз наказывать за то же самое нельзя.
+   */
+  it('повтор не влияет на звёзды и счёт, но слово запоминается', () => {
+    const seen: boolean[] = [];
+    const s = withRetry(2, 3, (a) => seen.push(a.correct));
+    s.attempt({ correct: false, wordIds: ['w_0'] });
+    s.advance();
+    s.attempt({ correct: true, wordIds: ['w_1'] });
+    s.advance();
+    expect(s.isRetry()).toBe(true);
+    s.attempt({ correct: false, wordIds: ['w_0'] });
+    expect(s.state.mistakes).toBe(1);
+    expect(s.state.attempts).toBe(2);
+    // но в статистику слова повтор идёт — ради неё он и нужен
+    expect(seen).toEqual([false, true, false]);
+  });
+
+  it('без повторов сессия ведёт себя как раньше', () => {
+    const s = session(2);
+    s.attempt({ correct: false, wordIds: ['w_0'] });
+    expect(s.state.total).toBe(2);
+    expect(s.willRetry()).toBe(false);
+  });
+});

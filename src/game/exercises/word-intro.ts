@@ -17,7 +17,7 @@ import type {
 } from '../types';
 
 export const wordIntroModule: ExerciseModule<WordIntroExercise> = {
-  title: () => 'Новое слово',
+  title: (ex) => (ex.remind ? 'Вспомним слово' : 'Новое слово'),
 
   mount(ex: WordIntroExercise, ctx: ExerciseContext): ExerciseInstance {
     let done = false;

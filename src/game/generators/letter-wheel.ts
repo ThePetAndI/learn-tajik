@@ -1,7 +1,11 @@
 /**
  * Колесо букв. Берём слово подлиннее, его буквы кладём на колесо,
- * а целями делаем все слова словаря, которые из этих букв собираются.
+ * а целями делаем слова, которые из этих букв собираются.
  * Если нашлось меньше двух — задание не складывается, возвращаем null.
+ *
+ * Цели — только слова этого урока и пройденных раньше. Раньше их брали
+ * из всего словаря курса, и в первом же уроке колесо просило собрать
+ * «мо» и «сол» — слова из разделов, до которых игрок ещё не дошёл.
  */
 
 import type { Rng } from '../../core/rng';
@@ -50,8 +54,8 @@ function collectTargets(pool: LevelPool, key: Word, available: Map<string, numbe
   const found: Word[] = [key];
   const seen = new Set([key.tg.normalize('NFC').toLowerCase()]);
 
-  // Сначала слова уровня, потом остальной словарь — так задание остаётся по теме
-  for (const source of [pool.words, pool.vocabulary]) {
+  // сначала слова уровня — так задание остаётся по теме, — потом пройденные
+  for (const source of [pool.words, pool.priorWords]) {
     for (const word of source) {
       if (found.length >= MAX_TARGETS) break;
       const tg = word.tg.normalize('NFC').toLowerCase();

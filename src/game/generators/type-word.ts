@@ -14,10 +14,17 @@ const MIN_LETTERS = 2;
 const MAX_LETTERS = 9;
 
 export function makeTypeWord(
-  _pool: LevelPool,
+  pool: LevelPool,
   word: Word,
   _rng: Rng,
 ): TypeWordExercise | null {
+  /*
+   * Написать можно только то, что знал до этого урока. Слово, показанное
+   * три экрана назад, сначала узнают среди вариантов, а пишут — потом,
+   * когда вернутся к нему. Иначе самое трудное задание достаётся тому,
+   * что человек только что увидел впервые.
+   */
+  if (pool.freshWords.has(word.id)) return null;
   const tg = word.tg.normalize('NFC');
   if (!isSingleToken(tg)) return null;
   if (tg.length < MIN_LETTERS || tg.length > MAX_LETTERS) return null;

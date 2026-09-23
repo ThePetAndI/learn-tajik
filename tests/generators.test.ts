@@ -253,8 +253,9 @@ describe('сборка уровня', () => {
   it('уровень из одних фраз собирается только из фраз', () => {
     const list = buildLevelExercises(makePool([], PHRASES, VOCAB), 'p:0');
     expect(list.length).toBeGreaterThan(0);
-    // ни пар, ни колеса: своих слов у уровня нет, чужие подставлять нельзя
-    const fromPhrases = new Set(['build_phrase', 'type_phrase']);
+    // ни пар, ни колеса: своих слов у уровня нет, чужие подставлять нельзя.
+    // Карточка фразы — часть того же материала: её показывают перед сборкой
+    const fromPhrases = new Set(['phrase_intro', 'build_phrase', 'type_phrase']);
     expect(list.every((ex) => fromPhrases.has(ex.kind))).toBe(true);
   });
 

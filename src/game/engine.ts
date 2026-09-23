@@ -42,6 +42,12 @@ export interface SessionOptions {
   onAttempt?: (attempt: Attempt) => void;
   /** Потолок бонуса за серию; без него — обычный из economy. */
   comboCap?: number;
+  /**
+   * Сколько заданий с ошибкой повторить в конце сессии. Повтор — тренировка:
+   * игрок только что увидел верный ответ и закрепляет его. На звёзды, монеты
+   * и серию повтор не влияет, но в статистику слова идёт — ради неё он и нужен.
+   */
+  retryMistakes?: number;
 }
 
 export interface Session {
@@ -54,12 +60,24 @@ export interface Session {
   result: () => SessionResult;
   /** Доля пройденного, 0..1 — для полосы прогресса. */
   progress: () => number;
+  /** Текущее задание — повтор ошибки в конце сессии. */
+  isRetry: () => boolean;
+  /** Текущее задание после ошибки вернётся в конце. */
+  willRetry: () => boolean;
 }
 
 export function createSession(opts: SessionOptions): Session {
+  /** Своя копия очереди: повторы дописываются в конец, массив вызывающего не трогаем. */
+  const queue = [...opts.exercises];
+  /** С какого места начинаются повторы. */
+  const firstPass = queue.length;
+  const retryCap = Math.max(0, opts.retryMistakes ?? 0);
+  /** Какие задания первого прохода уже поставлены в повтор. */
+  const queued = new Set<number>();
+
   const state: SessionState = {
     index: 0,
-    total: opts.exercises.length,
+    total: queue.length,
     attempts: 0,
     correct: 0,
     mistakes: 0,
@@ -72,9 +90,22 @@ export function createSession(opts: SessionOptions): Session {
   return {
     state,
 
-    current: () => opts.exercises[state.index],
+    current: () => queue[state.index],
 
     attempt(attempt: Attempt) {
+      if (state.index >= firstPass) {
+        // повтор — только тренировка: в счёт урока не идёт, но слово запоминается
+        opts.onAttempt?.(attempt);
+        return;
+      }
+      if (!attempt.correct && !queued.has(state.index) && queued.size < retryCap) {
+        const exercise = queue[state.index];
+        if (exercise) {
+          queued.add(state.index);
+          queue.push(exercise);
+          state.total = queue.length;
+        }
+      }
       state.attempts++;
       if (attempt.correct) {
         // монеты считаются от серии ДО этого ответа
@@ -104,6 +135,10 @@ export function createSession(opts: SessionOptions): Session {
       if (state.total === 0) return 1;
       return Math.min(1, state.index / state.total);
     },
+
+    isRetry: () => state.index >= firstPass,
+
+    willRetry: () => queued.has(state.index),
 
     result() {
       return {

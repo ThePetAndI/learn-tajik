@@ -14,7 +14,9 @@ import {
   makeTrueFalse,
   makeTypePhrase,
   makeTypeWord,
+  buildLevelExercises,
 } from '../src/game/generators';
+import { makeDialogueIntro, makePhraseIntro } from '../src/game/generators/phrase-intro';
 import type {
   AlphabetIntroExercise,
   CategorySortExercise,
@@ -91,6 +93,76 @@ describe('напиши слово', () => {
   it('не берёт слово с несколькими переводами — набирать нечего', () => {
     expect(makeTypeWord(pool(), word('w_x', 'нағз', 'хороший, хорошо'), rng())).toBeNull();
   });
+
+  /*
+   * Письмо — самое трудное. Слово, которое игрок увидел впервые на этом же
+   * уроке, сначала узнают среди вариантов, а пишут — потом.
+   */
+  it('не просит написать слово, новое на этом уроке', () => {
+    const fresh = pool(GREET, { freshWords: new Set(['w_salom']) });
+    expect(makeTypeWord(fresh, GREET[0] as Word, rng())).toBeNull();
+  });
+});
+
+/* ————————————————————————— карточки фраз ————————————————————————— */
+
+describe('карточка фразы и разговора', () => {
+  const vocab = new Map(VOCAB.map((w) => [w.id, w]));
+
+  it('фраза: перевод целиком и каждое слово отдельно', () => {
+    const card = makePhraseIntro(
+      { id: 'p_1', tg: 'Салом, дӯст!', ru: 'Привет, друг!', theme: 'greetings', words: ['w_salom', 'w_dust'], verified: true },
+      vocab,
+    );
+    expect(card.key).toBe('p:p_1');
+    expect(card.lines).toEqual([{ tg: 'Салом, дӯст!', ru: 'Привет, друг!' }]);
+    expect(card.gloss).toEqual([
+      { tg: 'салом', ru: 'привет' },
+      { tg: 'дӯст', ru: 'друг' },
+    ]);
+    expect(card.wordIds).toEqual(['w_salom', 'w_dust']);
+  });
+
+  it('разговор: реплика собеседника и ответ — обе с переводом', () => {
+    const card = makeDialogueIntro(
+      {
+        id: 'd_1',
+        theme: 'greetings',
+        ask: { tg: 'Салом!', ru: 'Привет!' },
+        reply: { tg: 'Салом, дӯст!', ru: 'Привет, друг!' },
+        words: ['w_salom'],
+        verified: true,
+      },
+      vocab,
+    );
+    expect(card.key).toBe('d:d_1');
+    expect(card.lines.map((l) => l.who)).toEqual(['them', 'me']);
+    expect(card.lines.every((l) => l.ru.length > 0)).toBe(true);
+  });
+
+  it('перед «собери фразу» с новой фразой стоит её карточка, а слова фразы отдельных карточек не просят', () => {
+    const phrases: Phrase[] = [
+      { id: 'p_s', tg: 'Салом, дӯст!', ru: 'Привет, друг!', theme: 'greetings', words: ['w_salom', 'w_dust'], verified: true },
+    ];
+    const fresh = new Set(GREET.map((w) => w.id));
+    const list = buildLevelExercises(makePool([], phrases, VOCAB, { freshWords: fresh }), 'k:0');
+    const build = list.findIndex((e) => e.kind === 'build_phrase');
+    expect(build).toBeGreaterThan(0);
+    const card = list[build - 1];
+    expect(card?.kind).toBe('phrase_intro');
+    // «салом» и «дӯст» объяснены карточкой фразы — отдельной карточки слова нет
+    const wordCards = list.filter((e) => e.kind === 'word_intro').flatMap((e) => e.wordIds);
+    expect(wordCards).not.toContain('w_salom');
+    expect(wordCards).not.toContain('w_dust');
+  });
+
+  it('объяснённую раньше фразу второй раз не объясняют', () => {
+    const phrases: Phrase[] = [
+      { id: 'p_s', tg: 'Салом, дӯст!', ru: 'Привет, друг!', theme: 'greetings', words: ['w_salom', 'w_dust'], verified: true },
+    ];
+    const list = buildLevelExercises(makePool([], phrases, VOCAB, { seenPhrases: new Set(['p:p_s']) }), 'k:0');
+    expect(list.some((e) => e.kind === 'phrase_intro')).toBe(false);
+  });
 });
 
 /* ————————————————————————— напиши фразу ————————————————————————— */
@@ -105,9 +177,17 @@ const phrase = (tg: string, ru = 'Доброе утро!', extra: Partial<Phrase
   ...extra,
 });
 
+/** Пул, где фраза уже объяснена: писать просят только объяснённое. */
+const seenPool = () => pool(GREET, { seenPhrases: new Set(['p:p_x']) });
+
 describe('напиши фразу', () => {
+  it('не берёт фразу, которую ещё не объясняли, — её сначала собирают', () => {
+    expect(makeTypePhrase(pool(), phrase('Субҳ ба хайр!'), rng())).toBeNull();
+    expect(makeTypePhrase(seenPool(), phrase('Субҳ ба хайр!'), rng())).not.toBeNull();
+  });
+
   it('разбирает эталон на слова: по ним рисуются ячейки', () => {
-    const ex = makeTypePhrase(pool(), phrase('Субҳ ба хайр!'), rng()) as TypePhraseExercise;
+    const ex = makeTypePhrase(seenPool(), phrase('Субҳ ба хайр!'), rng()) as TypePhraseExercise;
     expect(ex.answer).toEqual(['Субҳ', 'ба', 'хайр']);
     // знаки препинания в ячейки не попадают, а в эталоне остаются
     expect(ex.tg).toBe('Субҳ ба хайр!');
@@ -133,7 +213,7 @@ describe('напиши фразу', () => {
 
   it('разбирает и запасные переводы — по ним ответ тоже засчитают', () => {
     const ex = makeTypePhrase(
-      pool(),
+      seenPool(),
       phrase('Ман ба хона меравам.', 'Я иду домой.', { alt: ['Ба хона меравам.'] }),
       rng(),
     ) as TypePhraseExercise;
@@ -141,7 +221,7 @@ describe('напиши фразу', () => {
   });
 
   it('без поля alt его нет и в задании', () => {
-    const ex = makeTypePhrase(pool(), phrase('Субҳ ба хайр!'), rng()) as TypePhraseExercise;
+    const ex = makeTypePhrase(seenPool(), phrase('Субҳ ба хайр!'), rng()) as TypePhraseExercise;
     expect(ex.alt).toBeUndefined();
   });
 });

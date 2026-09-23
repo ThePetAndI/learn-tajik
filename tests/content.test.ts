@@ -15,7 +15,13 @@ import {
   sections,
 } from '../src/data/content';
 import { tokenize } from '../src/domain/answer';
-import { MAX_EXERCISES, MIN_EXERCISES, buildLevelExercises, makePool } from '../src/game/generators';
+import {
+  buildLevelExercises,
+  CARD_KINDS,
+  makePool,
+  MAX_EXERCISES,
+  MIN_EXERCISES,
+} from '../src/game/generators';
 import { isSupported } from '../src/game/registry';
 
 const TAJIK_LETTERS = 'абвгғдеёжзиӣйкқлмнопрстуӯфхҳчҷшъэюя';
@@ -127,7 +133,10 @@ describe('уровни собираются', () => {
   it('каждый уровень даёт от 6 до 10 заданий', () => {
     const broken: string[] = [];
     for (const level of levels) {
-      const list = buildLevelExercises(poolFor(level), level.id + ':0');
+      // карточки знакомства — не задания: считаем только то, где можно ошибиться
+      const list = buildLevelExercises(poolFor(level), level.id + ':0').filter(
+        (ex) => !CARD_KINDS.has(ex.kind),
+      );
       if (list.length < MIN_EXERCISES || list.length > MAX_EXERCISES) {
         broken.push(level.id + ' -> ' + list.length);
       }

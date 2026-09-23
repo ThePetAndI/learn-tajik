@@ -25,6 +25,7 @@ export function makeDialogue(
   const options = shuffle(rng, [dialogue.reply, ...wrong.slice(0, OPTIONS - 1)]);
   return {
     kind: 'dialogue_choice',
+    dialogueId: dialogue.id,
     wordIds: dialogue.words ?? [],
     ask: dialogue.ask,
     options: options.map((o) => ({ tg: o.tg, ru: o.ru })),

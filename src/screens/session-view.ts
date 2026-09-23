@@ -9,6 +9,7 @@
 import { clear, h, onTap } from '../core/dom';
 import { rngFor } from '../core/rng';
 import { getState, update } from '../core/store';
+import { now } from '../core/time';
 import { comboCapFor, hintCost as petHintCost } from '../domain/bonuses';
 import { boosterCount } from '../domain/catalog';
 import { useBooster } from '../domain/shop';
@@ -40,6 +41,8 @@ export interface SessionViewOptions {
   onExit: () => void;
   /** Свой блок справа в верхней панели — например, сердечки. */
   headerSlot?: HTMLElement | null;
+  /** Сколько заданий с ошибкой повторить в конце (см. engine.retryMistakes). */
+  retryMistakes?: number;
 }
 
 export interface SessionView {
@@ -57,6 +60,7 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
     sessionId: opts.sessionId,
     exercises: opts.exercises,
     comboCap: comboCapFor(getState()),
+    retryMistakes: opts.retryMistakes,
   });
 
   let instance: ExerciseInstance | null = null;
@@ -172,7 +176,22 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
     awaitingContinue = false;
     feedback.classList.remove('is-shown', 'is-right', 'is-wrong');
 
-    titleEl.textContent = mod.title(exercise);
+    // повтор ошибки подписан: иначе знакомое задание выглядит как сбой
+    titleEl.textContent = (session.isRetry() ? 'Повтор · ' : '') + mod.title(exercise);
+    titleEl.classList.toggle('is-retry', session.isRetry());
+    /*
+     * Карточка фразы или разговора показана — отмечаем, что игрок её видел.
+     * Отметка ставится здесь, при показе, а не при сборке урока: урок можно
+     * бросить на середине, и до карточки дело может не дойти.
+     */
+    if (exercise.kind === 'phrase_intro') {
+      const key = exercise.key;
+      if (getState().seen[key] === undefined) {
+        update((s) => {
+          s.seen[key] = now();
+        });
+      }
+    }
     instance = mod.mount(exercise, makeContext(session.state.index));
     instance.el.classList.add('ex--enter');
     host.append(instance.el);
@@ -209,7 +228,10 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
         outcome.lenient && outcome.expected ? 'Правильно пишется: ' + outcome.expected : '';
     } else {
       feedbackTitle.textContent = outcome.message ?? 'Не угадал';
-      feedbackText.textContent = outcome.expected ? 'Правильно: ' + outcome.expected : '';
+      feedbackText.textContent =
+        (outcome.expected ? 'Правильно: ' + outcome.expected : '') +
+        // ошибка вернётся в конце урока — пусть игрок знает, что это не конец
+        (session.willRetry() ? (outcome.expected ? '. ' : '') + 'Повторим в конце урока' : '');
     }
     feedbackText.classList.toggle('hidden', feedbackText.textContent === '');
 

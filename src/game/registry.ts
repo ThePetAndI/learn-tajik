@@ -10,6 +10,7 @@ import { matchPairsModule } from './exercises/match-pairs';
 import { missingLetterModule } from './exercises/missing-letter';
 import { numberWordModule } from './exercises/number-word';
 import { oddOneOutModule } from './exercises/odd-one-out';
+import { phraseIntroModule } from './exercises/phrase-intro';
 import { quizModule } from './exercises/quiz';
 import { ruleCardModule } from './exercises/rule-card';
 import { trueFalseModule } from './exercises/true-false';
@@ -24,6 +25,7 @@ type AnyModule = ExerciseModule<any>;
 const REGISTRY: Partial<Record<ExerciseKind, AnyModule>> = {
   rule_card: ruleCardModule,
   word_intro: wordIntroModule,
+  phrase_intro: phraseIntroModule,
   quiz_tg_ru: quizModule,
   quiz_ru_tg: quizModule,
   match_pairs: matchPairsModule,

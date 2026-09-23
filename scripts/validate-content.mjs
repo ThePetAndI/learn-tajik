@@ -88,9 +88,31 @@ function checkRu(file, id, field, value) {
   }
 }
 
+/**
+ * Своё значение слова во фразе или разговоре: [{ tg, ru }]. Слово должно
+ * быть среди слов записи — иначе переопределять нечего, и это опечатка.
+ */
+function checkGloss(file, id, entry) {
+  if (entry.gloss === undefined) return;
+  if (!Array.isArray(entry.gloss)) {
+    err(file, id + ': gloss должно быть списком { tg, ru }');
+    return;
+  }
+  const own = new Set((entry.words ?? []).map((wid) => (wordTg.get(wid) ?? '').toLowerCase()));
+  entry.gloss.forEach((g, i) => {
+    checkTajik(file, id, 'gloss[' + i + '].tg', g?.tg);
+    checkRu(file, id, 'gloss[' + i + '].ru', g?.ru);
+    if (typeof g?.tg === 'string' && !own.has(g.tg.normalize('NFC').toLowerCase())) {
+      warn(file, id + ': gloss «' + g.tg + '» не из слов этой записи — его не покажут');
+    }
+  });
+}
+
 /* ————————————————————————————— основная проверка ————————————————————————————— */
 
 const wordIds = new Map();
+/** id слова -> как оно пишется: для проверки gloss у фраз и разговоров. */
+const wordTg = new Map();
 const phraseIds = new Map();
 const levelIds = new Set();
 const emptyLevels = [];
@@ -111,6 +133,7 @@ async function checkWords() {
       if (!/^w_[a-z0-9_]+$/.test(id)) err(file, id + ': id должен быть вида w_slug (латиница, нижний регистр)');
       if (wordIds.has(id)) err(file, id + ': такой id уже есть в ' + relative(ROOT, wordIds.get(id)));
       wordIds.set(id, file);
+      if (typeof w.tg === 'string') wordTg.set(id, w.tg.normalize('NFC'));
 
       checkTajik(file, id, 'tg', w.tg);
       checkRu(file, id, 'ru', w.ru);
@@ -163,6 +186,7 @@ async function checkPhrases() {
           if (!wordIds.has(wid)) err(file, id + ': ссылается на несуществующее слово ' + wid);
         }
       }
+      checkGloss(file, id, p);
       // alt — другие верные переводы той же фразы, для задания «Напиши фразу»
       if (p.alt !== undefined) {
         if (!Array.isArray(p.alt)) err(file, id + ': alt должно быть списком строк');
@@ -242,6 +266,7 @@ async function checkDialogues() {
       checkTajik(file, id, side + '.tg', part.tg);
       checkRu(file, id, side + '.ru', part.ru);
     }
+    checkGloss(file, id, d);
     if (Array.isArray(d.wrong)) {
       for (const [i, w] of d.wrong.entries()) {
         checkTajik(file, id, 'wrong[' + i + '].tg', w?.tg);

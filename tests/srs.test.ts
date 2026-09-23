@@ -280,7 +280,8 @@ describe('поведение на длинной дистанции', () => {
 
 describe('награда за повторение', () => {
   it('меньше, чем за уровень: повторение можно крутить бесконечно', async () => {
-    const { reviewCoins } = await import('../src/screens/review');
+    // обе формулы — в домене: тесту не нужно тянуть за собой экран со всем интерфейсом
+    const { reviewCoins } = await import('../src/domain/economy');
     const { recoveryCoins } = await import('../src/domain/recovery');
     // полный уровень с тремя звёздами даёт около 85 монет
     expect(reviewCoins(114)).toBeLessThan(85);

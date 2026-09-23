@@ -8,39 +8,77 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { allPhrases, levels } from '../src/data/content';
+import { getState } from '../src/core/store';
+import { allPhrases, getWord, levels } from '../src/data/content';
+import { createWordStat } from '../src/data/state';
 import {
   CARD_KINDS,
   MAX_EXERCISES,
   MIN_EXERCISES,
   NEEDS_INTRO,
   buildLevelExercises,
+  needsOf,
 } from '../src/game/generators';
 import { poolForLevel } from '../src/game/level-pool';
 import { SUPPORTED_KINDS, moduleFor } from '../src/game/registry';
 import type { Exercise, ExerciseKind } from '../src/game/types';
 
 const ATTEMPTS = 3;
+const T0 = Date.parse('2026-03-10T12:00:00Z');
 
 interface Built {
   levelId: string;
   section: string;
+  /** Урок в первом разделе, где учат буквы. */
+  alphabet: boolean;
   exercises: Exercise[];
+  /** Что игрок знал до этого урока: выученные слова и объяснённые фразы. */
+  known: ReadonlySet<string>;
+  seen: ReadonlySet<string>;
 }
 
+/*
+ * Игрок проходит курс по порядку и учится по ходу: после каждого урока всё,
+ * что в нём встретилось, считается выученным. Так курс и играют — и от этого
+ * зависит сборка: писать просят только то, что знали до урока, «лишнее»
+ * и корзины берут чужие слова только из выученного, фразу объясняют один раз.
+ * Урок, собранный для игрока, который не знает вообще ничего, этих правил
+ * не проверил бы.
+ */
 const built: Built[] = [];
+const state = getState();
 for (const level of levels) {
   if (!level.playable) continue;
   const pool = poolForLevel(level);
+  const known = new Set(
+    Object.entries(state.srs)
+      .filter(([, w]) => w.introduced)
+      .map(([id]) => id),
+  );
+  const seen = new Set(Object.keys(state.seen));
+  const attempts: Exercise[][] = [];
   for (let attempt = 0; attempt < ATTEMPTS; attempt++) {
+    const exercises = buildLevelExercises(pool, level.id + ':' + attempt).filter((e) => moduleFor(e.kind));
+    attempts.push(exercises);
     built.push({
       levelId: level.id,
       section: level.sectionTitle,
-      exercises: buildLevelExercises(pool, level.id + ':' + attempt).filter((e) =>
-        moduleFor(e.kind),
-      ),
+      alphabet: level.letterChars.length > 0,
+      exercises,
+      known,
+      seen,
     });
   }
+  // урок пройден: всё, что встретилось, выучено, все карточки фраз просмотрены
+  for (const exercises of attempts) {
+    for (const ex of exercises) {
+      for (const id of needsOf(ex).concat(ex.wordIds)) {
+        state.srs[id] = { ...createWordStat(T0), introduced: true, seen: 1, correct: 1 };
+      }
+      if (ex.kind === 'phrase_intro') state.seen[ex.key] = T0;
+    }
+  }
+  state.levels[level.id] = { stars: 3, best: 1, attempts: 1, completedAt: T0 };
 }
 
 function countsByKind(): Map<ExerciseKind, number> {
@@ -86,48 +124,116 @@ describe('мини-игры на реальном курсе', () => {
   });
 
   /*
-   * Ради чего знакомство и заводилось: первое, что игрок узнаёт о слове,
-   * не должно быть вопросом о нём. Состояние в тестах пустое, то есть
-   * игрок видит курс впервые, — значит проверяется каждое слово курса.
+   * Главная гарантия курса: ни одно задание не спрашивает того, что игроку
+   * не показывали. Слово — либо выучено в прошлых уроках, либо показано
+   * карточкой раньше в этом. Фраза и разговор — либо объяснены раньше,
+   * либо здесь, карточкой перед заданием.
+   *
+   * Раньше эта проверка пропускала «собери фразу», колесо, диалог и изафет:
+   * считалось, что они показывают слово сами. Не показывали — и игрок в первом
+   * же уроке получал вопросы вслепую. Теперь исключений нет.
    */
-  it('ни одно слово не проверяют раньше, чем показали', () => {
+  it('ни одно задание не спрашивает того, что не показывали', () => {
+    const blind: string[] = [];
     for (const b of built) {
-      const known = new Set<string>();
+      const known = new Set(b.known);
+      const seen = new Set(b.seen);
       for (const ex of b.exercises) {
-        // задания, где слово с переводом на экране, знакомят сами собой
-        if (!NEEDS_INTRO.has(ex.kind)) {
+        if (ex.kind === 'phrase_intro') seen.add(ex.key);
+        if (CARD_KINDS.has(ex.kind) || ex.kind === 'alphabet_intro') {
           for (const id of ex.wordIds) known.add(id);
           continue;
         }
-        for (const id of ex.wordIds) {
-          expect(
-            known.has(id),
-            b.levelId + ': «' + id + '» спрашивают в «' + ex.kind + '» без знакомства',
-          ).toBe(true);
+        for (const id of needsOf(ex)) {
+          if (!known.has(id)) blind.push(b.levelId + ': «' + (getWord(id)?.tg ?? id) + '» в ' + ex.kind);
+        }
+        if ((ex.kind === 'build_phrase' || ex.kind === 'type_phrase') && ex.phraseId) {
+          if (!seen.has('p:' + ex.phraseId)) blind.push(b.levelId + ': фраза ' + ex.phraseId + ' без объяснения');
+        }
+        if (ex.kind === 'dialogue_choice' && ex.dialogueId) {
+          if (!seen.has('d:' + ex.dialogueId)) blind.push(b.levelId + ': разговор ' + ex.dialogueId + ' без объяснения');
+        }
+        for (const id of needsOf(ex)) known.add(id);
+      }
+    }
+    expect(blind).toEqual([]);
+  });
+
+  it('все задания, где слово надо знать, стоят в NEEDS_INTRO', () => {
+    for (const kind of SUPPORTED_KINDS) {
+      if (CARD_KINDS.has(kind) || kind === 'alphabet_intro') continue;
+      expect(NEEDS_INTRO.has(kind), kind).toBe(true);
+    }
+  });
+
+  /*
+   * Письмо — самое трудное. Его просят только о том, что игрок знал до урока:
+   * слово, увиденное впервые три экрана назад, сначала узнают среди вариантов.
+   */
+  it('писать просят только знакомое до урока', () => {
+    for (const b of built) {
+      for (const ex of b.exercises) {
+        if (ex.kind === 'type_word') {
+          for (const id of ex.wordIds) expect(b.known.has(id), b.levelId + ': пишут новое ' + id).toBe(true);
+        }
+        if (ex.kind === 'type_phrase' && ex.phraseId) {
+          expect(b.seen.has('p:' + ex.phraseId), b.levelId + ': пишут новую фразу').toBe(true);
         }
       }
     }
   });
 
   /*
-   * Самая жёсткая гарантия курса. «Напиши фразу» — единственное задание,
-   * где на экране нет ни слова материала: ни вариантов, ни банка. Фразу,
-   * которую видят впервые, набрать с нуля нельзя — это не проверка памяти,
-   * а проверка везения. Поэтому её сначала собирают из слов, и только потом,
-   * на том же уровне, просят написать.
+   * Урок алфавита учит читать. Раньше первый урок нёс три буквы, одиннадцать
+   * новых слов, девять фраз и разговор — и новичок терял все жизни, ещё
+   * не научившись различать «х» и «ҳ».
    */
-  it('фразу просят написать только после того, как её собирали из слов', () => {
+  it('урок алфавита — только буквы и узнавание, без фраз и письма', () => {
+    const allowed = new Set<ExerciseKind>([
+      'rule_card', 'alphabet_intro', 'word_intro',
+      'quiz_tg_ru', 'quiz_ru_tg', 'true_false', 'match_pairs', 'missing_letter',
+    ]);
+    for (const b of built.filter((x) => x.alphabet)) {
+      for (const ex of b.exercises) expect(allowed.has(ex.kind), b.levelId + ': ' + ex.kind).toBe(true);
+    }
+  });
+
+  it('в уроке алфавита новых слов немного', () => {
+    for (const b of built.filter((x) => x.alphabet)) {
+      const fresh = new Set<string>();
+      for (const ex of b.exercises) {
+        if (CARD_KINDS.has(ex.kind) || ex.kind === 'alphabet_intro') continue;
+        for (const id of needsOf(ex)) if (!b.known.has(id)) fresh.add(id);
+      }
+      expect(fresh.size, b.levelId).toBeLessThanOrEqual(6);
+    }
+  });
+
+  it('первые уроки после алфавита не заваливают новым', () => {
+    const early = built.filter((b) => !b.alphabet).slice(0, 5 * ATTEMPTS);
+    for (const b of early) {
+      const fresh = new Set<string>();
+      for (const ex of b.exercises) {
+        if (CARD_KINDS.has(ex.kind)) continue;
+        for (const id of needsOf(ex)) if (!b.known.has(id)) fresh.add(id);
+      }
+      expect(fresh.size, b.levelId).toBeLessThanOrEqual(7);
+    }
+  });
+
+  /*
+   * «Напиши фразу» — единственное задание, где на экране нет ни слова
+   * материала. Фразу, которую видят впервые, набрать нельзя, поэтому её
+   * просят написать только в следующих уроках: на своём уроке её объяснили
+   * карточкой и собрали из слов, а написать по памяти предлагают потом.
+   */
+  it('фразу просят написать только в уроках после того, как её объяснили', () => {
     let found = 0;
     for (const b of built) {
-      const assembled = new Set<string>();
       for (const ex of b.exercises) {
-        if (ex.kind === 'build_phrase') assembled.add(ex.tg);
         if (ex.kind !== 'type_phrase') continue;
         found++;
-        expect(
-          assembled.has(ex.tg),
-          b.levelId + ': «' + ex.tg + '» просят написать, ни разу не показав',
-        ).toBe(true);
+        expect(b.seen.has('p:' + ex.phraseId), b.levelId + ': «' + ex.tg + '» не объясняли до урока').toBe(true);
       }
     }
     expect(found, '«напиши фразу» не встретилось ни разу').toBeGreaterThan(0);

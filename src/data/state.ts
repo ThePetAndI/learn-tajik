@@ -3,7 +3,7 @@
  * При изменении структуры: поднять SAVE_VERSION и добавить шаг в migrate() (persist.ts).
  */
 
-export const SAVE_VERSION = 2;
+export const SAVE_VERSION = 3;
 
 /** Прогресс по одному уровню карты. */
 export interface LevelProgress {
@@ -126,6 +126,13 @@ export interface SaveState {
   /** id узла дерева прокачки -> когда открыт. */
   tree: Record<string, number>;
   /**
+   * Фразы и диалоги, которые игроку уже объясняли карточкой: «p:id» или «d:id»
+   * -> когда впервые. Слова учитываются в srs, а у фраз своей статистики нет —
+   * без этой отметки нельзя понять, видел ли игрок фразу, прежде чем
+   * просить собрать её или выбрать её в разговоре.
+   */
+  seen: Record<string, number>;
+  /**
    * Разовые достижения: ключ -> когда получено. Заодно служит ледгером
    * наград в лаъл — по нему видно, что за это уже платили (domain/gems).
    */
@@ -174,6 +181,7 @@ export function createInitialState(ts: number): SaveState {
     srs: {},
     inventory: { items: {}, owned: [], petLevels: {}, gear: {}, shards: 0, worn: {}, pity: 0 },
     tree: {},
+    seen: {},
     achievements: {},
     stats: {
       answers: 0,

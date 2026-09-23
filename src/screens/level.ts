@@ -59,6 +59,30 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
   renderHearts();
 
   let outOfLives = false;
+  /** Объяснили ли уже, почему ошибка не стоила жизни. Один раз за урок — дальше это шум. */
+  let explainedFreeMistake = false;
+
+  /*
+   * Первое знакомство не наказывается. Ошибка на слове, фразе или разговоре,
+   * которые игрок увидел впервые на этом же уровне, жизнь не отнимает: нельзя
+   * штрафовать за то, чего человек не знал пять минут назад. Звезду она всё
+   * равно снимает, а задание вернётся в конце урока — так слово и запоминается.
+   *
+   * Раньше каждая ошибка стоила жизнь, и новичок терял все пять в первом же
+   * уроке, где почти всё было новым.
+   */
+  function firstMeeting(attemptWords: readonly string[]): boolean {
+    if (attemptWords.some((id) => pool.freshWords.has(id))) return true;
+    const ex = view.session.current();
+    if ((ex?.kind === 'build_phrase' || ex?.kind === 'type_phrase') && ex.phraseId) {
+      return !pool.seenPhrases.has('p:' + ex.phraseId);
+    }
+    if (ex?.kind === 'dialogue_choice' && ex.dialogueId) {
+      return !pool.seenPhrases.has('d:' + ex.dialogueId);
+    }
+    return false;
+  }
+
   /*
    * Лаъл приходит из разных мест: слово дошло до последней коробки прямо
    * посреди уровня, серия взяла веху на первом ответе дня. Считать каждое
@@ -72,15 +96,19 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
     sessionId: level.id,
     seedKey: level.id + ':' + attemptNo,
     headerSlot: hearts,
+    // три задания с ошибкой вернутся в конце урока: верный ответ закрепляется сразу
+    retryMistakes: 3,
 
     onAttempt: (attempt) => {
       const ts = now();
       let shielded = false;
+      // повтор в конце урока — тренировка, а новое — знакомство: ни то ни другое не штрафуется
+      const free = !attempt.correct && (view.session.isRetry() || firstMeeting(attempt.wordIds));
       update((s) => {
         recordAttemptWords(s, attempt.wordIds, attempt.correct, ts);
         countDailyExercise(s, ts);
         touchStreak(s, ts);
-        if (!attempt.correct) {
+        if (!attempt.correct && !free) {
           if (shields > 0) {
             shields--;
             shielded = true;
@@ -91,13 +119,16 @@ export function createLevelScreen(level: FlatLevel): ScreenView {
         }
       });
       renderHearts();
-      if (shielded) {
+      if (free && !explainedFreeMistake && !view.session.isRetry()) {
+        explainedFreeMistake = true;
+        toast({ text: 'Это новое — жизнь не тратится. Повторим в конце урока', iconName: 'heart', ms: 2600 });
+      } else if (shielded) {
         toast({
           text: shields > 0 ? 'Щит принял удар — жизнь цела' : 'Щит принял удар — больше щитов нет',
           iconName: 'shield',
           ms: 1800,
         });
-      } else if (!attempt.correct) {
+      } else if (!attempt.correct && !free) {
         hearts.classList.remove('is-hit');
         void hearts.offsetWidth;
         hearts.classList.add('is-hit');
