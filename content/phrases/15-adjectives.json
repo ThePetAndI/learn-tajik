@@ -81,6 +81,33 @@
       "audio": null,
       "verified": true,
       "note": ""
+    },
+    {
+      "id": "p_gul_zebo",
+      "tg": "Гул зебо аст.",
+      "ru": "Цветок красивый.",
+      "theme": "adjectives",
+      "words": [
+        "w_gul",
+        "w_zebo",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_choyi_shirin",
+      "tg": "Чойи ширин",
+      "ru": "Сладкий чай",
+      "theme": "adjectives",
+      "words": [
+        "w_choy",
+        "w_shirin"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить изафет после гласной: чойи или чои"
     }
   ]
 }

@@ -11,6 +11,7 @@ import { computeLives } from '../domain/lives';
 import type { FlatLevel } from '../data/content';
 import { getLevelProgress } from '../domain/progress';
 import { MAX_STARS } from '../domain/stars';
+import { newLettersFor } from '../game/level-pool';
 import { button } from '../ui/button';
 import { icon } from '../ui/icons';
 import { modal } from '../ui/modal';
@@ -51,7 +52,11 @@ export function openLevelCard(level: FlatLevel): void {
   const bits: string[] = [];
   if (wordCount > 0) bits.push(wordCount + ' ' + plural(wordCount, 'слово', 'слова', 'слов'));
   if (phraseCount > 0) bits.push(phraseCount + ' ' + plural(phraseCount, 'фраза', 'фразы', 'фраз'));
-  if (level.kind === 'alphabet') bits.push('буквы алфавита');
+  // новая буква — заранее: так видно, что урок про неё, и она не застаёт врасплох
+  const letters = newLettersFor(level.index);
+  if (letters.length > 0) {
+    bits.push((letters.length === 1 ? 'новая буква ' : 'новые буквы ') + letters.join(', '));
+  }
 
   const body = h(
     'div',

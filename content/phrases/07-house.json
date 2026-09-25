@@ -82,6 +82,19 @@
       "audio": null,
       "verified": false,
       "note": "проверить слово равшан"
+    },
+    {
+      "id": "p_dari_khona",
+      "tg": "Дари хона",
+      "ru": "Дверь дома",
+      "theme": "house",
+      "words": [
+        "w_dar_door",
+        "w_khona"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     }
   ]
 }

@@ -2,156 +2,6 @@
   "_comment": "Структура карты. Формат описан в content/README.md. Слова и фразы добавляются на вехе 4.",
   "sections": [
     {
-      "id": "s00",
-      "title": "Алфавит",
-      "color": "purple",
-      "icon": "pencil",
-      "levels": [
-        {
-          "id": "s00_l1",
-          "title": "Знакомые буквы",
-          "letters": [
-            "о",
-            "х",
-            "ъ"
-          ],
-          "words": [
-            "w_barg",
-            "w_mor",
-            "w_salom",
-            "w_khayr",
-            "w_ne",
-            "w_shab",
-            "w_khush",
-            "w_khub"
-          ],
-          "phrases": [
-            "p_ob_va_non",
-            "p_barg_sabz",
-            "p_gul_zebo",
-            "p_kitobi_man2",
-            "p_sag_va_gurba",
-            "p_asp_medavad",
-            "p_noni_garm",
-            "p_choyi_shirin",
-            "p_dari_khona"
-          ],
-          "exercises": "auto",
-          "kind": "alphabet"
-        },
-        {
-          "id": "s00_l2",
-          "title": "Ғ и Қ",
-          "letters": [
-            "ғ",
-            "қ"
-          ],
-          "words": [
-            "w_ghoz",
-            "w_ghor",
-            "w_ghalaba",
-            "w_qand",
-            "w_qadam",
-            "w_nagz",
-            "w_tago",
-            "w_raqam"
-          ],
-          "phrases": [
-            "p_in_ghoz_ast",
-            "p_qand_shirin",
-            "p_mor_dar_ghor",
-            "p_qadami_aval",
-            "p_ghalabai_mo"
-          ],
-          "exercises": "auto",
-          "kind": "alphabet"
-        },
-        {
-          "id": "s00_l3",
-          "title": "Ӣ и Ӯ",
-          "letters": [
-            "ӣ",
-            "ӯ"
-          ],
-          "words": [
-            "w_juy",
-            "w_tuy",
-            "w_shur",
-            "w_pust",
-            "w_chub",
-            "w_ruz",
-            "w_chi",
-            "w_dust"
-          ],
-          "phrases": [
-            "p_juy_toza",
-            "p_tuyi_kalon",
-            "p_chub_daroz",
-            "p_shuri_bahr"
-          ],
-          "exercises": "auto",
-          "kind": "alphabet"
-        },
-        {
-          "id": "s00_l4",
-          "title": "Ҳ и Ҷ",
-          "letters": [
-            "ҳ",
-            "ҷ"
-          ],
-          "words": [
-            "w_halvo",
-            "w_hayot",
-            "w_havz",
-            "w_jon",
-            "w_juy",
-            "w_ha",
-            "w_subh",
-            "w_rahmat"
-          ],
-          "phrases": [
-            "p_halvo_bamaza",
-            "p_hayoti_nav"
-          ],
-          "exercises": "auto",
-          "kind": "alphabet"
-        },
-        {
-          "id": "s00_l5",
-          "title": "Читаем слова",
-          "letters": [
-            "ғ",
-            "қ",
-            "ӣ",
-            "ӯ",
-            "ҳ",
-            "ҷ"
-          ],
-          "words": [
-            "w_barg",
-            "w_mor",
-            "w_ghoz",
-            "w_ghor",
-            "w_juy",
-            "w_tuy",
-            "w_halvo",
-            "w_hayot",
-            "w_bad",
-            "w_lutfan"
-          ],
-          "phrases": [
-            "p_ob_va_non",
-            "p_in_ghoz_ast",
-            "p_juy_toza",
-            "p_halvo_bamaza"
-          ],
-          "exercises": "auto",
-          "kind": "alphabet",
-          "boss": true
-        }
-      ]
-    },
-    {
       "id": "s01",
       "title": "Приветствия",
       "color": "orange",
@@ -162,83 +12,93 @@
           "title": "Салом!",
           "words": [
             "w_salom",
-            "w_khayr",
             "w_ha",
             "w_ne",
-            "w_subh"
+            "w_rahmat"
           ],
           "phrases": [
             "p_assalom",
-            "p_shumo_chi_khel",
-            "p_nomi_shumo_chist"
+            "p_ha_rahmat",
+            "p_ne_rahmat"
           ],
           "exercises": "auto"
         },
         {
           "id": "s01_l2",
-          "title": "Доброе утро",
-          "words": [
-            "w_shab",
-            "w_ruz",
-            "w_khush",
-            "w_chi",
-            "w_nagz",
-            "w_khub"
-          ],
-          "phrases": [
-            "p_vaalaykum",
-            "p_tu_chi_khel",
-            "p_man_nagz"
-          ],
-          "exercises": "auto"
-        },
-        {
-          "id": "s01_l3",
           "title": "Как дела?",
           "words": [
+            "w_nagz",
             "w_bad",
-            "w_rahmat",
-            "w_tashakkur",
-            "w_lutfan",
-            "w_bubakhshed"
+            "w_chi",
+            "w_shumo"
           ],
           "phrases": [
-            "p_subh_ba_khayr",
+            "p_shumo_chi_khel",
             "p_rahmat_nagz"
           ],
           "exercises": "auto"
         },
         {
-          "id": "s01_l4",
-          "title": "Спасибо",
+          "id": "s01_l3",
+          "title": "Доброе утро",
           "words": [
-            "w_man",
-            "w_tu",
-            "w_shumo",
-            "w_mo",
-            "w_nom",
-            "w_dust"
+            "w_subh",
+            "w_shab",
+            "w_ruz",
+            "w_khayr"
           ],
           "phrases": [
-            "p_shab_ba_khayr",
-            "p_khush_omaded"
+            "p_subh_ba_khayr",
+            "p_shab_ba_khayr"
+          ],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l4",
+          "title": "Пожалуйста",
+          "words": [
+            "w_lutfan",
+            "w_bubakhshed",
+            "w_tashakkur",
+            "w_khush"
+          ],
+          "phrases": [
+            "p_khush_omaded",
+            "p_to_bozdid"
           ],
           "exercises": "auto"
         },
         {
           "id": "s01_l5",
+          "title": "Я и ты",
+          "words": [
+            "w_man",
+            "w_tu",
+            "w_nom",
+            "w_dust"
+          ],
+          "phrases": [
+            "p_salom_dust",
+            "p_nomi_shumo_chist",
+            "p_man_nagz",
+            "p_tu_chi_khel"
+          ],
+          "exercises": "auto"
+        },
+        {
+          "id": "s01_l6",
           "title": "До свидания",
           "words": [
             "w_salom",
-            "w_ne",
-            "w_ruz",
-            "w_nagz",
             "w_rahmat",
-            "w_bubakhshed"
+            "w_nagz",
+            "w_khayr",
+            "w_ruz",
+            "w_man"
           ],
           "phrases": [
             "p_ruz_ba_khayr",
-            "p_to_bozdid"
+            "p_vaalaykum"
           ],
           "exercises": "auto",
           "boss": true
@@ -257,7 +117,6 @@
           "words": [
             "w_ki",
             "w_in",
-            "w_on",
             "w_az",
             "w_kucho"
           ],
@@ -291,7 +150,8 @@
             "w_rusi",
             "w_mehmon",
             "w_ham",
-            "w_bale"
+            "w_bale",
+            "w_bo"
           ],
           "phrases": [
             "p_man_az_rusiya",
@@ -307,7 +167,8 @@
             "w_khele",
             "w_kame",
             "w_dushanbe_city",
-            "w_oshno"
+            "w_oshno",
+            "w_khub"
           ],
           "phrases": [
             "p_chand_sola"
@@ -362,7 +223,8 @@
             "w_nest",
             "w_budan",
             "w_kas",
-            "w_odam"
+            "w_odam",
+            "w_mo"
           ],
           "phrases": [
             "p_tu_ki_hasti",
@@ -377,7 +239,8 @@
             "w_chiz",
             "w_jo",
             "w_hamin",
-            "w_khud"
+            "w_khud",
+            "w_on"
           ],
           "phrases": [
             "p_u_dusti_man"
@@ -388,8 +251,6 @@
           "id": "s03_l4",
           "title": "Отрицание «нест»",
           "words": [
-            "w_bo",
-            "w_be",
             "w_baroi",
             "w_dar_prep",
             "w_ba"
@@ -464,10 +325,12 @@
             "w_khola",
             "w_zan",
             "w_mard",
-            "w_shavhar"
+            "w_shavhar",
+            "w_tuy"
           ],
           "phrases": [
-            "p_man_yak_barodar"
+            "p_man_yak_barodar",
+            "p_tuyi_kalon"
           ],
           "exercises": "auto"
         },
@@ -479,7 +342,8 @@
             "w_kudak",
             "w_farzand",
             "w_nabera",
-            "w_volidayn"
+            "w_volidayn",
+            "w_jon"
           ],
           "phrases": [
             "p_modari_shumo"
@@ -626,7 +490,6 @@
             "w_panir",
             "w_ravghan",
             "w_namak",
-            "w_shakar",
             "w_seb",
             "w_angur"
           ],
@@ -670,6 +533,24 @@
           "exercises": "auto"
         },
         {
+          "id": "s06_l6",
+          "title": "Сладкое и солёное",
+          "words": [
+            "w_halvo",
+            "w_qand",
+            "w_shakar",
+            "w_shur",
+            "w_be"
+          ],
+          "phrases": [
+            "p_halvo_bamaza",
+            "p_qand_shirin",
+            "p_choy_be_shakar",
+            "p_noni_garm"
+          ],
+          "exercises": "auto"
+        },
+        {
           "id": "s06_l5",
           "title": "За столом",
           "words": [
@@ -706,7 +587,8 @@
           ],
           "phrases": [
             "p_man_dar_khona",
-            "p_charogh_ravshan"
+            "p_charogh_ravshan",
+            "p_dari_khona"
           ],
           "exercises": "auto"
         },
@@ -1391,7 +1273,8 @@
             "w_zebo"
           ],
           "phrases": [
-            "p_kitobi_man"
+            "p_kitobi_man",
+            "p_gul_zebo"
           ],
           "exercises": "auto"
         },
@@ -1406,7 +1289,8 @@
             "w_siyoh"
           ],
           "phrases": [
-            "p_guli_surkh"
+            "p_guli_surkh",
+            "p_choyi_shirin"
           ],
           "exercises": "auto"
         },
@@ -1511,7 +1395,27 @@
             "w_zhola"
           ],
           "phrases": [
-            "p_kuhho_baland"
+            "p_kuhho_baland",
+            "p_sag_va_gurba",
+            "p_asp_medavad"
+          ],
+          "exercises": "auto"
+        },
+        {
+          "id": "s16_l6",
+          "title": "У реки",
+          "words": [
+            "w_barg",
+            "w_juy",
+            "w_havz",
+            "w_mor",
+            "w_ghoz"
+          ],
+          "phrases": [
+            "p_barg_sabz",
+            "p_juy_toza",
+            "p_in_ghoz_ast",
+            "p_shuri_bahr"
           ],
           "exercises": "auto"
         },
@@ -1548,7 +1452,8 @@
             "w_chashm",
             "w_gush",
             "w_bini",
-            "w_dahon"
+            "w_dahon",
+            "w_muy"
           ],
           "phrases": [
             "p_saram_dard",
@@ -1576,7 +1481,6 @@
           "title": "У врача",
           "words": [
             "w_gardan",
-            "w_muy",
             "w_ruy",
             "w_tan",
             "w_dukhtur"

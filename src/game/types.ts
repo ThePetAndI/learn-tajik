@@ -75,6 +75,12 @@ export interface PhraseIntroExercise extends ExerciseCommon {
   kind: 'phrase_intro';
   /** «p:id» для фразы, «d:id» для разговора — по нему отмечается «уже видел». */
   key: string;
+  /**
+   * Фразы урока, которые эта карточка показывает дословно: реплика разговора
+   * «Ассалому алайкум!» и есть фраза урока. Они тоже отмечаются виденными —
+   * второй карточки с тем же текстом не будет.
+   */
+  alsoKeys?: string[];
   /** Одна строка у фразы, две у разговора: реплика собеседника и ответ. */
   lines: { tg: string; ru: string; who?: 'them' | 'me' }[];
   /** Слова по отдельности, в словарной форме. */
@@ -189,7 +195,11 @@ export interface TrueFalseExercise extends ExerciseCommon {
   realRu: string;
 }
 
-/** Знакомство с буквой: карточка, затем проверка «найди эту букву». */
+/**
+ * Знакомство с буквой: карточка, затем проверка «найди эту букву».
+ * Стоит перед первым словом урока с этой буквой. Попыток не записывает:
+ * промах на букве, которую видят впервые, ничего не стоит.
+ */
 export interface AlphabetIntroExercise extends ExerciseCommon {
   kind: 'alphabet_intro';
   lower: string;

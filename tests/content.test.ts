@@ -1,7 +1,7 @@
 /**
  * Интеграционный тест на реальном контенте курса.
  * Проверяет не код по отдельности, а то, что из написанных слов и фраз
- * действительно собираются играбельные уровни — все 105.
+ * действительно собираются играбельные уровни — все 103.
  */
 import { describe, expect, it } from 'vitest';
 import {
@@ -39,9 +39,20 @@ describe('контент загрузился', () => {
   const stats = contentStats();
 
   it('разделы и уровни на месте', () => {
-    expect(stats.sections).toBe(21);
-    expect(stats.levels).toBe(105);
-    expect(sections[0]?.id).toBe('s00');
+    expect(stats.sections).toBe(20);
+    expect(stats.levels).toBe(103);
+  });
+
+  /*
+   * Раньше курс открывался разделом «Алфавит»: пять уроков слов, подобранных
+   * ради букв, — «хуб, хуш, худ», «ғоз, ғор», «чӣ, кӣ, сӣ». Похожие друг на друга,
+   * случайные по смыслу, и до первого «салом» — пять уроков. Теперь буквы
+   * объясняются по ходу, а начинается курс с того, что пригодится сразу.
+   */
+  it('курс начинается с приветствий, а не с алфавита', () => {
+    expect(sections[0]?.title).toBe('Приветствия');
+    expect(levels[0]?.wordIds).toContain('w_salom');
+    expect(sections.some((sec) => sec.title === 'Алфавит')).toBe(false);
   });
 
   it('объём словаря не меньше заявленного', () => {
@@ -70,6 +81,54 @@ describe('контент загрузился', () => {
         expect(word?.tg.toLowerCase()).toContain(letter.lower);
       }
     }
+  });
+});
+
+/* ————————————————————————— похожие слова ————————————————————————— */
+
+/** Расстояние Левенштейна: сколько букв надо поменять, вставить или убрать. */
+function distance(a: string, b: string): number {
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) {
+      cur.push(Math.min(prev[j]! + 1, cur[j - 1]! + 1, prev[j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1)));
+    }
+    prev = cur;
+  }
+  return prev[b.length]!;
+}
+
+/**
+ * Пары, которым место рядом: числа учат рядом, как считают, а «июн» и «июл»
+ * похожи и по-русски. Всё остальное, что отличается одной буквой, — разводим
+ * по разным урокам.
+ */
+const NEIGHBOURS = new Set(['ҳафт/ҳашт', 'июн/июл']);
+
+describe('похожие слова не вводятся вместе', () => {
+  /*
+   * Короткие слова, отличающиеся одной буквой, в одном уроке — главный
+   * источник путаницы у новичка: «хуб» и «хуш», «бо» и «бе», «ин» и «он»
+   * запоминаются как одно пятно. Порознь каждое держится.
+   */
+  it('в одном уроке нет двух новых слов, отличающихся одной буквой', () => {
+    const met = new Set<string>();
+    const found: string[] = [];
+    for (const level of levels) {
+      const fresh = level.wordIds.filter((id) => !met.has(id));
+      for (let i = 0; i < fresh.length; i++) {
+        for (let j = i + 1; j < fresh.length; j++) {
+          const a = getWord(fresh[i]!)!.tg.toLowerCase();
+          const b = getWord(fresh[j]!)!.tg.toLowerCase();
+          if (Math.min(a.length, b.length) > 5 || distance(a, b) > 1) continue;
+          if (NEIGHBOURS.has(a + '/' + b) || NEIGHBOURS.has(b + '/' + a)) continue;
+          found.push(level.id + ': ' + a + ' / ' + b);
+        }
+      }
+      for (const id of level.wordIds) met.add(id);
+    }
+    expect(found).toEqual([]);
   });
 });
 

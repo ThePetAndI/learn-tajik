@@ -81,6 +81,87 @@
       "audio": null,
       "verified": true,
       "note": ""
+    },
+    {
+      "id": "p_barg_sabz",
+      "tg": "Барги сабз",
+      "ru": "Зелёный лист",
+      "theme": "nature",
+      "words": [
+        "w_barg",
+        "w_sabz"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_juy_toza",
+      "tg": "Ҷӯй тоза аст.",
+      "ru": "Ручей чистый.",
+      "theme": "nature",
+      "words": [
+        "w_juy",
+        "w_toza",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_in_ghoz_ast",
+      "tg": "Ин ғоз аст.",
+      "ru": "Это гусь.",
+      "theme": "nature",
+      "words": [
+        "w_in",
+        "w_ghoz",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_shuri_bahr",
+      "tg": "Оби баҳр шӯр аст.",
+      "ru": "Морская вода солёная.",
+      "theme": "nature",
+      "words": [
+        "w_ob",
+        "w_bahr",
+        "w_shur",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_sag_va_gurba",
+      "tg": "Саг ва гурба",
+      "ru": "Собака и кошка",
+      "theme": "nature",
+      "words": [
+        "w_sag",
+        "w_gurba"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_asp_medavad",
+      "tg": "Асп медавад.",
+      "ru": "Лошадь бежит.",
+      "theme": "nature",
+      "words": [
+        "w_asp"
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "проверить форму медавад"
     }
   ]
 }

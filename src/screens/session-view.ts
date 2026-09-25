@@ -185,10 +185,10 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
      * бросить на середине, и до карточки дело может не дойти.
      */
     if (exercise.kind === 'phrase_intro') {
-      const key = exercise.key;
-      if (getState().seen[key] === undefined) {
+      const keys = [exercise.key, ...(exercise.alsoKeys ?? [])].filter((k) => getState().seen[k] === undefined);
+      if (keys.length > 0) {
         update((s) => {
-          s.seen[key] = now();
+          for (const k of keys) s.seen[k] = now();
         });
       }
     }

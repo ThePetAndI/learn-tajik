@@ -9,7 +9,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { getState } from '../src/core/store';
-import { allPhrases, getWord, levels } from '../src/data/content';
+import { allPhrases, getWord, letters, levels, rules } from '../src/data/content';
 import { createWordStat } from '../src/data/state';
 import {
   CARD_KINDS,
@@ -19,7 +19,7 @@ import {
   buildLevelExercises,
   needsOf,
 } from '../src/game/generators';
-import { poolForLevel } from '../src/game/level-pool';
+import { newLettersFor, poolForLevel } from '../src/game/level-pool';
 import { SUPPORTED_KINDS, moduleFor } from '../src/game/registry';
 import type { Exercise, ExerciseKind } from '../src/game/types';
 
@@ -29,8 +29,6 @@ const T0 = Date.parse('2026-03-10T12:00:00Z');
 interface Built {
   levelId: string;
   section: string;
-  /** Урок в первом разделе, где учат буквы. */
-  alphabet: boolean;
   exercises: Exercise[];
   /** Что игрок знал до этого урока: выученные слова и объяснённые фразы. */
   known: ReadonlySet<string>;
@@ -63,7 +61,6 @@ for (const level of levels) {
     built.push({
       levelId: level.id,
       section: level.sectionTitle,
-      alphabet: level.letterChars.length > 0,
       exercises,
       known,
       seen,
@@ -75,7 +72,7 @@ for (const level of levels) {
       for (const id of needsOf(ex).concat(ex.wordIds)) {
         state.srs[id] = { ...createWordStat(T0), introduced: true, seen: 1, correct: 1 };
       }
-      if (ex.kind === 'phrase_intro') state.seen[ex.key] = T0;
+      if (ex.kind === 'phrase_intro') for (const key of [ex.key, ...(ex.alsoKeys ?? [])]) state.seen[key] = T0;
     }
   }
   state.levels[level.id] = { stars: 3, best: 1, attempts: 1, completedAt: T0 };
@@ -139,8 +136,8 @@ describe('мини-игры на реальном курсе', () => {
       const known = new Set(b.known);
       const seen = new Set(b.seen);
       for (const ex of b.exercises) {
-        if (ex.kind === 'phrase_intro') seen.add(ex.key);
-        if (CARD_KINDS.has(ex.kind) || ex.kind === 'alphabet_intro') {
+        if (ex.kind === 'phrase_intro') for (const key of [ex.key, ...(ex.alsoKeys ?? [])]) seen.add(key);
+        if (CARD_KINDS.has(ex.kind)) {
           for (const id of ex.wordIds) known.add(id);
           continue;
         }
@@ -161,7 +158,7 @@ describe('мини-игры на реальном курсе', () => {
 
   it('все задания, где слово надо знать, стоят в NEEDS_INTRO', () => {
     for (const kind of SUPPORTED_KINDS) {
-      if (CARD_KINDS.has(kind) || kind === 'alphabet_intro') continue;
+      if (CARD_KINDS.has(kind)) continue;
       expect(NEEDS_INTRO.has(kind), kind).toBe(true);
     }
   });
@@ -184,40 +181,37 @@ describe('мини-игры на реальном курсе', () => {
   });
 
   /*
-   * Урок алфавита учит читать. Раньше первый урок нёс три буквы, одиннадцать
-   * новых слов, девять фраз и разговор — и новичок терял все жизни, ещё
-   * не научившись различать «х» и «ҳ».
+   * Первый раздел — пять уроков по четыре слова. Раньше первый урок нёс три
+   * буквы, одиннадцать новых слов, девять фраз и разговор — и новичок терял
+   * все жизни, ещё не научившись различать «х» и «ҳ».
    */
-  it('урок алфавита — только буквы и узнавание, без фраз и письма', () => {
-    const allowed = new Set<ExerciseKind>([
-      'rule_card', 'alphabet_intro', 'word_intro',
-      'quiz_tg_ru', 'quiz_ru_tg', 'true_false', 'match_pairs', 'missing_letter',
-    ]);
-    for (const b of built.filter((x) => x.alphabet)) {
-      for (const ex of b.exercises) expect(allowed.has(ex.kind), b.levelId + ': ' + ex.kind).toBe(true);
-    }
-  });
-
-  it('в уроке алфавита новых слов немного', () => {
-    for (const b of built.filter((x) => x.alphabet)) {
-      const fresh = new Set<string>();
-      for (const ex of b.exercises) {
-        if (CARD_KINDS.has(ex.kind) || ex.kind === 'alphabet_intro') continue;
-        for (const id of needsOf(ex)) if (!b.known.has(id)) fresh.add(id);
-      }
-      expect(fresh.size, b.levelId).toBeLessThanOrEqual(6);
-    }
-  });
-
-  it('первые уроки после алфавита не заваливают новым', () => {
-    const early = built.filter((b) => !b.alphabet).slice(0, 5 * ATTEMPTS);
+  it('первые уроки не заваливают новым', () => {
+    const early = built.slice(0, 5 * ATTEMPTS);
     for (const b of early) {
       const fresh = new Set<string>();
       for (const ex of b.exercises) {
         if (CARD_KINDS.has(ex.kind)) continue;
         for (const id of needsOf(ex)) if (!b.known.has(id)) fresh.add(id);
       }
-      expect(fresh.size, b.levelId).toBeLessThanOrEqual(7);
+      expect(fresh.size, b.levelId).toBeLessThanOrEqual(5);
+    }
+  });
+
+  it('первый урок — самые нужные слова: привет, да, нет, спасибо', () => {
+    const first = built[0]!;
+    const words = new Set(first.exercises.filter((e) => e.kind === 'word_intro').flatMap((e) => e.wordIds));
+    for (const id of ['w_salom', 'w_ha', 'w_ne', 'w_rahmat']) expect(words.has(id), id).toBe(true);
+  });
+
+  it('разговор в уроке — только из слов урока и уже выученных', () => {
+    for (const b of built) {
+      const own = new Set(levels.find((l) => l.id === b.levelId)!.wordIds);
+      for (const ex of b.exercises) {
+        if (ex.kind !== 'dialogue_choice') continue;
+        for (const id of ex.wordIds) {
+          expect(own.has(id) || b.known.has(id), b.levelId + ': в разговоре «' + ex.ask.tg + '» незнакомое ' + id).toBe(true);
+        }
+      }
     }
   });
 
@@ -254,16 +248,25 @@ describe('мини-игры на реальном курсе', () => {
     }
   });
 
-  it('правило показывается в начале раздела, и только в первом уровне', () => {
+  it('правило показывается в начале урока — своего или первого в разделе', () => {
     const withRule = built.filter((b) => b.exercises.some((e) => e.kind === 'rule_card'));
     expect(withRule.length, 'правил не нашлось вовсе').toBeGreaterThan(0);
 
     for (const b of withRule) {
       const level = levels.find((l) => l.id === b.levelId)!;
-      expect(level.indexInSection, b.levelId + ': правило не в первом уровне раздела').toBe(0);
+      const own = rules.filter((r) => r.level === level.id);
+      if (own.length === 0) {
+        expect(level.indexInSection, b.levelId + ': правило не в первом уровне раздела').toBe(0);
+      }
       // правило — самый первый экран, до знакомства со словами и до заданий
       expect(b.exercises[0]!.kind, b.levelId + ': правило не первое').toBe('rule_card');
     }
+  });
+
+  it('правило про «шумо» и «ту» — в уроке, где появилось «ту»', () => {
+    const polite = rules.find((r) => r.id === 'r_polite')!;
+    const level = levels.find((l) => l.id === polite.level)!;
+    expect(level.wordIds).toContain('w_tu');
   });
 
   it('разбор ошибки есть там, где правило известно точно', () => {
@@ -286,22 +289,59 @@ describe('мини-игры на реальном курсе', () => {
     expect(ex.some((e) => e.kind === 'word_intro')).toBe(false);
   });
 
-  it('знакомство с буквой бывает только в разделе «Алфавит»', () => {
+  /*
+   * Особая буква объясняется там, где впервые встречается: карточка буквы
+   * стоит раньше первой карточки слова или фразы, в которой эта буква видна.
+   */
+  it('новая особая буква объясняется раньше первого слова с ней', () => {
+    let letterCards = 0;
     for (const b of built) {
-      if (b.exercises.some((e) => e.kind === 'alphabet_intro')) {
-        expect(b.section).toBe('Алфавит');
+      const level = levels.find((l) => l.id === b.levelId)!;
+      for (const ch of newLettersFor(level.index)) {
+        const card = b.exercises.findIndex((e) => e.kind === 'alphabet_intro' && e.lower === ch);
+        const firstUse = b.exercises.findIndex(
+          (e) =>
+            (e.kind === 'word_intro' && e.tg.toLowerCase().includes(ch)) ||
+            (e.kind === 'phrase_intro' && e.lines.some((l) => l.tg.toLowerCase().includes(ch))),
+        );
+        if (firstUse < 0) continue; // слово с буквой не попало в эту попытку
+        expect(card, b.levelId + ': буква ' + ch + ' без карточки').toBeGreaterThanOrEqual(0);
+        expect(card, b.levelId + ': карточка буквы ' + ch + ' позже слова с ней').toBeLessThan(firstUse);
+        letterCards++;
+      }
+    }
+    expect(letterCards).toBeGreaterThan(0);
+  });
+
+  it('каждая буква без русского двойника где-то объясняется, и только один раз за курс', () => {
+    const special = letters.filter((l) => l.ru === null).map((l) => l.lower);
+    const taught = levels.flatMap((l) => newLettersFor(l.index));
+    expect(new Set(taught).size, 'буква объясняется дважды').toBe(taught.length);
+    for (const ch of 'ғӣқӯҳҷ') expect(taught, 'буква ' + ch + ' ни разу не объяснена').toContain(ch);
+    for (const ch of taught) expect(special).toContain(ch);
+  });
+
+  it('одна и та же реплика не объясняется в уроке двумя карточками', () => {
+    const norm = (t: string): string => t.toLowerCase().replace(/[.,!?…]/g, '').trim();
+    for (const b of built) {
+      const shown = new Set<string>();
+      for (const ex of b.exercises) {
+        if (ex.kind !== 'phrase_intro') continue;
+        // разговор может повторить строку, но только если в нём есть и новая реплика
+        const lines = ex.lines.map((l) => norm(l.tg));
+        expect(lines.every((l) => shown.has(l)), b.levelId + ': повтор карточки «' + ex.lines[0]!.tg + '»').toBe(false);
+        for (const l of lines) shown.add(l);
       }
     }
   });
 
-  it('раздел «Алфавит» действительно знакомит с буквами', () => {
-    const alphabet = built.filter((b) => b.section === 'Алфавит');
-    expect(alphabet.length).toBeGreaterThan(0);
-    for (const b of alphabet) {
-      expect(
-        b.exercises.filter((e) => e.kind === 'alphabet_intro').length,
-        b.levelId + ': нет знакомства с буквой',
-      ).toBeGreaterThan(0);
+  it('карточка буквы — только в уроке, где буква встретилась впервые', () => {
+    for (const b of built) {
+      const level = levels.find((l) => l.id === b.levelId)!;
+      const fresh = new Set(newLettersFor(level.index));
+      for (const ex of b.exercises) {
+        if (ex.kind === 'alphabet_intro') expect(fresh.has(ex.lower), b.levelId + ': лишняя карточка ' + ex.lower).toBe(true);
+      }
     }
   });
 

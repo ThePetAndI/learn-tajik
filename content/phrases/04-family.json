@@ -96,6 +96,19 @@
       "audio": null,
       "verified": true,
       "note": ""
+    },
+    {
+      "id": "p_tuyi_kalon",
+      "tg": "Тӯйи калон",
+      "ru": "Большая свадьба",
+      "theme": "family",
+      "words": [
+        "w_tuy",
+        "w_kalon"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     }
   ]
 }

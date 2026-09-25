@@ -229,6 +229,28 @@
       "audio": null,
       "verified": false,
       "note": "проверить употребительность"
+    },
+    {
+      "id": "w_jon",
+      "tg": "ҷон",
+      "ru": "душа; дорогой",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "часто добавляют к имени как ласковое обращение"
+    },
+    {
+      "id": "w_tuy",
+      "tg": "тӯй",
+      "ru": "свадьба, праздник",
+      "pos": "noun",
+      "theme": "family",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
     }
   ]
 }

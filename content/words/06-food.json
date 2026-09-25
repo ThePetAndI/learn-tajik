@@ -295,6 +295,39 @@
       "audio": null,
       "verified": true,
       "note": ""
+    },
+    {
+      "id": "w_halvo",
+      "tg": "ҳалво",
+      "ru": "халва",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_qand",
+      "tg": "қанд",
+      "ru": "сахар кусковой, леденец",
+      "pos": "noun",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_shur",
+      "tg": "шӯр",
+      "ru": "солёный",
+      "pos": "adj",
+      "theme": "food",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
     }
   ]
 }

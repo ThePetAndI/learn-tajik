@@ -70,9 +70,9 @@
       "special": true,
       "note": "проверить описание звука у носителя",
       "examples": [
-        "w_ghoz",
-        "w_ghor",
-        "w_bogh"
+        "w_nagz",
+        "w_bogh",
+        "w_ghoz"
       ],
       "verified": false
     },
@@ -116,7 +116,6 @@
       "note": "",
       "examples": [
         "w_yo",
-        "w_hayot",
         "w_piyoz"
       ],
       "verified": true
@@ -219,8 +218,8 @@
       "note": "",
       "examples": [
         "w_qand",
-        "w_aqib",
-        "w_vaqt"
+        "w_vaqt",
+        "w_aqib"
       ],
       "verified": true
     },
@@ -308,7 +307,7 @@
       "special": false,
       "note": "",
       "examples": [
-        "w_ghor",
+        "w_ruz",
         "w_shur",
         "w_mor"
       ],
@@ -368,9 +367,9 @@
       "special": true,
       "note": "проверить описание звука у носителя",
       "examples": [
-        "w_u",
-        "w_juy",
-        "w_tuy"
+        "w_ruz",
+        "w_dust",
+        "w_u"
       ],
       "verified": false
     },
@@ -414,8 +413,8 @@
       "note": "",
       "examples": [
         "w_ha",
-        "w_ham",
-        "w_nuh"
+        "w_rahmat",
+        "w_subh"
       ],
       "verified": true
     },
@@ -429,8 +428,8 @@
       "note": "",
       "examples": [
         "w_chi",
-        "w_chub",
-        "w_chiz"
+        "w_chiz",
+        "w_choy"
       ],
       "verified": true
     },
@@ -443,9 +442,9 @@
       "special": true,
       "note": "",
       "examples": [
+        "w_kucho",
         "w_jo",
-        "w_jon",
-        "w_juy"
+        "w_jon"
       ],
       "verified": true
     },

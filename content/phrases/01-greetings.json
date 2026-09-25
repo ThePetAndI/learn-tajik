@@ -164,6 +164,45 @@
       "audio": null,
       "verified": false,
       "note": "проверить, нужна ли связка «ҳастам»"
+    },
+    {
+      "id": "p_ha_rahmat",
+      "tg": "Ҳа, раҳмат.",
+      "ru": "Да, спасибо.",
+      "theme": "greetings",
+      "words": [
+        "w_ha",
+        "w_rahmat"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_ne_rahmat",
+      "tg": "Не, раҳмат.",
+      "ru": "Нет, спасибо.",
+      "theme": "greetings",
+      "words": [
+        "w_ne",
+        "w_rahmat"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_salom_dust",
+      "tg": "Салом, дӯст!",
+      "ru": "Привет, друг!",
+      "theme": "greetings",
+      "words": [
+        "w_salom",
+        "w_dust"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     }
   ]
 }

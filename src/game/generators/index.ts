@@ -5,7 +5,7 @@
  */
 
 import { rngFor, shuffle, type Rng } from '../../core/rng';
-import type { Dialogue, Izafet, Letter, Phrase, Word } from '../../data/content';
+import type { Dialogue, Izafet, Phrase, Word } from '../../data/content';
 import type { Exercise, ExerciseKind, PhraseIntroExercise } from '../types';
 import { makeAlphabetIntro } from './alphabet-intro';
 import { makeBuildPhrase } from './build-phrase';
@@ -50,22 +50,17 @@ export {
 export const MIN_EXERCISES = 6;
 export const MAX_EXERCISES = 10;
 /**
- * Сколько букв показываем на уровне алфавита. Все буквы урока, а не две:
- * раньше в первом уроке было три буквы, а карточек две, и «о» не объясняли вовсе.
- */
-const MAX_INTROS = 3;
-/**
  * Потолок на всю сессию вместе с карточками знакомства. Карточка — один тап,
  * но два десятка экранов подряд утомляют независимо от того, что на них.
  */
 const MAX_STEPS = 16;
 
 /**
- * Экраны, которые не являются заданиями: правило, знакомство со словом,
- * с фразой или разговором. Ошибиться на них нельзя, попыток они не записывают,
- * на звёзды не влияют — и в длину урока считаются отдельно от настоящих заданий.
+ * Экраны, которые не являются заданиями: правило, знакомство с буквой, со словом,
+ * с фразой или разговором. Жизни и звёзды на них не теряются, попыток они не
+ * записывают — и в длину урока считаются отдельно от настоящих заданий.
  */
-export const CARD_KINDS = new Set<ExerciseKind>(['rule_card', 'word_intro', 'phrase_intro']);
+export const CARD_KINDS = new Set<ExerciseKind>(['rule_card', 'alphabet_intro', 'word_intro', 'phrase_intro']);
 
 /**
  * Задания, перед которыми слово обязано быть показано.
@@ -158,11 +153,20 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
   const rng: Rng = rngFor(seedKey);
   const words = shuffle(rng, pool.words);
   const phrases = shuffle(rng, pool.phrases);
-  // буквы — в порядке курса, а не вперемешку: «о, х, ъ» объясняются именно так
-  const letters = [...pool.letters];
-  const dialogues = shuffle(rng, [...pool.dialogues]);
+  /*
+   * Разговор — только из слов этого урока и уже выученных. Разговоры цепляются
+   * к уроку по теме, и без этого первый же урок, где учат «салом» и «раҳмат»,
+   * начинал разговор «Хайр! — То боздид!» — ещё два новых слова не по теме
+   * урока, а своих фраз урок так и не показывал. Остальные разговоры темы
+   * не пропадают: их реплики остаются неверными вариантами ответа.
+   */
+  const lessonWords = new Set(pool.words.map((w) => w.id));
+  const dialogues = shuffle(
+    rng,
+    pool.dialogues.filter((d) => (d.words ?? []).every((id) => lessonWords.has(id) || !pool.freshWords.has(id))),
+  );
   const izafets = shuffle(rng, [...pool.izafets]);
-  if (words.length === 0 && phrases.length === 0 && letters.length === 0) return [];
+  if (words.length === 0 && phrases.length === 0) return [];
 
   const out: Exercise[] = [];
   const covered = new Set<string>();
@@ -171,7 +175,6 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
 
   const forWord = cycler<Word>(words);
   const forPhrase = cycler<Phrase>(phrases);
-  const forLetter = cycler<Letter>(letters);
   const forDialogue = cycler<Dialogue>(dialogues);
   const forIzafet = cycler<Izafet>(izafets);
 
@@ -179,15 +182,8 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
     if (!exercise || out.length >= MAX_EXERCISES) return false;
     const key = exercise.kind + ':' + exercise.wordIds.join(',');
     if (used.has(key)) return false;
-    // два одинаковых задания подряд выглядят как баг — кроме квиза и знакомства
-    // с буквой: «вот Ғ, вот Қ» подряд как раз и есть урок алфавита
-    if (
-      out[out.length - 1]?.kind === exercise.kind &&
-      exercise.kind !== 'quiz_tg_ru' &&
-      exercise.kind !== 'alphabet_intro'
-    ) {
-      return false;
-    }
+    // два одинаковых задания подряд выглядят как баг — кроме квиза
+    if (out[out.length - 1]?.kind === exercise.kind && exercise.kind !== 'quiz_tg_ru') return false;
     used.add(key);
     kinds.add(exercise.kind);
     out.push(exercise);
@@ -218,7 +214,6 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
   const alt = (a: Candidate, b: Candidate): [Candidate, Candidate] =>
     rng() < 0.5 ? [a, b] : [b, a];
 
-  const intro = () => forLetter((l) => makeAlphabetIntro(pool, l, rng));
   const quizTg = () => forWord((w) => makeQuiz(pool, w, 'tg_ru', rng));
   const quizRu = () => forWord((w) => makeQuiz(pool, w, 'ru_tg', rng));
   const trueFalse = () => forWord((w) => makeTrueFalse(pool, w, rng));
@@ -268,33 +263,16 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
     return null;
   };
 
-  for (let k = 0; k < MAX_INTROS; k++) slot(intro);
-
-  if (letters.length > 0) {
-    /*
-     * Урок алфавита учит читать, а не набирать словарь. Только узнавание:
-     * что значит слово, верна ли пара, найди пары — и главное задание раздела,
-     * пропущенная особая буква. Ни диалогов, ни фраз, ни письма: человек,
-     * который пять минут назад впервые увидел «ҳ», ещё не может ими заниматься.
-     */
-    slot(quizTg);
-    slot(missing, quizTg);
-    slot(trueFalse, quizTg);
-    slot(pairs, quizRu);
-    slot(missing, quizRu);
-    slot(quizRu, trueFalse);
-  } else {
-    slot(quizTg);
-    slot(trueFalse, quizTg);
-    slot(pairs, sort, quizTg);
-    slot(number, quizRu);
-    slot(dialogue, phrase, quizRu);
-    slot(missing, typeWord, quizRu);
-    slot(izafet, ...alt(wheel, phrase));
-    slot(...alt(sort, odd), wheel);
-    // последним — письмо: сначала собрать фразу из слов, потом написать её сам
-    slot(typePhrase, typeWord, missing, trueFalse);
-  }
+  slot(quizTg);
+  slot(trueFalse, quizTg);
+  slot(pairs, sort, quizTg);
+  slot(number, quizRu);
+  slot(dialogue, phrase, quizRu);
+  slot(missing, typeWord, quizRu);
+  slot(izafet, ...alt(wheel, phrase));
+  slot(...alt(sort, odd), wheel);
+  // последним — письмо: сначала собрать фразу из слов, потом написать её сам
+  slot(typePhrase, typeWord, missing, trueFalse);
 
   // Каждое слово уровня должно встретиться хотя бы раз
   for (const word of words) {
@@ -318,7 +296,7 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
     }
   }
 
-  return withRules(pool, withCards(pool, out));
+  return withRules(pool, withCards(pool, out, seedKey));
 }
 
 /**
@@ -338,16 +316,19 @@ function withRules(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] 
  * читаются как словарь, а «вот слово — а теперь проверим» запоминается.
  * Карточка не задание: попыток не записывает, на звёзды и монеты не влияет.
  *
- * Два вида карточек, в таком порядке:
+ * Три вида карточек, в таком порядке:
  *  — фраза или разговор, которые игрок ещё не видел: перевод целиком и
  *    каждое слово по отдельности. Их слова после этого считаются показанными,
  *    и отдельной карточки на каждое не нужно;
- *  — слово, которое ещё не показывали, — перед первой его проверкой.
+ *  — слово, которое ещё не показывали, — перед первой его проверкой;
+ *  — и перед любой из них — новая особая буква, если она в ней впервые
+ *    встречается: «ҳ» объясняется прямо перед «раҳмат», а не за пять уроков
+ *    до него на словах, подобранных ради буквы.
  *
  * Урок не должен растянуться: на всё вместе есть общий потолок экранов,
  * и под него подрезается хвост заданий — но не ниже минимальной длины урока.
  */
-function withCards(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] {
+function withCards(pool: LevelPool, exercises: readonly Exercise[], seedKey: string): Exercise[] {
   const byId = new Map(pool.vocabulary.map((w) => [w.id, w]));
   const phrasesById = new Map(pool.phrases.map((p) => [p.id, p]));
   const dialoguesById = new Map(pool.dialogues.map((d) => [d.id, d]));
@@ -363,7 +344,14 @@ function withCards(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] 
       const key = dialogueKey(ex.dialogueId);
       const dialogue = dialoguesById.get(ex.dialogueId);
       if (dialogue && !pool.seenPhrases.has(key) && !carded.has(key)) {
-        return makeDialogueIntro(dialogue, byId);
+        const card = makeDialogueIntro(dialogue, byId);
+        // фраза урока, которую разговор показывает дословно, своей карточки уже не требует
+        const lines = new Set(card.lines.map((l) => sameText(l.tg)));
+        const also = pool.phrases
+          .filter((p) => lines.has(sameText(p.tg)))
+          .map((p) => phraseKey(p.id))
+          .filter((k) => !pool.seenPhrases.has(k) && !carded.has(k));
+        return also.length > 0 ? { ...card, alsoKeys: also } : card;
       }
     }
     return null;
@@ -374,10 +362,30 @@ function withCards(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] 
     const out: Exercise[] = [];
     const shown = new Set<string>();
     const carded = new Set<string>();
+    const lettered = new Set<string>();
+
+    /*
+     * Карточка буквы — перед первой карточкой, где эта буква видна. Зерно у каждой
+     * буквы своё: план считается дважды (целиком и с подрезанным хвостом), и плитки
+     * проверки не должны от этого меняться.
+     */
+    const lettersFor = (text: string): void => {
+      const lower = text.normalize('NFC').toLowerCase();
+      for (const letter of pool.letters) {
+        if (lettered.has(letter.lower) || !lower.includes(letter.lower)) continue;
+        const card = makeAlphabetIntro(pool, letter, rngFor(seedKey + ':буква:' + letter.lower));
+        if (!card) continue;
+        lettered.add(letter.lower);
+        out.push(card);
+      }
+    };
+
     for (const exercise of tasks) {
       const card = phraseCard(exercise, carded);
       if (card) {
+        lettersFor(card.lines.map((l) => l.tg).join(' '));
         carded.add(card.key);
+        for (const key of card.alsoKeys ?? []) carded.add(key);
         for (const id of card.wordIds) shown.add(id);
         out.push(card);
       }
@@ -390,6 +398,7 @@ function withCards(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] 
         if (shown.has(id) || !pool.freshWords.has(id)) continue;
         const word = byId.get(id);
         if (!word) continue;
+        lettersFor(word.tg);
         shown.add(id);
         out.push(makeWordIntro(word, pool.reminder));
       }
@@ -400,9 +409,15 @@ function withCards(pool: LevelPool, exercises: readonly Exercise[]): Exercise[] 
   };
 
   const full = plan(exercises);
-  const cards = full.length - exercises.length;
+  // правила встанут в начало урока следом — их экраны тоже в общем потолке
+  const cards = full.length - exercises.length + pool.rules.length;
   const room = Math.max(MIN_EXERCISES, MAX_STEPS - cards);
   return room >= exercises.length ? full : plan(exercises.slice(0, room));
+}
+
+/** Тексты совпадают, если отличаются только регистром и знаками препинания. */
+function sameText(tg: string): string {
+  return tg.normalize('NFC').toLowerCase().replace(/[.,!?…:;«»"—-]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 /**

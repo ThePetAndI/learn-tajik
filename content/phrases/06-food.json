@@ -94,6 +94,61 @@
       "audio": null,
       "verified": false,
       "note": "проверить тайёр"
+    },
+    {
+      "id": "p_halvo_bamaza",
+      "tg": "Ҳалво ширин аст.",
+      "ru": "Халва сладкая.",
+      "theme": "food",
+      "words": [
+        "w_halvo",
+        "w_shirin",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_qand_shirin",
+      "tg": "Қанд ширин аст.",
+      "ru": "Леденец сладкий.",
+      "theme": "food",
+      "words": [
+        "w_qand",
+        "w_shirin",
+        "w_ast"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_noni_garm",
+      "tg": "Нони гарм",
+      "ru": "Тёплый хлеб",
+      "theme": "food",
+      "words": [
+        "w_non",
+        "w_garm"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "p_choy_be_shakar",
+      "tg": "Чой бе шакар.",
+      "ru": "Чай без сахара.",
+      "theme": "food",
+      "words": [
+        "w_choy",
+        "w_be",
+        "w_shakar"
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     }
   ]
 }

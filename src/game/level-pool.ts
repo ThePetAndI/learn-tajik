@@ -16,7 +16,7 @@ import {
   izafetsOfThemes,
   letters as alphabet,
   levels,
-  rulesOfSection,
+  rulesOfLevel,
   sections,
   type FlatLevel,
   type Letter,
@@ -29,11 +29,9 @@ import { makePool, type LevelPool } from './generators';
 
 /**
  * Названия тем по-русски берём из заголовков разделов курса — но не у первого
- * раздела, который тему задел, а у того, где её слов больше всего.
- *
- * Раздел «Алфавит» на примерах занимает слова изо всех тем сразу, и по правилу
- * «первый попавшийся» приветствия, семья и числа разом получали бы название
- * «Алфавит». Две корзины с одинаковой подписью — задание, которое нельзя решить.
+ * раздела, который тему задел, а у того, где её слов больше всего: итоговый
+ * урок или урок-повторение может занять слова соседней темы, и корзина
+ * с чужим названием сбивает с толку.
  */
 const themeTitles: Record<string, string> = (() => {
   const counts = new Map<string, Map<string, number>>();
@@ -114,14 +112,45 @@ function seenPhrases(): Set<string> {
   return new Set(Object.keys(getState().seen));
 }
 
-/** Особые буквы, которые к этому уровню уже прошли в разделе «Алфавит». */
-function taughtLettersUpTo(index: number): Set<string> {
-  const out = new Set<string>();
-  for (const level of levels) {
-    if (level.index > index) break;
-    for (const ch of level.letterChars) out.add(ch);
+/**
+ * Буквы, которым нужна своя карточка: те, у которых нет русского двойника, —
+ * ғ, ӣ, қ, ӯ, ҳ, ҷ и разделительный ъ. Остальные читаются как по-русски,
+ * и карточка «О — как русское о» только отнимает время.
+ */
+const CARD_LETTERS = new Set(alphabet.filter((l) => l.ru === null).map((l) => l.lower));
+
+/** Особые буквы, которые курс впервые показывает на каждом уровне. Считается один раз. */
+let newLettersCache: string[][] | null = null;
+
+/**
+ * Особые буквы, которые впервые встречаются на уровне — в его словах или фразах,
+ * по порядку курса. Раньше буквы учили отдельным разделом «Алфавит» до всякого
+ * смысла, на словах, подобранных ради букв: «хуб, хуш, худ», «ғоз, ғор». Теперь
+ * буква объясняется там, где она впервые нужна, — перед словом, в котором стоит.
+ */
+export function newLettersFor(index: number): string[] {
+  if (!newLettersCache) {
+    newLettersCache = [];
+    const met = new Set<string>();
+    for (const level of levels) {
+      const text = [
+        ...level.wordIds.map((id) => getWord(id)?.tg ?? ''),
+        ...level.phraseIds.map((id) => getPhrase(id)?.tg ?? ''),
+      ]
+        .join(' ')
+        .normalize('NFC')
+        .toLowerCase();
+      const fresh: string[] = [];
+      for (const ch of text) {
+        if (CARD_LETTERS.has(ch) && !met.has(ch)) {
+          met.add(ch);
+          fresh.push(ch);
+        }
+      }
+      newLettersCache.push(fresh);
+    }
   }
-  return out;
+  return newLettersCache[index] ?? [];
 }
 
 /** Фразы прошлых уроков этого раздела, которые игрок уже видел. */
@@ -135,32 +164,6 @@ function pastPhrasesOf(level: FlatLevel): Phrase[] {
       if (phrase && seen['p:' + id] !== undefined && !out.some((p) => p.id === id)) out.push(phrase);
     }
   }
-  return out;
-}
-
-/** Сколько слов проверяет урок алфавита. Урок учит буквам, а не словарю. */
-const ALPHABET_WORDS = 6;
-
-/**
- * Слова урока алфавита: те, что показывают его буквы, — и только с теми
- * особыми буквами, которые уже прошли. Иначе «пропущенная буква» спросила бы
- * «ҷ» в уроке про «о», за три урока до того, как «ҷ» объяснят.
- */
-function alphabetWords(level: FlatLevel, letters: readonly Letter[], listed: readonly Word[]): Word[] {
-  const taught = taughtLettersUpTo(level.index);
-  const own = new Set(letters.map((l) => l.lower));
-  const readable = (w: Word): boolean =>
-    [...w.tg.normalize('NFC').toLowerCase()].every((ch) => !'ғӣқӯҳҷ'.includes(ch) || taught.has(ch));
-  const shows = (w: Word): boolean => [...w.tg.normalize('NFC').toLowerCase()].some((ch) => own.has(ch));
-
-  const out: Word[] = [];
-  const add = (w: Word | undefined): void => {
-    if (!w || out.length >= ALPHABET_WORDS || out.some((x) => x.id === w.id)) return;
-    if (readable(w) && shows(w)) out.push(w);
-  };
-  // сначала слова из примеров к буквам: их игрок видит прямо на карточке буквы
-  for (const letter of letters) for (const id of letter.examples ?? []) add(getWord(id));
-  for (const w of listed) add(w);
   return out;
 }
 
@@ -189,48 +192,28 @@ export function poolForLevel(level: FlatLevel): LevelPool {
   const phrases = level.phraseIds
     .map(getPhrase)
     .filter((p): p is Phrase => Boolean(p));
-  const letters = level.letterChars
-    .map(getLetter)
-    .filter((l): l is Letter => Boolean(l));
-  const isAlphabet = letters.length > 0;
   const themes = mainThemeOf(words);
 
   /*
-   * Правило показываем в первом уровне раздела и только пока он не пройден.
-   * Отдельное поле в сохранении для этого не нужно: пройденный первый уровень
-   * и означает, что правило уже читали.
+   * Правило и карточки новых букв показываем только пока уровень не пройден.
+   * Отдельное поле в сохранении для этого не нужно: пройденный уровень
+   * и означает, что правило уже читали, а буквы уже видели.
    */
-  const rules =
-    level.indexInSection === 0 && !isDone(getState(), level.id)
-      ? rulesOfSection(level.sectionId)
-      : [];
+  const firstPass = !isDone(getState(), level.id);
+  const rules = firstPass ? rulesOfLevel(level) : [];
+  const letters = firstPass
+    ? newLettersFor(level.index)
+        .map(getLetter)
+        .filter((l): l is Letter => Boolean(l))
+    : [];
 
   /*
-   * Урок алфавита — только буквы и слова, которые их показывают. Фраз,
-   * разговоров и изафетов в нём нет: первый урок раньше нёс три буквы,
-   * восемь слов, девять фраз и разговор — для человека, который ещё
-   * не умеет читать эти буквы.
-   */
-  /*
    * Чужие слова для «лишнего», корзин и колеса — только из тех, что игрок
-   * действительно выучил. По порядку курса «пройденными» числились и слова
-   * из списков алфавита, которые уроки алфавита теперь не проверяют, — и во
-   * втором уроке приветствий корзины просили разложить «жизнь» и «победу».
+   * действительно выучил, а не всё, что по порядку курса стояло раньше:
+   * иначе корзины просили бы разложить слова, которых игрок ни разу не видел.
    */
   const fresh = freshWords();
   const prior = priorWordsFor(level.index).filter((w) => !fresh.has(w.id));
-
-  if (isAlphabet) {
-    return makePool(alphabetWords(level, letters, words), [], allWords(), {
-      priorWords: prior,
-      rules,
-      letters,
-      alphabet,
-      themeTitles,
-      freshWords: fresh,
-      seenPhrases: seenPhrases(),
-    });
-  }
 
   return makePool(words, phrases, allWords(), {
     priorWords: prior,

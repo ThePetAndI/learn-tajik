@@ -256,6 +256,61 @@
       "audio": null,
       "verified": false,
       "note": "проверить: жола — это град"
+    },
+    {
+      "id": "w_barg",
+      "tg": "барг",
+      "ru": "лист",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_juy",
+      "tg": "ҷӯй",
+      "ru": "арык, ручей",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_havz",
+      "tg": "ҳавз",
+      "ru": "водоём, бассейн",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_mor",
+      "tg": "мор",
+      "ru": "змея",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_ghoz",
+      "tg": "ғоз",
+      "ru": "гусь",
+      "pos": "noun",
+      "theme": "nature",
+      "example": null,
+      "audio": null,
+      "verified": true,
+      "note": "слово на букву ғ"
     }
   ]
 }

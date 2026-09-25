@@ -2,6 +2,10 @@
  * Знакомство с буквой: карточка со звуком и примерами, затем проверка
  * «найди эту букву» среди похожих.
  *
+ * Буква объясняется там, где она впервые встречается, — прямо перед словом,
+ * в котором стоит. Поэтому примеры — слова этого же урока: игрок сейчас их
+ * и выучит, а не посторонние «гусь» и «пещера», подобранные ради буквы.
+ *
  * Проверка именно среди похожих: человек, впервые увидевший ҳ, узнает её
  * рядом с б и м без всякого знания. Рядом с х — только если запомнил.
  */
@@ -32,7 +36,9 @@ export function makeAlphabetIntro(
   const tiles = shuffle(rng, options);
   return {
     kind: 'alphabet_intro',
-    wordIds: examples.map((e) => e.id),
+    // карточка, а не задание: статистику слов она не трогает, и карточки
+    // самих слов после неё показываются как обычно
+    wordIds: [],
     lower,
     upper: letter.upper,
     name: letter.name,
@@ -45,28 +51,26 @@ export function makeAlphabetIntro(
   };
 }
 
-/** Примеры буквы из контента; если их нет — ищем слова уровня с этой буквой. */
+function has(word: Word, lower: string): boolean {
+  return word.tg.normalize('NFC').toLowerCase().includes(lower);
+}
+
+/**
+ * Примеры буквы: сначала слова урока, потом слова его фраз — то, что игрок
+ * сейчас встретит. Примеры из alphabet.json — только если в уроке буква есть
+ * лишь в словах, которых нет в словаре.
+ */
 function collectExamples(pool: LevelPool, letter: Letter, lower: string): Word[] {
   const byId = new Map(pool.vocabulary.map((w) => [w.id, w]));
   const out: Word[] = [];
-  const seen = new Set<string>();
+  const add = (word: Word | undefined): void => {
+    if (!word || out.length >= MAX_EXAMPLES || out.some((w) => w.id === word.id)) return;
+    if (has(word, lower)) out.push(word);
+  };
 
-  for (const id of letter.examples ?? []) {
-    const word = byId.get(id);
-    if (!word || seen.has(word.id)) continue;
-    // контент мог разъехаться — показываем только слова, где буква правда есть
-    if (!word.tg.normalize('NFC').toLowerCase().includes(lower)) continue;
-    seen.add(word.id);
-    out.push(word);
-  }
-
-  if (out.length === 0) {
-    for (const word of pool.words) {
-      if (out.length >= MAX_EXAMPLES) break;
-      if (!word.tg.normalize('NFC').toLowerCase().includes(lower)) continue;
-      out.push(word);
-    }
-  }
+  for (const word of pool.words) add(word);
+  for (const phrase of pool.phrases) for (const id of phrase.words ?? []) add(byId.get(id));
+  if (out.length === 0) for (const id of letter.examples ?? []) add(byId.get(id));
   return out;
 }
 

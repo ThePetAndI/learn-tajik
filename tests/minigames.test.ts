@@ -15,6 +15,7 @@ import {
   makeTypePhrase,
   makeTypeWord,
   buildLevelExercises,
+  CARD_KINDS,
 } from '../src/game/generators';
 import { makeDialogueIntro, makePhraseIntro } from '../src/game/generators/phrase-intro';
 import type {
@@ -329,6 +330,23 @@ describe('знакомство с буквой', () => {
   it('без примеров карточки не будет', () => {
     const lonely: Letter = { ...letterHa, lower: 'щ', upper: 'Щ', examples: [] };
     expect(makeAlphabetIntro(makePool([], [], []), lonely, rng())).toBeNull();
+  });
+
+  /*
+   * Буква объясняется в уроке, где впервые встречается, — и примеры на карточке
+   * из этого же урока. Посторонний пример из alphabet.json («гусь», «пещера»)
+   * только отвлекал бы от слов, которые игрок сейчас учит.
+   */
+  it('примеры — слова урока, а не из справочника букв', () => {
+    const elsewhere: Letter = { ...letterHa, examples: ['w_ha_elsewhere'] };
+    const ex = makeAlphabetIntro(pool(), elsewhere, rng()) as AlphabetIntroExercise;
+    expect(ex.examples.map((e) => e.tg)).toEqual(['раҳмат']);
+  });
+
+  it('карточка буквы — карточка: статистику слов не трогает и в счёт урока не идёт', () => {
+    const ex = makeAlphabetIntro(pool(), letterHa, rng()) as AlphabetIntroExercise;
+    expect(ex.wordIds).toEqual([]);
+    expect(CARD_KINDS.has('alphabet_intro')).toBe(true);
   });
 });
 

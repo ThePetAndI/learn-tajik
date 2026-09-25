@@ -115,6 +115,8 @@ const wordIds = new Map();
 const wordTg = new Map();
 const phraseIds = new Map();
 const levelIds = new Set();
+/** id урока -> id его раздела: правило, привязанное к уроку, должно быть из того же раздела. */
+const levelSection = new Map();
 const emptyLevels = [];
 const sectionIds = new Set();
 const usedWordIds = new Set();
@@ -224,7 +226,6 @@ async function checkAlphabet() {
     if (typeof l.lower !== 'string' || l.lower.length !== 1) err(file, id + ': поле lower — одна буква');
     if (typeof l.upper !== 'string' || l.upper.length !== 1) err(file, id + ': поле upper — одна буква');
     if (typeof l.sound !== 'string' || !l.sound) err(file, id + ': нужно описание звука (sound)');
-    if (typeof l.lower === 'string') alphabetChars.add(l.lower);
     if (typeof l.verified !== 'boolean') err(file, id + ': нужно поле verified');
     if (l.verified === false) unverified.push({ id: 'буква ' + id, file, tg: l.lower, ru: l.sound, note: l.note ?? '' });
     if (Array.isArray(l.examples)) {
@@ -236,7 +237,6 @@ async function checkAlphabet() {
   }
 }
 
-const alphabetChars = new Set();
 const dialogueIds = new Set();
 const izafetIds = new Set();
 
@@ -347,6 +347,13 @@ async function checkRules() {
     ruleIds.add(id);
     if (typeof r.section !== 'string' || !r.section) err(file, id + ': нет раздела (section)');
     else if (!sectionIds.has(r.section)) err(file, id + ': раздела «' + r.section + '» нет в course.json');
+    if (r.level !== undefined) {
+      if (typeof r.level !== 'string' || !levelIds.has(r.level)) {
+        err(file, id + ': урока «' + r.level + '» нет в course.json');
+      } else if (levelSection.get(r.level) !== r.section) {
+        err(file, id + ': урок ' + r.level + ' не из раздела ' + r.section);
+      }
+    }
     checkRu(file, id, 'title', r.title);
     checkRu(file, id, 'body', r.body);
     if (typeof r.verified !== 'boolean') err(file, id + ': нужно поле verified');
@@ -389,6 +396,7 @@ async function checkCourse() {
       const lid = lvl.id ?? '(без id)';
       if (levelIds.has(lid)) err(file, 'уровень ' + lid + ': дубликат id');
       levelIds.add(lid);
+      levelSection.set(lid, sid);
       const words = Array.isArray(lvl.words) ? lvl.words : [];
       const phrases = Array.isArray(lvl.phrases) ? lvl.phrases : [];
       for (const wid of words) {
@@ -400,19 +408,16 @@ async function checkCourse() {
       }
       // Пустой уровень — не ошибка на этапе, когда контент ещё пишется:
       // карта его показывает, но играть в него нельзя. Считаем такие отдельно.
-      if (lvl.kind !== 'alphabet' && words.length === 0 && phrases.length === 0) {
+      if (words.length === 0 && phrases.length === 0) {
         emptyLevels.push(lid);
       }
       if (lvl.exercises !== undefined && lvl.exercises !== 'auto' && !Array.isArray(lvl.exercises)) {
         err(file, lid + ': exercises должно быть "auto" или массивом');
       }
-      if (lvl.letters !== undefined) {
-        if (!Array.isArray(lvl.letters)) err(file, lid + ': letters должно быть массивом букв');
-        else {
-          for (const ch of lvl.letters) {
-            if (!alphabetChars.has(ch)) err(file, lid + ': буквы «' + ch + '» нет в alphabet.json');
-          }
-        }
+      // Уроков-«алфавитов» больше нет: особая буква объясняется карточкой в том
+      // уроке, где она впервые встречается, — перечислять буквы не нужно.
+      if (lvl.letters !== undefined || lvl.kind !== undefined) {
+        warn(file, lid + ': поля letters и kind больше не используются — буквы показываются там, где впервые встречаются');
       }
     }
   }

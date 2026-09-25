@@ -100,11 +100,16 @@ export interface Izafet {
   note?: string;
 }
 
-/** Правило грамматики — карточка в начале раздела. */
+/** Правило грамматики — карточка в начале раздела или конкретного урока. */
 export interface Rule {
   id: string;
   /** id раздела курса, к началу которого правило прикреплено. */
   section: string;
+  /**
+   * id урока, если правилу место не в начале раздела, а там, где его тема
+   * впервые встречается: «шумо» и «ту» объясняют в уроке, где появилось «ту».
+   */
+  level?: string;
   title: string;
   /** Текст; абзацы разделены пустой строкой. */
   body: string;
@@ -136,10 +141,7 @@ export interface CourseLevel {
   title: string;
   words?: string[];
   phrases?: string[];
-  /** Буквы, с которыми знакомит уровень — только для kind: 'alphabet'. */
-  letters?: string[];
   exercises?: 'auto' | ExerciseSpec[];
-  kind?: string;
   boss?: boolean;
 }
 
@@ -157,10 +159,7 @@ export interface FlatLevel {
   title: string;
   wordIds: string[];
   phraseIds: string[];
-  /** Буквы уровня — пусто у всех, кроме раздела «Алфавит». */
-  letterChars: string[];
   exercises: 'auto' | ExerciseSpec[];
-  kind: string;
   boss: boolean;
   sectionId: string;
   sectionTitle: string;
@@ -245,15 +244,12 @@ export const levels: readonly FlatLevel[] = (() => {
     section.levels.forEach((level, indexInSection) => {
       const wordIds = level.words ?? [];
       const phraseIds = level.phrases ?? [];
-      const kind = level.kind ?? 'words';
       out.push({
         id: level.id,
         title: level.title,
         wordIds,
         phraseIds,
-        letterChars: level.letters ?? [],
         exercises: level.exercises ?? 'auto',
-        kind,
         boss: level.boss === true,
         sectionId: section.id,
         sectionTitle: section.title,
@@ -262,8 +258,7 @@ export const levels: readonly FlatLevel[] = (() => {
         index: out.length,
         indexInSection,
         sectionIndex,
-        // уровень алфавита играбелен без слов: он про буквы
-        playable: kind === 'alphabet' ? letterList.length > 0 : wordIds.length + phraseIds.length > 0,
+        playable: wordIds.length + phraseIds.length > 0,
       });
     });
   });
@@ -302,8 +297,14 @@ export function izafetsOfThemes(themes: readonly string[]): readonly Izafet[] {
 }
 
 /** Правила раздела — показываются в его первом уровне. */
-export function rulesOfSection(sectionId: string): readonly Rule[] {
-  return ruleList.filter((r) => r.section === sectionId);
+/**
+ * Правила урока: свои, прикреплённые к нему по id, и — в первом уроке
+ * раздела — общие правила раздела.
+ */
+export function rulesOfLevel(level: FlatLevel): readonly Rule[] {
+  return ruleList.filter((r) =>
+    r.level ? r.level === level.id : r.section === level.sectionId && level.indexInSection === 0,
+  );
 }
 
 /** Слова темы — из них берутся правдоподобные неверные варианты. */
