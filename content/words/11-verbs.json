@@ -8,7 +8,7 @@
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Ман меравам.",
+        "tg": "Ман мерам.",
         "ru": "Я иду."
       },
       "audio": null,
@@ -22,12 +22,12 @@
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Ӯ меояд.",
+        "tg": "Вай меояд.",
         "ru": "Он приходит."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить форму меояд"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_khurdan",
@@ -36,7 +36,7 @@
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Ман нон мехӯрам.",
+        "tg": "Ман нон мехӯрум.",
         "ru": "Я ем хлеб."
       },
       "audio": null,
@@ -50,8 +50,8 @@
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Чой менӯшам.",
-        "ru": "Пью чай."
+        "tg": "Чой нӯшидестам.",
+        "ru": "Пью чай (сейчас)."
       },
       "audio": null,
       "verified": true,
@@ -64,8 +64,8 @@
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Китоб мехонам.",
-        "ru": "Читаю книгу."
+        "tg": "Китоб хондестум.",
+        "ru": "Читаю книгу (сейчас)."
       },
       "audio": null,
       "verified": true,
@@ -79,8 +79,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу настоящего времени: навис-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_guftan",
@@ -90,8 +90,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу: гӯ-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_didan",
@@ -101,8 +101,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу: бин-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_shunidan",
@@ -112,8 +112,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу: шунав-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_donistan",
@@ -122,7 +122,7 @@
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Ман медонам.",
+        "tg": "Ман медонум.",
         "ru": "Я знаю."
       },
       "audio": null,
@@ -147,10 +147,13 @@
       "id": "w_kardan",
       "tg": "кардан",
       "ru": "делать",
+      "also": [
+        "кадан"
+      ],
       "pos": "verb",
       "theme": "verbs",
       "example": {
-        "tg": "Чӣ мекунӣ?",
+        "tg": "Чӣ кадестӣ?",
         "ru": "Что делаешь?"
       },
       "audio": null,
@@ -159,8 +162,9 @@
     },
     {
       "id": "w_khobidan",
-      "tg": "хобидан",
+      "tg": "хоб кадан",
       "ru": "спать",
+      "lit": "хобидан",
       "pos": "verb",
       "theme": "verbs",
       "example": null,
@@ -176,8 +180,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу: шин-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_giriftan",
@@ -187,8 +191,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу: гир-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_dodan",
@@ -198,8 +202,8 @@
       "theme": "verbs",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить основу: диҳ-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_fahmidan",

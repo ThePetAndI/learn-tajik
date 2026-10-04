@@ -3,7 +3,7 @@
   "phrases": [
     {
       "id": "p_man_dar_khona",
-      "tg": "Ман дар хона ҳастам.",
+      "tg": "Ман дар хонаюм.",
       "ru": "Я дома.",
       "theme": "house",
       "words": [
@@ -11,19 +11,25 @@
         "w_dar_prep",
         "w_khona"
       ],
+      "alt": [
+        "Ман дар хонаам.",
+        "Ман дар хона ҳастам."
+      ],
       "audio": null,
       "verified": true,
       "note": ""
     },
     {
       "id": "p_khonai_mo_kalon",
-      "tg": "Хонаи мо калон аст.",
+      "tg": "Хонаи мо калон.",
       "ru": "Наш дом большой.",
       "theme": "house",
       "words": [
         "w_khona",
-        "w_mo",
-        "w_ast"
+        "w_mo"
+      ],
+      "alt": [
+        "Хонаи мо калон аст."
       ],
       "audio": null,
       "verified": true,
@@ -31,16 +37,17 @@
     },
     {
       "id": "p_kalid_kucho",
-      "tg": "Калид куҷост?",
+      "tg": "Калид дар куҷо?",
       "ru": "Где ключ?",
       "theme": "house",
       "words": [
         "w_kalid",
+        "w_dar_prep",
         "w_kucho"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму куҷост"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_miz_va_kursi",
@@ -57,14 +64,16 @@
     },
     {
       "id": "p_gul_dar_tireza",
-      "tg": "Гул дар тиреза аст.",
+      "tg": "Гул дар тиреза ҳаст.",
       "ru": "Цветок на окне.",
       "theme": "house",
       "words": [
         "w_gul",
         "w_dar_prep",
-        "w_tireza",
-        "w_ast"
+        "w_tireza"
+      ],
+      "alt": [
+        "Гул дар тиреза аст."
       ],
       "audio": null,
       "verified": true,
@@ -72,16 +81,18 @@
     },
     {
       "id": "p_charogh_ravshan",
-      "tg": "Чароғ равшан аст.",
+      "tg": "Чароғ равшан ҳаст.",
       "ru": "Свет включён.",
       "theme": "house",
       "words": [
-        "w_charogh",
-        "w_ast"
+        "w_charogh"
+      ],
+      "alt": [
+        "Чароғ равшан аст."
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить слово равшан"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_dari_khona",

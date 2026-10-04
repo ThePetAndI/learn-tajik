@@ -8,7 +8,7 @@
       "pos": "noun",
       "theme": "bazaar",
       "example": {
-        "tg": "Ба бозор меравам.",
+        "tg": "Ба бозор мерам.",
         "ru": "Иду на базар."
       },
       "audio": null,
@@ -45,8 +45,8 @@
       "theme": "bazaar",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить обороты со словом нарх"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_arzon",
@@ -74,6 +74,9 @@
       "id": "w_somoni",
       "tg": "сомонӣ",
       "ru": "сомони (валюта)",
+      "also": [
+        "сум"
+      ],
       "pos": "noun",
       "theme": "bazaar",
       "example": null,
@@ -89,8 +92,8 @@
       "theme": "bazaar",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_furushanda",
@@ -118,6 +121,9 @@
       "id": "w_kilogramm",
       "tg": "килограмм",
       "ru": "килограмм",
+      "also": [
+        "кило"
+      ],
       "pos": "noun",
       "theme": "bazaar",
       "example": null,
@@ -127,8 +133,9 @@
     },
     {
       "id": "w_khalta",
-      "tg": "халта",
-      "ru": "пакет, мешок",
+      "tg": "пакет",
+      "ru": "пакет",
+      "lit": "халта",
       "pos": "noun",
       "theme": "bazaar",
       "example": null,
@@ -166,8 +173,8 @@
       "theme": "bazaar",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить значение при покупках"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_tanga",
@@ -177,8 +184,8 @@
       "theme": "bazaar",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить употребительность"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_tarozu",
@@ -188,8 +195,8 @@
       "theme": "bazaar",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_navbat",
@@ -198,6 +205,20 @@
       "pos": "noun",
       "theme": "bazaar",
       "example": null,
+      "audio": null,
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_okhir",
+      "tg": "охир",
+      "ru": "последний, окончательный",
+      "pos": "adj",
+      "theme": "bazaar",
+      "example": {
+        "tg": "Не, нарх охирай.",
+        "ru": "Нет, цена последняя."
+      },
       "audio": null,
       "verified": true,
       "note": ""

@@ -3,50 +3,69 @@
   "phrases": [
     {
       "id": "p_albatta_meoyam",
-      "tg": "Албатта меоям!",
+      "tg": "Албатта мебиём!",
       "ru": "Конечно приду!",
       "theme": "speech",
       "words": [
-        "w_albatta"
+        "w_albatta",
+        "w_omadan"
+      ],
+      "alt": [
+        "Албатта меоям!"
       ],
       "audio": null,
       "verified": false,
-      "note": "проверить форму меоям"
+      "note": "носитель не ответил; форма по образцу её «мебиём» — проверить"
     },
     {
       "id": "p_mutaassifona_nametavonam",
-      "tg": "Мутаассифона, наметавонам.",
-      "ru": "К сожалению, не могу.",
+      "tg": "Бахшиш, наметонум.",
+      "ru": "Извини, не могу.",
       "theme": "speech",
       "words": [
-        "w_mutaassifona"
+        "w_bakhshish"
+      ],
+      "alt": [
+        "Бахшиш, наметонам."
       ],
       "audio": null,
       "verified": false,
-      "note": "проверить форму наметавонам"
+      "note": "в ответе было «бахшиш нематонум» — проверить: «наметонум»?"
     },
     {
       "id": "p_kumak_kuned",
-      "tg": "Кӯмак кунед, лутфан.",
+      "tg": "Ёрдам кунед, илтимос.",
       "ru": "Помогите, пожалуйста.",
       "theme": "speech",
       "words": [
         "w_kumak",
-        "w_lutfan"
+        "w_iltimos"
+      ],
+      "alt": [
+        "Кӯмак кунед, илтимос."
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму кунед"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_man_va_tu",
-      "tg": "Ман ва ту",
+      "tg": "Ману ту",
       "ru": "Я и ты",
       "theme": "speech",
       "words": [
         "w_man",
         "w_va",
         "w_tu"
+      ],
+      "alt": [
+        "Ман ва ту"
+      ],
+      "gloss": [
+        {
+          "tg": "ва",
+          "ru": "и — в речи приклеивается: ману ту"
+        }
       ],
       "audio": null,
       "verified": true,
@@ -62,19 +81,21 @@
         "w_yo"
       ],
       "audio": null,
-      "verified": false,
-      "note": "добавить слово қаҳва в словарь"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_khele_bisyor",
-      "tg": "Ин хеле бисёр аст!",
+      "tg": "Ин хела бисёр!",
       "ru": "Это очень много!",
       "theme": "speech",
       "words": [
         "w_in",
         "w_khele",
-        "w_bisyor",
-        "w_ast"
+        "w_bisyor"
+      ],
+      "alt": [
+        "Ин хеле бисёр!"
       ],
       "audio": null,
       "verified": true,
@@ -82,12 +103,14 @@
     },
     {
       "id": "p_durust_ast",
-      "tg": "Дуруст аст.",
+      "tg": "Дуруст.",
       "ru": "Верно.",
       "theme": "speech",
       "words": [
-        "w_durust",
-        "w_ast"
+        "w_durust"
+      ],
+      "alt": [
+        "Дуруст аст."
       ],
       "audio": null,
       "verified": true,

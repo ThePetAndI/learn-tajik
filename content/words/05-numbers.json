@@ -148,8 +148,8 @@
       "theme": "num",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание числительного"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_senzdah",
@@ -160,8 +160,8 @@
       "theme": "num",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание числительного"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_chordah",
@@ -184,8 +184,8 @@
       "theme": "num",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание числительного"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_bist",

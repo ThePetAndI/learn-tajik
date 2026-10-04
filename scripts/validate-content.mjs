@@ -28,6 +28,16 @@ const POS = new Set([
 const errors = [];
 const warnings = [];
 const unverified = [];
+/**
+ * Таджикский текст, который игрок видит в уроках, — для проверки на книжные
+ * слова (content/dushanbe.json). Книжные формы, сохранённые нарочно
+ * (lit у слова, alt у фразы), сюда не попадают.
+ */
+const lessonTexts = [];
+
+function lessonText(file, id, field, value) {
+  if (typeof value === 'string' && value.trim()) lessonTexts.push({ file, id, field, text: value });
+}
 
 function err(file, msg) {
   errors.push(relative(ROOT, file) + ': ' + msg);
@@ -139,6 +149,22 @@ async function checkWords() {
 
       checkTajik(file, id, 'tg', w.tg);
       checkRu(file, id, 'ru', w.ru);
+      lessonText(file, id, 'tg', w.tg);
+      // also — другие формы, которые в Душанбе тоже говорят; lit — книжная, в уроках не видна
+      if (w.also !== undefined) {
+        if (!Array.isArray(w.also) || w.also.length === 0) err(file, id + ': also должно быть непустым списком строк');
+        else {
+          w.also.forEach((form, i) => {
+            checkTajik(file, id, 'also[' + i + ']', form);
+            lessonText(file, id, 'also[' + i + ']', form);
+          });
+          if (w.also.includes(w.tg)) warn(file, id + ': also повторяет само слово');
+        }
+      }
+      if (w.lit !== undefined) {
+        checkTajik(file, id, 'lit', w.lit);
+        if (w.lit === w.tg) warn(file, id + ': lit совпадает со словом — книжная форма нужна, только если она другая');
+      }
       if (!POS.has(w.pos)) err(file, id + ': неизвестная часть речи «' + w.pos + '»');
       if (typeof w.theme !== 'string' || !w.theme) err(file, id + ': нет темы (theme)');
       if (typeof w.verified !== 'boolean') err(file, id + ': нужно поле verified: true|false');
@@ -158,6 +184,7 @@ async function checkWords() {
         else {
           checkTajik(file, id, 'example.tg', w.example.tg);
           checkRu(file, id, 'example.ru', w.example.ru);
+          lessonText(file, id, 'example.tg', w.example.tg);
         }
       }
     }
@@ -180,6 +207,7 @@ async function checkPhrases() {
       phraseIds.set(id, file);
       checkTajik(file, id, 'tg', p.tg);
       checkRu(file, id, 'ru', p.ru);
+      lessonText(file, id, 'tg', p.tg);
       if (typeof p.theme !== 'string' || !p.theme) err(file, id + ': нет темы');
       if (typeof p.verified !== 'boolean') err(file, id + ': нужно поле verified');
       if (p.verified === false) unverified.push({ id, file, tg: p.tg, ru: p.ru, note: p.note ?? '' });
@@ -265,12 +293,14 @@ async function checkDialogues() {
       }
       checkTajik(file, id, side + '.tg', part.tg);
       checkRu(file, id, side + '.ru', part.ru);
+      lessonText(file, id, side + '.tg', part.tg);
     }
     checkGloss(file, id, d);
     if (Array.isArray(d.wrong)) {
       for (const [i, w] of d.wrong.entries()) {
         checkTajik(file, id, 'wrong[' + i + '].tg', w?.tg);
         checkRu(file, id, 'wrong[' + i + '].ru', w?.ru);
+        lessonText(file, id, 'wrong[' + i + '].tg', w?.tg);
       }
     }
     if (typeof d.theme !== 'string' || !d.theme) err(file, id + ': нет темы');
@@ -307,6 +337,7 @@ async function checkIzafet() {
     checkTajik(file, id, 'mod', z.mod);
     checkTajik(file, id, 'tg', z.tg);
     checkRu(file, id, 'ru', z.ru);
+    lessonText(file, id, 'tg', z.tg);
     // Форма собирается игроком как head + и + пробел + mod. Если строка tg
     // выглядит иначе, задание не соберётся — и молча пропадёт.
     if (typeof z.head === 'string' && typeof z.mod === 'string' && typeof z.tg === 'string') {
@@ -366,6 +397,7 @@ async function checkRules() {
       for (const [i, e] of r.examples.entries()) {
         checkTajik(file, id, 'examples[' + i + '].tg', e?.tg);
         checkRu(file, id, 'examples[' + i + '].ru', e?.ru);
+        lessonText(file, id, 'examples[' + i + '].tg', e?.tg);
       }
     }
   }
@@ -418,6 +450,41 @@ async function checkCourse() {
       // уроке, где она впервые встречается, — перечислять буквы не нужно.
       if (lvl.letters !== undefined || lvl.kind !== undefined) {
         warn(file, lid + ': поля letters и kind больше не используются — буквы показываются там, где впервые встречаются');
+      }
+    }
+  }
+}
+
+/**
+ * Курс учит душанбинской речи. content/dushanbe.json — книжные слова, которых
+ * в Душанбе не говорят, и чем их заменить; собран из ответов носителя.
+ * Слово ищется целиком: «оре» не должно ловиться в «хореограф».
+ */
+function dialectPattern(book) {
+  const escaped = book.normalize('NFC').toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp('(?<!\\p{L})' + escaped + '(?!\\p{L})', 'u');
+}
+
+async function checkDialect() {
+  const file = join(CONTENT, 'dushanbe.json');
+  if (!(await exists(file))) return;
+  const data = await readJson(file);
+  if (!data) return;
+  if (!Array.isArray(data.replace)) {
+    err(file, 'ожидалось поле replace: [{ book, say }]');
+    return;
+  }
+  const rules = [];
+  for (const [i, r] of data.replace.entries()) {
+    checkTajik(file, 'replace[' + i + ']', 'book', r?.book);
+    checkRu(file, 'replace[' + i + ']', 'say', r?.say);
+    if (typeof r?.book === 'string') rules.push({ ...r, re: dialectPattern(r.book) });
+  }
+  for (const t of lessonTexts) {
+    const text = t.text.normalize('NFC').toLowerCase();
+    for (const r of rules) {
+      if (r.re.test(text)) {
+        warn(t.file, t.id + '.' + t.field + ': «' + r.book + '» — книжное, в Душанбе говорят «' + r.say + '» (content/dushanbe.json)');
       }
     }
   }
@@ -481,6 +548,7 @@ async function main() {
   await checkIzafet();
   await checkCourse();
   await checkRules();
+  await checkDialect();
 
   const reviewPath = join(CONTENT, 'REVIEW.md');
   if (process.argv.includes('--write-review')) {

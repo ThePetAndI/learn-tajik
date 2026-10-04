@@ -8,7 +8,7 @@
       "pos": "pron",
       "theme": "meeting",
       "example": {
-        "tg": "Ин кӣ аст?",
+        "tg": "Ин кӣ?",
         "ru": "Кто это?"
       },
       "audio": null,
@@ -22,7 +22,7 @@
       "pos": "pron",
       "theme": "meeting",
       "example": {
-        "tg": "Ин китоб аст.",
+        "tg": "Ин китоб.",
         "ru": "Это книга."
       },
       "audio": null,
@@ -44,6 +44,9 @@
       "id": "w_az",
       "tg": "аз",
       "ru": "из, от",
+      "also": [
+        "ай"
+      ],
       "pos": "prep",
       "theme": "meeting",
       "example": {
@@ -61,7 +64,7 @@
       "pos": "pron",
       "theme": "meeting",
       "example": {
-        "tg": "Шумо аз куҷо?",
+        "tg": "Шумо ай куҷо?",
         "ru": "Вы откуда?"
       },
       "audio": null,
@@ -78,20 +81,6 @@
       "audio": null,
       "verified": true,
       "note": ""
-    },
-    {
-      "id": "w_sola",
-      "tg": "сола",
-      "ru": "лет (о возрасте)",
-      "pos": "adj",
-      "theme": "meeting",
-      "example": {
-        "tg": "Ман бист сола.",
-        "ru": "Мне двадцать лет."
-      },
-      "audio": null,
-      "verified": false,
-      "note": "проверить употребление без связки «ҳастам»"
     },
     {
       "id": "w_zabon",
@@ -140,8 +129,8 @@
         "ru": "Я учу таджикский."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить глагол «омӯхтан» в этом значении"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_rusi",
@@ -198,13 +187,16 @@
       "theme": "meeting",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: чаще говорят «фамилия»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_khele",
       "tg": "хеле",
       "ru": "очень",
+      "also": [
+        "хела"
+      ],
       "pos": "adv",
       "theme": "meeting",
       "example": {
@@ -219,6 +211,9 @@
       "id": "w_kame",
       "tg": "каме",
       "ru": "немного",
+      "also": [
+        "камтар"
+      ],
       "pos": "adv",
       "theme": "meeting",
       "example": {
@@ -248,8 +243,8 @@
       "theme": "meeting",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: «ошно» или «шинос»"
+      "verified": true,
+      "note": ""
     }
   ]
 }

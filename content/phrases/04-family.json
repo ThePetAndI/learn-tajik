@@ -3,12 +3,15 @@
   "phrases": [
     {
       "id": "p_oilai_man",
-      "tg": "Оилаи ман калон аст.",
+      "tg": "Оилаи ман калон.",
       "ru": "Моя семья большая.",
       "theme": "family",
       "words": [
         "w_oila",
         "w_man"
+      ],
+      "alt": [
+        "Оилаи ман калон аст."
       ],
       "audio": null,
       "verified": true,
@@ -16,12 +19,15 @@
     },
     {
       "id": "p_padari_man_kor",
-      "tg": "Падари ман кор мекунад.",
+      "tg": "Отаи ман кор мекунад.",
       "ru": "Мой отец работает.",
       "theme": "family",
       "words": [
         "w_padar",
         "w_man"
+      ],
+      "alt": [
+        "Падари ман кор мекунад."
       ],
       "audio": null,
       "verified": true,
@@ -29,7 +35,7 @@
     },
     {
       "id": "p_man_yak_barodar",
-      "tg": "Ман як бародар дорам.",
+      "tg": "Ман як ака дорам.",
       "ru": "У меня есть брат.",
       "theme": "family",
       "words": [
@@ -37,34 +43,40 @@
         "w_barodar",
         "w_yak"
       ],
+      "alt": [
+        "Ман як бародар дорам."
+      ],
       "audio": null,
       "verified": true,
       "note": ""
     },
     {
       "id": "p_modari_shumo",
-      "tg": "Модари шумо куҷост?",
+      "tg": "Аяи шумо дар куҷо?",
       "ru": "Где ваша мама?",
       "theme": "family",
       "words": [
         "w_modar",
         "w_shumo",
+        "w_dar_prep",
         "w_kucho"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму куҷост"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_in_khohari_man",
-      "tg": "Ин хоҳари ман аст.",
+      "tg": "Ин хоҳари ман.",
       "ru": "Это моя сестра.",
       "theme": "family",
       "words": [
         "w_in",
         "w_khohar",
-        "w_man",
-        "w_ast"
+        "w_man"
+      ],
+      "alt": [
+        "Ин хоҳари ман аст."
       ],
       "audio": null,
       "verified": true,
@@ -72,12 +84,15 @@
     },
     {
       "id": "p_bobo_pir",
-      "tg": "Бобои ман пир аст.",
+      "tg": "Бобои ман пир.",
       "ru": "Мой дедушка старый.",
       "theme": "family",
       "words": [
         "w_bobo",
         "w_man"
+      ],
+      "alt": [
+        "Бобои ман пир аст."
       ],
       "audio": null,
       "verified": true,
@@ -85,13 +100,16 @@
     },
     {
       "id": "p_du_farzand",
-      "tg": "Онҳо ду фарзанд доранд.",
+      "tg": "Вайҳо ду фарзанд доранд.",
       "ru": "У них двое детей.",
       "theme": "family",
       "words": [
         "w_onho",
         "w_farzand",
         "w_du"
+      ],
+      "alt": [
+        "Онҳо ду фарзанд доранд."
       ],
       "audio": null,
       "verified": true,

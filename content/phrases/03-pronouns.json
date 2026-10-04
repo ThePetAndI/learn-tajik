@@ -3,24 +3,30 @@
   "phrases": [
     {
       "id": "p_man_talaba",
-      "tg": "Ман талаба ҳастам.",
+      "tg": "Ман талабаам.",
       "ru": "Я ученик.",
       "theme": "pronouns",
       "words": [
         "w_man"
       ],
+      "alt": [
+        "Ман талаба ҳастам."
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить: «талаба» — ученик"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_tu_ki_hasti",
-      "tg": "Ту кӣ ҳастӣ?",
+      "tg": "Ту кӣ?",
       "ru": "Ты кто?",
       "theme": "pronouns",
       "words": [
         "w_tu",
         "w_ki"
+      ],
+      "alt": [
+        "Ту кӣ ҳастӣ?"
       ],
       "audio": null,
       "verified": true,
@@ -28,14 +34,16 @@
     },
     {
       "id": "p_u_dusti_man",
-      "tg": "Ӯ дӯсти ман аст.",
+      "tg": "Вай дӯсти ман.",
       "ru": "Он мой друг.",
       "theme": "pronouns",
       "words": [
-        "w_u",
+        "w_vay",
         "w_dust",
-        "w_man",
-        "w_ast"
+        "w_man"
+      ],
+      "alt": [
+        "Ӯ дӯсти ман аст."
       ],
       "audio": null,
       "verified": true,
@@ -43,12 +51,14 @@
     },
     {
       "id": "p_in_khona_ast",
-      "tg": "Ин хона аст.",
+      "tg": "Ин хона.",
       "ru": "Это дом.",
       "theme": "pronouns",
       "words": [
-        "w_in",
-        "w_ast"
+        "w_in"
+      ],
+      "alt": [
+        "Ин хона аст."
       ],
       "audio": null,
       "verified": true,
@@ -70,12 +80,15 @@
     },
     {
       "id": "p_onho_kucho",
-      "tg": "Онҳо куҷо ҳастанд?",
+      "tg": "Онҳо куҷоянд?",
       "ru": "Где они?",
       "theme": "pronouns",
       "words": [
         "w_onho",
         "w_kucho"
+      ],
+      "alt": [
+        "Онҳо куҷо ҳастанд?"
       ],
       "audio": null,
       "verified": true,
@@ -83,16 +96,19 @@
     },
     {
       "id": "p_mo_dust_hastem",
-      "tg": "Мо дӯст ҳастем.",
+      "tg": "Мо дӯстем.",
       "ru": "Мы друзья.",
       "theme": "pronouns",
       "words": [
         "w_mo",
         "w_dust"
       ],
+      "alt": [
+        "Мо дӯст ҳастем."
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить множественное число"
+      "verified": true,
+      "note": ""
     }
   ]
 }

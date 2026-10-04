@@ -47,8 +47,9 @@
     },
     {
       "id": "w_dahon",
-      "tg": "даҳон",
+      "tg": "даҳан",
       "ru": "рот",
+      "lit": "даҳон",
       "pos": "noun",
       "theme": "health",
       "example": null,
@@ -188,13 +189,16 @@
         "ru": "У меня болит голова."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот дард кардан"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_bemor",
       "tg": "бемор",
       "ru": "больной",
+      "also": [
+        "касал"
+      ],
       "pos": "adj",
       "theme": "health",
       "example": null,
@@ -204,14 +208,15 @@
     },
     {
       "id": "w_sihat",
-      "tg": "сиҳат",
+      "tg": "саломат",
       "ru": "здоровый",
+      "lit": "сиҳат",
       "pos": "adj",
       "theme": "health",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: сиҳат или солим"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_dorukhona",

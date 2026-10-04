@@ -18,17 +18,19 @@
     },
     {
       "id": "p_subh_mekhezam",
-      "tg": "Ман субҳ барвақт мехезам.",
-      "ru": "Я встаю рано утром.",
+      "tg": "Ман барвақт мехезам.",
+      "ru": "Я встаю рано.",
       "theme": "daily",
       "words": [
         "w_man",
-        "w_subh",
         "w_barvaqt"
       ],
+      "alt": [
+        "Ман субҳ барвақт мехезам."
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму мехезам"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_bad_az_dars",
@@ -48,13 +50,17 @@
     },
     {
       "id": "p_shab_mekhobam",
-      "tg": "Шаб ман мехобам.",
-      "ru": "Ночью я сплю.",
+      "tg": "Шаб ман хоб меравам.",
+      "ru": "Ночью я иду спать.",
       "theme": "daily",
       "words": [
         "w_shab",
         "w_man",
-        "w_khobidan"
+        "w_khob",
+        "w_raftan"
+      ],
+      "alt": [
+        "Шаб ман мехобам."
       ],
       "audio": null,
       "verified": true,
@@ -62,7 +68,7 @@
     },
     {
       "id": "p_man_hamesha_choy",
-      "tg": "Ман ҳамеша чой менӯшам.",
+      "tg": "Ман ҳарвақт чой менӯшам.",
       "ru": "Я всегда пью чай.",
       "theme": "daily",
       "words": [
@@ -70,6 +76,9 @@
         "w_hamesha",
         "w_choy",
         "w_nushidan"
+      ],
+      "alt": [
+        "Ман ҳамеша чой менӯшам."
       ],
       "audio": null,
       "verified": true,

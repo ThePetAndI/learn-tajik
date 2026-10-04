@@ -3,25 +3,32 @@
   "phrases": [
     {
       "id": "p_saram_dard",
-      "tg": "Сарам дард мекунад.",
+      "tg": "Сарам дард дорад.",
       "ru": "У меня болит голова.",
       "theme": "health",
       "words": [
         "w_sar",
-        "w_dard"
+        "w_dard",
+        "w_doshtan"
+      ],
+      "alt": [
+        "Сарам дард мекунад."
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот дард кардан"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_man_bemor",
-      "tg": "Ман бемор ҳастам.",
+      "tg": "Ман касалам.",
       "ru": "Я болен.",
       "theme": "health",
       "words": [
         "w_man",
         "w_bemor"
+      ],
+      "alt": [
+        "Ман бемор ҳастам."
       ],
       "audio": null,
       "verified": true,
@@ -29,27 +36,34 @@
     },
     {
       "id": "p_kucho_dorukhona",
-      "tg": "Дорухона куҷост?",
+      "tg": "Дорухона дар куҷояй?",
       "ru": "Где аптека?",
       "theme": "health",
       "words": [
         "w_dorukhona",
+        "w_dar_prep",
         "w_kucho"
       ],
+      "alt": [
+        "Дорухона дар куҷо?"
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму куҷост"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_ba_dukhtur",
-      "tg": "Ман ба духтур меравам.",
+      "tg": "Ман духтур меравам.",
       "ru": "Я иду к врачу.",
       "theme": "health",
       "words": [
         "w_man",
-        "w_ba",
         "w_dukhtur",
         "w_raftan"
+      ],
+      "alt": [
+        "Ман ба духтур меравам.",
+        "Ман ба духтур мерам."
       ],
       "audio": null,
       "verified": true,
@@ -57,29 +71,31 @@
     },
     {
       "id": "p_sihat_boshed",
-      "tg": "Сиҳат бошед!",
+      "tg": "Саломат бошед!",
       "ru": "Будьте здоровы!",
       "theme": "health",
       "words": [
         "w_sihat"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму бошед"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_dasti_man",
-      "tg": "Дасти ман дард мекунад.",
+      "tg": "Дастам дард мекунад.",
       "ru": "У меня болит рука.",
       "theme": "health",
       "words": [
         "w_dast",
-        "w_man",
         "w_dard"
       ],
+      "alt": [
+        "Дасти ман дард мекунад."
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот"
+      "verified": true,
+      "note": ""
     }
   ]
 }

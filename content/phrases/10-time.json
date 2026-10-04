@@ -3,13 +3,15 @@
   "phrases": [
     {
       "id": "p_soat_chand",
-      "tg": "Соат чанд аст?",
+      "tg": "Соат чанд?",
       "ru": "Который час?",
       "theme": "time",
       "words": [
         "w_soat",
-        "w_chand",
-        "w_ast"
+        "w_chand"
+      ],
+      "alt": [
+        "Соат чанд аст?"
       ],
       "audio": null,
       "verified": true,
@@ -17,13 +19,15 @@
     },
     {
       "id": "p_imruz_dushanbe",
-      "tg": "Имрӯз душанбе аст.",
+      "tg": "Имрӯз душанбе.",
       "ru": "Сегодня понедельник.",
       "theme": "time",
       "words": [
         "w_imruz",
-        "w_dushanbe",
-        "w_ast"
+        "w_dushanbe"
+      ],
+      "alt": [
+        "Имрӯз душанбе аст."
       ],
       "audio": null,
       "verified": true,
@@ -31,15 +35,19 @@
     },
     {
       "id": "p_pagoh_meoyam",
-      "tg": "Пагоҳ меоям.",
+      "tg": "Пага мебиём.",
       "ru": "Завтра приду.",
       "theme": "time",
       "words": [
-        "w_pagoh"
+        "w_pagoh",
+        "w_omadan"
+      ],
+      "alt": [
+        "Пагоҳ меоям."
       ],
       "audio": null,
       "verified": false,
-      "note": "проверить форму меоям"
+      "note": "в ответе было «Пага меобием» — проверить: «мебиём» (приду) или «мебиёем» (придём)"
     },
     {
       "id": "p_vaqt_nest",
@@ -56,25 +64,33 @@
     },
     {
       "id": "p_kay_meoed",
-      "tg": "Шумо кай меоед?",
+      "tg": "Шумо кай мебиёен?",
       "ru": "Когда вы придёте?",
       "theme": "time",
       "words": [
-        "w_shumo"
+        "w_shumo",
+        "w_kay",
+        "w_omadan"
+      ],
+      "alt": [
+        "Шумо кай меоед?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму меоед"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_hafta_haft_ruz",
-      "tg": "Ҳафта ҳафт рӯз дорад.",
+      "tg": "Ҳафта ҳафт рӯз дора.",
       "ru": "В неделе семь дней.",
       "theme": "time",
       "words": [
         "w_hafta",
         "w_haft",
         "w_ruz"
+      ],
+      "alt": [
+        "Ҳафта ҳафт рӯз дорад."
       ],
       "audio": null,
       "verified": true,

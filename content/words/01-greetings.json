@@ -33,6 +33,9 @@
       "id": "w_ha",
       "tg": "ҳа",
       "ru": "да",
+      "also": [
+        "ҳо"
+      ],
       "pos": "part",
       "theme": "greetings",
       "example": {
@@ -120,12 +123,12 @@
       "pos": "pron",
       "theme": "greetings",
       "example": {
-        "tg": "Ин чӣ аст?",
+        "tg": "Ин чияй?",
         "ru": "Что это?"
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить пример: «Ин чӣ аст?»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_nagz",
@@ -152,8 +155,8 @@
         "ru": "Хорошо, согласен."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить пример со словом «розӣ» (согласен)"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_bad",
@@ -177,8 +180,8 @@
         "ru": "Спасибо, вы очень добры."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить пример: «шумо хеле меҳрубон»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_tashakkur",
@@ -192,34 +195,26 @@
       "note": "более официальное, чем «раҳмат»"
     },
     {
-      "id": "w_lutfan",
-      "tg": "лутфан",
-      "ru": "пожалуйста (при просьбе)",
-      "pos": "adv",
-      "theme": "greetings",
-      "example": null,
-      "audio": null,
-      "verified": true,
-      "note": "в ответ на «спасибо» говорят иначе"
-    },
-    {
       "id": "w_bubakhshed",
       "tg": "бубахшед",
       "ru": "извините",
       "pos": "interj",
       "theme": "greetings",
       "example": {
-        "tg": "Бубахшед, ин ҷо озод аст?",
+        "tg": "Бубахшед, ин ҷо озод ҳаст?",
         "ru": "Извините, здесь свободно?"
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить пример: «ин ҷо озод аст?»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_man",
       "tg": "ман",
       "ru": "я",
+      "also": [
+        "ма"
+      ],
       "pos": "pron",
       "theme": "greetings",
       "example": {
@@ -227,8 +222,8 @@
         "ru": "Я Али."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить, нужна ли связка: «Ман Алӣ ҳастам»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_tu",
@@ -293,6 +288,20 @@
       "audio": null,
       "verified": true,
       "note": ""
+    },
+    {
+      "id": "w_bakhshish",
+      "tg": "бахшиш",
+      "ru": "извини, прости",
+      "pos": "interj",
+      "theme": "greetings",
+      "example": {
+        "tg": "Бахшиш, наметонум.",
+        "ru": "Извини, не могу."
+      },
+      "audio": null,
+      "verified": true,
+      "note": "проще, чем «бубахшед»: так говорят своим"
     }
   ]
 }

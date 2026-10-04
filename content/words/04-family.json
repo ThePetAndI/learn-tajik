@@ -5,10 +5,13 @@
       "id": "w_padar",
       "tg": "падар",
       "ru": "отец",
+      "also": [
+        "ота"
+      ],
       "pos": "noun",
       "theme": "family",
       "example": {
-        "tg": "Падари ман муаллим аст.",
+        "tg": "Отаи ман муаллим.",
         "ru": "Мой отец — учитель."
       },
       "audio": null,
@@ -19,10 +22,14 @@
       "id": "w_modar",
       "tg": "модар",
       "ru": "мать",
+      "also": [
+        "ая",
+        "оча"
+      ],
       "pos": "noun",
       "theme": "family",
       "example": {
-        "tg": "Модари ман дар хона аст.",
+        "tg": "Аяи ман дар хона.",
         "ru": "Моя мама дома."
       },
       "audio": null,
@@ -33,6 +40,9 @@
       "id": "w_barodar",
       "tg": "бародар",
       "ru": "брат",
+      "also": [
+        "ака"
+      ],
       "pos": "noun",
       "theme": "family",
       "example": null,
@@ -92,8 +102,8 @@
       "theme": "family",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: бибӣ или момо"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_amak",
@@ -179,7 +189,7 @@
       "pos": "noun",
       "theme": "family",
       "example": {
-        "tg": "Оилаи мо калон аст.",
+        "tg": "Оилаи мо калон.",
         "ru": "Наша семья большая."
       },
       "audio": null,
@@ -221,14 +231,15 @@
     },
     {
       "id": "w_volidayn",
-      "tg": "волидайн",
+      "tg": "отаву оча",
       "ru": "родители",
+      "lit": "волидайн",
       "pos": "noun",
       "theme": "family",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить употребительность"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_jon",

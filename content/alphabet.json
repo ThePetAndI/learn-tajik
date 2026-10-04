@@ -362,16 +362,16 @@
       "lower": "ӯ",
       "upper": "Ӯ",
       "name": "у дароз",
-      "sound": "звук между «у» и «о», губы округлены; в русском такого нет",
+      "sound": "в Душанбе звучит как обычное «у»; пишется своей буквой — её надо узнавать в словах",
       "ru": null,
       "special": true,
-      "note": "проверить описание звука у носителя",
+      "note": "",
       "examples": [
         "w_ruz",
         "w_dust",
         "w_u"
       ],
-      "verified": false
+      "verified": true
     },
     {
       "lower": "ф",
@@ -514,7 +514,6 @@
       "note": "",
       "examples": [
         "w_yak",
-        "w_shoyad",
         "w_soniya"
       ],
       "verified": true

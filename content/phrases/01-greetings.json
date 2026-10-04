@@ -3,23 +3,26 @@
   "phrases": [
     {
       "id": "p_assalom",
-      "tg": "Ассалому алайкум!",
+      "tg": "Ассалому алейкум!",
       "ru": "Здравствуйте!",
       "theme": "greetings",
       "words": [],
       "audio": null,
       "verified": true,
-      "note": "традиционное приветствие, вежливее чем «салом»"
+      "note": ""
     },
     {
       "id": "p_vaalaykum",
-      "tg": "Ваалайкум ассалом!",
+      "tg": "Валейкум ассалом!",
       "ru": "И вам здравствуйте!",
       "theme": "greetings",
       "words": [],
+      "alt": [
+        "Валайкум ассалом!"
+      ],
       "audio": null,
       "verified": true,
-      "note": "ответ на «Ассалому алайкум»"
+      "note": "ответ на «Ассалому алейкум»"
     },
     {
       "id": "p_subh_ba_khayr",
@@ -30,15 +33,15 @@
         "w_subh",
         "w_khayr"
       ],
-      "audio": null,
-      "verified": true,
-      "note": "",
       "gloss": [
         {
           "tg": "хайр",
           "ru": "добро, благо — в пожеланиях «... ба хайр»"
         }
-      ]
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_shab_ba_khayr",
@@ -49,15 +52,15 @@
         "w_shab",
         "w_khayr"
       ],
-      "audio": null,
-      "verified": true,
-      "note": "",
       "gloss": [
         {
           "tg": "хайр",
           "ru": "добро, благо — в пожеланиях «... ба хайр»"
         }
-      ]
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_ruz_ba_khayr",
@@ -68,15 +71,15 @@
         "w_ruz",
         "w_khayr"
       ],
-      "audio": null,
-      "verified": false,
-      "note": "проверить, насколько употребительно рядом с «субҳ ба хайр»",
       "gloss": [
         {
           "tg": "хайр",
           "ru": "добро, благо — в пожеланиях «... ба хайр»"
         }
-      ]
+      ],
+      "audio": null,
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_shumo_chi_khel",
@@ -149,8 +152,8 @@
         "w_shumo"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму «чист» (стяжение «чӣ аст»)"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_man_nagz",
@@ -162,17 +165,20 @@
         "w_nagz"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить, нужна ли связка «ҳастам»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_ha_rahmat",
-      "tg": "Ҳа, раҳмат.",
+      "tg": "Ҳо, раҳмат.",
       "ru": "Да, спасибо.",
       "theme": "greetings",
       "words": [
         "w_ha",
         "w_rahmat"
+      ],
+      "alt": [
+        "Ҳа, раҳмат."
       ],
       "audio": null,
       "verified": true,

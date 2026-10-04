@@ -56,6 +56,15 @@ export const wordIntroModule: ExerciseModule<WordIntroExercise> = {
             )
           : h('div', { class: 'intro-card__tg', text: ex.tg }),
         h('div', { class: 'intro-card__ru', text: ex.ru }),
+        // в Душанбе одно и то же часто говорят по-разному: «падар» и «ота»
+        ex.also && ex.also.length > 0
+          ? h(
+              'div',
+              { class: 'intro-card__also' },
+              h('span', { text: 'ещё говорят: ' }),
+              h('b', { text: ex.also.join(', ') }),
+            )
+          : null,
         ex.pos ? h('div', { class: 'intro-card__pos', text: ex.pos }) : null,
         ex.letters.length > 0
           ? h(

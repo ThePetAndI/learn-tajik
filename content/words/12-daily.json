@@ -2,42 +2,38 @@
   "theme": "daily",
   "words": [
     {
-      "id": "w_subhona",
-      "tg": "субҳона",
-      "ru": "завтрак",
-      "pos": "noun",
-      "theme": "daily",
-      "example": null,
-      "audio": null,
-      "verified": false,
-      "note": "проверить: субҳона или ноништа"
-    },
-    {
       "id": "w_noshto",
       "tg": "ноништа",
       "ru": "завтрак",
+      "also": [
+        "завтрак"
+      ],
       "pos": "noun",
       "theme": "daily",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить вариант"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_khuroki_shom",
-      "tg": "хӯроки шом",
+      "tg": "ужин",
       "ru": "ужин",
+      "lit": "хӯроки шом",
       "pos": "noun",
       "theme": "daily",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить составное название"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_istirohat",
       "tg": "истироҳат",
       "ru": "отдых",
+      "also": [
+        "отдих"
+      ],
       "pos": "noun",
       "theme": "daily",
       "example": null,
@@ -129,6 +125,9 @@
       "id": "w_hamesha",
       "tg": "ҳамеша",
       "ru": "всегда",
+      "also": [
+        "ҳарвақт"
+      ],
       "pos": "adv",
       "theme": "daily",
       "example": null,
@@ -144,8 +143,8 @@
       "theme": "daily",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: гоҳе или баъзан"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_hech_goh",
@@ -199,8 +198,8 @@
       "theme": "daily",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот бедор шудан"
+      "verified": true,
+      "note": ""
     }
   ]
 }

@@ -14,25 +14,15 @@
     },
     {
       "id": "w_shoyad",
-      "tg": "шояд",
+      "tg": "мумкин",
       "ru": "может быть",
+      "lit": "шояд",
       "pos": "adv",
       "theme": "speech",
       "example": null,
       "audio": null,
       "verified": true,
       "note": ""
-    },
-    {
-      "id": "w_mutaassifona",
-      "tg": "мутаассифона",
-      "ru": "к сожалению",
-      "pos": "adv",
-      "theme": "speech",
-      "example": null,
-      "audio": null,
-      "verified": false,
-      "note": "проверить написание"
     },
     {
       "id": "w_maylash",
@@ -42,8 +32,8 @@
       "theme": "speech",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить употребительность"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_durust",
@@ -71,6 +61,9 @@
       "id": "w_kumak",
       "tg": "кӯмак",
       "ru": "помощь",
+      "also": [
+        "ёрдам"
+      ],
       "pos": "noun",
       "theme": "speech",
       "example": null,
@@ -196,8 +189,8 @@
       "theme": "speech",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить оттенок"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_ehtiyot",
@@ -207,8 +200,8 @@
       "theme": "speech",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить употребление как предупреждения"
+      "verified": true,
+      "note": ""
     }
   ]
 }

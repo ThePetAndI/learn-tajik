@@ -8,7 +8,7 @@
       "pos": "noun",
       "theme": "house",
       "example": {
-        "tg": "Ман дар хона ҳастам.",
+        "tg": "Ман дар хонаюм.",
         "ru": "Я дома."
       },
       "audio": null,
@@ -155,8 +155,8 @@
       "theme": "house",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_dastarkhon",
@@ -215,14 +215,15 @@
     },
     {
       "id": "w_toqcha",
-      "tg": "тоқча",
-      "ru": "ниша, полка",
+      "tg": "полка",
+      "ru": "полка",
+      "lit": "тоқча",
       "pos": "noun",
       "theme": "house",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание и значение"
+      "verified": true,
+      "note": ""
     }
   ]
 }

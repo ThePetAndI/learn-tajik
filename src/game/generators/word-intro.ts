@@ -20,6 +20,7 @@ export function makeWordIntro(word: Word, remind = false): WordIntroExercise {
     tg: word.tg,
     ru: word.ru,
     pos: posLabel(word.pos),
+    ...(word.also && word.also.length > 0 ? { also: [...word.also] } : {}),
     example: word.example ? { tg: word.example.tg, ru: word.example.ru } : undefined,
     letters: specialLettersOf(word.tg),
     audio: word.audio ?? null,

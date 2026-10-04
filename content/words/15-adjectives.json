@@ -118,6 +118,9 @@
       "id": "w_zebo",
       "tg": "зебо",
       "ru": "красивый",
+      "also": [
+        "хушрӯ"
+      ],
       "pos": "adj",
       "theme": "adjectives",
       "example": null,
@@ -129,6 +132,9 @@
       "id": "w_toza",
       "tg": "тоза",
       "ru": "чистый, свежий",
+      "also": [
+        "соф"
+      ],
       "pos": "adj",
       "theme": "adjectives",
       "example": null,
@@ -138,8 +144,9 @@
     },
     {
       "id": "w_iflos",
-      "tg": "ифлос",
+      "tg": "чиркин",
       "ru": "грязный",
+      "lit": "ифлос",
       "pos": "adj",
       "theme": "adjectives",
       "example": null,
@@ -221,8 +228,8 @@
       "theme": "adjectives",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: кабуд и осмонӣ"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_vazn",

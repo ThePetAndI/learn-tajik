@@ -3,7 +3,7 @@
   "phrases": [
     {
       "id": "p_ba_bozor",
-      "tg": "Ман ба бозор меравам.",
+      "tg": "Ман ба бозор мерам.",
       "ru": "Я иду на базар.",
       "theme": "bazaar",
       "words": [
@@ -11,13 +11,16 @@
         "w_ba",
         "w_bozor"
       ],
+      "alt": [
+        "Ман ба бозор меравам."
+      ],
       "audio": null,
       "verified": true,
       "note": ""
     },
     {
       "id": "p_in_chand_pul",
-      "tg": "Ин чанд пул аст?",
+      "tg": "Ин чанд пул?",
       "ru": "Сколько это стоит?",
       "theme": "bazaar",
       "words": [
@@ -25,23 +28,35 @@
         "w_chand",
         "w_pul"
       ],
-      "audio": null,
-      "verified": false,
-      "note": "проверить оборот чанд пул"
-    },
-    {
-      "id": "p_khele_qimmat",
-      "tg": "Ин хеле қиммат аст!",
-      "ru": "Это очень дорого!",
-      "theme": "bazaar",
-      "words": [
-        "w_in",
-        "w_khele",
-        "w_qimmat"
+      "alt": [
+        "Ин чанд пул аст?"
       ],
       "audio": null,
       "verified": true,
       "note": ""
+    },
+    {
+      "id": "p_khele_qimmat",
+      "tg": "Ин қиммати бад!",
+      "ru": "Это очень дорого!",
+      "theme": "bazaar",
+      "words": [
+        "w_in",
+        "w_qimmat",
+        "w_bad"
+      ],
+      "alt": [
+        "Ин хеле қиммат!"
+      ],
+      "gloss": [
+        {
+          "tg": "бад",
+          "ru": "здесь: страшно, очень («қиммати бад» — страшно дорого)"
+        }
+      ],
+      "audio": null,
+      "verified": false,
+      "note": "в ответе было «Ин қиматибад» — проверить, так ли записано"
     },
     {
       "id": "p_arzontar",
@@ -53,19 +68,22 @@
         "w_nest"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму арзонтар"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_yak_kilo_seb",
-      "tg": "Як килограмм себ, лутфан.",
+      "tg": "Як кило себ, илтимос.",
       "ru": "Килограмм яблок, пожалуйста.",
       "theme": "bazaar",
       "words": [
         "w_yak",
         "w_kilogramm",
         "w_seb",
-        "w_lutfan"
+        "w_iltimos"
+      ],
+      "alt": [
+        "Як килограмм себ, илтимос."
       ],
       "audio": null,
       "verified": true,
@@ -73,15 +91,17 @@
     },
     {
       "id": "p_meva_arzon",
-      "tg": "Мева дар бозор арзон аст.",
+      "tg": "Мева дар бозор арзон.",
       "ru": "Фрукты на базаре дешёвые.",
       "theme": "bazaar",
       "words": [
         "w_meva",
         "w_dar_prep",
         "w_bozor",
-        "w_arzon",
-        "w_ast"
+        "w_arzon"
+      ],
+      "alt": [
+        "Мева дар бозор арзон аст."
       ],
       "audio": null,
       "verified": true,

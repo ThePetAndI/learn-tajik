@@ -3,16 +3,26 @@
   "phrases": [
     {
       "id": "p_chand_sol",
-      "tg": "Шумо чанд сол доред?",
+      "tg": "Шумо чандсолаед?",
       "ru": "Сколько вам лет?",
       "theme": "num",
       "words": [
         "w_chand",
+        "w_sol",
         "w_shumo"
       ],
+      "alt": [
+        "Шумо чанд сола ҳастед?"
+      ],
+      "gloss": [
+        {
+          "tg": "сол",
+          "ru": "год; «чандсола» — сколько лет"
+        }
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить: чанд сола ҳастед или чанд сол доред"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_man_bist_sola",
@@ -22,21 +32,29 @@
       "words": [
         "w_man",
         "w_bist",
-        "w_sola"
+        "w_sol"
+      ],
+      "gloss": [
+        {
+          "tg": "сол",
+          "ru": "год; «бист сола» — двадцать лет"
+        }
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить, нужна ли связка"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_dah_somoni",
-      "tg": "Ин даҳ сомонӣ аст.",
+      "tg": "Ин даҳ сомонӣ.",
       "ru": "Это десять сомони.",
       "theme": "num",
       "words": [
         "w_in",
-        "w_dah",
-        "w_ast"
+        "w_dah"
+      ],
+      "alt": [
+        "Ин даҳ сомонӣ аст."
       ],
       "audio": null,
       "verified": true,
@@ -58,7 +76,7 @@
     },
     {
       "id": "p_man_se_barodar",
-      "tg": "Ман се бародар дорам.",
+      "tg": "Ман се ака дорум.",
       "ru": "У меня три брата.",
       "theme": "num",
       "words": [
@@ -66,19 +84,24 @@
         "w_se",
         "w_barodar"
       ],
+      "alt": [
+        "Ман се бародар дорам."
+      ],
       "audio": null,
       "verified": true,
       "note": ""
     },
     {
       "id": "p_dah_va_dah",
-      "tg": "Даҳ ва даҳ бист аст.",
+      "tg": "Даҳ ва даҳ бист ҳаст.",
       "ru": "Десять и десять — двадцать.",
       "theme": "num",
       "words": [
         "w_dah",
-        "w_bist",
-        "w_ast"
+        "w_bist"
+      ],
+      "alt": [
+        "Даҳ ва даҳ бист аст."
       ],
       "audio": null,
       "verified": true,

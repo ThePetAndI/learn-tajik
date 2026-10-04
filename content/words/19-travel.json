@@ -38,17 +38,21 @@
       "id": "w_qatora",
       "tg": "қатора",
       "ru": "поезд",
+      "also": [
+        "поезд"
+      ],
       "pos": "noun",
       "theme": "travel",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: қатора или поезд"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_havopaymo",
-      "tg": "ҳавопаймо",
+      "tg": "самолёт",
       "ru": "самолёт",
+      "lit": "ҳавопаймо",
       "pos": "noun",
       "theme": "travel",
       "example": null,
@@ -69,8 +73,9 @@
     },
     {
       "id": "w_chipta",
-      "tg": "чипта",
+      "tg": "билет",
       "ru": "билет",
+      "lit": "чипта",
       "pos": "noun",
       "theme": "travel",
       "example": null,
@@ -93,6 +98,9 @@
       "id": "w_furudgoh",
       "tg": "фурудгоҳ",
       "ru": "аэропорт",
+      "also": [
+        "аэропорт"
+      ],
       "pos": "noun",
       "theme": "travel",
       "example": null,
@@ -119,8 +127,8 @@
       "theme": "travel",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_piyoda",
@@ -152,8 +160,8 @@
       "theme": "travel",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_rohbalad",
@@ -163,8 +171,8 @@
       "theme": "travel",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить употребительность"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_sarhad",
@@ -185,8 +193,22 @@
       "theme": "travel",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: шиноснома или паспорт"
+      "verified": true,
+      "note": ""
+    },
+    {
+      "id": "w_qapidan",
+      "tg": "қапидан",
+      "ru": "поймать, схватить",
+      "pos": "verb",
+      "theme": "travel",
+      "example": {
+        "tg": "Мо таксӣ қапидем.",
+        "ru": "Мы поймали такси."
+      },
+      "audio": null,
+      "verified": true,
+      "note": "разговорное: такси ловят, а не «берут»"
     }
   ]
 }

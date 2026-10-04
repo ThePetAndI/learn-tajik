@@ -676,6 +676,13 @@
   text-align: center;
   color: #ffe9a8;
 }
+.intro-card__also {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0.92;
+}
+.intro-card__also b { font-weight: 900; }
 .intro-card__pos {
   font-size: 12.5px;
   font-weight: 800;

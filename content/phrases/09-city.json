@@ -3,39 +3,45 @@
   "phrases": [
     {
       "id": "p_kucho_ast_maktab",
-      "tg": "Мактаб куҷост?",
+      "tg": "Мактаб дар куҷо?",
       "ru": "Где школа?",
       "theme": "city",
       "words": [
         "w_maktab",
+        "w_dar_prep",
         "w_kucho"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму куҷост"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_ba_chap_raved",
-      "tg": "Ба чап равед.",
+      "tg": "Ба чап равен.",
       "ru": "Идите налево.",
       "theme": "city",
       "words": [
         "w_ba",
         "w_chap"
       ],
+      "alt": [
+        "Ба чап равед."
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму равед"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_in_nazdik_ast",
-      "tg": "Ин наздик аст.",
+      "tg": "Ин наздик.",
       "ru": "Это близко.",
       "theme": "city",
       "words": [
         "w_in",
-        "w_nazdik",
-        "w_ast"
+        "w_nazdik"
+      ],
+      "alt": [
+        "Ин наздик аст."
       ],
       "audio": null,
       "verified": true,
@@ -43,13 +49,15 @@
     },
     {
       "id": "p_bozor_dur_ast",
-      "tg": "Бозор дур аст.",
+      "tg": "Бозор дур.",
       "ru": "Базар далеко.",
       "theme": "city",
       "words": [
         "w_bozor",
-        "w_dur",
-        "w_ast"
+        "w_dur"
+      ],
+      "alt": [
+        "Бозор дур аст."
       ],
       "audio": null,
       "verified": true,
@@ -57,7 +65,7 @@
     },
     {
       "id": "p_man_dar_shahr",
-      "tg": "Ман дар шаҳр зиндагӣ мекунам.",
+      "tg": "Ман дар шаҳр зиндагӣ мекунум.",
       "ru": "Я живу в городе.",
       "theme": "city",
       "words": [
@@ -65,22 +73,30 @@
         "w_dar_prep",
         "w_shahr"
       ],
+      "alt": [
+        "Ман дар шаҳр зиндагӣ мекунам."
+      ],
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот зиндагӣ кардан"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_rohi_markaz",
-      "tg": "Роҳи марказ кадом аст?",
+      "tg": "Кадом раҳ марказ меравад?",
       "ru": "Какая дорога в центр?",
       "theme": "city",
       "words": [
+        "w_kadom",
         "w_roh",
-        "w_markaz"
+        "w_markaz",
+        "w_raftan"
+      ],
+      "alt": [
+        "Роҳи марказ кадом аст?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить построение вопроса"
+      "verified": true,
+      "note": ""
     }
   ]
 }

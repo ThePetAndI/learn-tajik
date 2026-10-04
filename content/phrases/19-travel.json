@@ -3,17 +3,20 @@
   "phrases": [
     {
       "id": "p_chipta_chand",
-      "tg": "Чипта чанд пул аст?",
+      "tg": "Билет чанд сум?",
       "ru": "Сколько стоит билет?",
       "theme": "travel",
       "words": [
         "w_chipta",
         "w_chand",
-        "w_pul"
+        "w_somoni"
+      ],
+      "alt": [
+        "Билет чанд пул?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот чанд пул"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_ba_dushanbe_meravam",
@@ -32,20 +35,24 @@
     },
     {
       "id": "p_avtobus_kay",
-      "tg": "Автобус кай меояд?",
+      "tg": "Автобус кай мебиёя?",
       "ru": "Когда придёт автобус?",
       "theme": "travel",
       "words": [
         "w_avtobus",
-        "w_kay"
+        "w_kay",
+        "w_omadan"
+      ],
+      "alt": [
+        "Автобус кай меояд?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму меояд"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_man_piyoda",
-      "tg": "Ман пиёда меравам.",
+      "tg": "Ман пиёда мерам.",
       "ru": "Я иду пешком.",
       "theme": "travel",
       "words": [
@@ -53,32 +60,47 @@
         "w_piyoda",
         "w_raftan"
       ],
+      "alt": [
+        "Ман пиёда меравам."
+      ],
       "audio": null,
       "verified": true,
       "note": ""
     },
     {
       "id": "p_safari_khub",
-      "tg": "Сафари хуб!",
+      "tg": "Роҳи сафед!",
       "ru": "Счастливого пути!",
       "theme": "travel",
       "words": [
-        "w_safar",
-        "w_khub"
+        "w_roh",
+        "w_safed"
+      ],
+      "alt": [
+        "Сафари хуб!"
+      ],
+      "gloss": [
+        {
+          "tg": "сафед",
+          "ru": "белый: «белой дороги» — доброго пути"
+        }
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить устойчивое пожелание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_taksi_giriftem",
-      "tg": "Мо таксӣ гирифтем.",
-      "ru": "Мы взяли такси.",
+      "tg": "Мо таксӣ қапидем.",
+      "ru": "Мы поймали такси.",
       "theme": "travel",
       "words": [
         "w_mo",
         "w_taksi",
-        "w_giriftan"
+        "w_qapidan"
+      ],
+      "alt": [
+        "Мо таксӣ гирифтем."
       ],
       "audio": null,
       "verified": true,

@@ -11,8 +11,8 @@
         "w_man"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить, нужна ли связка «аст»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_az_kucho",
@@ -30,12 +30,16 @@
     },
     {
       "id": "p_man_az_rusiya",
-      "tg": "Ман аз Русия ҳастам.",
+      "tg": "Ман аз Росия.",
       "ru": "Я из России.",
       "theme": "meeting",
       "words": [
         "w_man",
         "w_az"
+      ],
+      "alt": [
+        "Ман аз Россия.",
+        "Ман аз Русия ҳастам."
       ],
       "audio": null,
       "verified": true,
@@ -48,8 +52,14 @@
       "theme": "meeting",
       "words": [
         "w_chand",
-        "w_sola",
+        "w_sol",
         "w_shumo"
+      ],
+      "gloss": [
+        {
+          "tg": "сол",
+          "ru": "год; «чанд сола» — сколько лет"
+        }
       ],
       "audio": null,
       "verified": true,
@@ -78,18 +88,21 @@
         "w_tojiki"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот «гап задан»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_kame_medonam",
-      "tg": "Ман каме тоҷикӣ медонам.",
+      "tg": "Ман камтар тоҷикиро медонам.",
       "ru": "Я немного знаю таджикский.",
       "theme": "meeting",
       "words": [
+        "w_man",
         "w_kame",
-        "w_tojiki",
-        "w_man"
+        "w_tojiki"
+      ],
+      "alt": [
+        "Ман каме тоҷикӣ медонам."
       ],
       "audio": null,
       "verified": true,
@@ -97,12 +110,15 @@
     },
     {
       "id": "p_in_ki_ast",
-      "tg": "Ин кӣ аст?",
+      "tg": "Ин кӣ?",
       "ru": "Кто это?",
       "theme": "meeting",
       "words": [
         "w_in",
         "w_ki"
+      ],
+      "alt": [
+        "Ин кӣ аст?"
       ],
       "audio": null,
       "verified": true,

@@ -41,6 +41,9 @@
       "id": "w_roh",
       "tg": "роҳ",
       "ru": "дорога, путь",
+      "also": [
+        "раҳ"
+      ],
       "pos": "noun",
       "theme": "city",
       "example": null,
@@ -133,8 +136,8 @@
       "theme": "city",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание: бонк или банк"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_chap",
@@ -180,8 +183,8 @@
       "theme": "city",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: ақиб или қафо"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_nazdik",
@@ -218,14 +221,15 @@
     },
     {
       "id": "w_kupruk",
-      "tg": "купрук",
+      "tg": "мост",
       "ru": "мост",
+      "lit": "купрук",
       "pos": "noun",
       "theme": "city",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     }
   ]
 }

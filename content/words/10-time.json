@@ -8,7 +8,7 @@
       "pos": "noun",
       "theme": "time",
       "example": {
-        "tg": "Соат чанд аст?",
+        "tg": "Соат чанд?",
         "ru": "Который час?"
       },
       "audio": null,
@@ -96,17 +96,21 @@
       "id": "w_pagoh",
       "tg": "пагоҳ",
       "ru": "завтра",
+      "also": [
+        "пага"
+      ],
       "pos": "adv",
       "theme": "time",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: пагоҳ также значит утро"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_diruz",
-      "tg": "дирӯз",
+      "tg": "дина",
       "ru": "вчера",
+      "lit": "дирӯз",
       "pos": "adv",
       "theme": "time",
       "example": null,
@@ -243,8 +247,8 @@
       "theme": "time",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание месяцев"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_iyul",
@@ -254,8 +258,8 @@
       "theme": "time",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание месяцев"
+      "verified": true,
+      "note": ""
     }
   ]
 }

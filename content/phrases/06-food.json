@@ -3,12 +3,15 @@
   "phrases": [
     {
       "id": "p_choy_menusham",
-      "tg": "Ман чой менӯшам.",
+      "tg": "Ман чой менӯшум.",
       "ru": "Я пью чай.",
       "theme": "food",
       "words": [
         "w_man",
         "w_choy"
+      ],
+      "alt": [
+        "Ман чой менӯшам."
       ],
       "audio": null,
       "verified": true,
@@ -29,26 +32,31 @@
     },
     {
       "id": "p_osh_bamaza",
-      "tg": "Ош хеле бамаза аст.",
+      "tg": "Ош хеле бамаза.",
       "ru": "Плов очень вкусный.",
       "theme": "food",
       "words": [
         "w_osh",
-        "w_khele",
-        "w_ast"
+        "w_khele"
+      ],
+      "alt": [
+        "Ош хеле бамаза аст."
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить слово бамаза"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_gusht_namekhuram",
-      "tg": "Ман гӯшт намехӯрам.",
+      "tg": "Ман гӯшт намехӯрум.",
       "ru": "Я не ем мясо.",
       "theme": "food",
       "words": [
         "w_man",
         "w_gusht"
+      ],
+      "alt": [
+        "Ман гӯшт намехӯрам."
       ],
       "audio": null,
       "verified": true,
@@ -56,14 +64,14 @@
     },
     {
       "id": "p_yak_piyola_choy",
-      "tg": "Як пиёла чой, лутфан.",
+      "tg": "Як пиёла чой, илтимос.",
       "ru": "Одну пиалу чая, пожалуйста.",
       "theme": "food",
       "words": [
         "w_yak",
         "w_piyola",
         "w_choy",
-        "w_lutfan"
+        "w_iltimos"
       ],
       "audio": null,
       "verified": true,
@@ -71,12 +79,15 @@
     },
     {
       "id": "p_chi_mekhured",
-      "tg": "Шумо чӣ мехӯред?",
+      "tg": "Шумо чӣ мехӯрен?",
       "ru": "Что вы будете есть?",
       "theme": "food",
       "words": [
         "w_shumo",
         "w_chi"
+      ],
+      "alt": [
+        "Шумо чӣ мехӯред?"
       ],
       "audio": null,
       "verified": true,
@@ -84,26 +95,30 @@
     },
     {
       "id": "p_khurok_tayyor",
-      "tg": "Хӯрок тайёр аст.",
+      "tg": "Хӯрок тайёр шуд.",
       "ru": "Еда готова.",
       "theme": "food",
       "words": [
-        "w_khurok",
-        "w_ast"
+        "w_khurok"
+      ],
+      "alt": [
+        "Хӯрок тайёр аст."
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить тайёр"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_halvo_bamaza",
-      "tg": "Ҳалво ширин аст.",
+      "tg": "Ҳалво ширин.",
       "ru": "Халва сладкая.",
       "theme": "food",
       "words": [
         "w_halvo",
-        "w_shirin",
-        "w_ast"
+        "w_shirin"
+      ],
+      "alt": [
+        "Ҳалво ширин аст."
       ],
       "audio": null,
       "verified": true,
@@ -111,13 +126,15 @@
     },
     {
       "id": "p_qand_shirin",
-      "tg": "Қанд ширин аст.",
+      "tg": "Қанд ширин.",
       "ru": "Леденец сладкий.",
       "theme": "food",
       "words": [
         "w_qand",
-        "w_shirin",
-        "w_ast"
+        "w_shirin"
+      ],
+      "alt": [
+        "Қанд ширин аст."
       ],
       "audio": null,
       "verified": true,

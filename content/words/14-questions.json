@@ -5,10 +5,13 @@
       "id": "w_charo",
       "tg": "чаро",
       "ru": "почему",
+      "also": [
+        "чиба"
+      ],
       "pos": "pron",
       "theme": "questions",
       "example": {
-        "tg": "Чаро?",
+        "tg": "Чиба?",
         "ru": "Почему?"
       },
       "audio": null,
@@ -36,17 +39,6 @@
       "audio": null,
       "verified": true,
       "note": ""
-    },
-    {
-      "id": "w_chi_tavr",
-      "tg": "чӣ тавр",
-      "ru": "каким образом",
-      "pos": "pron",
-      "theme": "questions",
-      "example": null,
-      "audio": null,
-      "verified": false,
-      "note": "проверить оттенок против чӣ хел"
     },
     {
       "id": "w_kadom",
@@ -94,25 +86,15 @@
     },
     {
       "id": "w_kucho_ast",
-      "tg": "куҷост",
-      "ru": "где находится",
+      "tg": "куҷода",
+      "ru": "где (находится)",
+      "lit": "куҷост",
       "pos": "pron",
       "theme": "questions",
       "example": null,
       "audio": null,
-      "verified": false,
+      "verified": true,
       "note": "стяжение куҷо + аст"
-    },
-    {
-      "id": "w_ore",
-      "tg": "оре",
-      "ru": "да (разговорное)",
-      "pos": "part",
-      "theme": "questions",
-      "example": null,
-      "audio": null,
-      "verified": false,
-      "note": "проверить употребительность"
     }
   ]
 }

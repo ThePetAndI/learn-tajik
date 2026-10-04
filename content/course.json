@@ -57,8 +57,8 @@
           "id": "s01_l4",
           "title": "Пожалуйста",
           "words": [
-            "w_lutfan",
-            "w_bubakhshed",
+            "w_iltimos",
+            "w_bakhshish",
             "w_tashakkur",
             "w_khush"
           ],
@@ -131,7 +131,7 @@
           "title": "Откуда ты?",
           "words": [
             "w_chand",
-            "w_sola",
+            "w_sol",
             "w_zabon",
             "w_mamlakat",
             "w_tojik"
@@ -181,7 +181,7 @@
           "words": [
             "w_ki",
             "w_az",
-            "w_sola",
+            "w_sol",
             "w_tojik",
             "w_mehmon",
             "w_nasab"
@@ -234,7 +234,7 @@
         },
         {
           "id": "s03_l3",
-          "title": "Связка «аст»",
+          "title": "Это и то",
           "words": [
             "w_chiz",
             "w_jo",
@@ -540,7 +540,8 @@
             "w_qand",
             "w_shakar",
             "w_shur",
-            "w_be"
+            "w_be",
+            "w_ser"
           ],
           "phrases": [
             "p_halvo_bamaza",
@@ -714,7 +715,8 @@
             "w_hisob",
             "w_tanga",
             "w_tarozu",
-            "w_navbat"
+            "w_navbat",
+            "w_okhir"
           ],
           "phrases": [
             "p_arzontar"
@@ -853,7 +855,6 @@
           "title": "Который час?",
           "words": [
             "w_moh",
-            "w_sol",
             "w_imruz",
             "w_pagoh",
             "w_diruz",
@@ -949,7 +950,8 @@
           ],
           "phrases": [
             "p_chi_mekuni",
-            "p_mo_choy_menushem"
+            "p_mo_choy_menushem",
+            "p_chi_megi"
           ],
           "exercises": "auto"
         },
@@ -1013,7 +1015,6 @@
           "id": "s12_l1",
           "title": "Утро",
           "words": [
-            "w_subhona",
             "w_noshto",
             "w_khuroki_shom",
             "w_istirohat"
@@ -1072,7 +1073,7 @@
           "id": "s12_l5",
           "title": "Мой день",
           "words": [
-            "w_subhona",
+            "w_noshto",
             "w_istirohat",
             "w_kitob",
             "w_har_ruz",
@@ -1102,7 +1103,6 @@
             "w_omad"
           ],
           "phrases": [
-            "p_diruz_raftam",
             "p_soli_guzashta"
           ],
           "exercises": "auto"
@@ -1189,7 +1189,6 @@
           "title": "Куҷо? Кай?",
           "words": [
             "w_chi_khel",
-            "w_chi_tavr",
             "w_kadom"
           ],
           "phrases": [
@@ -1214,8 +1213,7 @@
           "title": "Чанд? Кадом?",
           "words": [
             "w_baroi_chi",
-            "w_kucho_ast",
-            "w_ore"
+            "w_kucho_ast"
           ],
           "phrases": [
             "p_kadom_rang"
@@ -1227,9 +1225,9 @@
           "title": "Задай вопрос",
           "words": [
             "w_charo",
-            "w_chi_tavr",
-            "w_javob",
-            "w_ore"
+            "w_kay",
+            "w_kadom",
+            "w_javob"
           ],
           "phrases": [
             "p_savoli_man"
@@ -1621,7 +1619,8 @@
             "w_moshin",
             "w_avtobus",
             "w_taksi",
-            "w_qatora"
+            "w_qatora",
+            "w_qapidan"
           ],
           "phrases": [
             "p_chipta_chand",
@@ -1703,7 +1702,6 @@
           "words": [
             "w_albatta",
             "w_shoyad",
-            "w_mutaassifona",
             "w_maylash"
           ],
           "phrases": [
@@ -1720,7 +1718,7 @@
             "w_khato",
             "w_kumak",
             "w_marhamat",
-            "w_iltimos"
+            "w_bubakhshed"
           ],
           "phrases": [
             "p_mutaassifona_nametavonam",

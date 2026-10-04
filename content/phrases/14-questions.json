@@ -3,15 +3,19 @@
   "phrases": [
     {
       "id": "p_charo_namioi",
-      "tg": "Чаро намеоӣ?",
+      "tg": "Чиба намебиёӣ?",
       "ru": "Почему не приходишь?",
       "theme": "questions",
       "words": [
-        "w_charo"
+        "w_charo",
+        "w_omadan"
+      ],
+      "alt": [
+        "Чаро намеоӣ?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму намеоӣ"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_kay_shuru",
@@ -23,18 +27,20 @@
         "w_dars"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить оборот сар шудан"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_in_chi_khel",
-      "tg": "Ин чӣ хел аст?",
+      "tg": "Вай чӣ хелияй?",
       "ru": "Какой он?",
       "theme": "questions",
       "words": [
-        "w_in",
-        "w_chi_khel",
-        "w_ast"
+        "w_vay",
+        "w_chi_khel"
+      ],
+      "alt": [
+        "Ин чӣ хел аст?"
       ],
       "audio": null,
       "verified": true,
@@ -54,14 +60,16 @@
     },
     {
       "id": "p_savoli_man",
-      "tg": "Ман як савол дорам.",
+      "tg": "Ман савол дорам.",
       "ru": "У меня есть вопрос.",
       "theme": "questions",
       "words": [
         "w_man",
-        "w_yak",
         "w_savol",
         "w_doshtan"
+      ],
+      "alt": [
+        "Ман як савол дорам."
       ],
       "audio": null,
       "verified": true,
@@ -69,16 +77,20 @@
     },
     {
       "id": "p_javobi_shumo",
-      "tg": "Ҷавоби шумо чист?",
+      "tg": "Ҷавоби шумо чӣ?",
       "ru": "Каков ваш ответ?",
       "theme": "questions",
       "words": [
         "w_javob",
-        "w_shumo"
+        "w_shumo",
+        "w_chi"
+      ],
+      "alt": [
+        "Ҷавоби шумо чист?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму чист"
+      "verified": true,
+      "note": ""
     }
   ]
 }

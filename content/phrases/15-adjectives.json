@@ -42,28 +42,32 @@
     },
     {
       "id": "p_in_chi_rang",
-      "tg": "Ин чӣ ранг аст?",
+      "tg": "Ин чӣ ранг?",
       "ru": "Какого это цвета?",
       "theme": "adjectives",
       "words": [
         "w_in",
         "w_chi",
-        "w_rang",
-        "w_ast"
+        "w_rang"
+      ],
+      "alt": [
+        "Ин чӣ ранг аст?"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить построение вопроса о цвете"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_choy_garm",
-      "tg": "Чой гарм аст.",
+      "tg": "Чой гарм.",
       "ru": "Чай горячий.",
       "theme": "adjectives",
       "words": [
         "w_choy",
-        "w_garm",
-        "w_ast"
+        "w_garm"
+      ],
+      "alt": [
+        "Чой гарм аст."
       ],
       "audio": null,
       "verified": true,
@@ -78,19 +82,25 @@
         "w_dukhtar",
         "w_zebo"
       ],
+      "alt": [
+        "Духтари хушрӯ"
+      ],
       "audio": null,
       "verified": true,
       "note": ""
     },
     {
       "id": "p_gul_zebo",
-      "tg": "Гул зебо аст.",
+      "tg": "Гул зебост.",
       "ru": "Цветок красивый.",
       "theme": "adjectives",
       "words": [
         "w_gul",
-        "w_zebo",
-        "w_ast"
+        "w_zebo"
+      ],
+      "alt": [
+        "Гул зебо аст.",
+        "Гул зебо."
       ],
       "audio": null,
       "verified": true,
@@ -106,8 +116,8 @@
         "w_shirin"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить изафет после гласной: чойи или чои"
+      "verified": true,
+      "note": ""
     }
   ]
 }

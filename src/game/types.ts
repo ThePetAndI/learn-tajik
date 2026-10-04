@@ -56,6 +56,8 @@ export interface WordIntroExercise extends ExerciseCommon {
   ru: string;
   /** Часть речи по-русски. */
   pos?: string;
+  /** Другие формы, которые тоже говорят: «ота» при «падар». */
+  also?: string[];
   example?: { tg: string; ru: string };
   /** Особые буквы слова — то, на что стоит посмотреть заранее. */
   letters: string[];

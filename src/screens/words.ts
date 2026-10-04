@@ -78,6 +78,11 @@ function openWordDetail(word: Word, stat: WordStat, ts: number): void {
     { class: 'word-detail' },
     h('div', { class: 'word-detail__tg', text: word.tg }),
     h('div', { class: 'word-detail__ru', text: word.ru }),
+    word.also && word.also.length > 0
+      ? h('div', { class: 'word-detail__form', text: 'ещё говорят: ' + word.also.join(', ') })
+      : null,
+    // книжная форма — в уроках её нет, но на вывесках и в новостях она встретится
+    word.lit ? h('div', { class: 'word-detail__form', text: 'в книгах: ' + word.lit }) : null,
     hasSpecialLetters(word.tg)
       ? h('div', {
           class: 'word-detail__letters',
@@ -229,9 +234,9 @@ export function createWordsScreen(): ScreenView {
 
     for (const { word, stat } of entries) {
       if (!whole && !def?.match(stat, ts)) continue;
-      if (query && !word.tg.toLowerCase().includes(query) && !word.ru.toLowerCase().includes(query)) {
-        continue;
-      }
+      // ищется и по другим формам: «ота» находит «падар», «дирӯз» — «дина»
+      const forms = [word.tg, word.ru, ...(word.also ?? []), word.lit ?? ''];
+      if (query && !forms.some((f) => f.toLowerCase().includes(query))) continue;
       total++;
       if (rows.length < 300) rows.push(wordRow(word, stat, ts));
     }

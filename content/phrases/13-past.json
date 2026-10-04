@@ -2,22 +2,6 @@
   "theme": "past",
   "phrases": [
     {
-      "id": "p_diruz_raftam",
-      "tg": "Дирӯз ман ба бозор рафтам.",
-      "ru": "Вчера я ходил на базар.",
-      "theme": "past",
-      "words": [
-        "w_diruz",
-        "w_man",
-        "w_ba",
-        "w_bozor",
-        "w_raft"
-      ],
-      "audio": null,
-      "verified": true,
-      "note": ""
-    },
-    {
       "id": "p_in_khub_bud",
       "tg": "Ин хуб буд.",
       "ru": "Это было хорошо.",
@@ -33,13 +17,16 @@
     },
     {
       "id": "p_u_omad",
-      "tg": "Ӯ дирӯз омад.",
+      "tg": "Вай дина омад.",
       "ru": "Он вчера пришёл.",
       "theme": "past",
       "words": [
-        "w_u",
+        "w_vay",
         "w_diruz",
         "w_omad"
+      ],
+      "alt": [
+        "Ӯ дина омад."
       ],
       "audio": null,
       "verified": true,
@@ -69,17 +56,25 @@
         "w_did"
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить отрицание на-"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_soli_guzashta",
-      "tg": "Соли гузашта",
+      "tg": "Порсол",
       "ru": "В прошлом году",
       "theme": "past",
       "words": [
-        "w_sol",
-        "w_guzashta"
+        "w_sol"
+      ],
+      "alt": [
+        "Соли гузашта"
+      ],
+      "gloss": [
+        {
+          "tg": "сол",
+          "ru": "год; «порсол» — в прошлом году"
+        }
       ],
       "audio": null,
       "verified": true,

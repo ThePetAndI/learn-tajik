@@ -108,8 +108,8 @@
       "theme": "work",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_imtihon",
@@ -152,8 +152,8 @@
       "theme": "work",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: нома или мактуб"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_kompyuter",
@@ -163,8 +163,8 @@
       "theme": "work",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить написание"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_hunar",
@@ -185,8 +185,8 @@
       "theme": "work",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить оттенок"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_shogird",

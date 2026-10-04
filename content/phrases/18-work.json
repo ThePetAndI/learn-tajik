@@ -3,25 +3,38 @@
   "phrases": [
     {
       "id": "p_kasbi_shumo",
-      "tg": "Касби шумо чист?",
+      "tg": "Шумо чӣ кораед?",
       "ru": "Кем вы работаете?",
       "theme": "work",
       "words": [
-        "w_kasb",
-        "w_shumo"
+        "w_shumo",
+        "w_chi",
+        "w_kor"
+      ],
+      "alt": [
+        "Касби шумо чист?"
+      ],
+      "gloss": [
+        {
+          "tg": "кор",
+          "ru": "работа; «чӣ кораед» — кем вы работаете"
+        }
       ],
       "audio": null,
-      "verified": false,
-      "note": "проверить форму чист"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "p_man_muallim",
-      "tg": "Ман муаллим ҳастам.",
+      "tg": "Ман муаллимам.",
       "ru": "Я учитель.",
       "theme": "work",
       "words": [
         "w_man",
         "w_muallim"
+      ],
+      "alt": [
+        "Ман муаллим ҳастам."
       ],
       "audio": null,
       "verified": true,
@@ -29,14 +42,17 @@
     },
     {
       "id": "p_u_dar_maktab",
-      "tg": "Ӯ дар мактаб кор мекунад.",
+      "tg": "Вай дар мактаб кор мекунад.",
       "ru": "Он работает в школе.",
       "theme": "work",
       "words": [
-        "w_u",
+        "w_vay",
         "w_dar_prep",
         "w_maktab",
         "w_kor_kardan"
+      ],
+      "alt": [
+        "Ӯ дар мактаб кор мекунад."
       ],
       "audio": null,
       "verified": true,
@@ -44,31 +60,37 @@
     },
     {
       "id": "p_man_tojiki_meomuzam",
-      "tg": "Ман забони тоҷикиро меомӯзам.",
+      "tg": "Ман тоҷикира ёд мегирифтестам.",
       "ru": "Я изучаю таджикский язык.",
       "theme": "work",
       "words": [
         "w_man",
-        "w_zabon",
         "w_tojiki",
-        "w_omukhtan"
+        "w_giriftan"
+      ],
+      "alt": [
+        "Ман тоҷикӣ ёд мегирам.",
+        "Ман забони тоҷикиро меомӯзам."
       ],
       "audio": null,
       "verified": false,
-      "note": "проверить окончание -ро"
+      "note": "форма из ответа носителя; проверить «мегирифтестам» — или «ёд гирифтестам»"
     },
     {
       "id": "p_imtihon_sakht",
-      "tg": "Имтиҳон сахт буд.",
+      "tg": "Имтиҳон қинд буд.",
       "ru": "Экзамен был трудным.",
       "theme": "work",
       "words": [
         "w_imtihon",
         "w_bud"
       ],
+      "alt": [
+        "Имтиҳон сахт буд."
+      ],
       "audio": null,
       "verified": false,
-      "note": "проверить слово сахт"
+      "note": "проверить слово «қинд» (трудный): так и пишется?"
     },
     {
       "id": "p_kor_khub",

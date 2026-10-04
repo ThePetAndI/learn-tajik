@@ -8,7 +8,7 @@
       "pos": "pron",
       "theme": "pronouns",
       "example": {
-        "tg": "Ӯ дӯсти ман аст.",
+        "tg": "Ӯ дӯсти ман.",
         "ru": "Он мой друг."
       },
       "audio": null,
@@ -30,6 +30,9 @@
       "id": "w_onho",
       "tg": "онҳо",
       "ru": "они",
+      "also": [
+        "вайҳо"
+      ],
       "pos": "pron",
       "theme": "pronouns",
       "example": null,
@@ -58,12 +61,12 @@
       "pos": "verb",
       "theme": "pronouns",
       "example": {
-        "tg": "Ман омода ҳастам.",
+        "tg": "Ман тайёр.",
         "ru": "Я готов."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить пример со словом «омода»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_nest",
@@ -98,8 +101,8 @@
       "theme": "pronouns",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить оттенок: «кас» и «одам»"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_odam",
@@ -108,7 +111,7 @@
       "pos": "noun",
       "theme": "pronouns",
       "example": {
-        "tg": "Ӯ одами нағз аст.",
+        "tg": "Вай одами нағз.",
         "ru": "Он хороший человек."
       },
       "audio": null,
@@ -148,8 +151,8 @@
       "theme": "pronouns",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить оттенок"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_khud",
@@ -159,22 +162,25 @@
       "theme": "pronouns",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить употребление"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_bo",
       "tg": "бо",
       "ru": "с (вместе с)",
+      "also": [
+        "қати"
+      ],
       "pos": "prep",
       "theme": "pronouns",
       "example": {
-        "tg": "Бо ман биё.",
+        "tg": "Қати ман биё.",
         "ru": "Пойдём со мной."
       },
       "audio": null,
-      "verified": false,
-      "note": "проверить пример"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_be",

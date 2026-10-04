@@ -8,7 +8,7 @@
       "pos": "noun",
       "theme": "nature",
       "example": {
-        "tg": "Ҳаво гарм аст.",
+        "tg": "Ҳаво гарм.",
         "ru": "Погода тёплая."
       },
       "audio": null,
@@ -182,8 +182,9 @@
     },
     {
       "id": "w_gurba",
-      "tg": "гурба",
+      "tg": "пишак",
       "ru": "кошка",
+      "lit": "гурба",
       "pos": "noun",
       "theme": "nature",
       "example": null,
@@ -254,8 +255,8 @@
       "theme": "nature",
       "example": null,
       "audio": null,
-      "verified": false,
-      "note": "проверить: жола — это град"
+      "verified": true,
+      "note": ""
     },
     {
       "id": "w_barg",
