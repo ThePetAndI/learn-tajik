@@ -22,7 +22,6 @@ export type ExerciseKind =
   | 'missing_letter'
   | 'true_false'
   | 'alphabet_intro'
-  | 'odd_one_out'
   | 'dialogue_choice'
   | 'number_word'
   | 'category_sort'
@@ -218,15 +217,6 @@ export interface AlphabetIntroExercise extends ExerciseCommon {
   correct: number;
 }
 
-/** Лишнее слово: три из одной темы, одно из чужой. */
-export interface OddOneOutExercise extends ExerciseCommon {
-  kind: 'odd_one_out';
-  /** Название темы трёх слов — объясняет ответ. */
-  theme: string;
-  options: { wordId: string; tg: string; ru: string }[];
-  correct: number;
-}
-
 /** Выбери реплику: мини-диалог из двух ходов. */
 export interface DialogueChoiceExercise extends ExerciseCommon {
   kind: 'dialogue_choice';
@@ -284,7 +274,6 @@ export type Exercise =
   | MissingLetterExercise
   | TrueFalseExercise
   | AlphabetIntroExercise
-  | OddOneOutExercise
   | DialogueChoiceExercise
   | NumberWordExercise
   | CategorySortExercise
@@ -338,6 +327,11 @@ export interface ExerciseInstance {
   el: HTMLElement;
   /** Освободить слушатели и таймеры. */
   destroy?: () => void;
+  /**
+   * Остановить и снова пустить время — только у заданий на время. Поверх
+   * задания открыли окно замечания: пока игрок пишет, секунды идти не должны.
+   */
+  pause?: (paused: boolean) => void;
 }
 
 export interface ExerciseModule<E extends Exercise = Exercise> {

@@ -73,6 +73,9 @@
 }
 
 .level__task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   flex: none;
   padding: 2px var(--gutter) 10px;
   font-size: 16px;

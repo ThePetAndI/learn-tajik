@@ -2,11 +2,13 @@
 
 import { h, onTap } from '../core/dom';
 import { push, type ScreenView } from '../core/router';
-import { getState, subscribe } from '../core/store';
+import { getState, subscribe, update } from '../core/store';
 import { plural } from '../core/time';
 import { button } from '../ui/button';
 import { icon, type IconName } from '../ui/icons';
+import { confirmModal, modal } from '../ui/modal';
 import { toast } from '../ui/toast';
+import { clearReports, formatReports, REASON_LABELS, removeReport } from '../domain/reports';
 import { canInstall, isStandalone, onInstallAvailability, promptInstall } from '../pwa/install-prompt';
 import { now } from '../core/time';
 import { visibleStreak } from '../domain/streak';
@@ -122,6 +124,107 @@ export function createProfileScreen(): ScreenView {
     );
   }
 
+  /* ——— замечания к урокам ——— */
+
+  const reportsNote = h('p', { class: 'reports__note' });
+  const reportsList = h('div', { class: 'reports__list' });
+  const reportsActions = h('div', { class: 'reports__actions' });
+
+  /** Буфер обмена есть не везде: тогда показываем текст, чтобы скопировать руками. */
+  function showDump(text: string): void {
+    const area = h('textarea', { class: 'reports__dump', attr: { readonly: 'readonly' } });
+    area.value = text;
+    modal({
+      title: 'Замечания для Claude',
+      text: 'Выделите текст целиком, скопируйте и вставьте в чат.',
+      body: area,
+      closeButton: true,
+      actions: [{ label: 'Готово', tone: 'white' }],
+    });
+    setTimeout(() => area.select(), 50);
+  }
+
+  function copyReports(): void {
+    const text = formatReports(getState().reports, now());
+    const n = getState().reports.length;
+    if (!navigator.clipboard?.writeText) {
+      showDump(text);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(
+      () => toast({ text: 'Скопировано: ' + n + ' — вставьте в чат с Claude', tone: 'good', ms: 3200 }),
+      () => showDump(text),
+    );
+  }
+
+  function shareReports(): void {
+    const text = formatReports(getState().reports, now());
+    navigator.share({ title: 'Замечания к курсу «Тоҷикӣ»', text }).catch((err: unknown) => {
+      // отменённое «Поделиться» — не ошибка
+      if (err instanceof DOMException && err.name === 'AbortError') return;
+      showDump(text);
+    });
+  }
+
+  function renderReports(): void {
+    const reports = getState().reports;
+    const n = reports.length;
+    reportsNote.textContent =
+      n === 0
+        ? 'Пока нет. Нашли в уроке слово, которое так не говорят или произносят иначе, — нажмите флажок вверху урока.'
+        : n + ' ' + plural(n, 'замечание', 'замечания', 'замечаний') +
+          '. Скопируйте и вставьте в чат с Claude — он сверит их с курсом и поправит уроки.';
+
+    // свежие сверху
+    reportsList.replaceChildren(
+      ...[...reports].reverse().map((r) => {
+        const del = h(
+          'button',
+          { class: 'report-row__del', attr: { type: 'button' }, aria: { label: 'Удалить замечание' } },
+          icon('close'),
+        );
+        onTap(del, () => update((s) => void removeReport(s, r.at)));
+        return h(
+          'div',
+          { class: 'report-row' },
+          h(
+            'div',
+            { class: 'report-row__text' },
+            h('span', { class: 'report-row__what', text: r.ru ? r.tg + ' — ' + r.ru : r.tg }),
+            h('span', {
+              class: 'report-row__why',
+              text: REASON_LABELS[r.reason] + (r.note ? ': «' + r.note + '»' : '') + ' · ' + r.where,
+            }),
+          ),
+          del,
+        );
+      }),
+    );
+
+    reportsActions.replaceChildren();
+    if (n === 0) return;
+    reportsActions.append(
+      button({ label: 'Скопировать для Claude', icon: 'flag', tone: 'orange', wide: true, onTap: copyReports }),
+    );
+    if (typeof navigator.share === 'function') {
+      reportsActions.append(button({ label: 'Поделиться', tone: 'white', wide: true, onTap: shareReports }));
+    }
+    reportsActions.append(
+      button({
+        label: 'Удалить все',
+        tone: 'white',
+        wide: true,
+        onTap: () => {
+          void confirmModal('Удалить все замечания?', 'Если вы их ещё не отправили, они пропадут.', 'Удалить').then(
+            (ok) => {
+              if (ok) update((s) => void clearReports(s));
+            },
+          );
+        },
+      }),
+    );
+  }
+
   function renderInstall(): void {
     installSlot.replaceChildren();
     if (isStandalone() || !canInstall()) return;
@@ -198,19 +301,32 @@ export function createProfileScreen(): ScreenView {
         gemRows,
       ),
       h('section', { class: 'panel' }, h('div', { class: 'panel__title', text: 'Статистика' }), grid),
+      h(
+        'section',
+        { class: 'panel' },
+        h('div', { class: 'panel__title', text: 'Замечания к урокам' }),
+        reportsNote,
+        reportsList,
+        reportsActions,
+      ),
       h('div', { class: 'profile__actions' }, installSlot),
     ),
   );
 
-  const unsub = subscribe(renderStats);
+  const unsub = subscribe(() => {
+    renderStats();
+    renderReports();
+  });
   const unsubInstall = onInstallAvailability(renderInstall);
   renderStats();
+  renderReports();
   renderInstall();
 
   return {
     el,
     onShow: () => {
       renderStats();
+      renderReports();
       renderInstall();
     },
     destroy: () => {

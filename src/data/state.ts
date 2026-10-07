@@ -3,7 +3,7 @@
  * При изменении структуры: поднять SAVE_VERSION и добавить шаг в migrate() (persist.ts).
  */
 
-export const SAVE_VERSION = 5;
+export const SAVE_VERSION = 6;
 
 /** Прогресс по одному уровню карты. */
 export interface LevelProgress {
@@ -47,6 +47,41 @@ export interface WordStat {
 export interface Meal {
   id: string;
   left: number;
+}
+
+/** Что не так со словом или фразой в уроке. */
+export type ReportReason = 'not_used' | 'different' | 'pronounce' | 'translation' | 'other';
+
+export const REPORT_REASONS: readonly ReportReason[] = ['not_used', 'different', 'pronounce', 'translation', 'other'];
+/** Больше замечаний не храним: самые старые уходят. До потолка их, скорее всего, отправят раньше. */
+export const MAX_REPORTS = 300;
+/** Длина «как правильно» — фраза-другая, не сочинение. */
+export const MAX_REPORT_NOTE = 300;
+
+/**
+ * Замечание к уроку: игрок отметил слово или фразу, которые так не говорят,
+ * говорят или произносят иначе. Копятся здесь, потом одним текстом уходят
+ * Claude — он сверяет их с курсом и правит контент.
+ */
+export interface Report {
+  /** Когда отмечено (мс) — заодно и идентификатор замечания. */
+  at: number;
+  /** Где: id урока или режим — «review», «recovery». */
+  where: string;
+  /** Тип задания: «quiz_tg_ru», «phrase_intro»… */
+  kind: string;
+  /**
+   * Что именно: «w:id» — слово, «x:id» — пример к слову, «p:id» — фраза,
+   * «d:id/ask», «d:id/reply» — реплика разговора, «l:буква», «r:заголовок» —
+   * правило, «z:текст» — изафет, «all» — задание целиком.
+   */
+  ref: string;
+  /** Как это было показано — на случай, если контент к тому времени поменялся. */
+  tg: string;
+  ru: string;
+  reason: ReportReason;
+  /** Как правильно или что не так — своими словами, можно пусто. */
+  note: string;
 }
 
 export interface Settings {
@@ -155,6 +190,8 @@ export interface SaveState {
    * наград в лаъл — по нему видно, что за это уже платили (domain/gems).
    */
   achievements: Record<string, number>;
+  /** Замечания к урокам — от старых к новым (domain/reports). */
+  reports: Report[];
   stats: {
     answers: number;
     correct: number;
@@ -225,6 +262,7 @@ export function createInitialState(ts: number): SaveState {
     tree: {},
     seen: {},
     achievements: {},
+    reports: [],
     stats: {
       answers: 0,
       correct: 0,

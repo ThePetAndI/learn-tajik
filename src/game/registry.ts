@@ -9,7 +9,6 @@ import { letterWheelModule } from './exercises/letter-wheel';
 import { matchPairsModule } from './exercises/match-pairs';
 import { missingLetterModule } from './exercises/missing-letter';
 import { numberWordModule } from './exercises/number-word';
-import { oddOneOutModule } from './exercises/odd-one-out';
 import { phraseIntroModule } from './exercises/phrase-intro';
 import { quizModule } from './exercises/quiz';
 import { ruleCardModule } from './exercises/rule-card';
@@ -36,7 +35,6 @@ const REGISTRY: Partial<Record<ExerciseKind, AnyModule>> = {
   missing_letter: missingLetterModule,
   true_false: trueFalseModule,
   alphabet_intro: alphabetIntroModule,
-  odd_one_out: oddOneOutModule,
   dialogue_choice: dialogueModule,
   number_word: numberWordModule,
   category_sort: categorySortModule,

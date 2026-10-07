@@ -116,6 +116,14 @@ export const trueFalseModule: ExerciseModule<TrueFalseExercise> = {
     paint();
     raf = requestAnimationFrame(tick);
 
+    /** Пауза: кадры не считаем, а после неё отсчёт идёт с того же места. */
+    function pause(paused: boolean): void {
+      if (answered) return;
+      stop();
+      last = 0;
+      if (!paused) raf = requestAnimationFrame(tick);
+    }
+
     const el = h(
       'div',
       { class: 'ex ex--tf' },
@@ -130,6 +138,6 @@ export const trueFalseModule: ExerciseModule<TrueFalseExercise> = {
       h('div', { class: 'tf__buttons' }, yes, no),
     );
 
-    return { el, destroy: stop };
+    return { el, destroy: stop, pause };
   },
 };

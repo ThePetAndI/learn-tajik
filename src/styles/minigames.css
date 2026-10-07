@@ -388,17 +388,6 @@
 .letter-quiz__ask { font-size: 17px; font-weight: 900; text-align: center; }
 .letter-quiz__tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
 
-/* ————————————————————————— лишнее слово ————————————————————————— */
-
-.ex--odd { gap: 14px; }
-.odd__ask { font-size: 16px; font-weight: 800; text-align: center; opacity: 0.88; }
-.odd__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.odd__card { flex-direction: column; gap: 2px; min-height: 76px; }
-.odd__tg { font-size: 19px; font-weight: 900; }
-.odd__ru { font-size: 12.5px; font-weight: 700; color: var(--ink-mute); }
-.odd__card.is-right .odd__ru,
-.odd__card.is-wrong .odd__ru { color: rgba(255, 255, 255, 0.85); }
-
 /* ————————————————————————— выбери реплику ————————————————————————— */
 
 .ex--talk { gap: 14px; }

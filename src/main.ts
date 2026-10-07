@@ -11,6 +11,7 @@ import './styles/words.css';
 import './styles/screens.css';
 import './styles/tree.css';
 import './styles/gear.css';
+import './styles/report.css';
 
 import { bootstrap } from './app';
 

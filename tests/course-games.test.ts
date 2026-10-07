@@ -379,12 +379,13 @@ describe('мини-игры на реальном курсе', () => {
     expect(pool.themeTitles['num']).toBe('Числа');
   });
 
-  it('лишнее слово объясняется темой, отличной от темы остальных', () => {
+  /*
+   * «Найди лишнее» убрано: лишнее находилось по смыслу русских переводов,
+   * и задание проверяло сообразительность, а не таджикский.
+   */
+  it('задания «найди лишнее» в уроках нет', () => {
     for (const b of built) {
-      for (const ex of b.exercises) {
-        if (ex.kind !== 'odd_one_out') continue;
-        expect(ex.theme.length).toBeGreaterThan(0);
-      }
+      expect(b.exercises.map((ex) => ex.kind as string), b.levelId).not.toContain('odd_one_out');
     }
   });
 

@@ -132,6 +132,11 @@ export const ICONS = {
       '<circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="2.3"/>' +
       '<circle cx="12" cy="12" r="1.3" fill="currentColor"/>',
   ),
+  /** Флажок — «сообщить о неточности» в уроке. */
+  flag: S(
+    '<path d="M6.2 21V3.6" stroke="currentColor" stroke-width="2.6"/>' +
+      '<path d="M6.2 4.2h11.2l-2.6 4.1 2.6 4.1H6.2" fill="currentColor" stroke="currentColor" stroke-width="2.2"/>',
+  ),
   paw: F(
     '<ellipse cx="7.1" cy="9.2" rx="2.1" ry="2.6"/><ellipse cx="12" cy="7.4" rx="2.2" ry="2.8"/>' +
       '<ellipse cx="16.9" cy="9.2" rx="2.1" ry="2.6"/>' +

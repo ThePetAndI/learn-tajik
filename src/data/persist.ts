@@ -6,11 +6,16 @@
 import { kvGet, kvSet } from './db';
 import {
   DEFAULT_SETTINGS,
+  MAX_REPORTS,
+  MAX_REPORT_NOTE,
+  REPORT_REASONS,
   SAVE_VERSION,
   createInitialState,
   createWordStat,
   type LevelProgress,
   type Meal,
+  type Report,
+  type ReportReason,
   type SaveState,
   type Settings,
   type WordStat,
@@ -112,6 +117,12 @@ const MIGRATIONS: Record<number, Migration> = {
     const stats = isObj(raw.stats) ? raw.stats : {};
     raw.stats = { ...stats, meals: 0, deals: 0 };
     raw.version = 5;
+    return raw;
+  },
+  /* 5 -> 6: замечания к урокам. Их ещё не было — список пуст. */
+  5: (raw) => {
+    raw.reports = [];
+    raw.version = 6;
     return raw;
   },
 };
@@ -225,6 +236,32 @@ function sanitizeStringArray(v: unknown, maxItems = 500): string[] {
   return [...seen];
 }
 
+/**
+ * Замечания к урокам. Запись без причины или без того, к чему она относится,
+ * ничего не скажет при разборе — такую выбрасываем целиком, а не чиним.
+ */
+function sanitizeReports(v: unknown): Report[] {
+  if (!Array.isArray(v)) return [];
+  const out: Report[] = [];
+  for (const raw of v) {
+    if (!isObj(raw)) continue;
+    if (typeof raw.reason !== 'string' || !REPORT_REASONS.includes(raw.reason as ReportReason)) continue;
+    if (typeof raw.ref !== 'string' || raw.ref === '') continue;
+    if (typeof raw.at !== 'number' || !Number.isFinite(raw.at)) continue;
+    out.push({
+      at: raw.at,
+      where: str(raw.where, '', 64),
+      kind: str(raw.kind, '', 32),
+      ref: raw.ref.slice(0, 160),
+      tg: str(raw.tg, '', 200),
+      ru: str(raw.ru, '', 200),
+      reason: raw.reason as ReportReason,
+      note: str(raw.note, '', MAX_REPORT_NOTE),
+    });
+  }
+  return out.slice(-MAX_REPORTS);
+}
+
 /** Приводит произвольный объект к валидному SaveState, дополняя значениями по умолчанию. */
 export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
   const base = createInitialState(ts);
@@ -298,6 +335,7 @@ export function sanitizeState(raw: unknown, ts: number = now()): SaveState {
     seen: sanitizeStringMapToNumber(raw.seen),
     // ледгер разовых наград: ключей много (по одному на слово), потолок выше
     achievements: sanitizeStringMapToNumber(raw.achievements),
+    reports: sanitizeReports(raw.reports),
     stats: {
       answers: int(stats.answers, 0, 0, 1e9),
       correct: int(stats.correct, 0, 0, 1e9),

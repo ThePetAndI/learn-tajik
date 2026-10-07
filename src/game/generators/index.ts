@@ -16,7 +16,6 @@ import { makeLetterWheel } from './letter-wheel';
 import { makeMatchPairs } from './match-pairs';
 import { makeMissingLetter } from './missing-letter';
 import { makeNumberWord } from './number-word';
-import { makeOddOneOut } from './odd-one-out';
 import type { LevelPool } from './pool';
 import { makeQuiz } from './quiz';
 import { makeTrueFalse } from './true-false';
@@ -37,7 +36,6 @@ export {
   makeMatchPairs,
   makeMissingLetter,
   makeNumberWord,
-  makeOddOneOut,
   makeQuiz,
   makeTrueFalse,
   makeRuleCard,
@@ -85,7 +83,6 @@ export const NEEDS_INTRO = new Set<ExerciseKind>([
   'true_false',
   'dialogue_choice',
   'number_word',
-  'odd_one_out',
   'category_sort',
   'izafet_builder',
 ]);
@@ -233,7 +230,6 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
   const izafet = () => forIzafet((z) => makeIzafet(pool, z, rng));
   const pairs = () => makeMatchPairs(pool, rng);
   const sort = () => makeCategorySort(pool, rng);
-  const odd = () => makeOddOneOut(pool, rng);
   const wheel = () => makeLetterWheel(pool, rng);
 
   /*
@@ -270,7 +266,12 @@ export function buildLevelExercises(pool: LevelPool, seedKey: string): Exercise[
   slot(dialogue, phrase, quizRu);
   slot(missing, typeWord, quizRu);
   slot(izafet, ...alt(wheel, phrase));
-  slot(...alt(sort, odd), wheel);
+  /*
+   * Здесь раньше было «найди лишнее»: три слова из одной темы, одно из чужой.
+   * Игрок справедливо назвал его тестом на сообразительность — язык оно
+   * не тренировало, лишнее находилось по смыслу русских переводов. Убрано.
+   */
+  slot(sort, wheel);
   // последним — письмо: сначала собрать фразу из слов, потом написать её сам
   slot(typePhrase, typeWord, missing, trueFalse);
 
@@ -421,8 +422,8 @@ function sameText(tg: string): string {
 }
 
 /**
- * Какие слова задание требует знать. Обычно это wordIds, но у пар, корзин,
- * «лишнего» и колеса слов несколько, и каждое — отдельный ответ.
+ * Какие слова задание требует знать. Обычно это wordIds, но у пар, корзин
+ * и колеса слов несколько, и каждое — отдельный ответ.
  */
 export function needsOf(ex: Exercise): string[] {
   switch (ex.kind) {
@@ -430,8 +431,6 @@ export function needsOf(ex: Exercise): string[] {
       return ex.pairs.map((p) => p.wordId);
     case 'category_sort':
       return ex.items.map((i) => i.wordId);
-    case 'odd_one_out':
-      return ex.options.map((o) => o.wordId);
     case 'letter_wheel':
       return ex.targets.map((t) => t.wordId);
     default:

@@ -9,7 +9,6 @@ import {
   makeIzafet,
   makeMissingLetter,
   makeNumberWord,
-  makeOddOneOut,
   makePool,
   makeTrueFalse,
   makeTypePhrase,
@@ -24,7 +23,6 @@ import type {
   DialogueChoiceExercise,
   IzafetBuilderExercise,
   MissingLetterExercise,
-  OddOneOutExercise,
   TrueFalseExercise,
   TypePhraseExercise,
   TypeWordExercise,
@@ -347,26 +345,6 @@ describe('знакомство с буквой', () => {
     const ex = makeAlphabetIntro(pool(), letterHa, rng()) as AlphabetIntroExercise;
     expect(ex.wordIds).toEqual([]);
     expect(CARD_KINDS.has('alphabet_intro')).toBe(true);
-  });
-});
-
-/* ————————————————————————— лишнее слово ————————————————————————— */
-
-describe('лишнее слово', () => {
-  it('лишнее — из другой темы', () => {
-    const ex = makeOddOneOut(pool(GREET, { priorWords: FAMILY }), rng()) as OddOneOutExercise;
-    expect(ex.options).toHaveLength(4);
-    const odd = ex.options[ex.correct];
-    expect(FAMILY.some((w) => w.id === odd?.wordId)).toBe(true);
-  });
-
-  it('без пройденных слов задания нет: лишним оказалось бы просто незнакомое', () => {
-    expect(makeOddOneOut(pool(GREET, { priorWords: [] }), rng())).toBeNull();
-  });
-
-  it('подписывает тему по-русски', () => {
-    const ex = makeOddOneOut(pool(GREET, { priorWords: FAMILY }), rng()) as OddOneOutExercise;
-    expect(ex.theme).toBe('Приветствия');
   });
 });
 

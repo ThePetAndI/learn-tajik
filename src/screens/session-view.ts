@@ -19,6 +19,7 @@ import type { Attempt, ExerciseContext, ExerciseInstance, ExerciseOutcome } from
 import type { Exercise } from '../game/types';
 import { button } from '../ui/button';
 import { icon } from '../ui/icons';
+import { openReportSheet } from './report-sheet';
 
 export interface SessionViewOptions {
   exercises: Exercise[];
@@ -77,7 +78,33 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
   );
   onTap(closeBtn, () => opts.onExit());
 
-  const titleEl = h('div', { class: 'level__task' });
+  /*
+   * Флажок: «это так не говорят». Замечание относится к заданию на экране —
+   * и до ответа, и после, пока не нажали «Продолжить». Пока открыто окно,
+   * задание на время стоит.
+   */
+  const reportBtn = h(
+    'button',
+    { class: 'level__report', attr: { type: 'button' }, aria: { label: 'Сообщить о неточности' } },
+    icon('flag'),
+  );
+  let reporting = false;
+  onTap(reportBtn, () => {
+    const exercise = session.current();
+    if (!exercise || reporting) return;
+    reporting = true;
+    const shown = instance;
+    shown?.pause?.(true);
+    void openReportSheet(exercise, opts.sessionId).then(() => {
+      reporting = false;
+      // за время окна задание могло смениться — снимаем паузу только с того, что ставили
+      if (instance === shown) shown?.pause?.(false);
+    });
+  });
+
+  // флажок — в строке названия задания: в шапке ему места нет, а здесь он рядом с тем, о чём речь
+  const titleText = h('span', { class: 'level__task-text' });
+  const titleEl = h('div', { class: 'level__task' }, titleText, reportBtn);
   const host = h('div', { class: 'level__host' });
 
   const feedbackTitle = h('div', { class: 'feedback__title' });
@@ -177,7 +204,7 @@ export function createSessionView(opts: SessionViewOptions): SessionView {
     feedback.classList.remove('is-shown', 'is-right', 'is-wrong');
 
     // повтор ошибки подписан: иначе знакомое задание выглядит как сбой
-    titleEl.textContent = (session.isRetry() ? 'Повтор · ' : '') + mod.title(exercise);
+    titleText.textContent = (session.isRetry() ? 'Повтор · ' : '') + mod.title(exercise);
     titleEl.classList.toggle('is-retry', session.isRetry());
     /*
      * Карточка фразы или разговора показана — отмечаем, что игрок её видел.
